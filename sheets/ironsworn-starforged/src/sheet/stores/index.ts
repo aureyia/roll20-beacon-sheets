@@ -3,8 +3,7 @@ import { ref } from 'vue';
 import jp from 'jsonpath';
 import { useMetaStore, type MetaHydrate } from '@/sheet/stores/meta/metaStore';
 import { useCharacterStore } from '@/sheet/stores/character/characterStore';
-import { useAbilityScoreStore } from '@/sheet/stores/abilityScores/abilityScoresStore';
-import { useInventoryStore } from '@/sheet/stores/inventory/inventoryStore';
+import { useStatsStore } from '@/sheet/stores/stats/statsStore';
 import { useTraitsStore } from '@/sheet/stores/traits/traitsStore';
 import { v4 as uuidv4 } from 'uuid';
 import { useBioStore } from '@/sheet/stores/bio/bioStore';
@@ -22,8 +21,7 @@ export const useExampleSheetStore = defineStore('examplesheetStore', () => {
     meta: useMetaStore(),
     character: useCharacterStore(),
     bio: useBioStore(),
-    abilityScores: useAbilityScoreStore(),
-    inventory: useInventoryStore(),
+    stats: useStatsStore(),
     traits: useTraitsStore(),
   };
 
@@ -96,60 +94,27 @@ export const useExampleSheetStore = defineStore('examplesheetStore', () => {
   * Can invoke it from a button in the Settings tab.
   * */
   const loadExampleData = () => {
-    stores.meta.name = 'Kitten';
+    stores.meta.name = 'Auri';
     stores.meta.avatar = 'http://placekitten.com/200/200';
-    stores.abilityScores.abilityScores = {
-      Strength: { base: 1, current: 1 },
-      Endurance: { base: 0, current: 0 },
-      Agility: { base: 4, current: 4 },
-      Charisma: { base: 4, current: 4 },
-      Aura: { base: 1, current: 0 },
-      Thought: { base: 0, current: 0 },
+    stores.stats.stats = {
+      Edge: 1,
+      Heart: 1,
+      Iron: 2,
+      Shadow: 2,
+      Wits: 3,
     };
     stores.bio.friends = 'My Human';
     stores.bio.enemies = 'Dogs';
     stores.bio.looks = 'Smol';
     stores.bio.species = 'Cat';
     stores.bio.likes = 'Fish, yarn';
-    stores.character.xp = 6000;
-    stores.character.heroDiceMod = 2;
-    stores.inventory.items = [
-      {
-        _id: uuidv4(),
-        slots: 1,
-        name: 'Yarn Ball',
-        description:
-          'Can be rolled to force all other cats that see it to roll a Difficulty 10 Aura check or run after it.',
-        type: 'item',
-        quantity: 1,
-      },
-      {
-        _id: uuidv4(),
-        slots: 0,
-        name: 'Claws',
-        description: '1d4 damage. Agile. Finesse.',
-        type: 'weapon',
-        quantity: 2,
-      },
-      {
-        _id: uuidv4(),
-        slots: 2,
-        name: 'Catplate Armor',
-        description: '+4 defense',
-        type: 'armor',
-        quantity: 1,
-      },
-    ];
-    stores.inventory.itemsStowed = [
-      {
-        _id: uuidv4(),
-        slots: 1,
-        name: 'Catnip',
-        description: '????',
-        type: 'item',
-        quantity: 3,
-      },
-    ];
+    stores.character.callsign = 'Swifty'
+    stores.character.pronouns = 'She/Her'
+    stores.character.health = 5;
+    stores.character.spirit = 5;
+    stores.character.supply = 5;
+    stores.character.currentXp = 0;
+    stores.character.spentXp = 0;
     stores.traits.traits = [
       {
         _id: uuidv4(),
