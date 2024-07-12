@@ -3,9 +3,7 @@
     <div class="header section">
       <div class="section__header">This is the Header</div>
       <div class="section__body tabs">
-        <router-link to="/sheet">Sheet Tab</router-link>
-        <router-link to="/settings">Settings Tab</router-link>
-        <div class="campaignId" v-if="campaignId">Campaign ID: {{ campaignId }}</div>
+        <router-link v-for="item in navList" :to="`/${item}`">{{ capitalizeFirstLetter(item) }}</router-link>
       </div>
     </div>
     <router-view v-slot="{ Component }">
@@ -22,6 +20,21 @@ import { useExampleSheetStore } from './sheet/stores';
 
 const store = useExampleSheetStore();
 const campaignId = store.meta.campaignId;
+const navList = [
+  'summary',
+  'assets',
+  'connections',
+  'legacies',
+  'moves',
+  'oracles',
+  'progress',
+  'ship',
+  'vows'
+]
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 </script>
 
 <style scoped lang="scss">

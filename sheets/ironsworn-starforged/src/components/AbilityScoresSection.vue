@@ -82,3 +82,4 @@ const updateScore = (label, value, type) => {
   max-width: 2rem;
 }
 </style>
+@/sheet/stores/stats/abilityScoresStore
