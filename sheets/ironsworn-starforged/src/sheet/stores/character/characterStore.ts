@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
 
 export type CharacterHydrate = {
   character: {
@@ -10,10 +11,15 @@ export type CharacterHydrate = {
     supply: number;
     currentXp: number;
     spentXp: number;
+    momentum: number;
+    momentumMax: number;
+    momentumReset: number;
   };
 };
 
 export const useCharacterStore = defineStore('character', () => {
+  const impacts = useImpactsStore()
+
   const callsign = ref('')
   const pronouns = ref('')
   const health = ref(5);
@@ -21,6 +27,11 @@ export const useCharacterStore = defineStore('character', () => {
   const supply = ref(5);
   const currentXp = ref(0);
   const spentXp = ref(0);
+  const momentum = ref(2)
+  const momentumMax = computed(() => impacts.list.length > 10 ? 0 : 10 - impacts.list.length)
+  const momentumReset = computed(() => 
+    impacts.list.length === 1 ? 1 : (impacts.list.length >= 2 ? 0 : 2)
+  );
 
   const dehydrate = () => {
     return {
@@ -32,8 +43,9 @@ export const useCharacterStore = defineStore('character', () => {
         supply: supply.value,
         currentXp: currentXp.value,
         spentXp: spentXp.value,
+        momentum: momentum.value
       },
-    };
+    };                                          
   };
 
   const hydrate = (hydrateStore: CharacterHydrate) => {
@@ -44,6 +56,7 @@ export const useCharacterStore = defineStore('character', () => {
     supply.value = hydrateStore.character.supply ?? supply.value;
     currentXp.value = hydrateStore.character.currentXp ?? currentXp.value;
     spentXp.value = hydrateStore.character.spentXp ?? spentXp.value;
+    momentum.value = hydrateStore.character.momentum ?? momentum.value;
   };
 
   return {
@@ -54,6 +67,9 @@ export const useCharacterStore = defineStore('character', () => {
     supply,
     currentXp,
     spentXp,
+    momentum,
+    momentumMax,
+    momentumReset,
     dehydrate,
     hydrate,
   };
