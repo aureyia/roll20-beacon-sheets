@@ -97,11 +97,11 @@ export const useExampleSheetStore = defineStore('examplesheetStore', () => {
     stores.meta.name = 'Auri';
     stores.meta.avatar = 'http://placekitten.com/200/200';
     stores.stats.stats = {
-      Edge: 1,
-      Heart: 1,
-      Iron: 2,
-      Shadow: 2,
-      Wits: 3,
+      edge: 1,
+      heart: 1,
+      iron: 2,
+      shadow: 2,
+      wits: 3,
     };
     stores.bio.friends = 'My Human';
     stores.bio.enemies = 'Dogs';
@@ -115,21 +115,6 @@ export const useExampleSheetStore = defineStore('examplesheetStore', () => {
     stores.character.supply = 5;
     stores.character.currentXp = 0;
     stores.character.spentXp = 0;
-    stores.traits.traits = [
-      {
-        _id: uuidv4(),
-        name: 'Feline',
-        description: 'Proficient at jumping, hunting, stealth, acrobatics and climbing',
-        type: 'skill',
-      },
-      {
-        _id: uuidv4(),
-        name: 'Super Cute',
-        description:
-          'When targeted for a melee attack, they must attempt a Difficulty 8 Aura test or the attack is cancelled.',
-        type: 'power',
-      },
-    ];
   };
 
   return {

@@ -19,7 +19,6 @@ import {
 } from './handlers/handlers';
 import { reactive, ref, watch, nextTick, type Ref, type App, shallowRef } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
-import { addHeroDie } from '@/sheet/stores/character/characterStore';
 import { getAbilityScores, getBio, getLife, setLife } from '@/relay/handlers/computed';
 
 /* 
@@ -45,20 +44,20 @@ const relayConfig = {
      Check out Marvel Multiverse RPG Edges for a more complex example.
      ⭐ An important note is that the actions will not have access to any of the Pinia stores, so they need to be passed the necessary data or have access to it through the passed in character object.
      */
-    addHeroDie: {
-      method: async (
-        props: {
-          dispatch: Dispatch;
-          character: Character;
-          messageId?: string;
-          total?: number;
-        },
-        ...args: string[]
-      ): Promise<void> => {
-        const [originalRoll, originalTitle] = args;
-        return addHeroDie(props, Number(originalRoll), originalTitle);
-      },
-    },
+    // addHeroDie: {
+    //   method: async (
+    //     props: {
+    //       dispatch: Dispatch;
+    //       character: Character;
+    //       messageId?: string;
+    //       total?: number;
+    //     },
+    //     ...args: string[]
+    //   ): Promise<void> => {
+    //     const [originalRoll, originalTitle] = args;
+    //     return addHeroDie(props, Number(originalRoll), originalTitle);
+    //   },
+    // },
   },
   computed: {
     // These attributes allow dot notation in macros, and will not show up on token bar attributes

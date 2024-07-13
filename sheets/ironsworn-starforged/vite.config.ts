@@ -3,10 +3,11 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: [vue(), svgLoader()],
+  plugins: [vue(), svgLoader(), quasar({sassVariables: 'src/sheet/quasar/quasar-variables.sass'})],
   base:
     mode === "production"
       ? `https://storage.googleapis.com/beacon-community-sheets/example-sheet/`
