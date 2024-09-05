@@ -4,6 +4,7 @@
   "compilerOptions": {
     "lib": [],
     "types": ["node", "jsdom"],
-    "allowJs": true
+    "allowJs": true,
+    "ignoreDeprecations": "5.0"
   }
 }

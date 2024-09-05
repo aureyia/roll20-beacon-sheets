@@ -16,13 +16,13 @@
 </template>
 
 <script setup>
-import { useExampleSheetStore } from '@/sheet/stores';
+import { useStarforgedSheetStore } from '@/sheet/stores';
 import { useMetaStore } from '@/sheet/stores/meta/metaStore';
 import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import router from '@/router';
 import { computed } from 'vue';
 
-const store = useExampleSheetStore();
+const store = useStarforgedSheetStore();
 const meta = useMetaStore();
 const settings = useSettingsStore();
 
@@ -69,10 +69,10 @@ const loadExampleData = () => {
 
 .big-button {
   border: none;
-  color: var(--examplesheet-contrast-font-color);
+  color: var(--starforged-contrast-font-color);
   padding: 1rem 2rem;
-  background-color: var(--examplesheet-button-background-color);
-  font-family: var(--examplesheet-font-family);
+  background-color: var(--starforged-button-background-color);
+  font-family: var(--starforged-font-family);
   font-weight: 600;
   font-size: 1rem;
   text-transform: uppercase;

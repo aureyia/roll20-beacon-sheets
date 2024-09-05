@@ -19,7 +19,7 @@ import {
 } from './handlers/handlers';
 import { reactive, ref, watch, nextTick, type Ref, type App, shallowRef } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
-import { getAbilityScores, getBio, getLife, setLife } from '@/relay/handlers/computed';
+import { getBio } from '@/relay/handlers/computed';
 
 /* 
 This is the configuration for the relay. It defines the handlers and actions that the sheet will use.
@@ -62,10 +62,7 @@ const relayConfig = {
   computed: {
     // These attributes allow dot notation in macros, and will not show up on token bar attributes
     // EX: @{CHARACTER_NAME|abilityScores.Strength.current}
-    abilityScores: { tokenBarValue: false, get: getAbilityScores },
     bio: { tokenBarValue: false, get: getBio },
-    // These are defined token bar attributes
-    life: { tokenBarValue: true, get: getLife, set: setLife },
   },
 };
 
@@ -103,7 +100,7 @@ This is the function that is called when the character data is updated.
 logMode is a flag that can be used to log the updates to the console. This is useful for debugging.
 */
 const doUpdate = (dispatch: Dispatch, update: Record<string, any>, logMode = false) => {
-  if (logMode) console.info('➡️ ExampleSheet: Updating Firebase');
+  if (logMode) console.info('➡️ starforged: Updating Firebase');
   if (logMode) console.dir(`Firebase Update: ${initValues.character.id}`, update);
   const character: Record<string, any> = {
     character: {
@@ -141,7 +138,7 @@ This is just one way to trigger a re-render, you can implement your own logic to
 */
 export const createRelay = async ({
   devMode = false,
-  primaryStore = 'examplesheetStore',
+  primaryStore = 'starforgedSheetStore',
   logMode = false,
 }) => {
   // @ts-ignore

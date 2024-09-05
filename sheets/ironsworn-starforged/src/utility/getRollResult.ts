@@ -3,22 +3,21 @@ import type { Dispatch } from '@roll20-official/beacon-sdk';
 import type { DiceComponent } from '@/rolltemplates/rolltemplates';
 
 type RollResults = {
-  total: number;
-  components: Array<DiceComponent>;
+  dice: Array<DiceComponent>;
 };
-// Adds together a series of dice components and outputs the result. Beacon handles the dice rolling to ensure randomness.
+// Adds together a series of dice and outputs the result. Beacon handles the dice rolling to ensure randomness.
 export default async (
-  components: Array<DiceComponent>,
+  dice: Array<DiceComponent>,
   customDispatch?: Dispatch,
 ): Promise<RollResults> => {
   const dispatch = customDispatch || (dispatchRef.value as Dispatch); // Need a different Relay instance when handling sheet-actions
 
   const rolls: any = {};
-  for (const i in components) {
-    const component = components[i];
-    if (component.sides) {
-      const sides = component.sides;
-      const dieCount = component.count ?? 1;
+  for (const i in dice) {
+    const die = dice[i];
+    if (die.sides) {
+      const sides = die.sides;
+      const dieCount = die.count ?? 1;
       rolls[`dice-${i}`] = `${dieCount}d${sides}`;
     }
   }
@@ -28,10 +27,10 @@ export default async (
   for (const rollTerm in rollResult.results) {
     const result = rollResult.results[rollTerm];
     const rollIndex = parseInt(rollTerm.split(`-`)[1]);
-    const component = components[rollIndex];
-    component.value = result.results.result;
-    if (!component.label) {
-      component.label = result.results.expression;
+    const die = dice[rollIndex];
+    die.value = result.results.result;
+    if (!die.label) {
+      die.label = result.results.expression;
     }
 
     /*
@@ -39,20 +38,20 @@ export default async (
 				parts so that we don't need to write the formula parsing ourselves because
 				it's a complicated thing that Beacon already has to do as it is lol
 				*/
-    if (component.rollFormula) {
+    if (die.rollFormula) {
       const rollParts: DiceComponent[] = [];
-      const overallSum = component.value;
+      const overallSum = die.value;
       let diceSum = 0;
       if (result.results.rolls) {
-        for (const subcomponent of result.results.rolls) {
-          const sum = subcomponent.results.reduce((sum, result) => sum + result, 0);
+        for (const subDie of result.results.rolls) {
+          const sum = subDie.results.reduce((sum, result) => sum + result, 0);
           diceSum += sum;
-          const sublabel = `${subcomponent.dice}d${subcomponent.sides}`;
+          const sublabel = `${subDie.dice}d${subDie.sides}`;
           rollParts.push({
-            sides: subcomponent.sides,
-            count: subcomponent.dice,
+            sides: subDie.sides,
+            count: subDie.dice,
             value: sum,
-            label: component.label ? `${component.label} [${sublabel}]` : sublabel,
+            label: die.label ? `${die.label} [${sublabel}]` : sublabel,
           });
         }
 
@@ -62,10 +61,9 @@ export default async (
         });
       }
 
-      components.splice(rollIndex, 1, ...rollParts);
+      dice.splice(rollIndex, 1, ...rollParts);
     }
   }
 
-  const total = components.reduce((accum, next) => accum + (next?.value || 0), 0);
-  return { total, components };
+  return { dice };
 };

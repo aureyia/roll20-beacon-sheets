@@ -1,0 +1,31 @@
+<div class="action-score">
+    {{#if actionScore.dieNegated}}
+        <div class="action-score__row">
+            <div class="action-score__warning">Action Score Negated</div>
+        </div>
+    {{/if}}
+    <div class="action-score__row">
+        <div class="action-score__col-1 action-score__title">Action Die</div>
+        <div class="action-score__col-2">
+            <div class="action-score__image">{{> actionDieBg actionDie=(getActionDie dice)}}</div>
+        </div>
+    </div>
+    <div class="action-score__row">
+        <div class="action-score__col-1 action-score__title">Stat</div>
+        <div class="action-score__col-2">
+            <div class="action-score__value">{{value}}</div>
+        </div>
+    </div>
+    <div class="action-score__row">
+        <div class="action-score__col-1 action-score__title">Modifier</div>
+        <div class="action-score__col-2">
+            <div class="action-score__value">{{modifier}}</div>
+        </div>
+    </div>
+    <div class="action-score__row">
+        <div class="action-score__col-1 action-score__title">Action Score</div>
+        <div class="action-score__col-2">
+            <div class="action-score__image">{{> actionScoreBg actionScore=actionScore.score}}</div>
+        </div>
+    </div>
+</div>

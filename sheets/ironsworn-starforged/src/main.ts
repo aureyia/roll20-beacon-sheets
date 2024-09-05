@@ -29,6 +29,7 @@ const main = async () => {
   app.use(i18n);
   app.use(relayVue);
   app.use(Quasar, {
+    // config: { dark: 'auto' },
     plugins: {},
   });
   pinia.use(relayPinia);

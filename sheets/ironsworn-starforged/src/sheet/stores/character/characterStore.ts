@@ -4,6 +4,7 @@ import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
 
 export type CharacterHydrate = {
   character: {
+    name: string;
     callsign: string;
     pronouns: string;
     health: number;
@@ -20,6 +21,7 @@ export type CharacterHydrate = {
 export const useCharacterStore = defineStore('character', () => {
   const impacts = useImpactsStore()
 
+  const name = ref('')
   const callsign = ref('')
   const pronouns = ref('')
   const health = ref(5);
@@ -36,6 +38,7 @@ export const useCharacterStore = defineStore('character', () => {
   const dehydrate = () => {
     return {
       character: {
+        name: name.value,
         callsign: callsign.value,
         pronouns: pronouns.value,
         health: health.value,
@@ -49,6 +52,7 @@ export const useCharacterStore = defineStore('character', () => {
   };
 
   const hydrate = (hydrateStore: CharacterHydrate) => {
+    name.value = hydrateStore.character.name ?? name.value;
     callsign.value = hydrateStore.character.callsign ?? callsign.value;
     pronouns.value = hydrateStore.character.pronouns ?? pronouns.value;
     health.value = hydrateStore.character.health ?? health.value;
@@ -60,6 +64,7 @@ export const useCharacterStore = defineStore('character', () => {
   };
 
   return {
+    name,
     callsign,
     pronouns,
     health,

@@ -1,0 +1,72 @@
+@use '../../common/scss/vars.scss'
+@use '../../sheet/quasar/quasar-variables.sass'
+
+
+// TODO: Finish Styling for Roll Templates
+rolltemplate.starforged
+  display: block
+  max-width: 100%
+  border-radius: 0.5rem
+  background: #3c3c3c
+  color: #ffffff
+  padding: 0.5em
+  font-family: 'Montserrat', sans-serif
+
+  // &.starforged--stat
+  //   background-color: quasar-variables.$primary
+
+  .action-score__warning
+    background-color: #783030
+    width: 100%
+    text-align: center
+    border-radius: 0.6em
+    padding: 0.2em
+  
+  .action-score__col
+    flex-direction: column
+
+  .action-score__value
+    font-size: 24px
+    background-color: gray
+    padding: 0.3em
+    border-radius: 0.1em
+
+  .header
+    background-color: #545454
+    color: white
+    padding: 0.4em 1em
+    font-style: italic
+    border-radius: 0.7em
+  
+  .roll-outcome,
+  .stat__body
+    color: white
+    padding: 0.4em 1em
+    margin: 0.2em 0
+    border-radius: 1em
+
+  .action-score__row,
+  .challenge-dice__row
+    display: flex
+    justify-content: space-between
+    margin-bottom: 0.3em
+
+  .roll-outcome__row
+    display: flex
+    justify-content: space-between
+
+  .action-score__title,
+  .challenge-dice__col-1,
+  .roll-outcome__col-1
+    align-content: center
+    font-size: 1em
+  
+  .action-score__col-2,
+  .roll-outcome__col-2,
+  .challenge-dice__col-2
+    width: 6.2em
+
+  .stat__footer
+    background-color: #545454
+    border-radius: 1em
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5)

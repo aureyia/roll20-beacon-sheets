@@ -4,5 +4,6 @@
   "compilerOptions": {
     "types": ["node"],
     "target": "ES2022",
+    "ignoreDeprecations": "5.0"
   }
 }

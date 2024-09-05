@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,600;0,700;1,200;1,400;1,700&display=swap');
 
-$examplesheet-primary-color: black;
-$examplesheet-secondary-color: #452b52;
+$starforged-primary-color: black;
+$starforged-secondary-color: #452b52;
 
 html * {
-  --examplesheet-font-color: #{$examplesheet-primary-color};
-  --examplesheet-contrast-font-color: white;
-  --examplesheet-font-family: 'Montserrat', 'Verdana', sans-serif;
-  --examplesheet-input-border: 1px solid #{$examplesheet-secondary-color};
-  --examplesheet-button-background-color: #{$examplesheet-secondary-color};
-  --examplesheet-section-border: 1px solid #{$examplesheet-secondary-color};
-  --examplesheet-primary: #89018b;
-  --examplesheet-secondary: #ebd7ea;
+  --starforged-font-color: #{$starforged-primary-color};
+  --starforged-contrast-font-color: white;
+  --starforged-font-family: 'Montserrat', 'Verdana', sans-serif;
+  --starforged-input-border: 1px solid #{$starforged-secondary-color};
+  --starforged-button-background-color: #{$starforged-secondary-color};
+  --starforged-section-border: 1px solid #{$starforged-secondary-color};
+  --starforged-primary: #89018b;
+  --starforged-secondary: #ebd7ea;
 }

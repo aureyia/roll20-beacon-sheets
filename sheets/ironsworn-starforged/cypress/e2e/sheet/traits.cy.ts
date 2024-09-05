@@ -1,7 +1,7 @@
 describe("Sheet Traits", ()=>{
     beforeEach(() => {
         cy.visit("/sheet");
-        cy.get(".examplesheet__traits").should("exist");
+        cy.get(".starforged__traits").should("exist");
       });
 
     describe('When I add a trait', () => {

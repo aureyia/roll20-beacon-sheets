@@ -4,7 +4,8 @@ import jp from 'jsonpath';
 import { useMetaStore, type MetaHydrate } from '@/sheet/stores/meta/metaStore';
 import { useCharacterStore } from '@/sheet/stores/character/characterStore';
 import { useStatsStore } from '@/sheet/stores/stats/statsStore';
-import { useTraitsStore } from '@/sheet/stores/traits/traitsStore';
+import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
+import { useChronicleStore } from '@/sheet/stores/chronicle/chronicleStore';
 import { v4 as uuidv4 } from 'uuid';
 import { useBioStore } from '@/sheet/stores/bio/bioStore';
 
@@ -15,14 +16,15 @@ import { useBioStore } from '@/sheet/stores/bio/bioStore';
  * We are listening to changes in this object in other to trigger Dehydrates.
  * Most of this does not need to be changed if you're using Vue.
  * */
-export const useExampleSheetStore = defineStore('examplesheetStore', () => {
+export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () => {
   // List all the stores individually.
   const stores = {
     meta: useMetaStore(),
     character: useCharacterStore(),
     bio: useBioStore(),
     stats: useStatsStore(),
-    traits: useTraitsStore(),
+    impacts: useImpactsStore(),
+    chronicle: useChronicleStore(),
   };
 
   const pageLoading = ref(false);

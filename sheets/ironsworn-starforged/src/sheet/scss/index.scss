@@ -17,11 +17,11 @@ body {
   overflow-x: hidden;
 }
 
-.examplesheet {
+.starforged {
   --primary: #89018b;
 
   width: 88rem;
-  font-family: var(--examplesheet-font-family);
+  font-family: var(--starforged-font-family);
 
   > * {
     height: 100%;
@@ -29,12 +29,12 @@ body {
 
   .section {
     border-radius: 0.5rem;
-    border: 2px solid var(--examplesheet-primary);
+    border: 2px solid var(--starforged-primary);
 
     &__header {
       padding: 0.25rem 0.5rem;
       font-size: 1.25rem;
-      background: var(--examplesheet-primary);
+      background: var(--starforged-primary);
       color: white;
       text-align: center;
       text-transform: uppercase;

@@ -1,82 +1,77 @@
 <template>
-  <div class="examplesheet">
-    <div class="header section">
-      <div class="section__header">This is the Header</div>
-      <div class="section__body tabs">
-        <router-link v-for="item in navList" :to="`/${item}`">{{ capitalizeFirstLetter(item) }}</router-link>
-      </div>
-    </div>
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-    <div class="footer section section__header">This is the Footer</div>
-  </div>
+  <q-layout view="hHh lpR fFf">
+    <q-header elevated class="primary text-white">
+      <!-- <CharacterResources /> -->
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleleftDrawer" />
+        <q-space/>
+        <q-tabs>
+          <q-route-tab v-for="item in navList" :to="`/${item}`" :label="capitalizeFirstLetter(item)"/>
+        </q-tabs>
+        <q-space/>
+        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+      </q-toolbar>
+    </q-header>
+    <q-drawer show-if-above elevated v-model="leftDrawerOpen" side="left">
+      Vows
+    </q-drawer>
+    <q-drawer show-if-above elevated v-model="rightDrawerOpen" side="right">
+      Assets
+    </q-drawer>
+    <q-page-container>
+      <router-view v-slot="{ Component }">
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </q-page-container>
+    <q-footer elevated class="primary text-white">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleleftDrawer" />
+        <q-space/>
+        <Momentum />
+        <q-space/>
+        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+      </q-toolbar>
+    </q-footer>
+  </q-layout>
 </template>
 
 <script setup>
-import { useExampleSheetStore } from './sheet/stores';
+import { useStarforgedSheetStore } from './sheet/stores';
+import CharacterResources from '@/components/headers/CharacterResources.vue';
+import Momentum from '@/components/momentum/Momentum.vue'
+import { ref } from 'vue'
 
-const store = useExampleSheetStore();
+const rightDrawerOpen = ref(false)
+const leftDrawerOpen = ref(false)
+const store = useStarforgedSheetStore();
 const campaignId = store.meta.campaignId;
 const navList = [
   'summary',
-  'assets',
-  'connections',
-  'legacies',
   'moves',
   'oracles',
-  'progress',
+  'vows',
   'ship',
-  'vows'
+  'assets',
+  'progress',
+  'connections',
+  'legacies',
+  'settings',
 ]
 
+function toggleRightDrawer () {
+  rightDrawerOpen.value = !rightDrawerOpen.value
+}
+
+function toggleleftDrawer () {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
+
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 </script>
 
 <style scoped lang="scss">
-.header {
-  margin-bottom: 0.5rem;
-
-  .campaignId {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-  }
-
-  .tabs {
-    display: flex;
-    gap: 1rem;
-    a {
-      color: black;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      border: 1px solid lightgrey;
-      // Router-links get this class added if you're already on the page it leads you to. Useful for tabs.
-      &.router-link-active {
-        color: var(--examplesheet-primary);
-        font-weight: 600;
-        text-decoation: underline;
-        border-color: var(--examplesheet-primary);
-      }
-    }
-  }
-}
-.footer {
-  margin-top: 0.5rem;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>
