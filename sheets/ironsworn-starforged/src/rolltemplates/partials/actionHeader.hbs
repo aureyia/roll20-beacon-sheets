@@ -7,17 +7,11 @@
       {{> @partial-block }}
       <div class="header__sub-group">
         <div class="header__title">{{title}}</div>
-        {{#if subtitle}}
-          <div class="header__subtitle">{{subtitle}}</div>
-        {{/if}}
       </div>
     </div>
   {{else}}
     <div class="header__sub-group">
       <div class="header__title">{{title}}</div>
-      {{#if subtitle}}
-        <div class="header__subtitle">{{ capitalize subtitle}}</div>
-      {{/if}}
     </div>
   {{/if}}
 </div>

@@ -4,13 +4,14 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: [vue(), svgLoader(), quasar({sassVariables: 'src/sheet/quasar/quasar-variables.sass'})],
+  plugins: [vue(), svgLoader(), quasar({sassVariables: 'src/sheet/quasar/quasar-variables.sass'}), vueJsx()],
   base:
     mode === "production"
-      ? `https://storage.googleapis.com/beacon-community-sheets/example-sheet/`
+      ? `https://storage.googleapis.com/beacon-community-sheets/irosworn-starforged/`
       : "/",
   build: {
     emptyOutDir: true,

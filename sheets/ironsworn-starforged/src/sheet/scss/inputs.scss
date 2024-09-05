@@ -1,6 +1,6 @@
 // Reset
 
-.examplesheet {
+.starforged {
   button {
     display: inline-block;
     margin: 0;
@@ -19,7 +19,7 @@
       padding: 0.25rem;
       transition: color 0.2s ease-in-out;
       &:hover {
-        color: var(--examplesheet-primary);
+        color: var(--starforged-primary);
       }
       font-weight: 600;
     }
@@ -29,10 +29,10 @@
       padding: 0.25rem;
       transition: background-color 0.2s ease-in-out;
       border-radius: 0.25rem;
-      background-color: var(--examplesheet-primary);
+      background-color: var(--starforged-primary);
       color: white;
       &:hover {
-        background-color: var(--examplesheet-secondary);
+        background-color: var(--starforged-secondary);
         color: black;
       }
     }

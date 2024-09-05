@@ -1,58 +1,90 @@
 import handlebars from 'handlebars';
 
 // @ts-ignore
-import chatRollTemplate from './templates/chat.hbs?raw';
-// @ts-ignore
-import basicRollTemplate from './templates/basicRoll.hbs?raw';
-// @ts-ignore
-import keyValues from './partials/keyValues.hbs?raw';
-// @ts-ignore
-import textContent from './partials/textContent.hbs?raw';
+import statRollTemplate from './templates/statRoll.hbs?raw';
 // @ts-ignore
 import rollComponents from './partials/rollComponents.hbs?raw';
 // @ts-ignore
 import wrapper from './partials/wrapper.hbs?raw';
 // @ts-ignore
-import rollTotal from './partials/rollTotal.hbs?raw';
+import actionHeader from './partials/actionHeader.hbs?raw';
 // @ts-ignore
-import header from './partials/header.hbs?raw';
+import actionScore from './partials/actionScore.hbs?raw';
 // @ts-ignore
-import heroDie from './partials/heroDie.hbs?raw';
+import rollOutcome from './partials/rollOutcome.hbs?raw';
+// @ts-ignore
+import challengeDice from './partials/challengeDice.hbs?raw';
+// @ts-ignore
+import successBg from './partials/backgrounds/successBg.hbs?raw';
+// @ts-ignore
+import failBg from './partials/backgrounds/failBg.hbs?raw';
+// @ts-ignore
+import challengeDieBg from './partials/backgrounds/challengeDieBg.hbs?raw';
+// @ts-ignore
+import actionScoreBg from './partials/backgrounds/actionScoreBg.hbs?raw';
+// @ts-ignore
+import actionDieBg from './partials/backgrounds/actionDieBg.hbs?raw';
 
 import { isGreater } from './expressions/isGreater';
+import { isGreaterOrEqual } from './expressions/isGreaterOrEqual';
 import { isEqual } from './expressions/isEqual';
 import { sumComponents } from './expressions/sumComponents';
 import { getDice } from './expressions/getDice';
 import { isArray } from './expressions/isArray';
 import { capitalize } from './expressions/capitalize';
+import { calculateActionScore } from './expressions/calculateActionScore';
+import { calculateOutcome } from './expressions/calculateOutcome';
+import { getChallengeDie } from './expressions/getChallengeDie';
+import { getActionDie } from './expressions/getActionDie';
+import { isMatching } from './expressions/isMatching';
 
 /* All custom chat templates (called "roll templates" are created at run-time through handlebars based on this config */
 
 // Re-usable handlebars HTML partials.
-handlebars.registerPartial('header', header);
 handlebars.registerPartial('wrapper', wrapper);
-handlebars.registerPartial('keyValues', keyValues);
-handlebars.registerPartial('rollTotal', rollTotal);
-handlebars.registerPartial('textContent', textContent);
 handlebars.registerPartial('rollComponents', rollComponents);
-handlebars.registerPartial('heroDie', heroDie);
 
-// Helper functions for math/transformations
+// Starforged handlebars HTML partials
+handlebars.registerPartial('actionHeader', actionHeader);
+handlebars.registerPartial('actionScore', actionScore);
+handlebars.registerPartial('rollOutcome', rollOutcome);
+handlebars.registerPartial('challengeDice', challengeDice);
+handlebars.registerPartial('successBg', successBg);
+handlebars.registerPartial('failBg', failBg);
+handlebars.registerPartial('challengeDieBg', challengeDieBg);
+handlebars.registerPartial('actionScoreBg', actionScoreBg);
+handlebars.registerPartial('actionDieBg', actionDieBg);
+
+// Common Helper functions for math/transformations
 handlebars.registerHelper('sumComponents', sumComponents);
 handlebars.registerHelper('getDice', getDice);
 handlebars.registerHelper('isGreater', isGreater);
+handlebars.registerHelper('isGreaterOrEqual', isGreaterOrEqual);
 handlebars.registerHelper('isEqual', isEqual);
+handlebars.registerHelper('isMatching', isMatching);
 handlebars.registerHelper('isArray', isArray);
 handlebars.registerHelper('capitalize', capitalize);
-
 handlebars.registerHelper('not', (v) => !v);
 handlebars.registerHelper('or', (a, b) => a || b);
 handlebars.registerHelper('and', (a, b) => a && b);
 
-// We have 2 base templates. One for when dice are rolled and one for just rendering information.
+handlebars.registerHelper('assign', function(varName, value, options) {
+  options.data.root[varName] = value;
+});
+
+handlebars.registerHelper('assignActionScore', function(varName, value, options) {
+  console.log('assignActionScore', varName, value);
+  options.data.root[varName] = value.score;
+});
+
+// Starforged Helper functions
+handlebars.registerHelper('calculateActionScore', calculateActionScore);
+handlebars.registerHelper('calculateOutcome', calculateOutcome);
+handlebars.registerHelper('getChallengeDie', getChallengeDie);
+handlebars.registerHelper('getActionDie', getActionDie);
+
 const rollTemplates = {
-  chat: handlebars.compile(chatRollTemplate),
-  roll: handlebars.compile(basicRollTemplate),
+  stat: handlebars.compile(statRollTemplate),
 };
 
 // This corresponds to the data returned by Beacon when you ask it to roll dice for you.
@@ -72,6 +104,22 @@ export type DiceComponent = {
   alwaysShowInBreakdown?: boolean;
 };
 
+// TODO: Decide whether to support this type
+export type ActionDie = {
+  sides: 6;
+  label: 'Action Die';
+  count: 1;
+  value?: number;
+};
+
+// TODO: Decide whether to support this type
+export type ChallengeDice = {
+  sides: 10;
+  label: 'Challenge Dice';
+  count: 2;
+  value?: number;
+};
+
 // Generic params used by our 2 templates. These can be changed for your own templates.
 type CommonParameters = {
   characterName?: string;
@@ -82,22 +130,18 @@ type CommonParameters = {
   textContent?: string | string[];
 };
 
-export type SendToChatTemplate = {
-  type: 'chat';
-  parameters: CommonParameters;
-};
-
-export type RollToChatTemplate = {
-  type: 'roll';
+export type RollStat = {
+  type: 'stat';
   parameters: CommonParameters & {
-    components: DiceComponent[];
-    multiplier?: number;
-    resultType?: 'crit-success' | 'crit-fail';
-    allowHeroDie?: boolean;
+    dice: DiceComponent[];
+    label: string;
+    value: number;
+    momentum: number;
+    modifier: number;
   };
 };
 
-export type AnyRollTemplate = SendToChatTemplate | RollToChatTemplate;
+export type AnyRollTemplate = RollStat;
 
 // Returns the final HTML for a given template using all the required data.
 export const createRollTemplate = ({ type, parameters }: AnyRollTemplate) => {

@@ -1,53 +1,47 @@
 <template>
-  <div class="stats-static">
-    <div class="stat" v-for="(value, label) in stats" :key="label">
-      <div class="stats-title i18n-text" :data-i18n="`stat-${label}`">{{ capitalizeFirstLetter(label) }}</div>
-      <q-input
-        class="stat-input"
-        v-model.number="stats[label]"
-        type="number"
-        filled
-        @change="(value: number) => updateStat(label, value)"
-      />
+  <div class="stat-editor col" v-for="(value, label) in stats" :key="label">
+    <h5 class="stats-title i18n-text" :data-i18n="`stat-${label}`">{{ capitalizeFirstLetter(label) }}</h5>
+    <div class="stats-input-container">
+      <q-input filled type="text" class="stats-input" v-model.number="stats[label]" @update:model-value="() => updateStat(label, stats[label])"/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
-  import { useStatsStore } from '../../sheet/stores/stats/statsStore'
+import { computed } from 'vue';
+import { useStatsStore } from '../../sheet/stores/stats/statsStore';
 
-  const statsStore = useStatsStore();
-  const stats = computed(() => statsStore.stats);
+const statsStore = useStatsStore();
+const stats = computed(() => statsStore.stats);
 
-  function capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-  const updateStat = (label: string, value: number) => {
-    statsStore.stats = {
-      ...statsStore.stats,
-      [label]: value,
-    };
+const updateStat = (label: string, value: number) => {
+  statsStore.stats = {
+    ...statsStore.stats,
+    [label]: value,
   };
+};
 </script>
 
-<style scoped lang="scss">
-.stats-static {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
+<style scoped lang="sass">
+.stats-input-container
+  display: flex
+  justify-content: center
 
-.stat {
-  width: fit-content;
-  justify-content: center;
-  align-items: center;
-  margin: 1em;
-}
+.stats-title
+  text-align: center
+  margin: 0
+  margin-bottom: 0.4em
 
-.stat-input {
-  padding: 0.2em;
-  width: 6em;
-}
+div.stat-editor
+  width: 7em
+  justify-content: center
+
+.stats-input
+  width: 4em 
+  text-align-last: center
+  border: 2px solid $primary
 </style>

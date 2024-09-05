@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
+import rollStat from '@/utility/rollStat';
+import { useCharacterStore } from '../character/characterStore';
 
 export type StatsHydrate = {
   stats: {
@@ -10,8 +12,6 @@ export type StatsHydrate = {
     wits: number;
   };
 };
-
-// export type Stat = 'edge' | 'heart' | 'iron' | 'shadow' | 'wits';
 
 export const useStatsStore = defineStore('stats', () => {
   const edge = ref(0);
@@ -30,14 +30,20 @@ export const useStatsStore = defineStore('stats', () => {
         wits: wits.value,
       };
     },
-    set(stats) {
-      edge.value = stats.edge || edge.value;
-      heart.value = stats.heart || heart.value;
-      iron.value = stats.iron || iron.value;
-      shadow.value = stats.shadow || shadow.value;
-      wits.value = stats.wits || wits.value;
+    set(newStats) {
+      edge.value = newStats.edge ?? edge.value;
+      heart.value = newStats.heart ?? heart.value;
+      iron.value = newStats.iron ?? iron.value;
+      shadow.value = newStats.shadow ?? shadow.value;
+      wits.value = newStats.wits ?? wits.value;
     },
   });
+
+
+  const roll = async (stat: string, value: number, modifier: number = 0) => {
+    const { momentum } = useCharacterStore();
+    await rollStat(stat, value, momentum, modifier);
+  };
 
   const dehydrate = () => {
     return { stats: stats.value };
@@ -49,6 +55,7 @@ export const useStatsStore = defineStore('stats', () => {
 
   return {
     stats,
+    roll,
     dehydrate,
     hydrate,
   };
