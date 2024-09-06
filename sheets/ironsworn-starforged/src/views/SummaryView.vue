@@ -1,6 +1,7 @@
 
 <template>
   <div class="summary">
+    <CharacterBio />
     <CharacterStats />
     <CharacterImpacts />
     <CharacterChronicle />
@@ -8,6 +9,7 @@
 </template>
   
 <script setup>
+import CharacterBio from '@/components/bio/CharacterBio.vue';
 import CharacterStats from '@/components/stats/CharacterStats.vue';
 import CharacterImpacts from '@/components/impacts/CharacterImpacts.vue';
 import CharacterChronicle from '@/components/chronicle/CharacterChronicle.vue';

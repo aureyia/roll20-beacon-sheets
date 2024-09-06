@@ -2,13 +2,24 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import svgLoader from "vite-svg-loader";
-import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 
-// https://vitejs.dev/config/
+import svgLoader from "vite-svg-loader";
+import tailwind from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
+import Components from 'unplugin-vue-components/vite'
+import RadixVueResolver from 'radix-vue/resolver'
+
 export default defineConfig(({ mode }) => ({
-  plugins: [vue(), svgLoader(), quasar({sassVariables: 'src/sheet/quasar/quasar-variables.sass'}), vueJsx()],
+  plugins: [
+    vue(),
+    svgLoader(),
+    Components({
+      dts: true,
+      resolvers: [
+        RadixVueResolver()
+      ]
+    })
+  ],
   base:
     mode === "production"
       ? `https://storage.googleapis.com/beacon-community-sheets/irosworn-starforged/`
@@ -24,7 +35,7 @@ export default defineConfig(({ mode }) => ({
       output: {
         dir: "dist",
         compact: false,
-        assetFileNames: (assetInfo) => {
+        assetFileNames: (assetInfo: any) => {
           if (assetInfo.name === "style.css") return "sheet.css";
           return "assets/[name][extname]";
         },
@@ -48,5 +59,10 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     cors: false
-  }
+  },
+  css: {
+    postcss: {
+      plugins: [tailwind(), autoprefixer()],
+    },
+  },
 }));

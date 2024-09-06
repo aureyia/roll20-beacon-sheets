@@ -25,18 +25,18 @@ import actionScoreBg from './partials/backgrounds/actionScoreBg.hbs?raw';
 // @ts-ignore
 import actionDieBg from './partials/backgrounds/actionDieBg.hbs?raw';
 
-import { isGreater } from './expressions/isGreater';
-import { isGreaterOrEqual } from './expressions/isGreaterOrEqual';
-import { isEqual } from './expressions/isEqual';
-import { sumComponents } from './expressions/sumComponents';
-import { getDice } from './expressions/getDice';
-import { isArray } from './expressions/isArray';
-import { capitalize } from './expressions/capitalize';
-import { calculateActionScore } from './expressions/calculateActionScore';
-import { calculateOutcome } from './expressions/calculateOutcome';
-import { getChallengeDie } from './expressions/getChallengeDie';
-import { getActionDie } from './expressions/getActionDie';
-import { isMatching } from './expressions/isMatching';
+import { isGreater } from './expressions/isGreater.js';
+import { isGreaterOrEqual } from './expressions/isGreaterOrEqual.js';
+import { isEqual } from './expressions/isEqual.js';
+import { sumComponents } from './expressions/sumComponents.js';
+import { getDice } from './expressions/getDice.js';
+import { isArray } from './expressions/isArray.js';
+import { capitalize } from './expressions/capitalize.js';
+import { calculateActionScore } from './expressions/calculateActionScore.js';
+import { calculateOutcome } from './expressions/calculateOutcome.js';
+import { getChallengeDie } from './expressions/getChallengeDie.js';
+import { getActionDie } from './expressions/getActionDie.js';
+import { isMatching } from './expressions/isMatching.js';
 
 /* All custom chat templates (called "roll templates" are created at run-time through handlebars based on this config */
 
@@ -102,22 +102,6 @@ export type DiceComponent = {
   value?: number;
   /** Indicates whether or not to always show this component in the breakdown, even if it's 0 */
   alwaysShowInBreakdown?: boolean;
-};
-
-// TODO: Decide whether to support this type
-export type ActionDie = {
-  sides: 6;
-  label: 'Action Die';
-  count: 1;
-  value?: number;
-};
-
-// TODO: Decide whether to support this type
-export type ChallengeDice = {
-  sides: 10;
-  label: 'Challenge Dice';
-  count: 2;
-  value?: number;
 };
 
 // Generic params used by our 2 templates. These can be changed for your own templates.
