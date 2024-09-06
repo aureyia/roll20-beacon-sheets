@@ -3,3 +3,4 @@ const challenge = (order :string) => ({ sides: 10, label: `Challenge Dice: ${ord
 
 export const actionDice = [ ACTION, challenge('1'), challenge('2') ];
 export const progressDice = [ challenge('1'), challenge('2') ];
+export const oracleDice = [{ sides: 100, label: 'Oracle Dice' }];

@@ -1,15 +1,12 @@
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
-import { Quasar } from 'quasar'
 
 import App from './App.vue';
 import router from './router';
 
 import './sheet/scss/index.scss';
-
-import 'quasar/src/css/index.sass'
-import '@quasar/extras/material-icons/material-icons.css'
+import './sheet/css/index.css';
 
 import { createRelay } from './relay/relay';
 
@@ -28,10 +25,6 @@ const main = async () => {
   app.use(router);
   app.use(i18n);
   app.use(relayVue);
-  app.use(Quasar, {
-    // config: { dark: 'auto' },
-    plugins: {},
-  });
   pinia.use(relayPinia);
 
   app.mount('#app');

@@ -18,10 +18,10 @@
     &.link-btn {
       padding: 0.25rem;
       transition: color 0.2s ease-in-out;
-      &:hover {
+      font-weight: 600;
+      & :hover {
         color: var(--starforged-primary);
       }
-      font-weight: 600;
     }
 
     &.action-btn {
