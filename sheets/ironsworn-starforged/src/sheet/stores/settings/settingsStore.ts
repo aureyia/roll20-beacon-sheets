@@ -3,27 +3,32 @@ import { ref } from 'vue';
 
 export type SettingsHydrate = {
   settings: {
-    encumbrancePenalty: number;
+    mode: 'character-standard' | 'character-edge' | 'guide' | 'locations' | 'orcales' | 'shared' | 'ship';
   };
 };
 
 export const useSettingsStore = defineStore('settings', () => {
-  const encumbrancePenalty = ref(-4);
+  const mode = ref('');
+
+  const setMode = (arg :string) => mode.value = arg
+  const clearMode = () => mode.value = ''
 
   const dehydrate = () => {
     return {
       settings: {
-        encumbrancePenalty: encumbrancePenalty.value,
+        mode: mode.value,
       },
     };
   };
 
   const hydrate = (hydrateStore: SettingsHydrate) => {
-    encumbrancePenalty.value = hydrateStore.settings.encumbrancePenalty || encumbrancePenalty.value;
+    mode.value = hydrateStore.settings.mode ?? mode.value;
   };
 
   return {
-    encumbrancePenalty,
+    mode,
+    setMode,
+    clearMode,
     dehydrate,
     hydrate,
   };

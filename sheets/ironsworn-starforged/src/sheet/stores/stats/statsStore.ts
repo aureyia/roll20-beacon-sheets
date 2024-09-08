@@ -1,7 +1,16 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import rollStat from '@/utility/rollStat';
-import { useCharacterStore } from '../character/characterStore';
+import { useCharacterStore } from '@/sheet/stores/character/characterStore';
+
+export interface Stats {
+  edge: number;
+  heart: number;
+  iron: number;
+  shadow: number;
+  wits: number;
+  [key: string]: number;
+}
 
 export type StatsHydrate = {
   stats: {

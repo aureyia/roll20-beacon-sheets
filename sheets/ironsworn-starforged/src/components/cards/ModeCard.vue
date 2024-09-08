@@ -1,0 +1,35 @@
+<script setup lang="ts">
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { useSettingsStore } from '@/sheet/stores/settings/settingsStore'
+import { useRouter } from 'vue-router'
+
+const settings = useSettingsStore()
+const router = useRouter()
+const selectMode = (mode: string) => {
+  settings.setMode(mode)
+  console.log('selectMode', mode)
+  router.push({ name: mode })
+}
+
+defineProps({
+  mode: String
+})
+</script>
+
+<template>
+  <div class="mode-card m-2">
+    <Card>
+      <CardHeader>
+        <CardTitle i18n="">{{ mode }}</CardTitle>
+        <CardDescription i18n="">{{ mode }}</CardDescription>
+      </CardHeader>
+      <CardContent i18n="">
+        {{ mode }} Image
+      </CardContent>
+      <CardFooter>
+        <Button variant="secondary" i18n="" @click="selectMode(mode)">Select</Button>
+      </CardFooter>
+    </Card>
+  </div>
+</template>

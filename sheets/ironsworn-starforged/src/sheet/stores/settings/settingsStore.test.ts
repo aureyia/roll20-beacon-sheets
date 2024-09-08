@@ -3,7 +3,7 @@ import { createPinia } from 'pinia';
 import { describe, it, expect } from 'vitest';
 
 describe('settingsStore', () => {
-  const defaultEncumbrancePenalty = -4;
+  const mode = 'character-standard';
   const pinia = createPinia();
   const store = useSettingsStore(pinia);
 
@@ -12,7 +12,7 @@ describe('settingsStore', () => {
 
     expect(store.dehydrate()).toEqual({
       settings: {
-        encumbrancePenalty: defaultEncumbrancePenalty,
+        mode: mode,
       },
     });
   });
@@ -23,14 +23,14 @@ describe('settingsStore', () => {
     expect(
       store.hydrate({
         settings: {
-          encumbrancePenalty: newEncumbrancePenalty,
+          mode: mode,
         },
       }),
     );
 
     expect(store.dehydrate()).toEqual({
       settings: {
-        encumbrancePenalty: newEncumbrancePenalty,
+        encumbrancePenalty: mode,
       },
     });
   });
