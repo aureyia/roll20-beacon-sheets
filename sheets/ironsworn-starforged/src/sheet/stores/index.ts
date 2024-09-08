@@ -6,8 +6,8 @@ import { useCharacterStore } from '@/sheet/stores/character/characterStore';
 import { useStatsStore } from '@/sheet/stores/stats/statsStore';
 import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
 import { useChronicleStore } from '@/sheet/stores/chronicle/chronicleStore';
-import { v4 as uuidv4 } from 'uuid';
-import { useBioStore } from '@/sheet/stores/bio/bioStore';
+import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
+import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 
 /*
  * This is the master store for the entire character sheet.
@@ -21,10 +21,11 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
   const stores = {
     meta: useMetaStore(),
     character: useCharacterStore(),
-    bio: useBioStore(),
     stats: useStatsStore(),
+    resources: useResourcesStore(),
     impacts: useImpactsStore(),
     chronicle: useChronicleStore(),
+    settings: useSettingsStore(),
   };
 
   const pageLoading = ref(false);
@@ -91,25 +92,13 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
     stores.meta.campaignId = campaignId;
   };
 
-  /*
-  DEV METHOD used to fill the sheet with a lot of data without affecting how the stores are initialized.
-  * Can invoke it from a button in the Settings tab.
-  * */
+  // /*
+  // DEV METHOD used to fill the sheet with a lot of data without affecting how the stores are initialized.
+  // * Can invoke it from a button in the Settings tab.
+  // * */
   const loadExampleData = () => {
     stores.meta.name = 'Auri';
     stores.meta.avatar = 'http://placekitten.com/200/200';
-    stores.stats.stats = {
-      edge: 1,
-      heart: 1,
-      iron: 2,
-      shadow: 2,
-      wits: 3,
-    };
-    stores.bio.friends = 'My Human';
-    stores.bio.enemies = 'Dogs';
-    stores.bio.looks = 'Smol';
-    stores.bio.species = 'Cat';
-    stores.bio.likes = 'Fish, yarn';
     stores.character.callsign = 'Swifty'
     stores.character.pronouns = 'She/Her'
     stores.character.health = 5;

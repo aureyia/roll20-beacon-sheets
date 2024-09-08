@@ -22,7 +22,8 @@
     "ci-check": "npm run format && npm run lint && npm run type-check && npm run test:unit && npm run test:e2e:local"
   },
   "dependencies": {
-    "@roll20-official/beacon-sdk": "^0.0.11",
+    "@roll20-official/beacon-sdk": "^0.0.13",
+    "@vueuse/core": "^11.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dataforged": "^1.5.3",
@@ -61,6 +62,7 @@
     "eslint-plugin-vue": "^9.9.0",
     "jsdom": "^21.1.0",
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.45",
     "prettier": "^2.8.4",
     "sass": "^1.62.1",
     "start-server-and-test": "^2.0.0",
