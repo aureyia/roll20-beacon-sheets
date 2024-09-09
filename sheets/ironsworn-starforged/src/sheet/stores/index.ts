@@ -101,11 +101,11 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
     stores.meta.avatar = 'http://placekitten.com/200/200';
     stores.character.callsign = 'Swifty'
     stores.character.pronouns = 'She/Her'
-    stores.character.health = 5;
-    stores.character.spirit = 5;
-    stores.character.supply = 5;
-    stores.character.currentXp = 0;
-    stores.character.spentXp = 0;
+    stores.resources.health = 5;
+    stores.resources.spirit = 5;
+    stores.resources.supply = 5;
+    stores.resources.xp = 0;
+    stores.resources.spentXp = 0;
   };
 
   return {

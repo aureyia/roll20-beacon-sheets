@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import rollStat from '@/utility/rollStat';
-import { useCharacterStore } from '@/sheet/stores/character/characterStore';
+import { useResourcesStore } from '../resources/resourcesStore';
 
-export interface Stats {
+export type Stats = {
   edge: number;
   heart: number;
   iron: number;
   shadow: number;
   wits: number;
-  [key: string]: number;
 }
 
 export type StatsHydrate = {
@@ -29,41 +28,37 @@ export const useStatsStore = defineStore('stats', () => {
   const shadow = ref(0);
   const wits = ref(0);
 
-  const stats = computed({
-    get() {
-      return {
+  const roll = async (stat: string, value: number, modifier: number = 0) => {
+    const { momentum } = useResourcesStore();
+    await rollStat(stat, value, momentum, modifier);
+  };
+
+  const dehydrate = () => {
+    return { 
+      stats: {
         edge: edge.value,
         heart: heart.value,
         iron: iron.value,
         shadow: shadow.value,
         wits: wits.value,
-      };
-    },
-    set(newStats) {
-      edge.value = newStats.edge ?? edge.value;
-      heart.value = newStats.heart ?? heart.value;
-      iron.value = newStats.iron ?? iron.value;
-      shadow.value = newStats.shadow ?? shadow.value;
-      wits.value = newStats.wits ?? wits.value;
-    },
-  });
-
-
-  const roll = async (stat: string, value: number, modifier: number = 0) => {
-    const { momentum } = useCharacterStore();
-    await rollStat(stat, value, momentum, modifier);
-  };
-
-  const dehydrate = () => {
-    return { stats: stats.value };
+      }
+    };
   };
 
   const hydrate = (hydrateStore: StatsHydrate) => {
-    stats.value = hydrateStore.stats;
+    edge.value = hydrateStore.stats.edge ?? edge.value;
+    heart.value = hydrateStore.stats.heart ?? heart.value;
+    iron.value = hydrateStore.stats.iron ?? iron.value;
+    shadow.value = hydrateStore.stats.shadow ?? shadow.value;
+    wits.value = hydrateStore.stats.wits ?? wits.value;
   };
 
   return {
-    stats,
+    edge,
+    heart,
+    iron,
+    shadow,
+    wits,
     roll,
     dehydrate,
     hydrate,

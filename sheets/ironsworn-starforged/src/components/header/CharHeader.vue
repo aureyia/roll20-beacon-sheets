@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button';
 </script>
 
 <template>
-  <div class="header flex justify-between fixed top-0 left-0 right-0 py-1 text-center bg-slate-700 width-full">
-    <div>
-      <Button>Vows</Button>
+  <div class="header flex justify-between fixed top-0 left-0 right-0 py-2 text-center bg-slate-800 width-full">
+    <div class="button-container basis-1/4 flex justify-start ml-4">
+      <Button class="text-white bg-slate-600 drop-shadow p-2 hover:bg-slate-700 w-20">Vows</Button>
     </div>
     <StandardNav />
-    <div>
-      <Button>Assets</Button>
+    <div class="button-container basis-1/4 flex justify-end mr-4">
+      <Button class="text-white bg-slate-600 drop-shadow p-2 hover:bg-slate-700 w-20">Assets</Button>
     </div>
   </div>
 </template>

@@ -18,7 +18,7 @@ import {
   onDragOver,
 } from './handlers/handlers';
 import { reactive, ref, watch, nextTick, type Ref, type App, shallowRef } from 'vue';
-import { v4 as uuidv4 } from 'uuid';
+import { createId } from '@paralleldrive/cuid2'
 import { getBio } from '@/relay/handlers/computed';
 
 /* 
@@ -93,7 +93,7 @@ export const blockUpdate = ref(false);
 export const dispatchRef = shallowRef();
 export const dropUpdate: Ref<Dispatch> = ref({} as Dispatch);
 export const settingsSheet = ref(false);
-const sheetId = ref(uuidv4());
+const sheetId = ref(createId());
 
 /*
 This is the function that is called when the character data is updated.

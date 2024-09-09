@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { v4 as uuidv4 } from 'uuid';
+import { createId } from '@paralleldrive/cuid2'
 import { arrayToObject, objectToArray } from '@/utility/objectify';
 
 export type ChronicleEntrySubmission = {
@@ -28,7 +28,7 @@ export const useChronicleStore = defineStore('chronicle', () => {
 
   const addChronicleEntry = (submisson: ChronicleEntrySubmission) => {
     chronicle.value.push({
-      _id: uuidv4(),
+      _id: createId(),
       date: new Date(),
       ...submisson
     })
