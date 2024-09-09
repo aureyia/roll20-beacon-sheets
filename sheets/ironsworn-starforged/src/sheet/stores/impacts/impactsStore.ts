@@ -1,33 +1,9 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { v4 as uuidv4 } from 'uuid';
+import { createId } from '@paralleldrive/cuid2'
 import { arrayToObject, objectToArray } from '@/utility/objectify';
-
-export type Impact = {
-  _id: string
-  category: 'misfortunes' | 'lastingEffects' | 'burdens' | 'currentVehicle' | 'other'
-  description?: string
-}
-
-export type Misfortune = Impact & {
-  name: 'wounded' | 'shaken' | 'unprepared';
-}
-export type LastingEffect = Impact & {
-  name: 'permanently harmed' | 'traumatized'
-}
-export type Burden = Impact & {
-  name: 'doomed' | 'tormented' | 'indebted'
-}
-export type CurrentVehicle = Impact & {
-  name: 'battered' | 'cursed'
-}
-
-export type Other = Impact & {
-  name: string
-}
-
-export type AnyImpact = Misfortune | LastingEffect | Burden | CurrentVehicle | Other
+import type { AnyImpact, Burden, CurrentVehicle, LastingEffect, Misfortune, Other } from '@/system/impacts';
 
 export type ImpactsHydrate = {
   impacts: {
@@ -55,7 +31,7 @@ export const useImpactsStore = defineStore('impacts', () => {
       throw new Error('Option is required when adding an impact')
     }
     const impact :AnyImpact = {
-      _id: uuidv4(),
+      _id: createId(),
       category: category,
       name: name,
       description: description || ''
@@ -83,34 +59,42 @@ export const useImpactsStore = defineStore('impacts', () => {
     }
   }
 
-  const removeImpact = (name :AnyImpact['name'], category: AnyImpact['category']) => {
-    if (!category) {
-      throw new Error('Category is required when adding an impact')
+  const removeImpact = (impact :AnyImpact) => {
+    if (!impact.category) {
+      throw new Error('Category is required when removing an impact')
     }
-    if (!name) {
-      throw new Error('Option is required when adding an impact')
+    if (!impact._id) {
+      throw new Error('_id is required when removing an impact')
     }
-    if (!['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(category)) {
-      throw new Error(`Unknown category: ${category}`)
+    if (!['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(impact.category)) {
+      throw new Error(`Unknown category: ${impact.category}`)
     }
 
-    switch (category) {
+    switch (impact.category) {
       case 'misfortunes':
-        misfortunes.value = misfortunes.value.filter(entry => entry.name !== name)
+        misfortunes.value = misfortunes.value.filter(entry => entry.name !== impact.name)
         break
       case 'lastingEffects':
-        lastingEffects.value = lastingEffects.value.filter(entry => entry.name !== name)
+        lastingEffects.value = lastingEffects.value.filter(entry => entry.name !== impact.name)
         break
       case 'burdens':
-        burdens.value = burdens.value.filter(entry => entry.name !== name)
+        burdens.value = burdens.value.filter(entry => entry.name !== impact.name)
         break
       case 'currentVehicle':
-        currentVehicle.value = currentVehicle.value.filter(entry => entry.name !== name)
+        currentVehicle.value = currentVehicle.value.filter(entry => entry.name !== impact.name)
         break
       case 'other':
-        other.value = other.value.filter(entry => entry.name !== name)
+        other.value = other.value.filter(entry => entry.name !== impact.name)
         break
     }
+  }
+
+  const clearImpacts = () => {
+    misfortunes.value = []
+    lastingEffects.value = []
+    burdens.value = []
+    currentVehicle.value = []
+    other.value = []
   }
 
   const dehydrate = () => {
@@ -152,6 +136,7 @@ export const useImpactsStore = defineStore('impacts', () => {
     other,
     addImpact,
     removeImpact,
+    clearImpacts,
     dehydrate,
     hydrate,
   };

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CharHeader from '@/components/header/CharHeader.vue';
+import CharFooter from '@/components/footer/CharFooter.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
@@ -15,7 +16,5 @@ router.push({ path: '/summary' })
       </transition>
     </router-view>
   </div>
-  <div class="footer fixed bottom-0 left-0 right-0 py-2 text-center bg-slate-700 width-full">
-    Nom
-  </div>
+  <CharFooter />
 </template>

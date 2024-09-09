@@ -15,15 +15,16 @@ const navList = {
   assets: '/assets',
   connections: '/connections'
 }
-
-// v-for="item in Object.keys(navList)
-
 </script>
 
 <template>
-  <NavigationMenu>
-    <NavigationMenuList>
-      <NavigationMenuItem v-for="(item, key) in navList" :key="key" class="nav-item m-2">
+  <NavigationMenu class="ml-11">
+    <NavigationMenuList class="flex gap-3">
+      <NavigationMenuItem 
+        v-for="(item, key) in navList" 
+        :key="key" 
+        class="rounded nav-item hover:bg-slate-600 height-full cursor-pointer px-2 py-1"
+      >
         <NavigationMenuLink @click="() => $router.push({ path: item})"> {{ key }}</NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>
