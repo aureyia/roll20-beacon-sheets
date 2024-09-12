@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useStarforgedSheetStore } from '@/sheet/stores';
 import { useRouter } from 'vue-router';
+import DarkModeSwitch from './components/switches/DarkModeSwitch.vue';
 
 // TODO: Remove after testing
 import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
@@ -19,6 +20,7 @@ router.push({ name: settings.mode ?? 'root' })
 <template>
   <Button variant="secondary" i18n="" @click="clear">Reset</Button>
   <div>{{ settings.mode }}</div>
+  <DarkModeSwitch />
   <div class="starforged">
     <router-view />
   </div>

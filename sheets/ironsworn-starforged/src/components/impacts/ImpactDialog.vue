@@ -72,7 +72,7 @@ const onSubmit = form.handleSubmit((values) => {
   <div class="impact-dialog">
     <Dialog>
       <DialogTrigger as-child>
-        <Button class="w-20" variant="secondary">Add</Button>
+        <Button class="w-20">Add</Button>
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px]">
         <form @submit="onSubmit">

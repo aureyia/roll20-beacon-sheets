@@ -8,7 +8,7 @@ import { NavigationMenu } from '@/components/ui/navigation-menu';
     <NavigationMenu />
   </div>
   <div class="main">
-
+    
   </div>
   <div class="footer">
     
