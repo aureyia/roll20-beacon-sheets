@@ -19,7 +19,7 @@ const model = defineModel<string | number>({ required: true })
 <template>
   <div class="labelled-input">
     <span class="mr-2 text-lg">{{ label }}</span>
-    <Input class="bg-slate-900" :type="type" v-model="model" />
+    <Input class="bg-input" :type="type" v-model="model" />
   </div>
 </template>
 

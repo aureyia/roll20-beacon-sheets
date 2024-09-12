@@ -23,7 +23,7 @@ const navList = {
       <NavigationMenuItem 
         v-for="(item, key) in navList" 
         :key="key" 
-        class="rounded nav-item hover:bg-slate-600 height-full cursor-pointer px-2 py-1"
+        class="rounded nav-item height-full cursor-pointer px-2 py-1 hover:bg-muted-accent"
       >
         <NavigationMenuLink @click="() => $router.push({ path: item})"> {{ key }}</NavigationMenuLink>
       </NavigationMenuItem>

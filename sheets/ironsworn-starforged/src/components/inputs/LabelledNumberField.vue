@@ -22,6 +22,9 @@ defineProps({
   },
   max: {
     type: Number
+  },
+  inputModifier: {
+    type: String
   }
 })
 
@@ -32,10 +35,10 @@ const model = defineModel<number>({ required: true })
 <template>
   <div class="labelled-input">
     <div>{{ label }}</div>
-    <NumberField v-model="model" class="ml-2 w-28">
+    <NumberField v-model="model" class="ml-2 w-28" :min="min" :max="max">
       <NumberFieldContent>
         <NumberFieldDecrement />
-        <NumberFieldInput class="bg-slate-900"/>
+        <NumberFieldInput class="bg-input" :class="inputModifier" />
         <NumberFieldIncrement />
       </NumberFieldContent>
     </NumberField>

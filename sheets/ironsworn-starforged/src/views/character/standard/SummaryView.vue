@@ -70,6 +70,7 @@ const statList = ['edge', 'heart', 'iron', 'shadow', 'wits'];
         :key="stat"
         :label="stat"
         v-model="stats[stat as keyof Stats]"
+        input-modifier="py-12 font-bold text-2xl"
       />
     </div>
     <div class="stats flex justify-center gap-5 mt-10" v-else>
@@ -78,11 +79,12 @@ const statList = ['edge', 'heart', 'iron', 'shadow', 'wits'];
         :key="stat"
         :name="stat"
         :stat="stats[stat as keyof Stats]"
+        number-style="text-3xl"
       />
     </div>
     <div class="impacts mt-10">
       <div class="impacts-header flex justify-center gap-10 items-center">
-        <Toggle class= "hover:text-white bg-secondary hover:bg-secondary/80 data-[state=on]:bg-red-900" v-model:pressed="toggleImpactRemoval">Remove</Toggle>
+        <Toggle class= "text-primary-foreground hover:text-primary-foreground bg-primary hover:bg-primary/90 data-[state=on]:bg-destructive" v-model:pressed="toggleImpactRemoval">Remove</Toggle>
         <h3 class="text-2xl">Impacts</h3>
         <ImpactDialog />
       </div>

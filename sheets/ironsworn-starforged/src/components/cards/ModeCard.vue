@@ -13,7 +13,10 @@ const selectMode = (mode: string) => {
 }
 
 defineProps({
-  mode: String
+  mode: {
+    type: String,
+    required: true
+  }
 })
 </script>
 
@@ -21,14 +24,12 @@ defineProps({
   <div class="mode-card m-2">
     <Card>
       <CardHeader>
-        <CardTitle i18n="">{{ mode }}</CardTitle>
-        <CardDescription i18n="">{{ mode }}</CardDescription>
+        <CardTitle i18n="mode-card-character-standard-title">{{ mode }}</CardTitle>
+        <CardDescription i18n="mode-card-character-standard-description">{{ mode }}</CardDescription>
       </CardHeader>
-      <CardContent i18n="">
-        {{ mode }} Image
-      </CardContent>
+      <CardContent i18n="">{{ mode }} image</CardContent>
       <CardFooter>
-        <Button variant="secondary" i18n="" @click="selectMode(mode)">Select</Button>
+        <Button i18n="button-text-select" @click="selectMode(mode)">Select</Button>
       </CardFooter>
     </Card>
   </div>

@@ -12,18 +12,21 @@ defineProps({
   stat: {
     type: Number,
     required: true
+  },
+  numberStyle: {
+    type: String
   }
 })
 
 </script>
 
 <template>
-  <div class="mode-card min-w-36 text-center">
-    <Card @click="stats.roll(name, stat)" class="cursor-pointer drop-shadow shadow bg-slate-900 hover:bg-slate-800">
+  <div class="mode-card min-w-44 text-center">
+    <Card @click="stats.roll(name, stat)" class="cursor-pointer uppercase drop-shadow shadow bg-muted hover:bg-muted-accent">
       <CardHeader>
         <CardTitle i18n="">{{ name }}</CardTitle>
       </CardHeader>
-      <CardContent i18n="">{{ stat }}</CardContent>
+      <CardContent i18n="" :class="numberStyle">{{ stat }}</CardContent>
     </Card>
   </div>
 </template>
