@@ -3,11 +3,13 @@ import handlebars from 'handlebars';
 // @ts-ignore
 import statRollTemplate from './templates/statRoll.hbs?raw';
 // @ts-ignore
+import taskRollTemplate from './templates/taskRoll.hbs?raw';
+// @ts-ignore
 import rollComponents from './partials/rollComponents.hbs?raw';
 // @ts-ignore
 import wrapper from './partials/wrapper.hbs?raw';
 // @ts-ignore
-import actionHeader from './partials/actionHeader.hbs?raw';
+import characterRollHeader from './partials/characterRollHeader.hbs?raw';
 // @ts-ignore
 import actionScore from './partials/actionScore.hbs?raw';
 // @ts-ignore
@@ -45,7 +47,7 @@ handlebars.registerPartial('wrapper', wrapper);
 handlebars.registerPartial('rollComponents', rollComponents);
 
 // Starforged handlebars HTML partials
-handlebars.registerPartial('actionHeader', actionHeader);
+handlebars.registerPartial('characterRollHeader', characterRollHeader);
 handlebars.registerPartial('actionScore', actionScore);
 handlebars.registerPartial('rollOutcome', rollOutcome);
 handlebars.registerPartial('challengeDice', challengeDice);
@@ -85,6 +87,7 @@ handlebars.registerHelper('getActionDie', getActionDie);
 
 const rollTemplates = {
   stat: handlebars.compile(statRollTemplate),
+  task: handlebars.compile(taskRollTemplate),
 };
 
 // This corresponds to the data returned by Beacon when you ask it to roll dice for you.
@@ -125,7 +128,15 @@ export type RollStat = {
   };
 };
 
-export type AnyRollTemplate = RollStat;
+export type RollTask = {
+  type: 'task';
+  parameters: CommonParameters & {
+    dice: DiceComponent[];
+    progress: number;
+  }
+}
+
+export type AnyRollTemplate = RollStat | RollTask;
 
 // Returns the final HTML for a given template using all the required data.
 export const createRollTemplate = ({ type, parameters }: AnyRollTemplate) => {

@@ -24,8 +24,15 @@ const nom = ref(0)
 </script>
 
 <template>
-  <div class="progress-track">
+  <div class="progress-track flex justify-between gap-2">
+    <div class="progress-box gap-2 flex items-center">
+      <Button variant="outline" class="h-8 border-primary border-2 font-bold">Mark</Button>
+      <Button variant="outline" class="h-8 border-primary border-2 font-bold">Clear</Button>
+    </div>
     <ProgressBox v-for="n in boxNumber" :key="n" />
+    <div class="progress-box flex items-center">
+      <Button variant="outline" class="h-8 border-primary border-2 font-bold w-20">Fulfill</Button>
+    </div>
   </div>
 </template>
 

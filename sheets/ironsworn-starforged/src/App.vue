@@ -18,10 +18,9 @@ router.push({ name: settings.mode ?? 'root' })
 </script>
 
 <template>
-  <Button variant="secondary" i18n="" @click="clear">Reset</Button>
-  <div>{{ settings.mode }}</div>
-  <DarkModeSwitch />
-  <div class="starforged">
+  <!-- <Button variant="secondary" i18n="" @click="clear">Reset</Button> -->
+  <!-- <div>{{ settings.mode }}</div> -->
+  <div class="starforged mt-20">
     <router-view />
   </div>
 </template>

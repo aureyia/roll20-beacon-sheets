@@ -11,14 +11,14 @@
         {{/if}}
         {{#if (isMatching outcome 'weak-hit')}}
             <div class="roll-outcome__col-2">
-                {{#if (isGreaterOrEqual (getChallengeDie dice 1) actionScore)}}
+                {{#if (isGreaterOrEqual (getChallengeDie dice 1) score)}}
                     {{> failBg}}
                 {{else}}
                     {{> successBg}}
                 {{/if}}
             </div>
             <div class="roll-outcome__col-3">
-                {{#if (isGreaterOrEqual (getChallengeDie dice 2) actionScore)}}
+                {{#if (isGreaterOrEqual (getChallengeDie dice 2) score)}}
                     {{> failBg}}
                 {{else}}
                     {{> successBg}}

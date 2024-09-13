@@ -22,9 +22,13 @@
     --popover-foreground: 0 0% 3.9%;
  
     /* 50 - neutral */
-    --card: 0 0% 98%;
+    --card: 0 0% 96.1%;
+    /* 200 - neutral */
+    --card-input: 0 0% 14.9%;
     /* 950 - neutral */
     --card-foreground: 0 0% 3.9%;
+    /* 200 - neutral */
+    --card-button: 0, 0, 90%;
  
     /* 300 - neutral */
     --border: 0 0% 89.8%;
@@ -35,7 +39,7 @@
     --primary: 0 0% 9%;
     /* 100 - neutral */
     --primary-foreground: 0 0% 98%;
-    /* 100 - neutral */
+    /* 400 - neutral */
     --primary-accent: 0 0% 63.9%;
  
     /* 100 - neutral */
@@ -60,16 +64,16 @@
   }
  
   .dark {
+    /* 900 - neutral */
+    --background: 0 0% 9%;
     /* 100 - neutral */
-    --background: 0 0% 3.9%;
-    /* 950 - neutral */
     --foreground: 0 0% 98%;
  
-    /* 200 - neutral */
-    --muted: 0 0% 14.9%;
     /* 800 - neutral */
+    --muted: 0 0% 14.9%;
+    /* 400 - neutral */
     --muted-foreground: 0 0% 63.9%;
-    /* 700 - neutral */
+    /* 900 - neutral */
     --muted-accent: 0 0% 9%;
  
     /* 950 - neutral */
@@ -77,12 +81,15 @@
     /* 100 - neutral */
     --popover-foreground: 0 0% 98%;
  
+    --card: 0 0% 14.9%;
     /* 950 - neutral */
-    --card: 0 0% 3.9%;
+    --card-input: 0 0% 3.9%;
     /* 100 - neutral */
     --card-foreground: 0 0% 98%;
+    /* 700 - neutral */
+    --card-button: 0, 0, 25%;
  
-    /* 200 - neutral */
+    /* 800 - neutral */
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --banner: 0 0% 14.9%;
@@ -92,12 +99,12 @@
     /* 900 - neutral */
     --primary-foreground: 0 0% 9%;
  
-    /* 200 - neutral */
+    /* 800 - neutral */
     --secondary: 0 0% 14.9%;
     /* 100 - neutral */
     --secondary-foreground: 0 0% 98%;
  
-    /* 200 - neutral */
+    /* 800 - neutral */
     --accent: 0 0% 14.9%;
     /* 100 - neutral */
     --accent-foreground: 0 0% 98%;

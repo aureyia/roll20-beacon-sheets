@@ -1,7 +1,7 @@
 import type { DiceComponent } from '../rolltemplates';
 
 export const calculateOutcome = (
-  actionScore: number,
+  score: number,
   dice: DiceComponent[],
 ) :string => {
 
@@ -15,17 +15,17 @@ export const calculateOutcome = (
   }
 
   if (challengeDie1 === challengeDie2) {
-    if (actionScore > challengeDie1) {
+    if (score > challengeDie1) {
       return 'opportunity';
-    } else if (actionScore <= challengeDie1) {
+    } else if (score <= challengeDie1) {
       return 'complication';
     } else {
       throw new Error('Challenge dice not found');
     }
   } else {
-    if (actionScore > challengeDie1 && actionScore > challengeDie2) {
+    if (score > challengeDie1 && score > challengeDie2) {
       return 'strong-hit';
-    } else if (actionScore > challengeDie1 || actionScore > challengeDie2) {
+    } else if (score > challengeDie1 || score > challengeDie2) {
       return 'weak-hit';
     } else {
       return 'miss';
