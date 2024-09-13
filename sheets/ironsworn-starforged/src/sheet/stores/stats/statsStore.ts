@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import rollStat from '@/utility/rollStat';
 import { useResourcesStore } from '../resources/resourcesStore';
+import { createRollTemplate } from '@/rolltemplates/rolltemplates';
+import { dispatchRef, initValues } from '@/relay/relay';
+import type { Dispatch } from '@roll20-official/beacon-sdk';
+import getRollResult from '@/utility/getRollResult';
+import { actionDice } from '@/system/dice';
 
 export type Stats = {
   edge: number;
@@ -28,9 +32,43 @@ export const useStatsStore = defineStore('stats', () => {
   const shadow = ref(0);
   const wits = ref(0);
 
-  const roll = async (stat: string, value: number, modifier: number = 0) => {
+  /**
+   * Rolls a stat and posts the result to the chat log.
+   *
+   * @param label The label to display for the stat.
+   * @param value The value of the stat to roll.
+   * @param modifier The modifier to apply to the roll.
+   * @param customDispatch The dispatch function to use to post the roll template. If not provided, the default dispatch function will be used.
+   * @returns The result of the roll as an array of dice results.
+   */
+  const roll = async (label: string, value: number, modifier: number = 0, customDispatch?: Dispatch) => {
+    const dispatch = customDispatch || (dispatchRef.value as Dispatch);
     const { momentum } = useResourcesStore();
-    await rollStat(stat, value, momentum, modifier);
+    const { dice } = await getRollResult(actionDice, dispatch);
+
+    const rollTemplate = createRollTemplate({
+      type: 'stat',
+      parameters: {
+        characterName: initValues.character.name,
+        title: 'Rolling ' + label,
+        dice,
+        label,
+        value,
+        momentum,
+        modifier
+      }
+    });
+
+    await dispatch.post({
+      characterId: initValues.character.id,
+      content: rollTemplate,
+      options: {
+        whisper: undefined,
+        secret: undefined,
+      },
+    });
+
+    return dice;
   };
 
   const dehydrate = () => {
