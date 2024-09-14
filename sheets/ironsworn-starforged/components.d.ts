@@ -76,6 +76,7 @@ declare module 'vue' {
     ProgressBox: typeof import('./src/components/progress/ProgressBox.vue')['default']
     ProgressBoxList: typeof import('./src/components/progress/ProgressBoxList.vue')['default']
     ProgressCard: typeof import('./src/components/progress/ProgressCard.vue')['default']
+    ProgressDialog: typeof import('./src/components/progress/ProgressDialog.vue')['default']
     ProgressTrack: typeof import('./src/components/progress/ProgressTrack.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

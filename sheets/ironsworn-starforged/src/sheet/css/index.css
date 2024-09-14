@@ -23,8 +23,8 @@
  
     /* 50 - neutral */
     --card: 0 0% 96.1%;
-    /* 200 - neutral */
-    --card-input: 0 0% 14.9%;
+    /* 300 - neutral */
+    --card-input: 0 0% 83%;
     /* 950 - neutral */
     --card-foreground: 0 0% 3.9%;
     /* 200 - neutral */
@@ -83,11 +83,11 @@
  
     --card: 0 0% 14.9%;
     /* 950 - neutral */
-    --card-input: 0 0% 3.9%;
+    --card-input: 0 0% 14.9%;
     /* 100 - neutral */
     --card-foreground: 0 0% 98%;
     /* 700 - neutral */
-    --card-button: 0, 0, 25%;
+    --card-button: 0 0 25%;
  
     /* 800 - neutral */
     --border: 0 0% 14.9%;

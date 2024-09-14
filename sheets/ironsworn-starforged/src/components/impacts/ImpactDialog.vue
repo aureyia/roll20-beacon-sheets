@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
-
 import { Button } from '@/components/ui/button';
 import {
   FormControl,
@@ -14,7 +13,6 @@ import {
   FormMessage,
   Form,
 } from '@/components/ui/form';
-
 import {
   Select,
   SelectContent,
@@ -24,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import {
@@ -36,7 +33,6 @@ import {
   Dialog,
   DialogFooter,
 } from '@/components/ui/dialog';
-
 import { IMPACTS, AnyImpact } from '@/system/impacts';
 import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
 
