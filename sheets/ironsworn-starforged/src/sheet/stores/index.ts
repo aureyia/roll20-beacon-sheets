@@ -8,6 +8,7 @@ import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
 import { useChronicleStore } from '@/sheet/stores/chronicle/chronicleStore';
 import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
+import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
 
 /*
  * This is the master store for the entire character sheet.
@@ -26,6 +27,7 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
     impacts: useImpactsStore(),
     chronicle: useChronicleStore(),
     settings: useSettingsStore(),
+    tasks: useTaskStore(),
   };
 
   const pageLoading = ref(false);

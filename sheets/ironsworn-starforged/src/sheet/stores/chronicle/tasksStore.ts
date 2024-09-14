@@ -10,63 +10,46 @@ import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { taskDice } from '@/system/dice';
 import { createRollTemplate } from '@/rolltemplates/rolltemplates';
 
-export type Difficulty = 'troublesome' | 'dangerous' | 'formidable' | 'extreme' | 'epic'
-export type TaskCategory = 'vow' | 'generic' | 'challenge'
-export type TaskStatus = 'active' | 'completed' | 'failed' | 'abandoned'
-export type Countdown = 0 | 1 | 2 | 3 | 4
 export type ProgressRange = LimitedRange<0, 40>
-
-interface Task {
+export type Task = {
   _id: string
   description: string
-  type: TaskCategory
+  category: TaskCategory
   progress: number
   difficulty: Difficulty
   status: TaskStatus
   countdown?: Countdown
 }
 
-interface taskHydrate {
-  tasks: Task[]
-};
+export type Vow = Omit<Task, 'countdown'>
+export type GenericTask = Omit<Task, 'countdown'>
+export type Difficulty = 'troublesome' | 'dangerous' | 'formidable' | 'extreme' | 'epic'
+export type TaskCategory = 'vow' | 'generic' | 'challenge'
+export type TaskStatus = 'active' | 'completed' | 'failed' | 'abandoned'
+export type Countdown = 0 | 1 | 2 | 3 | 4
 
+type taskHydrate = { tasks: Task[] };
 export const useTaskStore = defineStore('task', () => {
 
   const tasks: Ref<Array<Task>> = ref([]);
 
-  const addTask = () => {
-
+  const addTask = (description: string, category: TaskCategory, difficulty: Difficulty) => {
+    tasks.value.push({ _id: createId(), description, category, progress: 0, difficulty, status: 'active' })
   }
 
-//   const updatedTasks = tasks.value.map((task :Task) => {
-//     if (task._id === id) {
-//       let newProgress
-//       switch (task.difficulty) {
-//         case 'troublesome':
-//           newProgress = (task.progress + 12 > 40) ? 40 : task.progress + 12 
-//           break
-//         case 'dangerous':
-//           newProgress = (task.progress + 8 > 40) ? 40 : task.progress + 8
-//           break
-//         case 'formidable':
-//           newProgress = (task.progress + 4 > 40) ? 40 : task.progress + 4
-//           break
-//         case 'extreme':
-//           newProgress = (task.progress + 2 > 40) ? 40 : task.progress + 2
-//           break
-//         case 'epic':
-//           newProgress = (task.progress + 1 > 40) ? 40 : task.progress + 1
-//           break
-//         default:
-//           throw new Error('Invalid difficulty')
-//       }
-//       task.progress = newProgress
-//       return task
-//     }
-//     return task
-//   })
-//   tasks.value = updatedTasks
-// }
+  const removeTask = (id: string) => {
+    console.log('Removing task', id)
+    tasks.value = tasks.value.filter((task: Task) => task._id !== id)
+  }
+
+  const updateDifficulty = (id: string, difficulty: Difficulty) => {
+    tasks.value = tasks.value.map((task: Task) => {
+      if (task._id === id) {
+        task.difficulty = difficulty
+      }
+      return task
+    })
+  }
 
   /**
    * Increase the progress of a task by the corresponding amount based on its difficulty.
@@ -97,7 +80,7 @@ export const useTaskStore = defineStore('task', () => {
       type: 'task',
       parameters: {
         characterName: initValues.character.name,
-        title: 'Rolling ' + task?.type,
+        title: 'Rolling ' + task?.category,
         dice,
         progress: calculatedProgress,
       }
@@ -127,6 +110,9 @@ export const useTaskStore = defineStore('task', () => {
 
   return {
     tasks,
+    updateDifficulty,
+    removeTask,
+    addTask,
     roll,
     markProgress,
     dehydrate,

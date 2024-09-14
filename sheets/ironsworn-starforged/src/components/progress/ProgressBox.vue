@@ -1,24 +1,18 @@
 <script setup lang="ts">
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useTaskStore } from '@/sheet/stores/chronicle/progressStore';
 import { ref } from 'vue';
 
-const INPUTS = ['0', '1', '2', '3', '4']
-
-const taskStore = useTaskStore()
+const INPUTS = ['0', '1', '2', '3', '4'] as const
 const progress = ref('0')
-
-const 
-
 
 // TODO: Integrate Store
 
 </script>
 
 <template>
-  <div class="progress-input-holder w-16 h-16 relative">
-    <Select v-model="progress" @update:model-value="" class="w-16 h-16 absolute top-0 left-0">
-      <SelectTrigger class="w-16 h-16 ">
+  <div class="progress-input-holder w-14 h-14 relative">
+    <Select v-model="progress" @update:model-value="" class="w-14 h-14 absolute top-0 left-0">
+      <SelectTrigger class="w-14 h-14 ">
         <SelectValue/>
       </SelectTrigger>
       <SelectContent class="min-w-20">
