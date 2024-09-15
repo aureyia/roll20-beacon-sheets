@@ -4,7 +4,7 @@
   "private": true,
   "engineStrict": true,
   "engines": {
-    "node": "^20"
+    "node": "^21"
   },
   "scripts": {
     "cypress:open:local": "CONFIG_FILE=local CYPRESS_ENV=true cypress open",
@@ -34,5 +34,8 @@
     "e2e": {
       "stepDefinitions": "support/step_definitions/index.steps.js"
     }
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5"
   }
 }

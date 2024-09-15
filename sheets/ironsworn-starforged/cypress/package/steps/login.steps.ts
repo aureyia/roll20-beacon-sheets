@@ -1,5 +1,5 @@
-const { Given, When, Then } = require('@badeball/cypress-cucumber-preprocessor')
-const AuthPage = require('../pages/auth.page')
+import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
+import AuthPage from '../pages/auth.page'
 
 Given(/^a user is on the "([^"]*)" page$/, (page) => {
   if (page === 'auth') {
