@@ -1,11 +1,11 @@
-const preprocessor = require('@badeball/cypress-cucumber-preprocessor')
-const webpack = require('@cypress/webpack-preprocessor')
-const { allureCypress } = require('allure-cypress/reporter')
+import preprocessor from '@badeball/cypress-cucumber-preprocessor'
+import webpack from '@cypress/webpack-preprocessor'
+import { allureCypress } from 'allure-cypress/reporter'
 const envFile = require(`./config/${
   process.env['CONFIG_FILE'] || 'staging'
 }.js`)
 
-module.exports = {
+export default {
   chromeWebSecurity: false,
   defaultCommandTimeout: 15000,
   video: true,
