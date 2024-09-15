@@ -1,6 +1,0 @@
-{
-  "name": "@roll20-tests/ironsworn-starforged",
-  "version": "1.0.0",
-  "description": "Cucumber Step Definitions and Page Objects for Example",
-  "main": "index.js"
-}
