@@ -24,5 +24,9 @@ module.exports = {
   },
   rules: {
     'vue/no-mutating-props': 'off'
+  },
+  globals: {
+    cy: 'writeable',
+    Cypress: 'writeable'
   }
 }
