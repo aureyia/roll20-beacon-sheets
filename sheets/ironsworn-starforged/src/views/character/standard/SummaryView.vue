@@ -12,6 +12,7 @@ import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { Toggle } from '@/components/ui/toggle/index';
 import { ref } from 'vue';
 import { IMPACTS } from '@/system/impacts';
+import { STAT_LIST } from '@/system/stats';
 
 import { ImpactDialog } from '@/components/impacts';
 
@@ -22,8 +23,6 @@ const resources = useResourcesStore();
 
 const toggleStatsEdit = ref(false);
 const toggleImpactRemoval = ref(false);
-
-const statList = ['edge', 'heart', 'iron', 'shadow', 'wits'];
 </script>
 
 <template>
@@ -66,7 +65,7 @@ const statList = ['edge', 'heart', 'iron', 'shadow', 'wits'];
     <div class="stats flex justify-center gap-5 mt-10" v-if="toggleStatsEdit">
       <LabelledNumberField
         class="text-center"
-        v-for="stat in statList"
+        v-for="stat in STAT_LIST"
         :key="stat"
         :label="stat"
         v-model="stats[stat as keyof Stats]"
@@ -75,7 +74,7 @@ const statList = ['edge', 'heart', 'iron', 'shadow', 'wits'];
     </div>
     <div class="stats flex justify-center gap-5 mt-10" v-else>
       <StatCard
-        v-for="stat in statList"
+        v-for="stat in STAT_LIST"
         :key="stat"
         :name="stat"
         :stat="stats[stat as keyof Stats]"

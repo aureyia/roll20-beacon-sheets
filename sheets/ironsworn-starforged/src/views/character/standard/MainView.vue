@@ -11,10 +11,25 @@ router.push({ path: '/summary' })
   <CharHeader />
   <div class="main">
     <router-view v-slot="{ Component }">
-      <transition name="fade">
+      <Transition name="fade">
         <component :is="Component" />
-      </transition>
+      </Transition>
     </router-view>
   </div>
   <CharFooter />
 </template>
+
+<style lang="sass" scoped>
+.fade-enter-active
+  transition: opacity 0.7s ease
+  height: 0
+
+.fade-leave-active
+  height: 0
+
+.fade-leave-to,
+.fade-enter-from
+  opacity: 0
+  height: 0
+
+</style>

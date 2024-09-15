@@ -1,17 +1,31 @@
 <script setup lang="ts">
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
 
 const INPUTS = ['0', '1', '2', '3', '4'] as const
-const progress = ref('0')
+const props = defineProps({ id: String, ticks: String })
+const selectedValue = ref(props.ticks)
+const taskStore = useTaskStore()
 
-// TODO: Integrate Store
+const differenceOf = (a: string) => (b: string) => parseInt(b) - parseInt(a)
+const progressUpdate = (id: string, value: string) => {
+  parseInt(props.ticks as string) !== parseInt(value) 
+    ? taskStore.manualProgressUpdate(id, differenceOf(props.ticks as string)(value)) 
+    : null
+
+  selectedValue.value !== props.ticks ? selectedValue.value = props.ticks : selectedValue.value
+}
+
+watch(() => props.ticks, (newValue) => {
+  selectedValue.value = newValue
+})
 
 </script>
 
 <template>
   <div class="progress-input-holder w-14 h-14 relative">
-    <Select v-model="progress" @update:model-value="" class="w-14 h-14 absolute top-0 left-0">
+    <Select v-model="selectedValue" @update:model-value="progressUpdate(props.id as string, $event)" class="w-14 h-14 absolute top-0 left-0">
       <SelectTrigger class="w-14 h-14 ">
         <SelectValue/>
       </SelectTrigger>
@@ -23,7 +37,7 @@ const progress = ref('0')
     </Select>
     <span 
       class="bg-muted border-2 rounded border-primary absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
-      :value="progress"
+      :value="selectedValue"
     ></span> 
   </div>
 </template>

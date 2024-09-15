@@ -24,7 +24,7 @@ export type Task = {
 export type Vow = Omit<Task, 'countdown'>
 export type GenericTask = Omit<Task, 'countdown'>
 export type Difficulty = 'troublesome' | 'dangerous' | 'formidable' | 'extreme' | 'epic'
-export type TaskCategory = 'vow' | 'generic' | 'challenge'
+export type  TaskCategory = 'vow' | 'generic' | 'challenge'
 export type TaskStatus = 'active' | 'completed' | 'failed' | 'abandoned'
 export type Countdown = 0 | 1 | 2 | 3 | 4
 
@@ -34,6 +34,7 @@ export const useTaskStore = defineStore('task', () => {
   const tasks: Ref<Array<Task>> = ref([]);
 
   const addTask = (description: string, category: TaskCategory, difficulty: Difficulty) => {
+    console.log('Adding task', description, category, difficulty)
     tasks.value.push({ _id: createId(), description, category, progress: 0, difficulty, status: 'active' })
   }
 
@@ -67,6 +68,24 @@ export const useTaskStore = defineStore('task', () => {
         epic: 1
       }[task.difficulty]);
     }
+  }
+
+  const clearProgress = (id: string) => {
+    tasks.value = tasks.value.map((task: Task) => {
+      if (task._id === id) {
+        task.progress = 0
+      }
+      return task
+    })
+  }
+
+  const manualProgressUpdate = (id: string, progress: number) => {
+    tasks.value = tasks.value.map((task: Task) => {
+      if (task._id === id) {
+        task.progress = progress + task.progress
+      }
+      return task
+    })
   }
 
   const roll = async (id: Task['_id'], customDispatch?: Dispatch) => {
@@ -111,9 +130,11 @@ export const useTaskStore = defineStore('task', () => {
   return {
     tasks,
     updateDifficulty,
+    manualProgressUpdate,
     removeTask,
     addTask,
     roll,
+    clearProgress,
     markProgress,
     dehydrate,
     hydrate,

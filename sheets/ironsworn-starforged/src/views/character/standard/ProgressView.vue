@@ -3,12 +3,13 @@ import { ProgressCard } from '@/components/progress';
 import { ProgressDialog } from '@/components/progress';
 import { Toggle } from '@/components/ui/toggle';
 import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
 
 const taskStore = useTaskStore()
-const getTaskById = (id: string) => taskStore.tasks.find(task => task._id === id)
-
 const removeMode = ref(false)
+const TASK_CATEGORIES = ['generic', 'challenge'] as const;
+
+provide('categories', TASK_CATEGORIES)
 </script>
 
 <template>
@@ -17,9 +18,6 @@ const removeMode = ref(false)
       <ProgressDialog />
       <Toggle class="h-8 w-24 border-primary border-2 data-[state=on]:bg-destructive font-bold" v-model:pressed="removeMode">Remove </Toggle>
     </div>
-    <div>
-      Tasks: {{ taskStore.tasks }}
-    </div>
-    <ProgressCard v-for="task in taskStore.tasks" :id="task._id" :removeMode="removeMode" :task="task"/>
+    <ProgressCard v-for="task in taskStore.tasks.filter(task => task.category === 'generic' || task.category === 'challenge')" :removeMode="removeMode" :task="task"/>
   </div>
 </template>
