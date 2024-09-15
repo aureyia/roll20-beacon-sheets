@@ -32,14 +32,20 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'vee-validate';
-import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
+import { useTaskStore, type TaskCategory } from '@/sheet/stores/chronicle/tasksStore';
 import { DIFFICULTIES } from '@/system/tasks';
+import { inject, watch } from 'vue';
 
-const TASK_CATEGORIES = ['generic', 'challenge'] as const;
+const categories: TaskCategory[] = inject('categories') as TaskCategory[] ?? [];
+
+if (categories.length === 0) {
+  throw new Error('Categories must have at least one element');
+}
+
 const formSchema = toTypedSchema(
   z.object({
     description: z.string().min(1).max(50),
-    category: z.enum(TASK_CATEGORIES),
+    category: z.string().default(categories[0]),
     difficulty: z.enum(DIFFICULTIES),
   }),
 );
@@ -49,23 +55,25 @@ const form = useForm({
 const taskStore = useTaskStore();
 
 const onSubmit = form.handleSubmit((values) => {
-  console.log(values)
-  taskStore.addTask(values.description, values.category, values.difficulty);
+  taskStore.addTask(values.description, values.category as TaskCategory, values.difficulty);
 });
 
-const taskCategories = ['generic', 'challenge'];
 </script>
 
 <template>
   <div class="progress-dialog">
     <Dialog>
       <DialogTrigger as-child>
-        <Button variant="outline" class="h-8 w-24 border-primary border-2 font-bold"
+        <Button 
+          variant="outline" 
+          class="h-8 w-24 border-primary border-2 font-bold"
+          @click="form.values.category = categories[0]"
           >Add</Button
         >
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px]">
         <form @submit="onSubmit">
+          <div>{{ form.values }}</div>
           <DialogHeader>
             <DialogTitle>Add progress tracker</DialogTitle>
           </DialogHeader>
@@ -87,7 +95,7 @@ const taskCategories = ['generic', 'challenge'];
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectGroup v-for="category in taskCategories">
+                    <SelectGroup v-for="category in categories">
                       <SelectItem :value="category">
                         <SelectLabel class="pl-0">{{ category }}</SelectLabel>
                       </SelectItem>
@@ -102,7 +110,7 @@ const taskCategories = ['generic', 'challenge'];
             <FormItem class="mt-2">
               <FormLabel>Difficulty *</FormLabel>
               <FormControl>
-                <Select :disabled="!form.values.description || !form.values.category" v-bind="componentField">
+                <Select :disabled="!form.values.description" v-bind="componentField">
                   <SelectTrigger>
                     <SelectValue placeholder="Select difficulty" />
                   </SelectTrigger>

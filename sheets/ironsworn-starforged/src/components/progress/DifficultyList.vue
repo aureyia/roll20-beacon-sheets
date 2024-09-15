@@ -6,23 +6,15 @@ import { DIFFICULTIES } from '@/system/tasks';
 
 const taskStore = useTaskStore()
 
-defineProps({
-  id: String,
-})
-
+defineProps({id: String,})
 defineModel('selectedDifficulty', { type: String })
-
-// const updateDifficulty = (id: string, difficulty: Difficulty) => {
-//   taskStore.updateDifficulty(id, difficulty)
-// }
-
 </script>
 
 <template>
   <div class="difficulty-list mt-2">
-    <ToggleGroup type="single" :modelValue="taskStore.tasks.find(task => task._id === id)?.difficulty">
+    <ToggleGroup type="single" :modelValue="taskStore.tasks.find(task => task._id === id)?.difficulty" class="justify-between">
       <ToggleGroupItem
-        class="font-bold hover:border-2 hover:text-primary hover:border-muted-foreground hover:bg-card-button bg-neutral-card-button data-[state=on]:bg-card-button data-[state=on]:border-2 data-[state=on]:border-primary  uppercase w-44 h-8 mx-auto" 
+        class="font-bold hover:border-2 hover:text-primary hover:border-muted-foreground hover:bg-card-button bg-neutral-card-button data-[state=on]:bg-card-button data-[state=on]:border-2 data-[state=on]:border-primary  uppercase w-44 h-8" 
         v-for="difficulty in DIFFICULTIES"
         @click="taskStore.updateDifficulty(id as string, difficulty)"
         :key="difficulty" 

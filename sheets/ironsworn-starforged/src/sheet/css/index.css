@@ -81,9 +81,10 @@
     /* 100 - neutral */
     --popover-foreground: 0 0% 98%;
  
+    /* 800 - neutral */
     --card: 0 0% 14.9%;
-    /* 950 - neutral */
-    --card-input: 0 0% 14.9%;
+    /* 700 - neutral */
+    --card-input: 0 0 25%;
     /* 100 - neutral */
     --card-foreground: 0 0% 98%;
     /* 700 - neutral */

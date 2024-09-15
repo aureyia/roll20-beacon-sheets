@@ -11,16 +11,15 @@ import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
 
 const taskStore = useTaskStore()
 
-defineProps({
-  id: String,
-  task: { type: Object, default: {} },
-  removeMode: Boolean
+const props = defineProps({
+  removeMode: Boolean,
+  task: { type: Object, default: {} }
 })
 </script>
 
 <template>
   <div class="progress-card">
-    <Card class=" mx-14 mt-3 drop-shadow border-primary">
+    <Card class=" mx-14 mt-3 drop-shadow">
       <CardHeader class="pt-4 pb-2 px-6">
         <div>
           <Transition>
@@ -28,15 +27,15 @@ defineProps({
               v-if="removeMode"
               variant="destructive"
               class="mb-2 h-8 w-24 border-primary border-2 font-bold text-primary"
-              @click="taskStore.removeTask(id as string)"
+              @click="taskStore.removeTask(task._id as string)"
               >Delete</Button>
             </Transition>
-          <Input class="bg-card-input border-primary h-10 text-lg"/>
+          <Input v-model="task.description" class="bg-card-input drop-shadow-sm h-10 text-lg"/>
         </div>
         <DifficultyList v-model:selectedDifficulty="task.difficulty" :id="task._id"/>
       </CardHeader>
       <CardContent>
-        <ProgressTrack />
+        <ProgressTrack :task="task" :id="task._id"/>
       </CardContent>
     </Card>
   </div>
