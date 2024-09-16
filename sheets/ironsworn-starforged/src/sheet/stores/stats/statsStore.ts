@@ -4,7 +4,9 @@ import { useResourcesStore } from '../resources/resourcesStore';
 import { createRollTemplate } from '@/rolltemplates/rolltemplates';
 import { dispatchRef, initValues } from '@/relay/relay';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
-import getRollResult from '@/utility/getRollResult';
+import { convertResultsToDice, formatDiceComponents } from '@/utility/convertResultsToDice';
+import { getRollFromDispatch } from '@/utility/getRollFromDispatch';
+
 import { actionDice } from '@/system/dice';
 
 export type Stats = {
@@ -44,14 +46,16 @@ export const useStatsStore = defineStore('stats', () => {
   const roll = async (label: string, value: number, modifier: number = 0, customDispatch?: Dispatch) => {
     const dispatch = customDispatch || (dispatchRef.value as Dispatch);
     const { momentum } = useResourcesStore();
-    const { dice } = await getRollResult(actionDice, dispatch);
+    const formattedDice = formatDiceComponents(actionDice)
+    const rollResults = await getRollFromDispatch({ rolls: formattedDice})
+    const rolledDice = convertResultsToDice(actionDice, rollResults)
 
     const rollTemplate = createRollTemplate({
       type: 'stat',
       parameters: {
         characterName: initValues.character.name,
         title: 'Rolling ' + label,
-        dice,
+        dice: rolledDice,
         label,
         value,
         momentum,
@@ -68,7 +72,7 @@ export const useStatsStore = defineStore('stats', () => {
       },
     });
 
-    return dice;
+    return rolledDice;
   };
 
   const dehydrate = () => {

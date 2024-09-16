@@ -64,5 +64,5 @@ export default defineConfig(({ mode }) => ({
     postcss: {
       plugins: [tailwind(), autoprefixer()],
     },
-  },
+  }
 }));

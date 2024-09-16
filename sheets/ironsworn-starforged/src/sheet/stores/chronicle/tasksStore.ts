@@ -5,7 +5,8 @@ import { createId } from '@paralleldrive/cuid2'
 import { arrayToObject, objectToArray } from '@/utility/objectify';
 import { dispatchRef, initValues } from '@/relay/relay';
 import { type LimitedRange } from '@/utility/limitedRange';
-import getRollResult from '@/utility/getRollResult';
+import { convertResultsToDice, formatDiceComponents } from '@/utility/convertResultsToDice';
+import { getRollFromDispatch } from '@/utility/getRollFromDispatch';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { taskDice } from '@/system/dice';
 import { createRollTemplate } from '@/rolltemplates/rolltemplates';
@@ -86,19 +87,20 @@ export const useTaskStore = defineStore('task', () => {
     })
   }
 
-  const roll = async (id: Task['_id'], customDispatch?: Dispatch) => {
-    const dispatch = customDispatch || (dispatchRef.value as Dispatch);
+  const roll = async (id: Task['_id']) => {
+    const dispatch = dispatchRef.value as Dispatch;
     const task = tasks.value.find(task => task._id === id);
     const calculatedProgress = Math.floor((task?.progress ?? 0) / 4)
-
-    const { dice } = await getRollResult(taskDice, dispatch);
+    const formattedDice = formatDiceComponents(taskDice)
+    const rollResults = await getRollFromDispatch({ rolls: formattedDice})
+    const rolledDice = convertResultsToDice(taskDice, rollResults)
 
     const rollTemplate = createRollTemplate({
       type: 'task',
       parameters: {
         characterName: initValues.character.name,
         title: 'Rolling ' + task?.category,
-        dice,
+        dice: rolledDice,
         progress: calculatedProgress,
       }
     });
@@ -112,7 +114,7 @@ export const useTaskStore = defineStore('task', () => {
       },
     });
 
-    return dice;
+    return rolledDice;
   }
 
   const dehydrate = () => {

@@ -3,7 +3,7 @@
   "exclude": [],
   "compilerOptions": {
     "lib": [],
-    "types": ["node", "jsdom"],
+    "types": ["node", "jsdom", "vitest/importMeta"],
     "allowJs": true,
     "ignoreDeprecations": "5.0"
   }
