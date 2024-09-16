@@ -75,7 +75,6 @@ handlebars.registerHelper('assign', function(varName, value, options) {
 });
 
 handlebars.registerHelper('assignActionScore', function(varName, value, options) {
-  console.log('assignActionScore', varName, value);
   options.data.root[varName] = value.score;
 });
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ProgressBox } from '@/components/progress';
 import { useTaskStore, type Task } from '@/sheet/stores/chronicle/tasksStore';
-import { progressToFill } from '@/utility/progressToFill';
+import { progressTicksToFill } from '@/utility/progressTicksToFill';
 
 const BOXES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 const taskStore = useTaskStore()
@@ -28,7 +28,7 @@ defineProps({ task: { type: Object, default: {} } })
         v-for="value, index in BOXES" 
         :key="index" 
         :id="task._id"
-        :ticks="progressToFill(index)(task.progress).toString()"
+        :ticks="progressTicksToFill(index)(task.progress).toString()"
       />
     </div>
     <div class="progress-box flex items-center">

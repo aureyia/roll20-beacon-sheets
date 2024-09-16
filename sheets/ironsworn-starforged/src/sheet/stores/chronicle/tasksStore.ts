@@ -34,12 +34,10 @@ export const useTaskStore = defineStore('task', () => {
   const tasks: Ref<Array<Task>> = ref([]);
 
   const addTask = (description: string, category: TaskCategory, difficulty: Difficulty) => {
-    console.log('Adding task', description, category, difficulty)
     tasks.value.push({ _id: createId(), description, category, progress: 0, difficulty, status: 'active' })
   }
 
   const removeTask = (id: string) => {
-    console.log('Removing task', id)
     tasks.value = tasks.value.filter((task: Task) => task._id !== id)
   }
 
