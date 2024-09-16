@@ -6,12 +6,12 @@ export const calculateOutcome = (
 ) :string => {
 
   const [challengeDie1, challengeDie2] = dice
-    .filter((die) => die.label?.startsWith('Challenge Dice'))
+    .filter((die) => die.label?.startsWith('Challenge Die'))
     .map((die) => die.value)
     .sort((a, b) => (typeof a === 'number' && typeof b === 'number') ? a - b : 0);
 
   if (!challengeDie1 || !challengeDie2) {
-    throw new Error('Challenge dice not found');
+    throw new Error('Challenge die not found');
   }
 
   if (challengeDie1 === challengeDie2) {
@@ -20,7 +20,7 @@ export const calculateOutcome = (
     } else if (score <= challengeDie1) {
       return 'complication';
     } else {
-      throw new Error('Challenge dice not found');
+      throw new Error('Challenge die not found');
     }
   } else {
     if (score > challengeDie1 && score > challengeDie2) {

@@ -9,11 +9,15 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     exclude: [...configDefaults.exclude, "e2e/*"],
-    root: fileURLToPath(new URL("./", import.meta.url))
+    root: fileURLToPath(new URL("./", import.meta.url)),
+    includeSource: ['src/**/*.{js,ts}'], 
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     },
+  },
+  define: { 
+    'import.meta.vitest': 'undefined', 
   },
 });

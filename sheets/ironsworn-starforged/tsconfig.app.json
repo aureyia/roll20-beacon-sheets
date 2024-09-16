@@ -8,5 +8,5 @@
       "@/*": ["./src/*"]
     },
     "ignoreDeprecations": "5.0"
-  }
+  },
 }
