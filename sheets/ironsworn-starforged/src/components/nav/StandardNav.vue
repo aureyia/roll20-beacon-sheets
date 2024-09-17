@@ -18,12 +18,13 @@ const navList = {
 </script>
 
 <template>
-  <NavigationMenu class="ml-11">
-    <NavigationMenuList class="flex gap-3">
+  <NavigationMenu>
+    <NavigationMenuList class="flex gap-10">
       <NavigationMenuItem 
         v-for="(item, key) in navList" 
-        :key="key" 
-        class="rounded nav-item height-full cursor-pointer px-2 py-1 hover:bg-muted-accent"
+        :key="key"
+        class="rounded nav-item height-full cursor-pointer font-normal"
+        :class="$route.path === item ? 'underline' : ''"
       >
         <NavigationMenuLink @click="() => $router.push({ path: item})"> {{ key }}</NavigationMenuLink>
       </NavigationMenuItem>

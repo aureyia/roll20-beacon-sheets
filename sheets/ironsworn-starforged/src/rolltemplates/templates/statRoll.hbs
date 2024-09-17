@@ -1,7 +1,7 @@
 {{!-- TODO: Support momentum burning --}}
 {{#> wrapper type="stat" keyValues=keyValues }}
-  {{#> actionHeader characterName=characterName title=title}}
-  {{/ actionHeader}}
+  {{#> characterRollHeader characterName=characterName title=title}}
+  {{/ characterRollHeader}}
 
   {{assign "actionScore" (calculateActionScore dice value modifier momentum)}}
 

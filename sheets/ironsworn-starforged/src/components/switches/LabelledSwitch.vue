@@ -15,7 +15,7 @@ const model = defineModel<boolean>({ required: true })
 <template>
   <div class="labelled-switch">
     <span class="mr-2 text-lg">{{ label }}</span>
-    <Switch class="data-[state=unchecked]:bg-muted-accent" v-model:checked="model" />
+    <Switch class="data-[state=unchecked]:bg-muted-foreground data-[state=checked]:bg-foreground" v-model:checked="model" />
   </div>
 </template>
 

@@ -1,7 +1,10 @@
+
 @use '/src/common/scss/vars';
 
 @use 'scale/ecv';
 @use 'scale/vtt';
+
+@import url('https://fonts.googleapis.com/css?family=Encode+Sans:400,500,600,700,800,900|Encode+Sans+Condensed:i,400,500,600,700,800,900|Exo:400,500,600,700,800,900|Montserrat:400,500,600,700,800,900&display=swap');
 
 body {
   width: 100%;
