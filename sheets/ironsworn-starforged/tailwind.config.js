@@ -61,6 +61,10 @@ module.exports = {
           input: "hsl(var(--card-input))",
           button: "hsl(var(--card-button))",
         },
+        switch: {
+          on: "hsl(var(--switch-on))",
+          off: "hsl(var(--switch-off))",
+        },
       },
       borderRadius: {
       	xl: "calc(var(--radius) + 4px)",
