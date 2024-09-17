@@ -17,8 +17,10 @@ defineProps({
       </CardHeader>
       <CardContent v-for="move in group.Moves" class="p-0 mx-2 flex">
         <span class="mr-3">Roll</span>
+        <Button> Roll </Button>
         <span>{{ move.Name }}</span>
       </CardContent>
     </Card>
   </div>
 </template>
+

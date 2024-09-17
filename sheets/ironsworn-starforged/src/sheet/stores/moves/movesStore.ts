@@ -27,12 +27,7 @@ export type StatsHydrate = {
   };
 };
 
-export const useStatsStore = defineStore('stats', () => {
-  const edge = ref(0);
-  const heart = ref(0);
-  const iron = ref(0);
-  const shadow = ref(0);
-  const wits = ref(0);
+export const useMovesStore = defineStore('moves', () => {
 
   /**
    * Rolls a stat and posts the result to the chat log.
@@ -47,8 +42,11 @@ export const useStatsStore = defineStore('stats', () => {
     const dispatch = customDispatch || (dispatchRef.value as Dispatch);
     const { momentum } = useResourcesStore();
     const formattedDice = formatDiceComponents(actionDice)
-    const rollResults = await getRollFromDispatch({ rolls: formattedDice})
+    const rollResults = await getRollFromDispatch({ rolls: formattedDice })
     const rolledDice = convertResultsToDice(actionDice, rollResults)
+
+    // TODO: Add support for assets
+    // const calculateAssetMofidiers
 
     const rollTemplate = createRollTemplate({
       type: 'stat',
@@ -76,7 +74,7 @@ export const useStatsStore = defineStore('stats', () => {
   };
 
   const dehydrate = () => {
-    return { 
+    return {
       stats: {
         edge: edge.value,
         heart: heart.value,
