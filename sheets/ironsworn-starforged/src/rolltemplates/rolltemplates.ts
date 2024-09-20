@@ -87,6 +87,7 @@ handlebars.registerHelper('getActionDie', getActionDie);
 const rollTemplates = {
   stat: handlebars.compile(statRollTemplate),
   task: handlebars.compile(taskRollTemplate),
+  move: handlebars.compile(taskRollTemplate),
 };
 
 // This corresponds to the data returned by Beacon when you ask it to roll dice for you.
@@ -104,6 +105,8 @@ export type DiceComponent = {
   value?: number;
   /** Indicates whether or not to always show this component in the breakdown, even if it's 0 */
   alwaysShowInBreakdown?: boolean;
+  /** If a challenge die will indicate if the roll has been exceeded by the action score */
+  exceeded?: boolean
 };
 
 // Generic params used by our 2 templates. These can be changed for your own templates.
@@ -116,8 +119,20 @@ type CommonParameters = {
   textContent?: string | string[];
 };
 
+// TODO: Decided if we need to handle move separately
+// export type RollMove = {
+//   type: 'move';
+//   parameters: CommonParameters & {
+//     dice: DiceComponent[];
+//     label: string;
+//     value: number;
+//     momentum: number;
+//     modifier: number;
+//   };
+// };
+
 export type RollStat = {
-  type: 'stat';
+  type: 'stat' | 'move';
   parameters: CommonParameters & {
     dice: DiceComponent[];
     label: string;
