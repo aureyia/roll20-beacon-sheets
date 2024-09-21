@@ -1,0 +1,14 @@
+{{!-- TODO: Support momentum burning --}}
+{{#> wrapper type="stat"}}
+  {{#> compactCharacterRollHeader characterName=characterName title=title}}
+  {{/ compactCharacterRollHeader}}
+
+  <div class="compact-stat__body">
+    {{> compactActionScore actionScore=score}}
+    {{> compactChallengeDice dice=dice}}
+  </div>
+
+  <div class="compact-stat__footer">
+    {{> compactRollOutcome outcome=outcome}}
+  </div>
+{{/ wrapper }}

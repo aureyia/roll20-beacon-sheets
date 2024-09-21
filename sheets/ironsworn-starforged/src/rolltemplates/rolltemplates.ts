@@ -3,6 +3,8 @@ import handlebars from 'handlebars';
 // @ts-ignore
 import statRollTemplate from './templates/statRoll.hbs?raw';
 // @ts-ignore
+import compactStatRollTemplate from './templates/compactStatRoll.hbs?raw';
+// @ts-ignore
 import taskRollTemplate from './templates/taskRoll.hbs?raw';
 // @ts-ignore
 import rollComponents from './partials/rollComponents.hbs?raw';
@@ -16,6 +18,14 @@ import actionScore from './partials/actionScore.hbs?raw';
 import rollOutcome from './partials/rollOutcome.hbs?raw';
 // @ts-ignore
 import challengeDice from './partials/challengeDice.hbs?raw';
+// @ts-ignore
+import compactCharacterRollHeader from './partials/compact/compactCharacterRollHeader.hbs?raw';
+// @ts-ignore
+import compactActionScore from './partials/compact/compactActionScore.hbs?raw';
+// @ts-ignore
+import compactRollOutcome from './partials/compact/compactRollOutcome.hbs?raw';
+// @ts-ignore
+import compactChallengeDice from './partials/compact/compactChallengeDice.hbs?raw';
 // @ts-ignore
 import successBg from './partials/backgrounds/successBg.hbs?raw';
 // @ts-ignore
@@ -34,8 +44,6 @@ import { sumComponents } from './expressions/sumComponents.js';
 import { getDice } from './expressions/getDice.js';
 import { isArray } from './expressions/isArray.js';
 import { capitalize } from './expressions/capitalize.js';
-import { calculateActionScore } from './expressions/calculateActionScore.js';
-import { calculateOutcome } from './expressions/calculateOutcome.js';
 import { getChallengeDie } from './expressions/getChallengeDie.js';
 import { getActionDie } from './expressions/getActionDie.js';
 import { isMatching } from './expressions/isMatching.js';
@@ -48,9 +56,13 @@ handlebars.registerPartial('rollComponents', rollComponents);
 
 // Starforged handlebars HTML partials
 handlebars.registerPartial('characterRollHeader', characterRollHeader);
+handlebars.registerPartial('compactCharacterRollHeader', compactCharacterRollHeader);
 handlebars.registerPartial('actionScore', actionScore);
+handlebars.registerPartial('compactActionScore', compactActionScore);
 handlebars.registerPartial('rollOutcome', rollOutcome);
+handlebars.registerPartial('compactRollOutcome', compactRollOutcome);
 handlebars.registerPartial('challengeDice', challengeDice);
+handlebars.registerPartial('compactChallengeDice', compactChallengeDice);
 handlebars.registerPartial('successBg', successBg);
 handlebars.registerPartial('failBg', failBg);
 handlebars.registerPartial('challengeDieBg', challengeDieBg);
@@ -79,15 +91,15 @@ handlebars.registerHelper('assignActionScore', function(varName, value, options)
 });
 
 // Starforged Helper functions
-handlebars.registerHelper('calculateActionScore', calculateActionScore);
-handlebars.registerHelper('calculateOutcome', calculateOutcome);
 handlebars.registerHelper('getChallengeDie', getChallengeDie);
 handlebars.registerHelper('getActionDie', getActionDie);
 
 const rollTemplates = {
   stat: handlebars.compile(statRollTemplate),
+  'stat-compact': handlebars.compile(compactStatRollTemplate),
   task: handlebars.compile(taskRollTemplate),
-  move: handlebars.compile(taskRollTemplate),
+  move: handlebars.compile(statRollTemplate),
+  'move-compact': handlebars.compile(compactStatRollTemplate),
 };
 
 // This corresponds to the data returned by Beacon when you ask it to roll dice for you.
@@ -113,32 +125,14 @@ export type DiceComponent = {
 type CommonParameters = {
   characterName?: string;
   title: string;
-  subtitle?: string;
-  keyValues?: Record<string, string | number | boolean>;
-  traits?: string[];
-  textContent?: string | string[];
 };
 
-// TODO: Decided if we need to handle move separately
-// export type RollMove = {
-//   type: 'move';
-//   parameters: CommonParameters & {
-//     dice: DiceComponent[];
-//     label: string;
-//     value: number;
-//     momentum: number;
-//     modifier: number;
-//   };
-// };
-
 export type RollStat = {
-  type: 'stat' | 'move';
+  type: 'stat' | 'stat-compact' | 'move' | 'move-compact';
   parameters: CommonParameters & {
     dice: DiceComponent[];
-    label: string;
-    value: number;
-    momentum: number;
-    modifier: number;
+    outcome: string;
+    score: number
   };
 };
 

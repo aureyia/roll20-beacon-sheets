@@ -8,7 +8,8 @@ rolltemplate.starforged
   background: #3c3c3c
   color: #ffffff
   padding: 0.5em
-  font-family: 'Montserrat', sans-serif
+  font-size: 1rem
+  // font-family: 'Montserrat', sans-serif
 
   // &.starforged--stat
   //   background-color: quasar-variables.$primary
@@ -19,6 +20,16 @@ rolltemplate.starforged
     text-align: center
     border-radius: 0.6em
     padding: 0.2em
+    margin-bottom: 0.2rem
+
+  .compact-action-score__warning
+    background-color: #783030
+    width: 100%
+    text-align: center
+    border-radius: 0.6em
+    padding: 0.2em
+    margin-bottom: 0.3rem
+    font-size: 0.9rem
   
   .action-score__col
     flex-direction: column
@@ -29,12 +40,30 @@ rolltemplate.starforged
     padding: 0.3em
     border-radius: 0.1em
 
+  .compact-action-score__title
+    align-self: center
+
+  .compact-action-score__value
+    padding: 0.3rem
+    background-color: #545454
+    border-radius: 0.3rem
+    text-align: center
+    width: 1rem
+
   .header
     background-color: #545454
     color: white
     padding: 0.4em 1em
     font-style: italic
     border-radius: 0.7em
+
+  .compact-header
+    background-color: #545454
+    border-radius: 0.5rem
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5)
+    padding: 0.2rem 0.3rem
+    font-size: 0.9rem
+    font-style: italic
   
   .roll-outcome,
   .stat__body
@@ -42,6 +71,37 @@ rolltemplate.starforged
     padding: 0.4em 1em
     margin: 0.2em 0
     border-radius: 1em
+
+  .compact-stat__body
+    padding: 0.5rem
+  
+  .compact-challenge-dice
+    margin-top: 0.2rem
+
+  .compact-challenge-dice__row,
+  .compact-action-score__row
+    display: flex
+    justify-content: space-between
+
+  .compact-roll-outcome__row
+    display: flex
+
+  .compact-challenge-dice__sub-col-1
+    margin-right: 0.2rem
+
+  .compact-challenge-dice__col-1
+    align-self: center 
+
+  .compact-challenge-dice__sub-col-1,
+  .compact-challenge-dice__sub-col-2
+    padding: 0.3rem
+    background: #545454
+    border-radius: 0.3rem
+    width: 1rem
+    text-align: center 
+
+  .compact-row__gap
+    width: 1.4rem
 
   .action-score__row,
   .challenge-dice__row
@@ -59,12 +119,43 @@ rolltemplate.starforged
     align-content: center
     font-size: 1em
   
-  .action-score__col-2,
-  .roll-outcome__col-2,
-  .challenge-dice__col-2
-    width: 6.2em
+  // .action-score__col-2,
+  // .roll-outcome__col-2,
+  // .challenge-dice__col-2
+  //   width: 6.2em
 
   .stat__footer
     background-color: #545454
     border-radius: 1em
     box-shadow: 0 0 5px 0 rgba(0,0,0,0.5)
+
+  .compact-stat__footer
+    background-color: #545454
+    border-radius: 0.5rem 
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5)
+    line-height: normal 
+
+  .compact-roll-outcome__box
+    width: 0.7rem
+    height: auto
+    border-radius: 0.3rem 0rem 0rem 0.3rem
+
+  .compact-roll-outcome__col-1
+    margin-right: 0.5rem
+  
+  .compact-roll-outcome__col-2
+    align-self: center
+
+  .compact-roll-outcome__miss
+    background: #ff4d4d
+  .compact-roll-outcome__complication
+    background: #d22e53
+  .compact-roll-outcome__weak-hit
+    background: #83dbff 
+  .compact-roll-outcome__strong-hit
+    background: #63a9ca
+  .compact-roll-outcome__opportunity
+    background: #40819f
+
+  .compact-roll-outcome
+    height: 100%
