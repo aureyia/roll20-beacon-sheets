@@ -6,19 +6,20 @@ import { boolean } from 'zod';
 
 defineProps({
   edgeMode: Boolean,
-  default: () => false
-})
-
+  default: () => false,
+});
 </script>
 
 <template>
-  <div class="header flex flex-row justify-center fixed top-0 left-0 right-0 py-2 text-center bg-banner width-full z-10">
-    <div class="button-container basis-1/4 flex justify-start ml-4" v-if="edgeMode">
-      <Button class="p-2 w-20 mr-2">Vows</Button>
+  <div
+    class="header width-full fixed left-0 right-0 top-0 z-10 flex flex-row justify-center bg-banner py-2 text-center"
+  >
+    <div class="button-container ml-4 flex basis-1/4 justify-start" v-if="edgeMode">
+      <Button class="mr-2 w-20 p-2">Vows</Button>
     </div>
-    <StandardNav class="uppercase ml-2"/>
-    <div class="button-container basis-1/4 flex justify-end mr-4" v-if="edgeMode">
-      <Button class="p-2 w-20">Assets</Button>
+    <StandardNav class="ml-2 uppercase" />
+    <div class="button-container mr-4 flex basis-1/4 justify-end" v-if="edgeMode">
+      <Button class="w-20 p-2">Assets</Button>
     </div>
   </div>
 </template>

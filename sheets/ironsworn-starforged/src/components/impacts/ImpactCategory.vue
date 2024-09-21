@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { ImpactList } from '@/components/impacts'
+import { ImpactList } from '@/components/impacts';
 import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
 import { type Impact } from '@/system/impacts';
-import { useAttrs } from 'vue'
-const attrs = useAttrs()
+import { useAttrs } from 'vue';
+const attrs = useAttrs();
 
-console.log(attrs)
+console.log(attrs);
 
 defineProps({
   label: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const impacts = useImpactsStore()
+const impacts = useImpactsStore();
 </script>
 
 <template>
@@ -24,6 +24,4 @@ const impacts = useImpactsStore()
   </div>
 </template>
 
-<style lang="sass" scoped>
-
-</style>
+<style lang="sass" scoped></style>

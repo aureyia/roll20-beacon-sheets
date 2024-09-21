@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/ui/input';
 
 defineProps({
   label: {
     type: String,
-    required: true
+    required: true,
   },
   type: {
     type: String,
-    default: 'text'
-  }
-})
+    default: 'text',
+  },
+});
 
-const model = defineModel<string | number>({ required: true })
-
+const model = defineModel<string | number>({ required: true });
 </script>
 
 <template>

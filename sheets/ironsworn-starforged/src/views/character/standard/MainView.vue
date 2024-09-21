@@ -2,9 +2,9 @@
 import CharHeader from '@/components/header/CharHeader.vue';
 import CharFooter from '@/components/footer/CharFooter.vue';
 import { useRouter } from 'vue-router';
-const router = useRouter()
+const router = useRouter();
 
-router.push({ path: '/summary' })
+router.push({ path: '/summary' });
 </script>
 
 <template>
@@ -31,5 +31,4 @@ router.push({ path: '/summary' })
 .fade-enter-from
   opacity: 0
   height: 0
-
 </style>

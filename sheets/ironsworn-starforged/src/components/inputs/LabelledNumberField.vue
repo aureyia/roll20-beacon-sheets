@@ -5,31 +5,30 @@ import {
   NumberFieldDecrement,
   NumberFieldIncrement,
   NumberFieldInput,
-} from '@/components/ui/number-field'
+} from '@/components/ui/number-field';
 
 defineProps({
   label: {
     type: String,
-    required: true
+    required: true,
   },
   type: {
     type: String,
-    default: 'text'
+    default: 'text',
   },
   min: {
     type: Number,
-    default: 0
+    default: 0,
   },
   max: {
-    type: Number
+    type: Number,
   },
   inputModifier: {
-    type: String
-  }
-})
+    type: String,
+  },
+});
 
-const model = defineModel<number>({ required: true })
-
+const model = defineModel<number>({ required: true });
 </script>
 
 <template>

@@ -11,10 +11,10 @@ const router = useRouter();
 const clear = () => {
   settings.clearMode();
   router.push({ path: '/' });
-}
+};
 
 useStarforgedSheetStore();
-router.push({ name: settings.mode ?? 'root' })
+router.push({ name: settings.mode ?? 'root' });
 </script>
 
 <template>

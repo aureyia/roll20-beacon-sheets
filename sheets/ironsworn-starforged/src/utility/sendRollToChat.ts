@@ -2,7 +2,11 @@ import { createRollTemplate, type AnyRollTemplate } from '@/rolltemplates/rollte
 import { dispatchRef } from '@/relay/relay';
 import type { Dispatch, PostArgs } from '@roll20-official/beacon-sdk';
 
-export const sendRollToChat = async (id: PostArgs['characterId'], params: AnyRollTemplate, options = {}) => {
+export const sendRollToChat = async (
+  id: PostArgs['characterId'],
+  params: AnyRollTemplate,
+  options = {},
+) => {
   const dispatch = dispatchRef.value as Dispatch;
   const rollTemplate = createRollTemplate(params);
 

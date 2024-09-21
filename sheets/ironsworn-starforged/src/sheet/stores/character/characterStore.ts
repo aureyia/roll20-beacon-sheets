@@ -9,8 +9,8 @@ export type CharacterHydrate = {
 };
 
 export const useCharacterStore = defineStore('character', () => {
-  const callsign = ref('')
-  const pronouns = ref('')
+  const callsign = ref('');
+  const pronouns = ref('');
 
   const dehydrate = () => {
     return {
@@ -18,7 +18,7 @@ export const useCharacterStore = defineStore('character', () => {
         callsign: callsign.value,
         pronouns: pronouns.value,
       },
-    };                                          
+    };
   };
 
   const hydrate = (hydrateStore: CharacterHydrate) => {

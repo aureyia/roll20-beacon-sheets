@@ -13,7 +13,7 @@ export const calculateActionScore = (
   statValue: number,
   modifier: number,
   momentum: number,
-): { score: number; dieNegated: boolean; } => {
+): { score: number; dieNegated: boolean } => {
   const actionDie = dice.find((die) => die.label === 'Action Die');
   const dieValue = actionDie?.value ?? 0;
   const isDieNegated = dieValue === -momentum;

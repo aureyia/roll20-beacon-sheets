@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { 
+import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuLink
-} from '@/components/ui/navigation-menu'
+  NavigationMenuLink,
+} from '@/components/ui/navigation-menu';
 
 const navList = {
   legacies: '/legacies',
@@ -13,20 +13,22 @@ const navList = {
   summary: '/summary',
   moves: '/moves',
   assets: '/assets',
-  connections: '/connections'
-}
+  connections: '/connections',
+};
 </script>
 
 <template>
   <NavigationMenu>
     <NavigationMenuList class="flex gap-10">
-      <NavigationMenuItem 
-        v-for="(item, key) in navList" 
+      <NavigationMenuItem
+        v-for="(item, key) in navList"
         :key="key"
-        class="rounded nav-item height-full cursor-pointer font-normal"
+        class="nav-item height-full cursor-pointer rounded font-normal"
         :class="$route.path === item ? 'underline' : ''"
       >
-        <NavigationMenuLink @click="() => $router.push({ path: item})"> {{ key }}</NavigationMenuLink>
+        <NavigationMenuLink @click="() => $router.push({ path: item })">
+          {{ key }}</NavigationMenuLink
+        >
       </NavigationMenuItem>
     </NavigationMenuList>
   </NavigationMenu>

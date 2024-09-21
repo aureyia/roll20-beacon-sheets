@@ -1,13 +1,10 @@
-import type { DiceComponent } from "@/rolltemplates/rolltemplates";
+import type { DiceComponent } from '@/rolltemplates/rolltemplates';
 
 type EligibilityResult = {
   eligibility: boolean;
   newOutcome?: string;
 };
-const formatResult = (
-  eligibility: boolean,
-  newOutcome?: string,
-): EligibilityResult => ({
+const formatResult = (eligibility: boolean, newOutcome?: string): EligibilityResult => ({
   eligibility,
   ...(newOutcome && { newOutcome }),
 });
@@ -46,9 +43,7 @@ export const isEligibleForMomentumBurn = (
   }
 
   if (isComplication) {
-    return d1IsEligible && d2IsEligible
-      ? formatResult(true, 'opportunity')
-      : formatResult(false);
+    return d1IsEligible && d2IsEligible ? formatResult(true, 'opportunity') : formatResult(false);
   }
 
   if (isMiss) {
@@ -169,7 +164,7 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 2', value: 7, exceeded: true },
       ];
       expect(isEligibleForMomentumBurn(rolledDice, 'strong-hit', 8)).toStrictEqual({
-        eligibility: false
+        eligibility: false,
       });
     });
   });

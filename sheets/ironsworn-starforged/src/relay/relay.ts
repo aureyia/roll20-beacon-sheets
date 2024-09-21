@@ -18,7 +18,7 @@ import {
   onDragOver,
 } from './handlers/handlers';
 import { reactive, ref, watch, nextTick, type Ref, type App, shallowRef } from 'vue';
-import { createId } from '@paralleldrive/cuid2'
+import { createId } from '@paralleldrive/cuid2';
 import { getBio } from '@/relay/handlers/computed';
 
 /* 
@@ -126,7 +126,7 @@ const devRelay = async () =>
     updateCharacter: (...args: any[]) => console.log('devRelay updateCharacter', args),
     characters: {},
     updateTokensByCharacter: () => '',
-  } as any as Dispatch);
+  }) as any as Dispatch;
 
 /*
 This function is called to create the relay.

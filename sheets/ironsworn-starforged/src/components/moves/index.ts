@@ -1,1 +1,1 @@
-export { default as MovesGroup } from './MovesGroup.vue'
+export { default as MovesGroup } from './MovesGroup.vue';

@@ -1,28 +1,37 @@
 <script setup lang="ts">
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { useStatsStore } from '@/sheet/stores/stats/statsStore';
 
-const stats = useStatsStore()
+const stats = useStatsStore();
 
 defineProps({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   stat: {
     type: Number,
-    required: true
+    required: true,
   },
   numberStyle: {
-    type: String
-  }
-})
-
+    type: String,
+  },
+});
 </script>
 
 <template>
   <div class="mode-card min-w-44 text-center">
-    <Card @click="stats.roll(name, stat)" class="cursor-pointer uppercase drop-shadow shadow bg-muted hover:bg-muted-accent">
+    <Card
+      @click="stats.roll(name, stat)"
+      class="cursor-pointer bg-muted uppercase shadow drop-shadow hover:bg-muted-accent"
+    >
       <CardHeader>
         <CardTitle i18n="">{{ name }}</CardTitle>
       </CardHeader>

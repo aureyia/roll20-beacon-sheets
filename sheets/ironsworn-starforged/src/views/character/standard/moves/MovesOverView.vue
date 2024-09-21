@@ -3,19 +3,17 @@ import { starforged } from 'dataforged';
 // import { ItemSearch } from '@/components/search';
 import { MovesGroup } from '@/components/moves';
 
-const moves = starforged['Move Categories']
-
+const moves = starforged['Move Categories'];
 </script>
 
 <template>
   <div class="moves-overview">
     <!-- TODO: Implement Search -->
     <!-- <ItemSearch /> -->
-    <div class="moves-container columns-3 gap-4 mx-20 mb-20">
-      <MovesGroup class="group" v-for="group in moves" :key="group" :group="group"/>
+    <div class="moves-container mx-20 mb-20 columns-3 gap-4">
+      <MovesGroup class="group" v-for="group in moves" :key="group" :group="group" />
     </div>
   </div>
 </template>
 
-<style lang="sass" scoped>
-</style>
+<style lang="sass" scoped></style>

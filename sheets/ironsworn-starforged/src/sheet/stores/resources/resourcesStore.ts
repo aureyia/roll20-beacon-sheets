@@ -16,30 +16,29 @@ export type ResourcesHydrate = {
 };
 
 export const useResourcesStore = defineStore('resources', () => {
-  const impacts = useImpactsStore()
+  const impacts = useImpactsStore();
 
   const health = ref(5);
   const spirit = ref(5);
   const supply = ref(5);
   const xp = ref(0);
   const spentXp = ref(0);
-  const momentum = ref(2)
-  const momentumMax = computed(() => impacts.list.length > 10 ? 0 : 10 - impacts.list.length)
-  const momentumReset = computed(() => 
-    impacts.list.length === 1 ? 1 : (impacts.list.length >= 2 ? 0 : 2)
+  const momentum = ref(2);
+  const momentumMax = computed(() => (impacts.list.length > 10 ? 0 : 10 - impacts.list.length));
+  const momentumReset = computed(() =>
+    impacts.list.length === 1 ? 1 : impacts.list.length >= 2 ? 0 : 2,
   );
-  
 
   const dehydrate = () => {
-    return { 
+    return {
       resources: {
         health: health.value,
         spirit: spirit.value,
         supply: supply.value,
         xp: xp.value,
         spentXp: spentXp.value,
-        momentum: momentum.value
-      }
+        momentum: momentum.value,
+      },
     };
   };
 

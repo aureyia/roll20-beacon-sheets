@@ -4,9 +4,7 @@
     "Name": "Session",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 140
     },
@@ -15,9 +13,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 141
         },
@@ -34,16 +30,12 @@
           "Text": "When you begin a significant session or chapter of play..."
         },
         "Text": "**When you begin a significant session or chapter of play**, do all of the following.\n\n  * Identify or adjust flagged content and [Set a Flag](Starforged/Moves/Session/Set_a_Flag).\n  * Review or recap what happened last session.\n  * Set the scene by envisioning your character’s current situation and intent.\n\nIn addition, you may spotlight a new danger, opportunity, or insight. This can include a scene hidden from your character’s perspective. If you do, envision a brief vignette (you may roll or choose on the table below for inspiration). Then, all players take +1 momentum as you return to play from the viewpoint of your characters.\n\nRoll   | Result\n-------|-----------------------------------------------------------------------\n1-10   | Flashback reveals an aspect of your background or nature\n11-20  | Flashback reveals an aspect of another character, place, or faction\n21-30  | Influential character or faction is introduced or given new detail\n31-40  | Seemingly unrelated situations are shown to be connected\n41-50  | External factors create new danger, urgency, or importance for a quest\n51-60  | Important character is put in danger or suffers a misadventure\n61-70  | Key location is made unsafe or becomes mired in conflict\n71-80  | Unexpected return of an enemy or threat\n81-90  | Peril lies ahead or lurks just out of view\n91-100 | Unforeseen aid is on the way or within reach",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Begin_a_Session"
-        ]
+        "Oracles": ["Starforged/Oracles/Moves/Begin_a_Session"]
       },
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 142
         },
@@ -64,9 +56,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 143
         },
@@ -87,9 +77,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 144
         },
@@ -110,9 +98,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 145
         },
@@ -142,9 +128,7 @@
     "Name": "Adventure",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 146
     },
@@ -153,9 +137,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 147
         },
@@ -175,45 +157,35 @@
               "Text": "With speed, mobility, or agility",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Face_Danger/Trigger/Options/2",
               "Text": "With resolve, command, or sociability",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Face_Danger/Trigger/Options/3",
               "Text": "With strength, endurance, or aggression",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Face_Danger/Trigger/Options/4",
               "Text": "With deception, stealth, or trickery",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Face_Danger/Trigger/Options/5",
               "Text": "With expertise, focus, or observation",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you attempt something risky or react to an imminent threat..."
@@ -238,9 +210,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 148
         },
@@ -260,45 +230,35 @@
               "Text": "With speed, mobility, or agility",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Secure_an_Advantage/Trigger/Options/2",
               "Text": "With resolve, command, or sociability",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Secure_an_Advantage/Trigger/Options/3",
               "Text": "With strength, endurance, aggression",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Secure_an_Advantage/Trigger/Options/4",
               "Text": "With deception, stealth, or trickery",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Secure_an_Advantage/Trigger/Options/5",
               "Text": "With expertise, focus, or observation",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you assess a situation, make preparations, or attempt to gain leverage..."
@@ -323,9 +283,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 149
         },
@@ -344,17 +302,13 @@
               "$id": "Starforged/Moves/Adventure/Gather_Information/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you search for clues, conduct an investigation, analyze evidence, or do research..."
         },
         "Text": "**When you search for clues, conduct an investigation, analyze evidence, or do research**, roll +wits.\n\nOn a **strong hit**, you discover something helpful and specific. The path you must follow or action you must take to make progress is made clear. Envision what you learn. Then, take +2 momentum.\n\nOn a **weak hit**, the information provides new insight, but also complicates your quest. Envision what you discover. Then, take +1 momentum.\n\nOn a **miss**, your investigation unearths a dire threat or reveals an unwelcome truth that undermines your quest. [Pay the Price](Starforged/Moves/Fate/Pay_the_Price).",
-        "Oracles": [
-          "Starforged/Oracles/Misc/Story_Clue"
-        ],
+        "Oracles": ["Starforged/Oracles/Misc/Story_Clue"],
         "Outcomes": {
           "$id": "Starforged/Moves/Adventure/Gather_Information/Outcomes",
           "Strong Hit": {
@@ -374,9 +328,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 150
         },
@@ -396,27 +348,21 @@
               "Text": "Charm, pacify, encourage, or barter",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Compel/Trigger/Options/2",
               "Text": "Threaten or incite",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Adventure/Compel/Trigger/Options/3",
               "Text": "Lie or swindle",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             }
           ],
           "Text": "When you try to persuade someone or make them an offer..."
@@ -441,9 +387,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 152
         },
@@ -464,9 +408,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 153
         },
@@ -485,9 +427,7 @@
               "$id": "Starforged/Moves/Adventure/Check_Your_Gear/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Supply"
-              ]
+              "Using": ["Supply"]
             }
           ],
           "Text": "When you check to see if you have a specific helpful item or resource..."
@@ -521,9 +461,7 @@
     "Name": "Quest",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 154
     },
@@ -532,9 +470,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 156
         },
@@ -553,9 +489,7 @@
               "$id": "Starforged/Moves/Quest/Swear_an_Iron_Vow/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             }
           ],
           "Text": "When you swear upon iron to complete a quest..."
@@ -580,9 +514,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 157
         },
@@ -603,9 +535,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 158
         },
@@ -625,9 +555,7 @@
               "$id": "Starforged/Moves/Quest/Fulfill_Your_Vow/Trigger/Options/1",
               "Roll type": "Progress roll",
               "Method": "Any",
-              "Using": [
-                "Vow"
-              ]
+              "Using": ["Vow"]
             }
           ],
           "Text": "When you reach the end of your quest..."
@@ -652,9 +580,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 160
         },
@@ -684,9 +610,7 @@
     "Name": "Connection",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 162
     },
@@ -695,9 +619,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 163
         },
@@ -716,9 +638,7 @@
               "$id": "Starforged/Moves/Connection/Make_a_Connection/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             }
           ],
           "Text": "When you search out a new relationship or give focus to an existing relationship (not an ally or companion)..."
@@ -743,9 +663,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 164
         },
@@ -826,9 +744,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 165
         },
@@ -847,9 +763,7 @@
               "$id": "Starforged/Moves/Connection/Test_Your_Relationship/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             }
           ],
           "Text": "When your relationship with a connection is tested through conflict, betrayal, or circumstance..."
@@ -874,9 +788,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 166
         },
@@ -896,9 +808,7 @@
               "$id": "Starforged/Moves/Connection/Forge_a_Bond/Trigger/Options/1",
               "Roll type": "Progress roll",
               "Method": "Any",
-              "Using": [
-                "Connection"
-              ]
+              "Using": ["Connection"]
             }
           ],
           "Text": "When your relationship with a connection is ready to evolve..."
@@ -932,9 +842,7 @@
     "Name": "Exploration",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 168
     },
@@ -943,9 +851,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 169
         },
@@ -965,27 +871,21 @@
               "Text": "Move at speed",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Exploration/Undertake_an_Expedition/Trigger/Options/2",
               "Text": "Keep under the radar",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Exploration/Undertake_an_Expedition/Trigger/Options/3",
               "Text": "Stay vigilant",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you trailblaze a route through perilous space, journey over hazardous terrain, or survey a mysterious site..."
@@ -1010,9 +910,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 174
         },
@@ -1031,9 +929,7 @@
               "$id": "Starforged/Moves/Exploration/Explore_a_Waypoint/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you divert from an expedition to examine a notable location..."
@@ -1066,9 +962,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 176
         },
@@ -1085,16 +979,12 @@
           "Text": "When your exploration of a waypoint uncovers something wondrous"
         },
         "Text": "**When your exploration of a waypoint uncovers something wondrous**, roll on the table below or choose one. Then, envision the nature of the discovery and how it is revealed. When you first experience or engage with the discovery, you and your allies may mark two ticks on your discoveries legacy track.\n\nRoll   | Result\n-------|---------------------------------------------------------------\n1-4    | Advanced technology waiting to be harnessed or salvaged\n5-8    | Ancient archive or message\n9-10   | Artificial consciousness evolved to a higher state\n11-12  | Clues to a crucial resource or uncharted domain\n13-14  | Envoy from another time or reality\n15-22  | Extraordinary natural phenomenon\n23-24  | First contact with intelligent life\n25-26  | Gateway to another time or alternate reality\n27-28  | Key to unlocking a language or method of communication\n29-34  | Lost or hidden people\n35-42  | Majestic or unusual lifeforms\n43-46  | Marvel of ancient engineering\n47-50  | Miraculously preserved artifact or specimen\n51-56  | Monumental architecture or artistry of an ancient civilization\n57-62  | Mysterious device or artifact of potential value\n63-66  | New understanding of an enduring mystery\n67-68  | Pathway or means of travel to a distant location\n69-70  | Person or lifeform with phenomenal abilities\n71-78  | Place of awe-inspiring beauty\n79-86  | Rare and valuable resource\n87-88  | Safeguarded or idyllic location\n89-90  | Visions or prophesies of the future\n91-100 | Roll twice",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Make_a_Discovery"
-        ]
+        "Oracles": ["Starforged/Oracles/Moves/Make_a_Discovery"]
       },
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 177
         },
@@ -1111,16 +1001,12 @@
           "Text": "When your exploration of a waypoint uncovers something dreadful..."
         },
         "Text": "**When your exploration of a waypoint uncovers something dreadful**, decide the number of aspects: one, two, or three. Roll that number of times or choose that number of aspects on the table below. Then, envision how the encounter begins.\n\nFor each result, when you first confront that aspect within the scope of the encounter, you and your allies may mark one tick on your discoveries legacy track.\n\nRoll   | Result\n-------|---------------------------------------------\n1-4    | Baneful weapon of mass destruction\n5-9    | Cataclysmic environmental effects\n10-12  | Dead given unnatural life\n13-17  | Destructive lifeform of monstrous proportion\n18-20  | Dread hallucinations or illusions\n21-24  | Harbingers of an imminent invasion\n25-27  | Horde of insatiable hunger or fury\n28-32  | Horrific lifeforms of inscrutable purpose\n33-36  | Impostors in human form\n37-41  | Machines made enemy\n42-45  | Malignant contagion or parasite\n46-50  | Messenger or signal with a dire warning\n51-53  | Passage to a grim alternate reality\n54-58  | People corrupted by chaos\n59-63  | Powerful distortions of time or space\n64-68  | Signs of an impending catastrophe\n69-72  | Site of a baffling disappearance\n73-77  | Site of a horrible disaster\n78-82  | Site of terrible carnage\n83-87  | Technology nullified or made unstable\n88-92  | Technology warped for dark purpose\n93-96  | Vault of dread technology or power\n97-100 | Worshipers of great and malevolent powers",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Confront_Chaos"
-        ]
+        "Oracles": ["Starforged/Oracles/Moves/Confront_Chaos"]
       },
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 178
         },
@@ -1140,9 +1026,7 @@
               "$id": "Starforged/Moves/Exploration/Finish_an_Expedition/Trigger/Options/1",
               "Roll type": "Progress roll",
               "Method": "Any",
-              "Using": [
-                "Expedition"
-              ]
+              "Using": ["Expedition"]
             }
           ],
           "Text": "When your expedition comes to an end..."
@@ -1167,9 +1051,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 180
         },
@@ -1188,9 +1070,7 @@
               "$id": "Starforged/Moves/Exploration/Set_a_Course/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Supply"
-              ]
+              "Using": ["Supply"]
             }
           ],
           "Text": "When you follow a known route through perilous space, across hazardous terrain, or within a mysterious site..."
@@ -1224,9 +1104,7 @@
     "Name": "Combat",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 182
     },
@@ -1235,9 +1113,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 188
         },
@@ -1257,45 +1133,35 @@
               "Text": "On the move",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Combat/Enter_the_Fray/Trigger/Options/2",
               "Text": "Facing off against your foe",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Combat/Enter_the_Fray/Trigger/Options/3",
               "Text": "In the thick of it at close quarters",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Combat/Enter_the_Fray/Trigger/Options/4",
               "Text": "Preparing to act against an unaware foe",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Combat/Enter_the_Fray/Trigger/Options/5",
               "Text": "Caught in a trap or sizing up the situation",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you initiate combat or are forced into a fight..."
@@ -1320,9 +1186,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 190
         },
@@ -1342,45 +1206,35 @@
               "Text": "In pursuit, fleeing, or maneuvering",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Combat/Gain_Ground/Trigger/Options/2",
               "Text": "By charging boldly into action, coming to the aid of others, negotiating, or commanding",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Combat/Gain_Ground/Trigger/Options/3",
               "Text": "Gaining leverage with force, powering through, or making a threat",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Combat/Gain_Ground/Trigger/Options/4",
               "Text": "Hiding, preparing an ambush, or misdirecting",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Combat/Gain_Ground/Trigger/Options/5",
               "Text": "Coordinating a plan, studying a situation, or cleverly gaining leverage",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you are in control and take action in a fight to reinforce your position or move toward an objective..."
@@ -1405,9 +1259,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 191
         },
@@ -1427,45 +1279,35 @@
               "Text": "In pursuit, fleeing, dodging, getting back into position, or taking cover",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Combat/React_Under_Fire/Trigger/Options/2",
               "Text": "Remaining stalwart against fear or temptation",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Combat/React_Under_Fire/Trigger/Options/3",
               "Text": "Blocking or diverting with force, or taking the hit",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Combat/React_Under_Fire/Trigger/Options/4",
               "Text": "Moving into hiding or creating a distraction",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Combat/React_Under_Fire/Trigger/Options/5",
               "Text": "Changing the plan, finding a way out, or cleverly bypassing an obstacle",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you are in a bad spot and take action in a fight to avoid danger or overcome an obstacle..."
@@ -1490,9 +1332,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 192
         },
@@ -1512,18 +1352,14 @@
               "Text": "Assault a foe at close quarters",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Combat/Strike/Trigger/Options/2",
               "Text": "Attack at a distance",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             }
           ],
           "Text": "When you are in control and assault a foe at close quarters, or when you attack at a distance..."
@@ -1548,9 +1384,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 193
         },
@@ -1570,18 +1404,14 @@
               "Text": "Fight back against a foe at close quarters",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Combat/Clash/Trigger/Options/2",
               "Text": "Exchange fire at a distance",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             }
           ],
           "Text": "When you are in a bad spot and fight back against a foe at close quarters, or when you exchange fire at a distance..."
@@ -1606,9 +1436,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 194
         },
@@ -1628,17 +1456,13 @@
               "$id": "Starforged/Moves/Combat/Take_Decisive_Action/Trigger/Options/1",
               "Roll type": "Progress roll",
               "Method": "Any",
-              "Using": [
-                "Combat"
-              ]
+              "Using": ["Combat"]
             }
           ],
           "Text": "When you seize an objective in a fight..."
         },
         "Text": "**When you seize an objective in a fight**, envision how you take decisive action. Then, roll the challenge dice and compare to your progress.\n\nIf you are in control, check the result as normal. If you are in a bad spot, count a strong hit without a match as a weak hit, and a weak hit as a miss.\n\nOn a **strong hit**, you prevail. Take +1 momentum. If any objectives remain and the fight continues, you are in control.\n\nOn a **weak hit**, you achieve your objective, but not without cost. Roll on the table below or choose one. If the fight continues, you are in a bad spot.\n\nRoll   | Result\n-------|--------\n1-40   | It’s worse than you thought: Make a suffer move (-2)\n41-52  | Victory is short-lived: A new peril or foe appears\n53-64  | You face collateral damage: Something is lost, damaged, or broken\n65-76  | Others pay the price: Someone else suffers the cost\n77-88  | Others won’t forget: You are marked for vengeance\n89-100 | It gets complicated: The true nature of a foe or objective is revealed\n\nOn a **miss**, you are defeated or your objective is lost. [Pay the Price](Starforged/Moves/Fate/Pay_the_Price).",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Take_Decisive_Action"
-        ],
+        "Oracles": ["Starforged/Oracles/Moves/Take_Decisive_Action"],
         "Outcomes": {
           "$id": "Starforged/Moves/Combat/Take_Decisive_Action/Outcomes",
           "Strong Hit": {
@@ -1658,9 +1482,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 196
         },
@@ -1681,9 +1503,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 197
         },
@@ -1703,45 +1523,35 @@
               "Text": "At range, or using your speed and the environment to your advantage",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Combat/Battle/Trigger/Options/2",
               "Text": "Depending on your courage, leadership, or companions",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Combat/Battle/Trigger/Options/3",
               "Text": "In close to overpower your foe",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Combat/Battle/Trigger/Options/4",
               "Text": "Using trickery to befuddle your foe",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Combat/Battle/Trigger/Options/5",
               "Text": "Using careful tactics to outsmart your foe",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you fight a battle and it happens in a blur..."
@@ -1775,9 +1585,7 @@
     "Name": "Suffer",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 198
     },
@@ -1786,9 +1594,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 199
         },
@@ -1809,9 +1615,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 200
         },
@@ -1830,18 +1634,13 @@
               "$id": "Starforged/Moves/Suffer/Endure_Harm/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Highest",
-              "Using": [
-                "Iron",
-                "Health"
-              ]
+              "Using": ["Iron", "Health"]
             }
           ],
           "Text": "When you face physical injury, fatigue, or illness..."
         },
         "Text": "**When you face physical injury, fatigue, or illness**, suffer -1 health for minor harm, -2 for serious harm, or -3 for major harm. If your health is 0, [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) equal to any remaining harm.\n\nThen, if your health is 0 or you choose to resist the harm, roll +health or +iron, whichever is higher.\n\nOn a **strong hit**, choose one.\n\n  * Shake it off: If you are not wounded, take +1 health\n  * Embrace the pain: Take +1 momentum\n\nOn a **weak hit**, if you are not wounded, you may [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) (-1) in exchange for +1 health. Otherwise, press on.\n\nOn a **miss**, it’s worse than you thought. Suffer an additional -1 health or [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) (-2). If your health is 0, you must also mark wounded or permanently harmed, or roll on the table below.\n\nRoll   | Result\n-------|---------\n1-10   | You suffer mortal harm. [Face Death](Starforged/Moves/Threshold/Face_Death).\n11-20  | You are dying. Within an hour or two, you must [Heal](Starforged/Moves/Recover/Heal) and raise your health above 0, or [Face Death](Starforged/Moves/Threshold/Face_Death).\n21-35  | You are unconscious and out of action. If left alone, you come back to your senses in an hour or two. If you are vulnerable to ongoing harm, [Face Death](Starforged/Moves/Threshold/Face_Death).\n36-50  | You are reeling. If you engage in any vigorous activity before taking a breather, roll on this table again (before resolving the other move).\n51-100 | You are still standing.",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Endure_Harm"
-        ],
+        "Oracles": ["Starforged/Oracles/Moves/Endure_Harm"],
         "Outcomes": {
           "$id": "Starforged/Moves/Suffer/Endure_Harm/Outcomes",
           "Strong Hit": {
@@ -1861,9 +1660,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 202
         },
@@ -1882,18 +1679,13 @@
               "$id": "Starforged/Moves/Suffer/Endure_Stress/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Highest",
-              "Using": [
-                "Heart",
-                "Spirit"
-              ]
+              "Using": ["Heart", "Spirit"]
             }
           ],
           "Text": "When you face mental strain, shock, or despair..."
         },
         "Text": "**When you face mental strain, shock, or despair**, suffer -1 spirit for minor stress, -2 for serious stress, or -3 for major stress. If your spirit is 0, [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) equal to any remaining stress.\n\nThen, if your spirit is 0 or you choose to resist the stress, roll +spirit or +heart, whichever is higher.\n\nOn a **strong hit**, choose one.\n\n  * Shake it off: If you are not shaken, take +1 spirit\n  * Embrace the darkness: Take +1 momentum\n\nOn a **weak hit**, if you are not shaken, you may [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) (-1) in exchange for +1 spirit. Otherwise, press on.\n\nOn a **miss**, it's worse than you thought. Suffer an additional -1 spirit or [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) (-2). If your spirit is 0, you must also mark shaken or traumatized, or roll on the table below.\n\nRoll   | Result\n-------|--------------------------------------------------------------------------\n1-10   | You are overwhelmed. [Face Desolation](Starforged/Moves/Threshold/Face_Desolation).\n11-25  | You give up. [Forsake Your Vow](Starforged/Moves/Quest/Forsake_Your_Vow).\n26-50  | You give in to fear or compulsion, and act against your better instincts.\n51-100 | You persevere.",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Endure_Stress"
-        ],
+        "Oracles": ["Starforged/Oracles/Moves/Endure_Stress"],
         "Outcomes": {
           "$id": "Starforged/Moves/Suffer/Endure_Stress/Outcomes",
           "Strong Hit": {
@@ -1913,9 +1705,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 204
         },
@@ -1934,9 +1724,7 @@
               "$id": "Starforged/Moves/Suffer/Companion_Takes_a_Hit/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Companion Health"
-              ]
+              "Using": ["Companion Health"]
             }
           ],
           "Text": "When your companion faces physical hardship..."
@@ -1965,9 +1753,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 205
         },
@@ -1988,9 +1774,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 206
         },
@@ -2009,17 +1793,13 @@
               "$id": "Starforged/Moves/Suffer/Withstand_Damage/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Vehicle Integrity"
-              ]
+              "Using": ["Vehicle Integrity"]
             }
           ],
           "Text": "When your vehicle faces a damaging situation or environment..."
         },
         "Text": "**When your vehicle faces a damaging situation or environment**, suffer -1 integrity for minor damage, -2 for serious damage, or -3 for major damage. If your integrity is 0, [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) equal to any remaining damage.\n\nThen, if your integrity is 0 or you choose to resist the damage, roll +integrity.\n\nOn a **strong hit**, choose one.\n\n  * Bypass: If your vehicle is not battered, take +1 integrity\n  * Ride it out: Take +1 momentum\n\nOn a **weak hit**, if your vehicle is not battered, you may [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) (-1) in exchange for +1 integrity. Otherwise, press on.\n\nOn a **miss**, it’s worse than you thought. Suffer an additional -1 integrity or [Lose Momentum](Starforged/Moves/Suffer/Lose_Momentum) (-2). If your integrity is 0, also suffer a cost according to the vehicle type.\n\n  * **Command vehicle:** Mark the vehicle as **battered** or **cursed**, mark a module as **broken**, destroy a broken module by discarding it, or roll on the table below. If the command vehicle is destroyed, [Overcome Destruction](Starforged/Moves/Threshold/Overcome_Destruction).\n  * **Support vehicle:** Mark the vehicle as **battered** or roll on the table below. If the vehicle is destroyed, discard the asset.\n  * **Incidental vehicle:** Roll on the table below.\n\nRoll   | Result\n-------|-------------------\n1-10   | Immediate catastrophic destruction. All aboard must [Endure Harm](Starforged/Moves/Suffer/Endure_Harm) or [Face Death](Starforged/Moves/Threshold/Face_Death), as appropriate.\n11-25  | Destruction is imminent and unavoidable. If you do not have the means or intention to get clear, [Endure Harm](Starforged/Moves/Suffer/Endure_Harm) or [Face Death](Starforged/Moves/Threshold/Face_Death), as appropriate.\n26-40  | Destruction is imminent, but can be averted if you [Repair](Starforged/Moves/Recover/Repair) your vehicle and raise its integrity above 0. If you fail, see 11-25.\n41-55  | You cannot [Repair](Starforged/Moves/Recover/Repair) this vehicle until you [Resupply](Starforged/Moves/Recover/Resupply) and obtain a crucial replacement part. If you roll this result again prior to that, see 11-25.\n56-70  | The vehicle is crippled or out of your control. To get it back in action, you must [Repair](Starforged/Moves/Recover/Repair) and raise its integrity above 0.\n71-85  | It’s a rough ride. All aboard must make the [Endure Harm](Starforged/Moves/Suffer/Endure_Harm), [Endure Stress](Starforged/Moves/Suffer/Endure_Stress), or [Companion Takes a Hit](Starforged/Moves/Suffer/Companion_Takes_a_Hit) move, suffering a serious (-2) cost.\n86-95  | You’ve lost fuel, energy, or cargo. [Sacrifice Resources](Starforged/Moves/Suffer/Sacrifice_Resources) (-2).\n96-100 | Against all odds, the vehicle holds together.",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Withstand_Damage"
-        ],
+        "Oracles": ["Starforged/Oracles/Moves/Withstand_Damage"],
         "Outcomes": {
           "$id": "Starforged/Moves/Suffer/Withstand_Damage/Outcomes",
           "Strong Hit": {
@@ -2048,9 +1828,7 @@
     "Name": "Recover",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 208
     },
@@ -2059,9 +1837,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 209
         },
@@ -2080,9 +1856,7 @@
               "$id": "Starforged/Moves/Recover/Sojourn/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             }
           ],
           "Text": "When you spend time recovering within a community..."
@@ -2107,9 +1881,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 210
         },
@@ -2129,37 +1901,28 @@
               "Text": "Receive treatment from someone (not an ally)",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Recover/Heal/Trigger/Options/2",
               "Text": "Mend your own wounds",
               "Roll type": "Action roll",
               "Method": "Lowest",
-              "Using": [
-                "Iron",
-                "Wits"
-              ]
+              "Using": ["Iron", "Wits"]
             },
             {
               "$id": "Starforged/Moves/Recover/Heal/Trigger/Options/3",
               "Text": "Obtain treatment for a companion",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Recover/Heal/Trigger/Options/4",
               "Text": "Provide care",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you receive medical care or provide treatment..."
@@ -2184,9 +1947,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 211
         },
@@ -2205,9 +1966,7 @@
               "$id": "Starforged/Moves/Recover/Hearten/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             }
           ],
           "Text": "When you socialize, share intimacy, or find a moment of peace..."
@@ -2232,9 +1991,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 212
         },
@@ -2254,36 +2011,28 @@
               "Text": "Barter or make an appeal",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Recover/Resupply/Trigger/Options/2",
               "Text": "Threaten or seize",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Recover/Resupply/Trigger/Options/3",
               "Text": "Steal or swindle",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Recover/Resupply/Trigger/Options/4",
               "Text": "Scavenge or craft",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you attempt to bolster your readiness..."
@@ -2308,9 +2057,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 214
         },
@@ -2330,18 +2077,14 @@
               "Text": "Make your own repairs, or direct a companion to make repairs",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             },
             {
               "$id": "Starforged/Moves/Recover/Repair/Trigger/Options/2",
               "Text": "Obtain repairs from someone (not an ally)",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Supply"
-              ]
+              "Using": ["Supply"]
             }
           ],
           "Text": "When you make repairs to your vehicles, modules, mechanical companions, or other devices..."
@@ -2375,9 +2118,7 @@
     "Name": "Threshold",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 216
     },
@@ -2386,9 +2127,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 217
         },
@@ -2407,9 +2146,7 @@
               "$id": "Starforged/Moves/Threshold/Face_Death/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             }
           ],
           "Text": "When you are brought to the brink of death with a chance for recovery or redemption..."
@@ -2434,9 +2171,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 218
         },
@@ -2455,9 +2190,7 @@
               "$id": "Starforged/Moves/Threshold/Face_Desolation/Trigger/Options/1",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             }
           ],
           "Text": "When you are brought to the brink of desolation..."
@@ -2482,9 +2215,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 220
         },
@@ -2504,9 +2235,7 @@
               "$id": "Starforged/Moves/Threshold/Overcome_Destruction/Trigger/Options/1",
               "Roll type": "Progress roll",
               "Method": "Any",
-              "Using": [
-                "Bonds"
-              ]
+              "Using": ["Bonds"]
             }
           ],
           "Text": "When your command vehicle is destroyed or irrevocably lost..."
@@ -2540,9 +2269,7 @@
     "Name": "Legacy",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 222
     },
@@ -2551,9 +2278,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 224
         },
@@ -2574,9 +2299,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 225
         },
@@ -2597,9 +2320,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 226
         },
@@ -2619,11 +2340,7 @@
               "$id": "Starforged/Moves/Legacy/Continue_a_Legacy/Trigger/Options/1",
               "Roll type": "Progress roll",
               "Method": "All",
-              "Using": [
-                "Quests Legacy",
-                "Bonds Legacy",
-                "Discoveries Legacy"
-              ]
+              "Using": ["Quests Legacy", "Bonds Legacy", "Discoveries Legacy"]
             }
           ],
           "Text": "When you retire from your life as Ironsworn, or succumb to death or desolation..."
@@ -2657,9 +2374,7 @@
     "Name": "Fate",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 228
     },
@@ -2668,9 +2383,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 229
         },
@@ -2698,9 +2411,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 232
         },
@@ -2717,9 +2428,7 @@
           "Text": "When you suffer the outcome of an action..."
         },
         "Text": "**When you suffer the outcome of an action**, choose one.\n\n  * Make the most obvious negative outcome happen.\n  * [Ask the Oracle](Starforged/Moves/Fate/Ask_the_Oracle) for inspiration. Interpret the answer as a hardship or complication appropriate to the situation.\n  * Roll on the table below. If the result doesn’t fit the situation, roll again.\n\nRoll   | Result\n-------|---------------------------------------------------------------------\n1-2    | A trusted individual or community acts against you\n3-4    | An individual or community you care about is exposed to danger\n5-7    | You encounter signs of a looming threat\n8-10   | You create an opportunity for an enemy\n11-14  | You face a tough choice\n15-18  | You face the consequences of an earlier choice\n19-22  | A surprising development complicates your quest\n23-26  | You are separated from something or someone\n27-32  | Your action causes collateral damage or has an unintended effect\n33-38  | Something of value is lost or destroyed\n39-44  | The environment or terrain introduces a new hazard\n45-50  | A new enemy is revealed\n51-56  | A friend, companion, or ally is in harm's way (or you are, if alone)\n57-62  | Your equipment or vehicle malfunctions\n63-68  | Your vehicle suffers damage\n69-74  | You waste resources\n75-81  | You are harmed\n82-88  | You are stressed\n89-95  | You are delayed or put at a disadvantage\n96-100 | Roll twice",
-        "Oracles": [
-          "Starforged/Oracles/Moves/Pay_the_Price"
-        ]
+        "Oracles": ["Starforged/Oracles/Moves/Pay_the_Price"]
       }
     ],
     "Display": {
@@ -2733,9 +2442,7 @@
     "Name": "Scene Challenge",
     "Source": {
       "Title": "Ironsworn: Starforged Rulebook",
-      "Authors": [
-        "Shawn Tomkin"
-      ],
+      "Authors": ["Shawn Tomkin"],
       "Date": "050622",
       "Page": 239
     },
@@ -2744,9 +2451,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 239
         },
@@ -2767,9 +2472,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 240
         },
@@ -2790,45 +2493,35 @@
               "Text": "With speed, mobility, or agility",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Face_Danger/Trigger/Options/2",
               "Text": "With resolve, command, or sociability",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Face_Danger/Trigger/Options/3",
               "Text": "With strength, endurance, or aggression",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Face_Danger/Trigger/Options/4",
               "Text": "With deception, stealth, or trickery",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Face_Danger/Trigger/Options/5",
               "Text": "With expertise, focus, or observation",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you attempt something risky or react to an imminent threat within a scene challenge..."
@@ -2861,9 +2554,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 240
         },
@@ -2884,45 +2575,35 @@
               "Text": "With speed, mobility, or agility",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Edge"
-              ]
+              "Using": ["Edge"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Secure_an_Advantage/Trigger/Options/2",
               "Text": "With resolve, command, or sociability",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Heart"
-              ]
+              "Using": ["Heart"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Secure_an_Advantage/Trigger/Options/3",
               "Text": "With strength, endurance, aggression",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Iron"
-              ]
+              "Using": ["Iron"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Secure_an_Advantage/Trigger/Options/4",
               "Text": "With deception, stealth, or trickery",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Shadow"
-              ]
+              "Using": ["Shadow"]
             },
             {
               "$id": "Starforged/Moves/Scene_Challenge/Secure_an_Advantage/Trigger/Options/5",
               "Text": "With expertise, focus, or observation",
               "Roll type": "Action roll",
               "Method": "Any",
-              "Using": [
-                "Wits"
-              ]
+              "Using": ["Wits"]
             }
           ],
           "Text": "When you assess a situation, make preparations, or attempt to gain leverage within a scene challenge..."
@@ -2955,9 +2636,7 @@
       {
         "Source": {
           "Title": "Ironsworn: Starforged Rulebook",
-          "Authors": [
-            "Shawn Tomkin"
-          ],
+          "Authors": ["Shawn Tomkin"],
           "Date": "050622",
           "Page": 241
         },
@@ -2977,9 +2656,7 @@
               "$id": "Starforged/Moves/Scene_Challenge/Finish_the_Scene/Trigger/Options/1",
               "Roll type": "Progress roll",
               "Method": "Any",
-              "Using": [
-                "Scene Challenge"
-              ]
+              "Using": ["Scene Challenge"]
             }
           ],
           "Text": "When the scene challenge tension clock or progress track is filled, or when events lead to the scene’s conclusion..."
