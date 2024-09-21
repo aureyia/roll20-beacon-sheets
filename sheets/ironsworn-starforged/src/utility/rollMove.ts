@@ -8,27 +8,6 @@ import type { DiceComponent } from '@/rolltemplates/rolltemplates';
 import { calculateOutcome } from './calculateOutcome';
 import { calculateActionScore } from './calculateActionScore';
 import { isEligibleForMomentumBurn } from './momentumEligibility';
-import { MoveOutcome } from 'dataforged';
-
-export const actionRoll = async (label: string, value: number, modifier: number) => {
-  const { momentum } = useResourcesStore();
-  const formattedDice = formatDiceComponents(actionDice);
-  const rollResults = await getRollFromDispatch({ rolls: formattedDice });
-  const rolledDice = convertResultsToDice(actionDice, rollResults);
-  const character = initValues.character;
-  sendRollToChat(character.id, {
-    type: 'move',
-    parameters: {
-      characterName: character.name,
-      title: 'Rolling ' + label,
-      dice: rolledDice,
-      label,
-      value,
-      momentum,
-      modifier,
-    },
-  });
-};
 
 // TODO: Refactor so it doesn't have state called during the function execution.
 // Momentum and dice roll
@@ -36,26 +15,29 @@ export const rollMove = async (move: any, assets: any, value: number, modifier: 
   const rolledDice = await getRolledDice(actionDice);
   const { momentum } = useResourcesStore();
 
-  const actionScore = calculateActionScore(rolledDice, value, modifier, momentum);
+  const assetModifiers = calculatePrerollAssetModifiers(assets) 
+
+  const actionScore = calculateActionScore(rolledDice, value, modifier + assetModifiers, momentum);
   const { dice, outcome } = calculateOutcome(actionScore.score, rolledDice);
-  const momentumBurn = isEligibleForMomentumBurn(dice, outcome, momentum) 
-  return { dice, outcome, actionScore, momentumBurn };
+  const momentumBurn = isEligibleForMomentumBurn(dice, outcome, momentum);
+  return { dice, outcome, actionScore, momentumBurn, move };
 };
 
-export const followUpRoll = async (dice: DiceComponent[], outcome: string,  score: number, label: string, negated = false, modifier = 0,) => {
- sendRollToChat(initValues.character.id, {
-  type: 'move',
-  parameters: {
-    characterName: initValues.character.name,
-    title: 'Rolling ' + label,
-    dice,
-    outcome,
-    score,
-    negated,
-    modifier,
-    label,
-  }
- }) 
+const calculatePrerollAssetModifiers = (assets: any) => 0
+
+export const followUpRoll = async (opts: any) => {
+  // console.log(opts)
+  
+  sendRollToChat(initValues.character.id, {
+    type: 'move-compact',
+    parameters: {
+      characterName: initValues.character.name,
+      title: 'Rolling ' + opts.move.Name,
+      dice: opts.dice,
+      outcome: opts.outcome,
+      score: opts.actionScore,
+    }
+  }) 
 }
 
 

@@ -1,16 +1,14 @@
 {{!-- TODO: Support momentum burning --}}
-{{#> wrapper type="stat" keyValues=keyValues }}
+{{#> wrapper type="stat"}}
   {{#> characterRollHeader characterName=characterName title=title}}
   {{/ characterRollHeader}}
 
-  {{assign "actionScore" (calculateActionScore dice value modifier momentum)}}
-
   <div class="stat__body">
-    {{> actionScore actionScore=@root.actionScore}}
+    {{> actionScore actionScore=score}}
     {{> challengeDice dice=dice}}
   </div>
 
   <div class="stat__footer">
-    {{> rollOutcome outcome=(calculateOutcome @root.actionScore.score dice) score=@root.actionScore.score}}
+    {{> rollOutcome outcome=outcome}}
   </div>
 {{/ wrapper }}
