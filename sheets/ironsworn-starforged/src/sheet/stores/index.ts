@@ -101,8 +101,8 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
   const loadExampleData = () => {
     stores.meta.name = 'Auri';
     stores.meta.avatar = 'http://placekitten.com/200/200';
-    stores.character.callsign = 'Swifty'
-    stores.character.pronouns = 'She/Her'
+    stores.character.callsign = 'Swifty';
+    stores.character.pronouns = 'She/Her';
     stores.resources.health = 5;
     stores.resources.spirit = 5;
     stores.resources.supply = 5;

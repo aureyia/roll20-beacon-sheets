@@ -28,12 +28,12 @@ const toggleImpactRemoval = ref(false);
 <template>
   <div class="summary mx-10">
     <div class="descriptors">
-      <div class="character-info flex gap-6 flex-row m-3">
+      <div class="character-info m-3 flex flex-row gap-6">
         <LabelledInput class="flex basis-2/4" label="Name" v-model="meta.name" />
         <LabelledInput class="flex basis-1/4" label="Callsign" v-model="character.callsign" />
         <LabelledInput class="flex basis-1/4" label="Pronouns" v-model="character.pronouns" />
       </div>
-      <div class="resources gap-6 flex flex-row m-3">
+      <div class="resources m-3 flex flex-row gap-6">
         <LabelledNumberField
           class="flex basis-1/4"
           type="number"
@@ -58,11 +58,16 @@ const toggleImpactRemoval = ref(false);
           :max="5"
           :min="0"
         />
-        <LabelledNumberField class="flex basis-1/4" type="number" label="XP" v-model="resources.xp" />
+        <LabelledNumberField
+          class="flex basis-1/4"
+          type="number"
+          label="XP"
+          v-model="resources.xp"
+        />
         <LabelledSwitch class="flex basis-1/4" label="Edit Stats" v-model="toggleStatsEdit" />
       </div>
     </div>
-    <div class="stats flex justify-center gap-5 mt-10" v-if="toggleStatsEdit">
+    <div class="stats mt-10 flex justify-center gap-5" v-if="toggleStatsEdit">
       <LabelledNumberField
         class="text-center"
         v-for="stat in STAT_LIST"
@@ -72,7 +77,7 @@ const toggleImpactRemoval = ref(false);
         input-modifier="py-12 font-bold text-2xl"
       />
     </div>
-    <div class="stats flex justify-center gap-5 mt-10" v-else>
+    <div class="stats mt-10 flex justify-center gap-5" v-else>
       <StatCard
         v-for="stat in STAT_LIST"
         :key="stat"
@@ -82,12 +87,16 @@ const toggleImpactRemoval = ref(false);
       />
     </div>
     <div class="impacts mt-10">
-      <div class="impacts-header flex justify-center gap-10 items-center">
-        <Toggle class= "text-primary-foreground hover:text-primary-foreground bg-primary hover:bg-primary/90 data-[state=on]:bg-destructive" v-model:pressed="toggleImpactRemoval">Remove</Toggle>
+      <div class="impacts-header flex items-center justify-center gap-10">
+        <Toggle
+          class="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground data-[state=on]:bg-destructive"
+          v-model:pressed="toggleImpactRemoval"
+          >Remove</Toggle
+        >
         <h3 class="text-2xl">Impacts</h3>
         <ImpactDialog />
       </div>
-      <div class="flex justify-evenly gap-3 text-center mt-8">
+      <div class="mt-8 flex justify-evenly gap-3 text-center">
         <ImpactCategory
           v-for="category in Object.keys(IMPACTS)"
           :key="category"

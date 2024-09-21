@@ -15,7 +15,7 @@ export type Stats = {
   iron: number;
   shadow: number;
   wits: number;
-}
+};
 
 export type StatsHydrate = {
   stats: {
@@ -43,12 +43,17 @@ export const useStatsStore = defineStore('stats', () => {
    * @param customDispatch The dispatch function to use to post the roll template. If not provided, the default dispatch function will be used.
    * @returns The result of the roll as an array of dice results.
    */
-  const roll = async (label: string, value: number, modifier: number = 0, customDispatch?: Dispatch) => {
+  const roll = async (
+    label: string,
+    value: number,
+    modifier: number = 0,
+    customDispatch?: Dispatch,
+  ) => {
     const dispatch = customDispatch || (dispatchRef.value as Dispatch);
     const { momentum } = useResourcesStore();
-    const formattedDice = formatDiceComponents(actionDice)
-    const rollResults = await getRollFromDispatch({ rolls: formattedDice})
-    const rolledDice = convertResultsToDice(actionDice, rollResults)
+    const formattedDice = formatDiceComponents(actionDice);
+    const rollResults = await getRollFromDispatch({ rolls: formattedDice });
+    const rolledDice = convertResultsToDice(actionDice, rollResults);
 
     const rollTemplate = createRollTemplate({
       type: 'stat',
@@ -59,8 +64,8 @@ export const useStatsStore = defineStore('stats', () => {
         label,
         value,
         momentum,
-        modifier
-      }
+        modifier,
+      },
     });
 
     await dispatch.post({
@@ -76,14 +81,14 @@ export const useStatsStore = defineStore('stats', () => {
   };
 
   const dehydrate = () => {
-    return { 
+    return {
       stats: {
         edge: edge.value,
         heart: heart.value,
         iron: iron.value,
         shadow: shadow.value,
         wits: wits.value,
-      }
+      },
     };
   };
 

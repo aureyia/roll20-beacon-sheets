@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const modeList = [
   'character-standard',
   'character-edge',
@@ -7,18 +6,17 @@ const modeList = [
   'locations',
   'oracles',
   'shared',
-  'ship'
-]
-
+  'ship',
+];
 </script>
 
 <template>
   <div class="mode">
     <div>
-      <h3 class="text-2xl text-center mb-4">Modes</h3>
+      <h3 class="mb-4 text-center text-2xl">Modes</h3>
     </div>
-    <div class="mode-select flex flex-wrap gap-2 justify-center">
-      <ModeCard  v-for="mode in modeList" :key="mode" :mode="mode"/>
+    <div class="mode-select flex flex-wrap justify-center gap-2">
+      <ModeCard v-for="mode in modeList" :key="mode" :mode="mode" />
     </div>
   </div>
 </template>

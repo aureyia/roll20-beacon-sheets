@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import  ModeSelectView  from '@/views/_common/ModeSelectView.vue';
+import ModeSelectView from '@/views/_common/ModeSelectView.vue';
 
-import { 
+import {
   MainView as CharacterStandardMainView,
   AssetsView as CharacterStandardAssetsView,
   ConnectionsView as CharacterStandardConnectionsView,
@@ -9,10 +9,10 @@ import {
   MovesView as CharacterStandardMovesView,
   ProgressView as CharacterStandardProgressView,
   SummaryView as CharacterStandardSummaryView,
-  VowsView as CharacterStandardVowsView
-} from '@/views/character/standard'
+  VowsView as CharacterStandardVowsView,
+} from '@/views/character/standard';
 
-import { 
+import {
   MainView as CharacterEdgeMainView,
   AssetsView as CharacterEdgeAssetsView,
   ConnectionsView as CharacterEdgeConnectionsView,
@@ -20,31 +20,20 @@ import {
   MovesView as CharacterEdgeMovesView,
   ProgressView as CharacterEdgeProgressView,
   SummaryView as CharacterEdgeSummaryView,
-  VowsView as CharacterEdgeVowsView
-} from '../views/character/edge'
+  VowsView as CharacterEdgeVowsView,
+} from '../views/character/edge';
 
-import { 
-  MainView as GuideMainView,
-  OraclesView as GuideOraclesView
-} from '@/views/guide';
+import { MainView as GuideMainView, OraclesView as GuideOraclesView } from '@/views/guide';
 
-import {
-  MainView as LocationsMainView
-} from '@/views/locations';
+import { MainView as LocationsMainView } from '@/views/locations';
 
-import {
-  MainView as OrcalesMainView
-} from '@/views/orcales';
+import { MainView as OrcalesMainView } from '@/views/orcales';
 
-import {
-  MainView as SharedMainView
-} from '@/views/ship';
+import { MainView as SharedMainView } from '@/views/ship';
 
-import {
-  MainView as ShipMainView
-} from '@/views/ship';
+import { MainView as ShipMainView } from '@/views/ship';
 
-const characterStandardViews :any = {
+const characterStandardViews: any = {
   summary: CharacterStandardSummaryView,
   assets: CharacterStandardAssetsView,
   connections: CharacterStandardConnectionsView,
@@ -54,7 +43,7 @@ const characterStandardViews :any = {
   vows: CharacterStandardVowsView,
 };
 
-const characterEdgeViews :any = {
+const characterEdgeViews: any = {
   summary: CharacterEdgeSummaryView,
   assets: CharacterEdgeAssetsView,
   connections: CharacterEdgeConnectionsView,
@@ -72,21 +61,23 @@ const characterViewList = [
   'progress',
   'summary',
   'vows',
-]
+];
 
-const charactercStandardRoutes = () => characterViewList.map((view) => ({
-  path: `/${view}`,
-  name: `characterStandard${view.charAt(0).toUpperCase() + view.slice(1)}`,
-  component: characterStandardViews[view],
-  alias: `/character-${view}`,
-}))
+const charactercStandardRoutes = () =>
+  characterViewList.map((view) => ({
+    path: `/${view}`,
+    name: `characterStandard${view.charAt(0).toUpperCase() + view.slice(1)}`,
+    component: characterStandardViews[view],
+    alias: `/character-${view}`,
+  }));
 
-const characterEdgeRoutes = () => characterViewList.map((view) => ({
-  path: `/${view}`,
-  name: `characterEdge${view.charAt(0).toUpperCase() + view.slice(1)}`,
-  component: characterEdgeViews[view],
-  alias: `/character-${view}`,
-}))
+const characterEdgeRoutes = () =>
+  characterViewList.map((view) => ({
+    path: `/${view}`,
+    name: `characterEdge${view.charAt(0).toUpperCase() + view.slice(1)}`,
+    component: characterEdgeViews[view],
+    alias: `/character-${view}`,
+  }));
 
 /*
  * Vue Router is used for switching between the 2 different views in the sheet.
@@ -105,17 +96,13 @@ const router = createRouter({
       path: '/character/standard',
       name: 'character-standard',
       component: CharacterStandardMainView,
-      children: [
-        ...charactercStandardRoutes(),
-      ]
+      children: [...charactercStandardRoutes()],
     },
     {
       path: '/character/edge',
       name: 'character-edge',
       component: CharacterEdgeMainView,
-      children: [
-        ...characterEdgeRoutes(),
-      ]
+      children: [...characterEdgeRoutes()],
     },
     {
       path: '/guide',
@@ -125,31 +112,30 @@ const router = createRouter({
         {
           path: 'oracles',
           name: 'guideOracles',
-          component: GuideOraclesView
-        }
-      ]
+          component: GuideOraclesView,
+        },
+      ],
     },
     {
       path: '/locations',
       name: 'locations',
-      component: LocationsMainView
+      component: LocationsMainView,
     },
     {
       path: '/orcales',
       name: 'orcales',
-      component: OrcalesMainView
+      component: OrcalesMainView,
     },
     {
       path: '/ship',
       name: 'ship',
-      component: ShipMainView
+      component: ShipMainView,
     },
     {
       path: '/shared',
       name: 'shared',
-      component: SharedMainView
+      component: SharedMainView,
     },
   ],
 });
 export default router;
-

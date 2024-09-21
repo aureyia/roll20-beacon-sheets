@@ -1,4 +1,3 @@
-
 @use '/src/common/scss/vars';
 
 @use 'scale/ecv';
@@ -14,11 +13,13 @@ body {
   overflow-x: hidden;
 }
 
-input, button {
-  font: inherit
+input,
+button {
+  font: inherit;
 }
 
-textarea, input {
+textarea,
+input {
   font: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;

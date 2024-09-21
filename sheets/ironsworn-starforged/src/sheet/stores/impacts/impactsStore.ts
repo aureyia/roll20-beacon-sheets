@@ -1,9 +1,16 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { createId } from '@paralleldrive/cuid2'
+import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
-import type { AnyImpact, Burden, CurrentVehicle, LastingEffect, Misfortune, Other } from '@/system/impacts';
+import type {
+  AnyImpact,
+  Burden,
+  CurrentVehicle,
+  LastingEffect,
+  Misfortune,
+  Other,
+} from '@/system/impacts';
 
 export type ImpactsHydrate = {
   impacts: {
@@ -16,86 +23,95 @@ export type ImpactsHydrate = {
 };
 
 export const useImpactsStore = defineStore('impacts', () => {
-
   const misfortunes: Ref<Array<Misfortune>> = ref([]);
   const lastingEffects: Ref<Array<LastingEffect>> = ref([]);
   const burdens: Ref<Array<Burden>> = ref([]);
   const currentVehicle: Ref<Array<CurrentVehicle>> = ref([]);
   const other: Ref<Array<Other>> = ref([]);
 
-  const addImpact = (name :AnyImpact['name'], category: AnyImpact['category'], description?: string) => {
+  const addImpact = (
+    name: AnyImpact['name'],
+    category: AnyImpact['category'],
+    description?: string,
+  ) => {
     if (!category) {
-      throw new Error('Category is required when adding an impact')
+      throw new Error('Category is required when adding an impact');
     }
     if (!name) {
-      throw new Error('Option is required when adding an impact')
+      throw new Error('Option is required when adding an impact');
     }
-    const impact :AnyImpact = {
+    const impact: AnyImpact = {
       _id: createId(),
       category: category,
       name: name,
-      description: description || ''
-    }
-    if (!['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(category)) {
-      throw new Error(`Unknown category: ${category}`)
+      description: description || '',
+    };
+    if (
+      !['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(category)
+    ) {
+      throw new Error(`Unknown category: ${category}`);
     }
 
     switch (category) {
       case 'misfortunes':
-        misfortunes.value.push(impact as Misfortune)
-        break
+        misfortunes.value.push(impact as Misfortune);
+        break;
       case 'lastingEffects':
-        lastingEffects.value.push(impact as LastingEffect)
-        break
+        lastingEffects.value.push(impact as LastingEffect);
+        break;
       case 'burdens':
-        burdens.value.push(impact as Burden)
-        break
+        burdens.value.push(impact as Burden);
+        break;
       case 'currentVehicle':
-        currentVehicle.value.push(impact as CurrentVehicle)
-        break
+        currentVehicle.value.push(impact as CurrentVehicle);
+        break;
       case 'other':
-        other.value.push(impact as Other)
-        break
+        other.value.push(impact as Other);
+        break;
     }
-  }
+  };
 
-  const removeImpact = (impact :AnyImpact) => {
+  const removeImpact = (impact: AnyImpact) => {
     if (!impact.category) {
-      throw new Error('Category is required when removing an impact')
+      throw new Error('Category is required when removing an impact');
     }
     if (!impact._id) {
-      throw new Error('_id is required when removing an impact')
+      throw new Error('_id is required when removing an impact');
     }
-    if (!['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(impact.category)) {
-      throw new Error(`Unknown category: ${impact.category}`)
+    if (
+      !['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(
+        impact.category,
+      )
+    ) {
+      throw new Error(`Unknown category: ${impact.category}`);
     }
 
     switch (impact.category) {
       case 'misfortunes':
-        misfortunes.value = misfortunes.value.filter(entry => entry.name !== impact.name)
-        break
+        misfortunes.value = misfortunes.value.filter((entry) => entry.name !== impact.name);
+        break;
       case 'lastingEffects':
-        lastingEffects.value = lastingEffects.value.filter(entry => entry.name !== impact.name)
-        break
+        lastingEffects.value = lastingEffects.value.filter((entry) => entry.name !== impact.name);
+        break;
       case 'burdens':
-        burdens.value = burdens.value.filter(entry => entry.name !== impact.name)
-        break
+        burdens.value = burdens.value.filter((entry) => entry.name !== impact.name);
+        break;
       case 'currentVehicle':
-        currentVehicle.value = currentVehicle.value.filter(entry => entry.name !== impact.name)
-        break
+        currentVehicle.value = currentVehicle.value.filter((entry) => entry.name !== impact.name);
+        break;
       case 'other':
-        other.value = other.value.filter(entry => entry.name !== impact.name)
-        break
+        other.value = other.value.filter((entry) => entry.name !== impact.name);
+        break;
     }
-  }
+  };
 
   const clearImpacts = () => {
-    misfortunes.value = []
-    lastingEffects.value = []
-    burdens.value = []
-    currentVehicle.value = []
-    other.value = []
-  }
+    misfortunes.value = [];
+    lastingEffects.value = [];
+    burdens.value = [];
+    currentVehicle.value = [];
+    other.value = [];
+  };
 
   const dehydrate = () => {
     return {
@@ -111,9 +127,11 @@ export const useImpactsStore = defineStore('impacts', () => {
 
   const hydrate = (hydrateStore: ImpactsHydrate) => {
     misfortunes.value = objectToArray(hydrateStore.impacts.misfortunes) ?? misfortunes.value;
-    lastingEffects.value = objectToArray(hydrateStore.impacts.lastingEffects) ?? lastingEffects.value;
+    lastingEffects.value =
+      objectToArray(hydrateStore.impacts.lastingEffects) ?? lastingEffects.value;
     burdens.value = objectToArray(hydrateStore.impacts.burdens) ?? burdens.value;
-    currentVehicle.value = objectToArray(hydrateStore.impacts.currentVehicle) ?? currentVehicle.value;
+    currentVehicle.value =
+      objectToArray(hydrateStore.impacts.currentVehicle) ?? currentVehicle.value;
     other.value = objectToArray(hydrateStore.impacts.other) ?? other.value;
   };
 
@@ -123,9 +141,9 @@ export const useImpactsStore = defineStore('impacts', () => {
       ...lastingEffects.value,
       ...burdens.value,
       ...currentVehicle.value,
-      ...other.value
-    ]
-  })
+      ...other.value,
+    ];
+  });
 
   return {
     list,

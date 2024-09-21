@@ -36,7 +36,7 @@ import { useTaskStore, type TaskCategory } from '@/sheet/stores/chronicle/tasksS
 import { DIFFICULTIES } from '@/system/tasks';
 import { inject, watch } from 'vue';
 
-const categories: TaskCategory[] = inject('categories') as TaskCategory[] ?? [];
+const categories: TaskCategory[] = (inject('categories') as TaskCategory[]) ?? [];
 
 if (categories.length === 0) {
   throw new Error('Categories must have at least one element');
@@ -57,16 +57,15 @@ const taskStore = useTaskStore();
 const onSubmit = form.handleSubmit((values) => {
   taskStore.addTask(values.description, values.category as TaskCategory, values.difficulty);
 });
-
 </script>
 
 <template>
   <div class="progress-dialog">
     <Dialog>
       <DialogTrigger as-child>
-        <Button 
-          variant="outline" 
-          class="h-8 w-24 border-primary border-2 font-bold"
+        <Button
+          variant="outline"
+          class="h-8 w-24 border-2 border-primary font-bold"
           @click="form.values.category = categories[0]"
           >Add</Button
         >

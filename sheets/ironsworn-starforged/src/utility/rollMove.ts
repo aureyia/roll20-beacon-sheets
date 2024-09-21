@@ -15,7 +15,7 @@ export const rollMove = async (move: any, assets: any, value: number, modifier: 
   const rolledDice = await getRolledDice(actionDice);
   const { momentum } = useResourcesStore();
 
-  const assetModifiers = calculatePrerollAssetModifiers(assets) 
+  const assetModifiers = calculatePrerollAssetModifiers(assets);
 
   const actionScore = calculateActionScore(rolledDice, value, modifier + assetModifiers, momentum);
   const { dice, outcome } = calculateOutcome(actionScore.score, rolledDice);
@@ -23,11 +23,11 @@ export const rollMove = async (move: any, assets: any, value: number, modifier: 
   return { dice, outcome, actionScore, momentumBurn, move };
 };
 
-const calculatePrerollAssetModifiers = (assets: any) => 0
+const calculatePrerollAssetModifiers = (assets: any) => 0;
 
 export const followUpRoll = async (opts: any) => {
   // console.log(opts)
-  
+
   sendRollToChat(initValues.character.id, {
     type: 'move-compact',
     parameters: {
@@ -36,14 +36,12 @@ export const followUpRoll = async (opts: any) => {
       dice: opts.dice,
       outcome: opts.outcome,
       score: opts.actionScore,
-    }
-  }) 
-}
-
+    },
+  });
+};
 
 export const getRolledDice = async (dice: DiceComponent[]): Promise<DiceComponent[]> => {
   const formattedDice = formatDiceComponents(dice);
   const rollResults = await getRollFromDispatch({ rolls: formattedDice });
   return convertResultsToDice(dice, rollResults);
 };
-

@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { Toggle } from '@/components/ui/toggle';
 import { Switch } from '@/components/ui/switch';
-import { ref }  from 'vue';
+import { ref } from 'vue';
 import { Label } from '@/components/ui/label';
 import { LabelledSwitch } from '@/components/switches';
 import MovesOverView from '@/views/character/standard/moves/MovesOverView.vue';
 
-const viewMode = ref(false)
-
+const viewMode = ref(false);
 </script>
 
 <template>

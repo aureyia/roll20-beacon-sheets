@@ -1,23 +1,30 @@
 <script setup lang="ts">
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { useSettingsStore } from '@/sheet/stores/settings/settingsStore'
-import { useRouter } from 'vue-router'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
+import { useRouter } from 'vue-router';
 
-const settings = useSettingsStore()
-const router = useRouter()
+const settings = useSettingsStore();
+const router = useRouter();
 const selectMode = (mode: string) => {
-  settings.setMode(mode)
-  console.log('selectMode', mode)
-  router.push({ name: mode })
-}
+  settings.setMode(mode);
+  console.log('selectMode', mode);
+  router.push({ name: mode });
+};
 
 defineProps({
   mode: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
 
 <template>
@@ -25,7 +32,9 @@ defineProps({
     <Card>
       <CardHeader>
         <CardTitle i18n="mode-card-character-standard-title">{{ mode }}</CardTitle>
-        <CardDescription i18n="mode-card-character-standard-description">{{ mode }}</CardDescription>
+        <CardDescription i18n="mode-card-character-standard-description">{{
+          mode
+        }}</CardDescription>
       </CardHeader>
       <CardContent i18n="">{{ mode }} image</CardContent>
       <CardFooter>

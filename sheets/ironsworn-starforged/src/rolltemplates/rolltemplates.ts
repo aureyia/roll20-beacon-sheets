@@ -82,11 +82,11 @@ handlebars.registerHelper('not', (v) => !v);
 handlebars.registerHelper('or', (a, b) => a || b);
 handlebars.registerHelper('and', (a, b) => a && b);
 
-handlebars.registerHelper('assign', function(varName, value, options) {
+handlebars.registerHelper('assign', function (varName, value, options) {
   options.data.root[varName] = value;
 });
 
-handlebars.registerHelper('assignActionScore', function(varName, value, options) {
+handlebars.registerHelper('assignActionScore', function (varName, value, options) {
   options.data.root[varName] = value.score;
 });
 
@@ -118,7 +118,7 @@ export type DiceComponent = {
   /** Indicates whether or not to always show this component in the breakdown, even if it's 0 */
   alwaysShowInBreakdown?: boolean;
   /** If a challenge die will indicate if the roll has been exceeded by the action score */
-  exceeded?: boolean
+  exceeded?: boolean;
 };
 
 // Generic params used by our 2 templates. These can be changed for your own templates.
@@ -132,7 +132,7 @@ export type RollStat = {
   parameters: CommonParameters & {
     dice: DiceComponent[];
     outcome: string;
-    score: number
+    score: number;
   };
 };
 
@@ -141,8 +141,8 @@ export type RollTask = {
   parameters: CommonParameters & {
     dice: DiceComponent[];
     progress: number;
-  }
-}
+  };
+};
 
 export type AnyRollTemplate = RollStat | RollTask;
 
@@ -150,6 +150,6 @@ export type AnyRollTemplate = RollStat | RollTask;
 export const createRollTemplate = ({ type, parameters }: AnyRollTemplate) => {
   const template = rollTemplates[type];
   const rollTemplate = template(parameters);
-  console.log(parameters)
+  console.log(parameters);
   return rollTemplate;
 };

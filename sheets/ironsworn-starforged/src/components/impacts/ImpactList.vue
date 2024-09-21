@@ -1,37 +1,52 @@
 <script setup lang="ts">
 import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
-import { DialogTrigger, Dialog, DialogContent, DialogTitle, DialogFooter, DialogClose } from '../ui/dialog';
+import {
+  DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from '../ui/dialog';
 import { Button } from '../ui/button';
 import type { AnyImpact } from '@/system/impacts';
 
 const impacts = useImpactsStore();
-const getImpactsByCategory = (category: string) => impacts.list.filter((impact) => impact.category === category)
+const getImpactsByCategory = (category: string) =>
+  impacts.list.filter((impact) => impact.category === category);
 
 defineProps({
   label: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 const removeImpact = (impact: AnyImpact) => {
-  console.log(impact)
-  impacts.removeImpact(impact)
-}
+  console.log(impact);
+  impacts.removeImpact(impact);
+};
 </script>
 
 <template>
   <div class="impact-list">
-    <div v-for="impact in getImpactsByCategory(label)" :key="impact._id" class="relative z-0 h-8 content-center mt-3">
+    <div
+      v-for="impact in getImpactsByCategory(label)"
+      :key="impact._id"
+      class="relative z-0 mt-3 h-8 content-center"
+    >
       <div class="impact-name p-1">{{ impact.name }}</div>
       <Dialog>
         <DialogTrigger>
-          <Button v-if="$attrs.modelValue" class="bg-[#7f1d1d9e] hover:bg-[#c112129e] absolute inset-0 flex justify-center items center z-10 h-8 w-full" />
+          <Button
+            v-if="$attrs.modelValue"
+            class="items center absolute inset-0 z-10 flex h-8 w-full justify-center bg-[#7f1d1d9e] hover:bg-[#c112129e]"
+          />
         </DialogTrigger>
         <DialogContent class="w-60">
           <DialogTitle>Remove Impact?</DialogTitle>
           <DialogFooter>
-            <DialogClose class="flex justify-between gap-2 w-full">
+            <DialogClose class="flex w-full justify-between gap-2">
               <Button>Cancel</Button>
               <Button variant="destructive" @click="removeImpact(impact)">Delete</Button>
             </DialogClose>
