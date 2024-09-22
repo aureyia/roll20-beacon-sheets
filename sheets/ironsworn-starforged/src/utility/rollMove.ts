@@ -20,7 +20,6 @@ export const rollMove = async (
   modifier: number,
   option: any,
 ) => {
-  console.log(move);
   const rolledDice = await getRolledDice(actionDice);
   const { momentum } = useResourcesStore();
 
