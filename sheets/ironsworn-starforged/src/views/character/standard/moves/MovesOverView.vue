@@ -11,7 +11,7 @@ const moves = starforged['Move Categories'];
     <!-- TODO: Implement Search -->
     <!-- <ItemSearch /> -->
     <div class="moves-container mx-20 mb-20 columns-3 gap-4">
-      <MovesGroup class="group" v-for="group in moves" :key="group" :group="group" />
+      <MovesGroup class="group" v-for="group in moves" :group="group" />
     </div>
   </div>
 </template>

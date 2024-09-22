@@ -13,6 +13,7 @@ export const isEligibleForMomentumBurn = (
   rolledDice: DiceComponent[],
   outcome: string,
   momentum: number,
+  option: any,
 ): { eligibility: boolean; newOutcome?: string } => {
   const [challengeDie1, challengeDie2] = rolledDice.filter((die) =>
     die.label?.startsWith('Challenge Die'),
@@ -34,7 +35,7 @@ export const isEligibleForMomentumBurn = (
   const d1IsEligible = challengeDie1.value < momentum;
   const d2IsEligible = challengeDie2.value < momentum;
 
-  if (isOpportunity || isStrongHit) {
+  if (isOpportunity || isStrongHit || option['Roll type'] === 'Progress roll') {
     return formatResult(false);
   }
 
@@ -76,7 +77,8 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 5, exceeded: false },
         { label: 'Challenge Die: 2', value: 5, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'complication', 10)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'complication', 10, option)).toStrictEqual({
         eligibility: true,
         newOutcome: 'opportunity',
       });
@@ -86,7 +88,8 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 10, exceeded: false },
         { label: 'Challenge Die: 2', value: 10, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'complication', 10)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'complication', 10, option)).toStrictEqual({
         eligibility: false,
       });
     });
@@ -95,7 +98,8 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 7, exceeded: false },
         { label: 'Challenge Die: 2', value: 6, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 8)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 8, option)).toStrictEqual({
         eligibility: true,
         newOutcome: 'strong-hit',
       });
@@ -105,7 +109,8 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 7, exceeded: false },
         { label: 'Challenge Die: 2', value: 6, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 7)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 7, option)).toStrictEqual({
         eligibility: true,
         newOutcome: 'weak-hit',
       });
@@ -115,7 +120,8 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 6, exceeded: false },
         { label: 'Challenge Die: 2', value: 7, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 7)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 7, option)).toStrictEqual({
         eligibility: true,
         newOutcome: 'weak-hit',
       });
@@ -125,16 +131,18 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 6, exceeded: false },
         { label: 'Challenge Die: 2', value: 7, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 5)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'miss', 5, option)).toStrictEqual({
         eligibility: false,
       });
     });
     it('weak-hit -> strong-hit - 1', () => {
+      const option = { 'Roll type': 'Action roll' };
       const rolledDice: DiceComponent[] = [
         { label: 'Challenge Die: 1', value: 5, exceeded: false },
         { label: 'Challenge Die: 2', value: 3, exceeded: true },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'weak-hit', 7)).toStrictEqual({
+      expect(isEligibleForMomentumBurn(rolledDice, 'weak-hit', 7, option)).toStrictEqual({
         eligibility: true,
         newOutcome: 'strong-hit',
       });
@@ -144,7 +152,8 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 3, exceeded: true },
         { label: 'Challenge Die: 2', value: 5, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'weak-hit', 7)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'weak-hit', 7, option)).toStrictEqual({
         eligibility: true,
         newOutcome: 'strong-hit',
       });
@@ -154,7 +163,8 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 6, exceeded: true },
         { label: 'Challenge Die: 2', value: 7, exceeded: false },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'weak-hit', 3)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'weak-hit', 3, option)).toStrictEqual({
         eligibility: false,
       });
     });
@@ -163,7 +173,18 @@ if (import.meta.vitest) {
         { label: 'Challenge Die: 1', value: 6, exceeded: true },
         { label: 'Challenge Die: 2', value: 7, exceeded: true },
       ];
-      expect(isEligibleForMomentumBurn(rolledDice, 'strong-hit', 8)).toStrictEqual({
+      const option = { 'Roll type': 'Action roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'strong-hit', 8, option)).toStrictEqual({
+        eligibility: false,
+      });
+    });
+    it('progress roll not eligible', () => {
+      const rolledDice: DiceComponent[] = [
+        { label: 'Challenge Die: 1', value: 6, exceeded: true },
+        { label: 'Challenge Die: 2', value: 7, exceeded: true },
+      ];
+      const option = { 'Roll type': 'Progress roll' };
+      expect(isEligibleForMomentumBurn(rolledDice, 'weak-hit', 7, option)).toStrictEqual({
         eligibility: false,
       });
     });
