@@ -11,7 +11,16 @@ import { isEligibleForMomentumBurn } from './momentumEligibility';
 
 // TODO: Refactor so it doesn't have state called during the function execution.
 // Momentum and dice roll
-export const rollMove = async (move: any, assets: any, value: number, modifier: number) => {
+export const moveOptionsCheck = (move: any) => move.Trigger.Options.length > 1;
+
+export const rollMove = async (
+  move: any,
+  assets: any,
+  value: number,
+  modifier: number,
+  option: any,
+) => {
+  console.log(move);
   const rolledDice = await getRolledDice(actionDice);
   const { momentum } = useResourcesStore();
 
@@ -19,14 +28,14 @@ export const rollMove = async (move: any, assets: any, value: number, modifier: 
 
   const actionScore = calculateActionScore(rolledDice, value, modifier + assetModifiers, momentum);
   const { dice, outcome } = calculateOutcome(actionScore.score, rolledDice);
-  const momentumBurn = isEligibleForMomentumBurn(dice, outcome, momentum);
+  const momentumBurn = isEligibleForMomentumBurn(dice, outcome, momentum, option);
   return { dice, outcome, actionScore, momentumBurn, move };
 };
 
 const calculatePrerollAssetModifiers = (assets: any) => 0;
 
 export const followUpRoll = async (opts: any) => {
-  // console.log(opts)
+  console.log(opts);
 
   sendRollToChat(initValues.character.id, {
     type: 'move-compact',

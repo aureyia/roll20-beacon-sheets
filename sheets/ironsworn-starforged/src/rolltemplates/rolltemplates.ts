@@ -150,6 +150,5 @@ export type AnyRollTemplate = RollStat | RollTask;
 export const createRollTemplate = ({ type, parameters }: AnyRollTemplate) => {
   const template = rollTemplates[type];
   const rollTemplate = template(parameters);
-  console.log(parameters);
   return rollTemplate;
 };
