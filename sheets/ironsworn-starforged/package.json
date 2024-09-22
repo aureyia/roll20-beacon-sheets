@@ -42,6 +42,7 @@
     "radix-vue": "^1.9.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "ts-to-zod": "^3.13.0",
     "vee-validate": "^4.13.2",
     "vite-svg-loader": "^4.0.0",
     "vue": "^3.2.47",

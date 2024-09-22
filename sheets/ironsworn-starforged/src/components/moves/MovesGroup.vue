@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { getValue, resourceValues } from '@/utility/moveChecks';
+import { resourceValues } from '@/utility/moveChecks';
 import { Effect } from 'effect';
 
 defineProps({
@@ -46,16 +46,16 @@ const assetCheck = (move: IMove) => {
 
 const optionsCheck = (move: IMove) => {
   const hasMultipleOptions = moveOptionsCheck(move);
-  hasMultipleOptions ? (optionSelectionDialog.value = true) : moveRoll({ multiOption: false });
+  hasMultipleOptions
+    ? (optionSelectionDialog.value = true)
+    : moveRoll(selectedMove.value.Trigger.Options[0]);
 };
 
-const moveRoll = async (opts = {}) => {
+const moveRoll = async (option: any) => {
   console.log(selectedOption);
-  if (opts.multiOption === false) {
-    selectedOption.value = selectedMove.value.Trigger.Options[0];
-  }
-  const value = Effect.runSync(resourceValues(selectedOption.value));
-  const result = await rollMove(selectedMove.value, null, value, 0, selectedOption.value);
+  console.log('option', option);
+  const value = Effect.runSync(resourceValues(option));
+  const result = await rollMove(option, null, value, 0, option);
   currentResult.value = result;
   if (result.momentumBurn.eligibility) {
     momentumBurnDialog.value = result.momentumBurn.eligibility;
@@ -71,6 +71,10 @@ const momentumBurnDialog = ref(false);
 const optionSelectionDialog = ref(false);
 const assetSelectionDialog = ref(false);
 const resourcesStore = useResourcesStore();
+
+const selectOptionAndRoll = () => {
+  moveRoll(selectedOption.value);
+};
 
 const preFollowUpRoll = async (opts: any) => {
   if (opts.burn) {
@@ -130,7 +134,7 @@ const doesMoveHaveRoll = (move: IMove) =>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction @click="moveRoll()">Submit</AlertDialogAction>
+          <AlertDialogAction @click="selectOptionAndRoll()">Submit</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
