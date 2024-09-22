@@ -6,8 +6,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"],
+    "types": ["node", "vitest/ImportMeta"],
     "target": "ES2022",
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
   }
 }
