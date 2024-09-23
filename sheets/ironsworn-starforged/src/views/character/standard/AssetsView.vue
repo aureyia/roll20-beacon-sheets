@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAssetStore } from '@/sheet/stores/assets/assetStore';
+import { useAssetStore, type Asset } from '@/sheet/stores/assets/assetStore';
+import { starforged, type IAsset } from 'dataforged';
+import { pipe } from 'effect'
 
 const assetStore = useAssetStore();
 const removeMode = ref(false);
+
+
+const getAssetById = (asset: Asset) =>
+  starforged['Asset Types']
+    .find((x) => x.Name === asset.category)?.Assets
+    .find((x) => x.$id === asset.dataforgedId)
 </script>
 
 <template>
-  <div class="assets">
-    <div class="asset-control">
+  <div class="assets mx-20 mb-10">
+    <div class="asset-control mb-4">
       <AssetAddDialog />
       <div>
         <Toggle
@@ -18,7 +26,8 @@ const removeMode = ref(false);
         </Toggle>
       </div>
     </div>
-    <div>{{ assetStore.assets }}</div>
-    <AssetList />
+    <div class="assets-container flex flex-wrap justify-between">
+      <AssetCard v-for="asset in assetStore.assets" :abilities="asset.abilities" :storedAsset="asset" :dataforgedAsset="getAssetById(asset)"/>
+    </div>
   </div>
 </template>
