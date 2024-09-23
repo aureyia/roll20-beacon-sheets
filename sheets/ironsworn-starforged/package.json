@@ -38,6 +38,7 @@
     "jsonpath": "^1.1.1",
     "lodash": "^4.17.21",
     "lucide-vue-next": "^0.439.0",
+    "marked": "^14.1.2",
     "pinia": "^2.0.32",
     "radix-vue": "^1.9.5",
     "tailwind-merge": "^2.5.2",

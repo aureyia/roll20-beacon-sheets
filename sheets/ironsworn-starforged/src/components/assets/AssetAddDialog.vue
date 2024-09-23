@@ -8,6 +8,7 @@ import {
   type AssetCategory,
   useAssetStore,
   getAllAssetsForCategory,
+  type AssetSubmission,
 } from '@/sheet/stores/assets/assetStore';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
@@ -34,11 +35,24 @@ const form = useForm({
 });
 
 const onSubmit = form.handleSubmit((values) => {
-  assetStore.addAsset();
+  const selectedAsset = allAssets[values.category].find(
+    (asset: IAsset) => asset.Name === values.asset
+  );
+  const submission: AssetSubmission = {
+    dataforgedId: selectedAsset.$id,
+    name: values.asset,
+    category: values.category,
+  };
+  assetStore.addAsset(submission);
 });
+
+const clearState = () => {
+  assetStore.assets = []
+}
 </script>
 
 <template>
+  <Button @click="clearState()">Clear</Button>
   <Dialog>
     <DialogTrigger as-child>
       <Button>Add</Button>

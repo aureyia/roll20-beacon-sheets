@@ -18,7 +18,7 @@ export type AssetsHydrate = {
 };
 
 export type Ability = {
-  $id: string;
+  id: string;
   enabled: boolean;
 };
 
@@ -27,7 +27,11 @@ export type Asset = {
   dataforgedId: string;
   name: string;
   category: AssetCategory;
-  abilities: Ability[];
+  abilities: {
+    '1': Ability;
+    '2': Ability;
+    '3': Ability;
+  };
 };
 
 export interface AssetSubmission {
@@ -36,7 +40,7 @@ export interface AssetSubmission {
   category: AssetCategory;
 }
 
-const getCategory = (category: AssetCategory): Effect.Effect<IAssetType, Error> => {
+export const getCategory = (category: AssetCategory): Effect.Effect<IAssetType, Error> => {
   const selectedCategory = starforged['Asset Types'].find((x) => x.Name === category);
 
   if (!selectedCategory) {
@@ -74,20 +78,27 @@ const getAssetAbilities = (
     return Effect.fail(new Error('No abilities found for Asset'));
   }
 
-  return Effect.succeed(abilities.map((x) => ({ $id: x.$id, enabled: x.Enabled })));
+  return Effect.succeed(abilities.map((x) => ({ id: x.$id, enabled: x.Enabled })));
 };
 
 export const useAssetStore = defineStore('asset', () => {
   const assets: Ref<Array<Asset>> = ref([]);
 
-  const addAsset = (opts: AssetSubmission) =>
+const addAsset = (opts: AssetSubmission) => {
+    const abilities: Ability[] = Effect.runSync(getAssetAbilities(opts.dataforgedId, opts.category))
+    console.log(abilities)
     assets.value.push({
       _id: createId(),
       dataforgedId: opts.dataforgedId,
       name: opts.name,
       category: opts.category,
-      abilities: Effect.runSync(getAssetAbilities(opts.dataforgedId, opts.category)),
+      abilities: {
+        '1': abilities[0],
+        '2': abilities[1],
+        '3': abilities[2],
+      },
     });
+  }
 
   const dehydrate = () => {
     return {
