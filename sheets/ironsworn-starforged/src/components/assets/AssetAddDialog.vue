@@ -5,26 +5,33 @@ import { FormField, FormItem, FormLabel } from '../ui/form';
 import { starforged, type IAsset } from 'dataforged';
 import { Select, SelectContent, SelectTrigger, SelectValue } from '../ui/select';
 import {
-  type AssetCategory,
   useAssetStore,
-  getAllAssetsForCategory,
   type AssetSubmission,
 } from '@/sheet/stores/assets/assetStore';
+import { getAllAssetsForCategory } from '@/sheet/stores/assets/helpers/assetType';
+import type { AssetCategory } from '@/sheet/stores/assets/types/asset-types';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { Effect } from 'effect';
 
-const CATEGORIES = ['Path', 'Companion', 'Deed'] as const;
+const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const;
 const assetStore = useAssetStore();
 
 const formSchema = toTypedSchema(
   z.object({
-    category: z.string(),
+    category: z.string().min(2),
     asset: z.string(),
-  }),
+  }).required(),
 );
 
-const allAssets = {
+type SupportedAssets = {
+  Path: IAsset[];
+  Companion: IAsset[];
+  Deed: IAsset[];
+  [key: string]: IAsset[];
+}
+
+const allAssets: SupportedAssets = {
   Path: Effect.runSync(getAllAssetsForCategory('Path')),
   Companion: Effect.runSync(getAllAssetsForCategory('Companion')),
   Deed: Effect.runSync(getAllAssetsForCategory('Deed')),
@@ -38,9 +45,15 @@ const onSubmit = form.handleSubmit((values) => {
   const selectedAsset = allAssets[values.category].find(
     (asset: IAsset) => asset.Name === values.asset
   );
+
+  if (!selectedAsset) {
+    return
+  }
+
   const submission: AssetSubmission = {
     dataforgedId: selectedAsset.$id,
     name: values.asset,
+    // @ts-ignore
     category: values.category,
   };
   assetStore.addAsset(submission);
