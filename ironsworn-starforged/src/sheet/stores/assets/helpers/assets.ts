@@ -6,6 +6,7 @@ import {
 } from "dataforged";
 import { getAssetType } from "./assetType";
 import type { Ability, AssetCategory } from "../types/asset-types";
+import { createId } from "@paralleldrive/cuid2";
 
 const getAssets = (assetType: IAssetType):IAsset[] => {
   return assetType.Assets
@@ -46,5 +47,5 @@ export const getAssetAbilities = (
     return Effect.fail(new Error('No abilities found for Asset'));
   }
 
-  return Effect.succeed(abilities.map((x) => ({ id: x.$id, enabled: x.Enabled })));
+  return Effect.succeed(abilities.map((x) => ({ _id: createId(), dataforgedId: x.$id, enabled: x.Enabled })));
 };

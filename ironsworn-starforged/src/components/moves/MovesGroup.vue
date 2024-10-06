@@ -29,6 +29,8 @@ import {
 } from '@/components/ui/select';
 import { resourceValues } from '@/utility/moveChecks';
 import { Effect } from 'effect';
+import { useAssetStore } from '@/sheet/stores/assets/assetStore';
+import { starforged } from 'dataforged';
 
 defineProps({
   group: {
@@ -41,6 +43,27 @@ const assetCheck = (move: IMove) => {
   // TODO: Check assets for alter moves / Triggers
   selectedMove.value = move;
   const hasAssetTriggers = false;
+  // Get assets from store
+  const playerAssets = useAssetStore().assets
+  // Get enabled abilties from dataforged
+  const activeDataforgedAssets = playerAssets.map((asset) => {
+    const assetType = starforged['Asset Types'].find((assetType) => assetType.Name === asset.category)
+    const matchedAsset = assetType?.Assets.find((dataforgedAsset) => dataforgedAsset.$id === asset.dataforgedId)
+    return matchedAsset
+  })
+  const activeDataforgedAbilities = activeDataforgedAssets.map((dfAsset) => {
+    const enabledAbilities = playerAssets.map((asset) => {
+      return {}
+    })
+  })
+  console.log(activeDataforgedAbilities)
+  // Check if enabled abilities contain move id
+  // If true
+  // Enrich alter move with missing data
+  // Setup Trigger state
+  // Show dialog
+  // else
+  // move on
   hasAssetTriggers ? (assetSelectionDialog.value = true) : optionsCheck(move);
 };
 
@@ -50,6 +73,7 @@ const optionsCheck = (move: IMove) => {
     ? (optionSelectionDialog.value = true)
     : moveRoll(selectedMove.value.Trigger.Options[0]);
 };
+
 
 const moveRoll = async (option: any) => {
   console.log(selectedOption);
@@ -89,6 +113,7 @@ const doesMoveHaveRoll = (move: IMove) =>
     (option: any) =>
       option['Roll type'] === 'Action roll' || option['Roll type'] === 'Progress roll',
   );
+
 </script>
 
 <template>

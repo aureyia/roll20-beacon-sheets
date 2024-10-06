@@ -10,6 +10,7 @@ import { getRollFromDispatch } from '@/utility/getRollFromDispatch';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { taskDice } from '@/system/dice';
 import { createRollTemplate } from '@/rolltemplates/rolltemplates';
+import { Effect } from 'effect';
 
 export type ProgressRange = LimitedRange<0, 40>;
 export type Task = {
@@ -128,13 +129,13 @@ export const useTaskStore = defineStore('task', () => {
   };
 
   const dehydrate = () => {
-    return {
-      tasks: arrayToObject(tasks.value),
-    };
+    return Effect.succeed({
+      tasks: Effect.runSync(arrayToObject(tasks.value)),
+    });
   };
 
   const hydrate = (hydrateStore: taskHydrate) => {
-    tasks.value = objectToArray(hydrateStore.tasks) ?? tasks.value;
+    tasks.value = Effect.runSync(objectToArray(hydrateStore.tasks)) ?? tasks.value;
   };
 
   return {

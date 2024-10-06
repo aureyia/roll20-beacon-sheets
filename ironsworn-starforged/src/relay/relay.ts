@@ -19,14 +19,7 @@ import {
 } from './handlers/handlers';
 import { reactive, ref, watch, nextTick, type Ref, type App, shallowRef } from 'vue';
 import { createId } from '@paralleldrive/cuid2';
-import { getBio } from '@/relay/handlers/computed';
 
-/* 
-This is the configuration for the relay. It defines the handlers and actions that the sheet will use.
-The handlers are functions that are called by the relay when certain events occur.
-The actions are custom functions that can be called by the sheet to perform specific actions.
-the computed properties are exposed by the sheet to be used in macros, inline rolls and tokens.
-*/
 const relayConfig = {
   handlers: {
     onInit,
@@ -35,35 +28,7 @@ const relayConfig = {
     onSharedSettingsChange,
     onTranslationsRequest,
     onDragOver,
-  },
-  actions: {
-    /*
-     Handlers for custom actions initiated by interacting with roll templates.
-     See /src/rolltemplates/partials/heroDie.hbs for an example of how an action is performed.
-     This one rolls 1d6, adds the result to a previous roll, and then prints the new result.
-     Check out Marvel Multiverse RPG Edges for a more complex example.
-     ⭐ An important note is that the actions will not have access to any of the Pinia stores, so they need to be passed the necessary data or have access to it through the passed in character object.
-     */
-    // addHeroDie: {
-    //   method: async (
-    //     props: {
-    //       dispatch: Dispatch;
-    //       character: Character;
-    //       messageId?: string;
-    //       total?: number;
-    //     },
-    //     ...args: string[]
-    //   ): Promise<void> => {
-    //     const [originalRoll, originalTitle] = args;
-    //     return addHeroDie(props, Number(originalRoll), originalTitle);
-    //   },
-    // },
-  },
-  computed: {
-    // These attributes allow dot notation in macros, and will not show up on token bar attributes
-    // EX: @{CHARACTER_NAME|abilityScores.Strength.current}
-    bio: { tokenBarValue: false, get: getBio },
-  },
+  }
 };
 
 // This is the typescript type for the initial values that the sheet will use when it starts.

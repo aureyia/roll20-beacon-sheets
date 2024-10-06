@@ -11,7 +11,8 @@ export type AssetsHydrate = {
 };
 
 export type Ability = {
-  id: string;
+  _id: string;
+  dataforgedId: string;
   enabled: boolean;
 };
 
@@ -20,10 +21,6 @@ export type Asset = {
   dataforgedId: string;
   name: string;
   category: AssetCategory;
-  abilities: {
-    '1': Ability;
-    '2': Ability;
-    '3': Ability;
-  };
+  abilities: Ability[];
   meter?: number;
 };

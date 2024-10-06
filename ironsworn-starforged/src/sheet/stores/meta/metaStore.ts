@@ -1,6 +1,7 @@
 import type { Token } from '@roll20-official/beacon-sdk';
 import { defineStore } from 'pinia';
 import { reactive, ref, type Ref } from 'vue';
+import { Effect } from 'effect';
 
 /* Every Character, regardless of sheet, has these meta fields
  * and they must be saved to firebase in this specific way.
@@ -31,7 +32,7 @@ export const useMetaStore = defineStore('meta', () => {
 
   // Stubs for store consistency
 
-  const dehydrate = () => {
+  const dehydrate = () => Effect.sync(() => {
     return {
       name: name.value,
       avatar: avatar.value,
@@ -39,7 +40,7 @@ export const useMetaStore = defineStore('meta', () => {
       gmNotes: gmNotes.value,
       campaignId: campaignId.value,
     };
-  };
+  });
 
   const hydrate = (hydrateStore: MetaHydrate) => {
     id.value = hydrateStore.id ?? id.value;

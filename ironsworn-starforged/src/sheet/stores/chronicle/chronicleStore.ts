@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
+import { Effect } from 'effect';
 
 export type ChronicleEntrySubmission = {
   title: string;
@@ -38,13 +39,13 @@ export const useChronicleStore = defineStore('chronicle', () => {
   };
 
   const dehydrate = () => {
-    return {
-      chronicle: arrayToObject(chronicle.value),
-    };
+    return Effect.succeed({
+      chronicle: Effect.runSync(arrayToObject(chronicle.value)),
+    });
   };
 
   const hydrate = (hydrateStore: chronicleHydrate) => {
-    chronicle.value = objectToArray(hydrateStore.chronicle) ?? chronicle.value;
+    chronicle.value = Effect.runSync(objectToArray(hydrateStore.chronicle)) ?? chronicle.value;
   };
 
   return {

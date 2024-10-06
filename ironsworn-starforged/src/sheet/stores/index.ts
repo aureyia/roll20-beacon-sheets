@@ -10,6 +10,7 @@ import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
 import { useAssetStore } from './assets/assetStore';
+import { Effect } from 'effect'
 
 /*
  * This is the master store for the entire character sheet.
@@ -59,15 +60,14 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
     character.attributes = {};
     const storeKeys = Object.keys(stores) as (keyof typeof stores)[];
     storeKeys.forEach((key) => {
-      //if (key === "rolls") return;
       if (key === 'meta') {
-        const { name, bio, gmNotes, avatar } = stores.meta.dehydrate();
+        const { name, bio, gmNotes, avatar } = Effect.runSync(stores.meta.dehydrate());
         character.name = name;
         character.bio = bio;
         character.gmNotes = gmNotes;
         character.avatar = avatar;
       } else {
-        character.attributes[key] = stores[key].dehydrate();
+        character.attributes[key] = Effect.runSync(stores[key].dehydrate());
       }
     });
     return character;
@@ -96,22 +96,6 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
     stores.meta.campaignId = campaignId;
   };
 
-  // /*
-  // DEV METHOD used to fill the sheet with a lot of data without affecting how the stores are initialized.
-  // * Can invoke it from a button in the Settings tab.
-  // * */
-  const loadExampleData = () => {
-    stores.meta.name = 'Auri';
-    stores.meta.avatar = 'http://placekitten.com/200/200';
-    stores.character.callsign = 'Swifty';
-    stores.character.pronouns = 'She/Her';
-    stores.resources.health = 5;
-    stores.resources.spirit = 5;
-    stores.resources.supply = 5;
-    stores.resources.xp = 0;
-    stores.resources.spentXp = 0;
-  };
-
   return {
     ...stores,
     storeRegistry,
@@ -123,6 +107,5 @@ export const useStarforgedSheetStore = defineStore('starforgedSheetStore', () =>
     setPermissions,
     setCampaignId,
     pageLoading,
-    loadExampleData,
   };
 });

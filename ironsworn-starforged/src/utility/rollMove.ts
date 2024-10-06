@@ -8,6 +8,7 @@ import type { DiceComponent } from '@/rolltemplates/rolltemplates';
 import { calculateOutcome } from './calculateOutcome';
 import { calculateActionScore } from './calculateActionScore';
 import { isEligibleForMomentumBurn } from './momentumEligibility';
+import { Effect, Context } from 'effect';
 
 // TODO: Refactor so it doesn't have state called during the function execution.
 // Momentum and dice roll
@@ -26,21 +27,22 @@ export const rollMove = async (
   const assetModifiers = calculatePrerollAssetModifiers(assets);
 
   const actionScore = calculateActionScore(rolledDice, value, modifier + assetModifiers, momentum);
-  const { dice, outcome } = calculateOutcome(actionScore.score, rolledDice);
+  const { dice, outcome } = Effect.runSync(calculateOutcome(actionScore.score, rolledDice));
   const momentumBurn = isEligibleForMomentumBurn(dice, outcome, momentum, option);
   return { dice, outcome, actionScore, momentumBurn, move };
 };
 
 const calculatePrerollAssetModifiers = (assets: any) => 0;
 
-export const followUpRoll = async (opts: any) => {
+export const followUpRoll = async (opts: any) =>{
   console.log(opts);
 
   sendRollToChat(initValues.character.id, {
     type: 'move-compact',
     parameters: {
       characterName: initValues.character.name,
-      title: 'Rolling ' + opts.move.Name,
+      // TODO: Fix move name not displaying  
+      title: 'Rolling ' + opts.move.Text,
       dice: opts.dice,
       outcome: opts.outcome,
       score: opts.actionScore,

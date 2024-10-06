@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { Effect } from 'effect';
 
 export type SettingsHydrate = {
   settings: {
@@ -23,12 +24,12 @@ export const useSettingsStore = defineStore('settings', () => {
   const clearMode = () => (mode.value = '');
 
   const dehydrate = () => {
-    return {
+    return Effect.succeed({
       settings: {
         mode: mode.value,
         darkMode: darkMode.value,
       },
-    };
+    });
   };
 
   const hydrate = (hydrateStore: SettingsHydrate) => {

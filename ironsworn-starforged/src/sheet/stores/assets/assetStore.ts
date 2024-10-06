@@ -11,41 +11,61 @@ export type AssetsHydrate = {
   assets: Asset[];
 };
 
-export interface AssetSubmission {
+export type AssetSubmission = {
   dataforgedId: string;
   name: string;
   category: AssetCategory;
   meter?: number
 }
 
+const formatAbilities = (
+  formatter: typeof objectToArray | typeof arrayToObject,
+  assets: AssetsHydrate | any
+) => {
+  if (!assets) {
+    return Effect.fail(new Error('No assets were provided'))
+  }
+
+  const mappedAssets = assets.map((asset: any) => {
+    const abilities = Effect.runSync(formatter(asset.abilities))
+    return {
+      ...asset,
+      abilities: abilities
+    }
+  })
+
+  return Effect.succeed(mappedAssets)
+}
+
 export const useAssetStore = defineStore('asset', () => {
   const assets: Ref<Array<Asset>> = ref([]);
 
-const addAsset = (opts: AssetSubmission) => {
+
+  const addAsset = (opts: AssetSubmission) => {
     const abilities: Ability[] = Effect.runSync(getAssetAbilities(opts.dataforgedId, opts.category))
-    console.log(abilities)
     assets.value.push({
       _id: createId(),
       dataforgedId: opts.dataforgedId,
       name: opts.name,
       category: opts.category,
-      abilities: {
-        '1': abilities[0],
-        '2': abilities[1],
-        '3': abilities[2],
-      },
+      abilities,
       meter: opts.meter
     });
   }
 
   const dehydrate = () => {
-    return {
-      assets: arrayToObject(assets.value),
-    };
+    const updatedAssets = Effect.runSync(formatAbilities(arrayToObject, assets.value))
+    return Effect.succeed({
+      assets: Effect.runSync(arrayToObject(updatedAssets)),
+    });
   };
 
   const hydrate = (hydrateStore: AssetsHydrate) => {
-    assets.value = objectToArray(hydrateStore.assets) ?? assets.value;
+    const assetsList = Effect.runSync(objectToArray(hydrateStore.assets))
+    const updatedAssets = Effect.runSync(
+      formatAbilities(objectToArray, assetsList)
+    )
+    assets.value = updatedAssets ?? assets.value;
   };
 
   return {

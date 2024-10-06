@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
+import { Effect } from 'effect';
 
 export type ResourcesHydrate = {
   resources: {
@@ -30,7 +31,7 @@ export const useResourcesStore = defineStore('resources', () => {
   );
 
   const dehydrate = () => {
-    return {
+    return Effect.succeed({
       resources: {
         health: health.value,
         spirit: spirit.value,
@@ -39,7 +40,7 @@ export const useResourcesStore = defineStore('resources', () => {
         spentXp: spentXp.value,
         momentum: momentum.value,
       },
-    };
+    });
   };
 
   const hydrate = (hydrateStore: ResourcesHydrate) => {

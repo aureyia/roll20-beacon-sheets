@@ -8,6 +8,7 @@ import { convertResultsToDice, formatDiceComponents } from '@/utility/convertRes
 import { getRollFromDispatch } from '@/utility/getRollFromDispatch';
 
 import { actionDice } from '@/system/dice';
+import { Effect } from 'effect';
 
 export type Stats = {
   edge: number;
@@ -81,7 +82,7 @@ export const useStatsStore = defineStore('stats', () => {
   };
 
   const dehydrate = () => {
-    return {
+    return Effect.succeed({
       stats: {
         edge: edge.value,
         heart: heart.value,
@@ -89,7 +90,7 @@ export const useStatsStore = defineStore('stats', () => {
         shadow: shadow.value,
         wits: wits.value,
       },
-    };
+    });
   };
 
   const hydrate = (hydrateStore: StatsHydrate) => {

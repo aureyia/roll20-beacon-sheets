@@ -3,6 +3,7 @@ import { CardFooter, Card, CardHeader, CardContent } from '../ui/card';
 import { Checkbox } from '../ui/checkbox'
 import { marked } from 'marked'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group';
+import { Ability } from '@/sheet/stores/assets/types/asset-types';
 
 const props = defineProps({
   dataforgedAsset: {
@@ -15,7 +16,7 @@ const props = defineProps({
   }
 })
 // TODO: Clean Up UI. Note!! You can't pass nested arrays to beacon. They need to be objectified. Also support tracks
-const abilities = Object.values(props.storedAsset.abilities).filter((x) => x !== null)
+const abilities = props.storedAsset.abilities.filter((x: Ability) => x !== null)
 console.log(abilities)
 console.log(props.storedAsset)
 </script>

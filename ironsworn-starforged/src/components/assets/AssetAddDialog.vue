@@ -56,6 +56,7 @@ const onSubmit = form.handleSubmit((values) => {
     // @ts-ignore
     category: values.category,
   };
+  console.log('nom')
   assetStore.addAsset(submission);
 });
 

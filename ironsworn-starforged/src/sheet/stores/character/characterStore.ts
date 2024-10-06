@@ -1,3 +1,4 @@
+import { Effect } from 'effect';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -13,12 +14,12 @@ export const useCharacterStore = defineStore('character', () => {
   const pronouns = ref('');
 
   const dehydrate = () => {
-    return {
+    return Effect.succeed({
       character: {
         callsign: callsign.value,
         pronouns: pronouns.value,
       },
-    };
+    });
   };
 
   const hydrate = (hydrateStore: CharacterHydrate) => {

@@ -11,6 +11,7 @@ import type {
   Misfortune,
   Other,
 } from '@/system/impacts';
+import { Effect } from 'effect';
 
 export type ImpactsHydrate = {
   impacts: {
@@ -89,8 +90,6 @@ export const useImpactsStore = defineStore('impacts', () => {
     switch (impact.category) {
       case 'misfortunes':
         misfortunes.value = misfortunes.value.filter((entry) => entry.name !== impact.name);
-        break;
-      case 'lastingEffects':
         lastingEffects.value = lastingEffects.value.filter((entry) => entry.name !== impact.name);
         break;
       case 'burdens':
@@ -114,25 +113,33 @@ export const useImpactsStore = defineStore('impacts', () => {
   };
 
   const dehydrate = () => {
-    return {
+    return Effect.succeed({
       impacts: {
-        misfortunes: arrayToObject(misfortunes.value),
-        lastingEffects: arrayToObject(lastingEffects.value),
-        burdens: arrayToObject(burdens.value),
-        currentVehicle: arrayToObject(currentVehicle.value),
-        other: arrayToObject(other.value),
+        misfortunes: Effect.runSync(arrayToObject(misfortunes.value)),
+        lastingEffects: Effect.runSync(arrayToObject(lastingEffects.value)),
+        burdens: Effect.runSync(arrayToObject(burdens.value)),
+        currentVehicle: Effect.runSync(arrayToObject(currentVehicle.value)),
+        other: Effect.runSync(arrayToObject(other.value)),
       },
-    };
+    });
   };
 
   const hydrate = (hydrateStore: ImpactsHydrate) => {
-    misfortunes.value = objectToArray(hydrateStore.impacts.misfortunes) ?? misfortunes.value;
+    misfortunes.value =
+      Effect.runSync(objectToArray(hydrateStore.impacts.misfortunes))
+      ?? misfortunes.value;
     lastingEffects.value =
-      objectToArray(hydrateStore.impacts.lastingEffects) ?? lastingEffects.value;
-    burdens.value = objectToArray(hydrateStore.impacts.burdens) ?? burdens.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.lastingEffects))
+      ?? lastingEffects.value;
+    burdens.value = 
+      Effect.runSync(objectToArray(hydrateStore.impacts.burdens))
+      ?? burdens.value;
     currentVehicle.value =
-      objectToArray(hydrateStore.impacts.currentVehicle) ?? currentVehicle.value;
-    other.value = objectToArray(hydrateStore.impacts.other) ?? other.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.currentVehicle))
+      ?? currentVehicle.value;
+    other.value = 
+      Effect.runSync(objectToArray(hydrateStore.impacts.other))
+      ?? other.value;
   };
 
   const list = computed(() => {
