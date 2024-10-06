@@ -68,6 +68,7 @@ declare module 'vue' {
     LabelledSwitch: typeof import('./src/components/switches/LabelledSwitch.vue')['default']
     ModeCard: typeof import('./src/components/cards/ModeCard.vue')['default']
     MovesGroup: typeof import('./src/components/moves/MovesGroup.vue')['default']
+    MoveTriggers: typeof import('./src/components/moves/MoveTriggers.vue')['default']
     NavigationMenu: typeof import('./src/components/ui/navigation-menu/NavigationMenu.vue')['default']
     NavigationMenuContent: typeof import('./src/components/ui/navigation-menu/NavigationMenuContent.vue')['default']
     NavigationMenuIndicator: typeof import('./src/components/ui/navigation-menu/NavigationMenuIndicator.vue')['default']

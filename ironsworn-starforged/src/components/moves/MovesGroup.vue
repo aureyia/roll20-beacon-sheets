@@ -31,12 +31,17 @@ import { resourceValues } from '@/utility/moveChecks';
 import { Effect } from 'effect';
 import { useAssetStore } from '@/sheet/stores/assets/assetStore';
 import { starforged } from 'dataforged';
+import { Group } from 'lucide-vue-next';
 
 defineProps({
   group: {
     type: Object,
     required: true,
   },
+  showTriggers: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const getDfAssets = () => starforged['Asset Types']
@@ -180,22 +185,30 @@ const doesMoveHaveRoll = (move: IMove) =>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-    <Card class="m-0 h-full p-0 pb-1">
-      <CardHeader class="mb-1 rounded-t-lg bg-card-input p-1">
-        <CardTitle class="text-xl font-normal">{{ group.Name }}</CardTitle>
-      </CardHeader>
-      <CardContent v-for="move in group.Moves" class="mx-1 flex h-7 items-center p-0">
-        <div class="button-container mr-1 w-7 items-center leading-3">
-          <Button
-            v-if="doesMoveHaveRoll(move)"
-            @click="assetCheck(move)"
-            class="h-6 content-center border-primary bg-muted px-0 py-0 font-bold leading-3 text-primary hover:bg-muted-accent"
-          >
-            <Icon icon="tabler:dice-6" height="h-7" />
-          </Button>
-        </div>
-        <span class="leading-none">{{ move.Name }}</span>
-      </CardContent>
-    </Card>
+    <!-- <Card class="m-0 h-full p-0 pb-1"> -->
+      <!-- <CardHeader class="mb-1 rounded-t-lg bg-card-input px-1 py-0">
+        <CardTitle class="text-lg font-normal">{{ group.Name }}</CardTitle>
+      </CardHeader> -->
+      <div>{{ group.Name }}</div>
+      <!-- <CardContent v-for="move in group.Moves"> -->
+        <Card v-for="move in group.Moves" class="cursor-pointer text-sm mx-1 p-0 my-1 bg-card-input/[0.4] hover:bg-card-input/[0.6]">
+          <div class="flex items-center h7 my-1">
+            <!-- <div class="button-container h-7 mr-1 w-7 items-center leading-3">
+              <Button
+                v-if="doesMoveHaveRoll(move)"
+                @click="assetCheck(move)"
+                class="h-6 content-center border-primary bg-muted px-0 py-0 font-bold leading-3 text-primary hover:bg-muted-accent"
+              >
+                <Icon icon="tabler:dice-6" height="h-7" />
+              </Button>
+            </div> -->
+            <span class="ml-1 font-bold">{{ move.Name }}</span>
+          </div>
+          <div v-if="showTriggers" class="p-1 rounded-b-lg">
+            {{ move.Trigger.Text }}
+          </div>
+        </Card>
+      <!-- </CardContent> -->
+    <!-- </Card> -->
   </div>
 </template>
