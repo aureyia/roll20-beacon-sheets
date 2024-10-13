@@ -4,8 +4,8 @@ import { useResourcesStore } from '../resources/resourcesStore';
 import { createRollTemplate } from '@/rolltemplates/rolltemplates';
 import { dispatchRef, initValues } from '@/relay/relay';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
-import { convertResultsToDice, formatDiceComponents } from '@/utility/convertResultsToDice';
-import { getRollFromDispatch } from '@/utility/getRollFromDispatch';
+import { convertResultsToDice, formatDiceComponents } from '@/utility/rolls/convertResultsToDice';
+import { getRollFromDispatch } from '@/utility/rolls/getRollFromDispatch';
 
 import { actionDice } from '@/system/dice';
 import { Effect } from 'effect';

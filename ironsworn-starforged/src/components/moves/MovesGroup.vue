@@ -11,10 +11,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { rollMove, moveOptionsCheck } from '@/utility/rollMove';
+import { rollMove, moveOptionsCheck, followUpRoll } from '@/utility/moves/rollMove';
 import { ref } from 'vue';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
-import { followUpRoll } from '@/utility/rollMove';
 import { IMove } from 'dataforged';
 
 import { Icon } from '@iconify/vue';
@@ -27,7 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { resourceValues } from '@/utility/moveChecks';
+import { resourceValues } from '@/utility/moves/moveChecks';
 import { Effect } from 'effect';
 import { useAssetStore } from '@/sheet/stores/assets/assetStore';
 import { starforged } from 'dataforged';
@@ -193,7 +192,7 @@ const doesMoveHaveRoll = (move: IMove) =>
       <!-- <CardContent v-for="move in group.Moves"> -->
         <Card v-for="move in group.Moves" class="cursor-pointer text-sm mx-1 p-0 my-1 bg-card-input/[0.4] hover:bg-card-input/[0.6]">
           <div class="flex items-center h7 my-1">
-            <!-- <div class="button-container h-7 mr-1 w-7 items-center leading-3">
+            <div class="button-container h-7 mr-1 w-7 items-center leading-3">
               <Button
                 v-if="doesMoveHaveRoll(move)"
                 @click="assetCheck(move)"
@@ -201,7 +200,7 @@ const doesMoveHaveRoll = (move: IMove) =>
               >
                 <Icon icon="tabler:dice-6" height="h-7" />
               </Button>
-            </div> -->
+            </div>
             <span class="ml-1 font-bold">{{ move.Name }}</span>
           </div>
           <div v-if="showTriggers" class="p-1 rounded-b-lg">

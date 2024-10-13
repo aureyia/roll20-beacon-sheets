@@ -1,13 +1,13 @@
 import { initValues } from '@/relay/relay';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { sendRollToChat } from '@/utility/sendRollToChat';
-import { convertResultsToDice, formatDiceComponents } from '@/utility/convertResultsToDice';
-import { getRollFromDispatch } from '@/utility/getRollFromDispatch';
+import { convertResultsToDice, formatDiceComponents } from '@/utility/rolls/convertResultsToDice';
+import { getRollFromDispatch } from '@/utility/rolls/getRollFromDispatch';
 import { actionDice } from '@/system/dice';
 import type { DiceComponent } from '@/rolltemplates/rolltemplates';
-import { calculateOutcome } from './calculateOutcome';
-import { calculateActionScore } from './calculateActionScore';
-import { isEligibleForMomentumBurn } from './momentumEligibility';
+import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
+import { calculateActionScore } from '@/utility/rolls/calculateActionScore';
+import { isEligibleForMomentumBurn } from '../rolls/momentumEligibility';
 import { Effect, Context } from 'effect';
 
 // TODO: Refactor so it doesn't have state called during the function execution.
