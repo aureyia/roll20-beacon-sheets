@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { Toggle } from '@/components/ui/toggle';
-import { Switch } from '@/components/ui/switch';
-import { ref } from 'vue';
-import { Label } from '@/components/ui/label';
-import { LabelledSwitch } from '@/components/switches';
+import { ref, provide } from 'vue';
 import MovesOverView from '@/views/character/standard/moves/MovesOverView.vue';
+import MovesDetailView from '@/views/character/standard/moves/MovesDetailView.vue';
 
-const viewMode = ref(false);
+const viewMode = ref(true);
+const activeMove = ref('Face Danger')
+
+const updateActiveMove = (moveId: string) => activeMove.value = moveId
+
+provide('move', {
+  activeMove,
+  updateActiveMove
+})
 </script>
 
 <template>
@@ -15,7 +20,7 @@ const viewMode = ref(false);
       <LabelledSwitch label="Detailed View" class="align-items-center m-auto" v-model="viewMode" />
     </div> -->
     <div class="moves-detail-view" v-if="viewMode">
-      <MoveDetailView />
+      <MovesDetailView />
     </div>
     <div class="moves-overview" v-else>
       <MovesOverView />

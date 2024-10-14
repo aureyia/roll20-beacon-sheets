@@ -50,6 +50,7 @@ export const useStatsStore = defineStore('stats', () => {
     modifier: number = 0,
     customDispatch?: Dispatch,
   ) => {
+    // TODO: Roll is out of date, requires refactor
     const dispatch = customDispatch || (dispatchRef.value as Dispatch);
     const { momentum } = useResourcesStore();
     const formattedDice = formatDiceComponents(actionDice);

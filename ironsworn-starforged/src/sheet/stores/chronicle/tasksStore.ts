@@ -97,7 +97,7 @@ export const useTaskStore = defineStore('task', () => {
       return task;
     });
   };
-
+  // TODO: Roll is out of date, requires refacor using rollDiceWithBeacon
   const roll = async (id: Task['_id']) => {
     const dispatch = dispatchRef.value as Dispatch;
     const task = tasks.value.find((task) => task._id === id);
