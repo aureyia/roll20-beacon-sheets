@@ -5,7 +5,7 @@ import { createRollTemplate } from '@/rolltemplates/rolltemplates';
 import { dispatchRef, initValues } from '@/relay/relay';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { convertResultsToDice, formatDiceComponents } from '@/utility/rolls/convertResultsToDice';
-import { getRollFromDispatch } from '@/utility/rolls/getRollFromDispatch';
+import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
 
 import { actionDice } from '@/system/dice';
 import { Effect } from 'effect';
@@ -53,7 +53,7 @@ export const useStatsStore = defineStore('stats', () => {
     const dispatch = customDispatch || (dispatchRef.value as Dispatch);
     const { momentum } = useResourcesStore();
     const formattedDice = formatDiceComponents(actionDice);
-    const rollResults = await getRollFromDispatch({ rolls: formattedDice });
+    const rollResults = await rollDiceWithBeacon({ rolls: formattedDice });
     const rolledDice = convertResultsToDice(actionDice, rollResults);
 
     const rollTemplate = createRollTemplate({

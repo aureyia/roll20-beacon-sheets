@@ -1,5 +1,3 @@
-import { dispatchRef } from '@/relay/relay';
-
 export type AvailableDice = '1d6' | '1d10' | '1d100';
 export type FormattedRoll = {
   rolls: {
@@ -9,5 +7,3 @@ export type FormattedRoll = {
   };
 };
 
-export const getRollFromDispatch = async (formattedRoll: FormattedRoll): Promise<any> =>
-  await dispatchRef.value.roll(formattedRoll);

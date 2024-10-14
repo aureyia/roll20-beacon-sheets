@@ -1,5 +1,5 @@
 import type { DiceComponent } from '@/rolltemplates/rolltemplates';
-import type { FormattedRoll } from '@/utility/rolls/getRollFromDispatch';
+import type { FormattedRoll } from '@/utility/rolls/rollTypes';
 
 export const formatDieKey = (index: number) => `dice-${index}`;
 export const formatDie = (dieCount: number, sides: number) => `${dieCount}d${sides}`;

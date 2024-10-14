@@ -6,7 +6,7 @@ import { arrayToObject, objectToArray } from '@/utility/objectify';
 import { dispatchRef, initValues } from '@/relay/relay';
 import { type LimitedRange } from '@/utility/limitedRange';
 import { convertResultsToDice, formatDiceComponents } from '@/utility/rolls/convertResultsToDice';
-import { getRollFromDispatch } from '@/utility/rolls/getRollFromDispatch';
+import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { taskDice } from '@/system/dice';
 import { createRollTemplate } from '@/rolltemplates/rolltemplates';
@@ -103,7 +103,7 @@ export const useTaskStore = defineStore('task', () => {
     const task = tasks.value.find((task) => task._id === id);
     const calculatedProgress = Math.floor((task?.progress ?? 0) / 4);
     const formattedDice = formatDiceComponents(taskDice);
-    const rollResults = await getRollFromDispatch({ rolls: formattedDice });
+    const rollResults = await rollDiceWithBeacon({ rolls: formattedDice });
     const rolledDice = convertResultsToDice(taskDice, rollResults);
 
     const rollTemplate = createRollTemplate({

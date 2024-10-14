@@ -1,14 +1,12 @@
 import { initValues } from '@/relay/relay';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { sendRollToChat } from '@/utility/sendRollToChat';
-import { convertResultsToDice, formatDiceComponents } from '@/utility/rolls/convertResultsToDice';
-import { getRollFromDispatch } from '@/utility/rolls/getRollFromDispatch';
 import { actionDice } from '@/system/dice';
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
 import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
 import { calculateActionScore } from '@/utility/rolls/calculateActionScore';
 import { isEligibleForMomentumBurn } from '../rolls/momentumEligibility';
 import { Effect, Context } from 'effect';
+import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 
 // TODO: Refactor so it doesn't have state called during the function execution.
 // Momentum and dice roll
@@ -21,7 +19,7 @@ export const rollMove = async (
   modifier: number,
   option: any,
 ) => {
-  const rolledDice = await getRolledDice(actionDice);
+  const rolledDice = await Effect.runPromise(rollDiceWithBeacon(actionDice));
   const { momentum } = useResourcesStore();
 
   const assetModifiers = calculatePrerollAssetModifiers(assets);
@@ -48,10 +46,4 @@ export const followUpRoll = async (opts: any) =>{
       score: opts.actionScore,
     },
   });
-};
-
-export const getRolledDice = async (dice: DiceComponent[]): Promise<DiceComponent[]> => {
-  const formattedDice = formatDiceComponents(dice);
-  const rollResults = await getRollFromDispatch({ rolls: formattedDice });
-  return convertResultsToDice(dice, rollResults);
 };
