@@ -10,6 +10,8 @@ import {
   ProgressView as CharacterStandardProgressView,
   SummaryView as CharacterStandardSummaryView,
   VowsView as CharacterStandardVowsView,
+  MovesOverView as CharacterStandardMovesOverView,
+  MovesDetailView as CharacterStandardMovesDetailView,
 } from '@/views/character/standard';
 
 import {
@@ -96,7 +98,29 @@ const router = createRouter({
       path: '/character/standard',
       name: 'character-standard',
       component: CharacterStandardMainView,
-      children: [...charactercStandardRoutes()],
+      children: [
+        {
+          path: '/moves',
+          name: 'characterStandardMoves',
+          component: CharacterStandardMovesView,
+          alias: '/character-moves',
+          children: [
+            {
+              path: '/overview',
+              name: 'characterStandardMovesOverView',
+              component: CharacterStandardMovesOverView,
+              alias: '/character-moves-overview'
+            },
+            {
+              path: '/detail-view',
+              name: 'characterStandardMovesDetailView',
+              component: CharacterStandardMovesDetailView,
+              alias: '/character-moves-detail-view'
+            }
+          ]
+        },
+        ...charactercStandardRoutes(),
+      ],
     },
     {
       path: '/character/edge',
