@@ -11,8 +11,17 @@ export const progressTicksToFill: ProgressTicksToFill = (
   positionInTrack: number,
   currentProgress: number,
 ): number => {
-  assert(isNumberBetween(positionInTrack, 0, 10), `positionInTrack: ${positionInTrack}`);
-  assert(isNumberBetween(currentProgress, 0, 40), `currentProgress: ${currentProgress}`);
+  const MAX_TOTAL_PROGRESS = 40 as const;
+  const FINAL_TRACK_POSITION = 10 as const;
+
+  assert(
+    isNumberBetween(positionInTrack, 0, FINAL_TRACK_POSITION),
+    `positionInTrack: ${positionInTrack}`,
+  );
+  assert(
+    isNumberBetween(currentProgress, 0, MAX_TOTAL_PROGRESS),
+    `currentProgress: ${currentProgress}`,
+  );
 
   const MAX_TICKS_PER_BOX = 4 as const;
   const NO_TICKS = 0 as const;
@@ -25,6 +34,6 @@ export const progressTicksToFill: ProgressTicksToFill = (
     (lowestTicks) => Math.max(NO_TICKS, lowestTicks),
   );
 
-  assert(isNumberBetween(result, 0, 4), `result: ${result}`);
+  assert(isNumberBetween(result, NO_TICKS, MAX_TICKS_PER_BOX), `result: ${result}`);
   return result;
 };
