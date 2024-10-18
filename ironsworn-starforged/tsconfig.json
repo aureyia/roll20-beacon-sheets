@@ -2,6 +2,8 @@
   "files": [],
   "compilerOptions": {
     "baseUrl": ".",
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
     "paths": {
       "@/*": ["./src/*"]
     },

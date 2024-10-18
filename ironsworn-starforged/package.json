@@ -26,6 +26,7 @@
     "cypress:report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "dependencies": {
+    "@effect/schema": "^0.75.5",
     "@paralleldrive/cuid2": "^2.2.2",
     "@roll20-official/beacon-sdk": "^0.0.13",
     "@vee-validate/zod": "^4.13.2",

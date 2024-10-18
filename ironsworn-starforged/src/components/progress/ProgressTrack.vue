@@ -30,7 +30,7 @@ defineProps({ task: { type: Object, default: {} } });
         v-for="(value, index) in BOXES"
         :key="index"
         :id="task._id"
-        :ticks="progressTicksToFill(index)(task.progress).toString()"
+        :ticks="progressTicksToFill(index, task.progress).toString()"
       />
     </div>
     <div class="progress-box flex items-center">

@@ -4,6 +4,8 @@
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "baseUrl": ".",
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
     "types": ["vitest/ImportMeta"],
     "paths": {
       "@/*": ["./src/*"]
