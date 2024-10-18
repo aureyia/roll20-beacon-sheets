@@ -126,20 +126,13 @@ export const useImpactsStore = defineStore('impacts', () => {
 
   const hydrate = (hydrateStore: ImpactsHydrate) => {
     misfortunes.value =
-      Effect.runSync(objectToArray(hydrateStore.impacts.misfortunes))
-      ?? misfortunes.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.misfortunes)) ?? misfortunes.value;
     lastingEffects.value =
-      Effect.runSync(objectToArray(hydrateStore.impacts.lastingEffects))
-      ?? lastingEffects.value;
-    burdens.value = 
-      Effect.runSync(objectToArray(hydrateStore.impacts.burdens))
-      ?? burdens.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.lastingEffects)) ?? lastingEffects.value;
+    burdens.value = Effect.runSync(objectToArray(hydrateStore.impacts.burdens)) ?? burdens.value;
     currentVehicle.value =
-      Effect.runSync(objectToArray(hydrateStore.impacts.currentVehicle))
-      ?? currentVehicle.value;
-    other.value = 
-      Effect.runSync(objectToArray(hydrateStore.impacts.other))
-      ?? other.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.currentVehicle)) ?? currentVehicle.value;
+    other.value = Effect.runSync(objectToArray(hydrateStore.impacts.other)) ?? other.value;
   };
 
   const list = computed(() => {

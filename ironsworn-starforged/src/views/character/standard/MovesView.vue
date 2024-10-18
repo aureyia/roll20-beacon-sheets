@@ -4,23 +4,23 @@ import MovesOverView from '@/views/character/standard/moves/MovesOverView.vue';
 import MovesDetailView from '@/views/character/standard/moves/MovesDetailView.vue';
 
 const viewMode = ref(false);
-const activeMove = ref('')
+const activeMove = ref('');
 
 const updateActiveMove = (moveId: string) => {
-  viewMode.value = true
-  activeMove.value = moveId
-  console.log(activeMove.value)
-}
+  viewMode.value = true;
+  activeMove.value = moveId;
+  console.log(activeMove.value);
+};
 const clearActiveMove = () => {
   viewMode.value = false;
   activeMove.value = '';
-}
+};
 
 provide('move', {
   activeMove,
   updateActiveMove,
   clearActiveMove,
-})
+});
 </script>
 
 <template>

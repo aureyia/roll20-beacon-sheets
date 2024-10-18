@@ -109,15 +109,15 @@ const router = createRouter({
               path: '/overview',
               name: 'characterStandardMovesOverView',
               component: CharacterStandardMovesOverView,
-              alias: '/character-moves-overview'
+              alias: '/character-moves-overview',
             },
             {
               path: '/detail-view',
               name: 'characterStandardMovesDetailView',
               component: CharacterStandardMovesDetailView,
-              alias: '/character-moves-detail-view'
-            }
-          ]
+              alias: '/character-moves-detail-view',
+            },
+          ],
         },
         ...charactercStandardRoutes(),
       ],

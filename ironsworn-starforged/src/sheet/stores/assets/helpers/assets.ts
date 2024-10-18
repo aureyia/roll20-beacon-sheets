@@ -1,35 +1,34 @@
-import { Effect, pipe, Either } from "effect";
-import { 
-  starforged, 
-  type IAsset, 
-  type IAssetType
-} from "dataforged";
-import { getAssetType } from "./assetType";
-import type { Ability, AssetCategory } from "../types/asset-types";
-import { createId } from "@paralleldrive/cuid2";
+import { Effect, pipe, Either } from 'effect';
+import { starforged, type IAsset, type IAssetType } from 'dataforged';
+import { getAssetType } from './assetType';
+import type { Ability, AssetCategory } from '../types/asset-types';
+import { createId } from '@paralleldrive/cuid2';
 
-const getAssets = (assetType: IAssetType):IAsset[] => {
-  return assetType.Assets
-}
+const getAssets = (assetType: IAssetType): IAsset[] => {
+  return assetType.Assets;
+};
 
-const getAssetById = (assets:IAsset[], id: string): Effect.Effect<IAsset, Error> => {
-  const asset: IAsset|undefined = assets.find((x) => x.$id === id)
-  
-  if(!asset) {
-    return Effect.fail(new Error(`Asset not found for ${id}`))
+const getAssetById = (assets: IAsset[], id: string): Effect.Effect<IAsset, Error> => {
+  const asset: IAsset | undefined = assets.find((x) => x.$id === id);
+
+  if (!asset) {
+    return Effect.fail(new Error(`Asset not found for ${id}`));
   }
 
-  return Effect.succeed(asset)
-}
+  return Effect.succeed(asset);
+};
 
-export const getAsset = (id: string, assetTypeName: AssetCategory):Effect.Effect<IAsset, Error> => {
+export const getAsset = (
+  id: string,
+  assetTypeName: AssetCategory,
+): Effect.Effect<IAsset, Error> => {
   return pipe(
     assetTypeName,
     getAssetType,
     Effect.map(getAssets),
-    Effect.andThen((x) => getAssetById(x, id))
-  )
-}
+    Effect.andThen((x) => getAssetById(x, id)),
+  );
+};
 
 export const getAssetAbilities = (
   id: string,
@@ -47,5 +46,7 @@ export const getAssetAbilities = (
     return Effect.fail(new Error('No abilities found for Asset'));
   }
 
-  return Effect.succeed(abilities.map((x) => ({ _id: createId(), dataforgedId: x.$id, enabled: x.Enabled })));
+  return Effect.succeed(
+    abilities.map((x) => ({ _id: createId(), dataforgedId: x.$id, enabled: x.Enabled })),
+  );
 };

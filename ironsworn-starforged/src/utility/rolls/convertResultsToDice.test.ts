@@ -1,4 +1,8 @@
-import { actionRollResults, taskRollResults, oracleRollResults } from '@/utility/__mocks__/example-rolls';
+import {
+  actionRollResults,
+  taskRollResults,
+  oracleRollResults,
+} from '@/utility/__mocks__/example-rolls';
 import { oracleDie, actionDice, taskDice } from '@/system/dice';
 import { convertResultsToDice, formatDiceComponents } from './convertResultsToDice';
 import { it, expect, describe } from 'vitest';

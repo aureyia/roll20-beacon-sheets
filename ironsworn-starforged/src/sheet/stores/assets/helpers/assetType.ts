@@ -1,6 +1,6 @@
-import { Effect, Either } from "effect";
-import { starforged, type IAssetType, type AssetTypeName, type IAsset } from "dataforged";
-import type { AssetCategory } from "../types/asset-types";
+import { Effect, Either } from 'effect';
+import { starforged, type IAssetType, type AssetTypeName, type IAsset } from 'dataforged';
+import type { AssetCategory } from '../types/asset-types';
 
 export const getCategory = (category: AssetCategory): Effect.Effect<IAssetType, Error> => {
   const selectedCategory = starforged['Asset Types'].find((x) => x.Name === category);
@@ -31,4 +31,4 @@ export const getAssetType = (assetTypeName: AssetCategory): Effect.Effect<IAsset
   }
 
   return Effect.succeed(selectedAssetType);
-}
+};

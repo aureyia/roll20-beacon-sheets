@@ -2,16 +2,15 @@
 import { ref } from 'vue';
 import { useAssetStore, type Asset } from '@/sheet/stores/assets/assetStore';
 import { starforged, type IAsset } from 'dataforged';
-import { pipe } from 'effect'
+import { pipe } from 'effect';
 
 const assetStore = useAssetStore();
 const removeMode = ref(false);
 
-
 const getAssetById = (asset: Asset) =>
   starforged['Asset Types']
-    .find((x) => x.Name === asset.category)?.Assets
-    .find((x) => x.$id === asset.dataforgedId)
+    .find((x) => x.Name === asset.category)
+    ?.Assets.find((x) => x.$id === asset.dataforgedId);
 </script>
 
 <template>
@@ -27,7 +26,12 @@ const getAssetById = (asset: Asset) =>
       </div>
     </div>
     <div class="assets-container flex flex-wrap justify-between">
-      <AssetCard v-for="asset in assetStore.assets" :abilities="asset.abilities" :storedAsset="asset" :dataforgedAsset="getAssetById(asset)"/>
+      <AssetCard
+        v-for="asset in assetStore.assets"
+        :abilities="asset.abilities"
+        :storedAsset="asset"
+        :dataforgedAsset="getAssetById(asset)"
+      />
     </div>
   </div>
 </template>

@@ -10,7 +10,7 @@ import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
 import { useAssetStore } from './assets/assetStore';
-import { Effect } from 'effect'
+import { Effect } from 'effect';
 
 /*
  * This is the master store for the entire character sheet.

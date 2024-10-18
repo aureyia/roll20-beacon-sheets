@@ -2,9 +2,9 @@ import type { DiceComponent } from '@/rolltemplates/rolltemplates';
 import { Effect } from 'effect';
 
 type Outcome = {
-  outcome: string,
-  dice: DiceComponent[]
-}
+  outcome: string;
+  dice: DiceComponent[];
+};
 
 export const calculateOutcome = (
   score: number,
@@ -18,19 +18,37 @@ export const calculateOutcome = (
 
   if (challengeDie1 === challengeDie2) {
     if (score > challengeDie1) {
-      return Effect.succeed({ outcome: 'opportunity', dice: updateExceededChallengeDie(dice, true, true) });
+      return Effect.succeed({
+        outcome: 'opportunity',
+        dice: updateExceededChallengeDie(dice, true, true),
+      });
     } else {
-      return Effect.succeed({ outcome: 'complication', dice: updateExceededChallengeDie(dice, false, false) });
+      return Effect.succeed({
+        outcome: 'complication',
+        dice: updateExceededChallengeDie(dice, false, false),
+      });
     }
   } else {
     if (score > challengeDie1 && score > challengeDie2) {
-      return Effect.succeed({ outcome: 'strong-hit', dice: updateExceededChallengeDie(dice, true, true) });
+      return Effect.succeed({
+        outcome: 'strong-hit',
+        dice: updateExceededChallengeDie(dice, true, true),
+      });
     } else if (score > challengeDie1) {
-      return Effect.succeed({ outcome: 'weak-hit', dice: updateExceededChallengeDie(dice, true, false) });
+      return Effect.succeed({
+        outcome: 'weak-hit',
+        dice: updateExceededChallengeDie(dice, true, false),
+      });
     } else if (score > challengeDie2) {
-      return Effect.succeed({ outcome: 'weak-hit', dice: updateExceededChallengeDie(dice, false, true) });
+      return Effect.succeed({
+        outcome: 'weak-hit',
+        dice: updateExceededChallengeDie(dice, false, true),
+      });
     } else {
-      return Effect.succeed({ outcome: 'miss', dice: updateExceededChallengeDie(dice, false, false) });
+      return Effect.succeed({
+        outcome: 'miss',
+        dice: updateExceededChallengeDie(dice, false, false),
+      });
     }
   }
 };

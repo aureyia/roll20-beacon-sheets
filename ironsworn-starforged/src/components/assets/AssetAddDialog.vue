@@ -4,10 +4,7 @@ import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { FormField, FormItem, FormLabel } from '../ui/form';
 import { starforged, type IAsset } from 'dataforged';
 import { Select, SelectContent, SelectTrigger, SelectValue } from '../ui/select';
-import {
-  useAssetStore,
-  type AssetSubmission,
-} from '@/sheet/stores/assets/assetStore';
+import { useAssetStore, type AssetSubmission } from '@/sheet/stores/assets/assetStore';
 import { getAllAssetsForCategory } from '@/sheet/stores/assets/helpers/assetType';
 import type { AssetCategory } from '@/sheet/stores/assets/types/asset-types';
 import { useForm } from 'vee-validate';
@@ -18,10 +15,12 @@ const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const;
 const assetStore = useAssetStore();
 
 const formSchema = toTypedSchema(
-  z.object({
-    category: z.string().min(2),
-    asset: z.string(),
-  }).required(),
+  z
+    .object({
+      category: z.string().min(2),
+      asset: z.string(),
+    })
+    .required(),
 );
 
 type SupportedAssets = {
@@ -29,7 +28,7 @@ type SupportedAssets = {
   Companion: IAsset[];
   Deed: IAsset[];
   [key: string]: IAsset[];
-}
+};
 
 const allAssets: SupportedAssets = {
   Path: Effect.runSync(getAllAssetsForCategory('Path')),
@@ -43,11 +42,11 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit((values) => {
   const selectedAsset = allAssets[values.category].find(
-    (asset: IAsset) => asset.Name === values.asset
+    (asset: IAsset) => asset.Name === values.asset,
   );
 
   if (!selectedAsset) {
-    return
+    return;
   }
 
   const submission: AssetSubmission = {
@@ -56,13 +55,13 @@ const onSubmit = form.handleSubmit((values) => {
     // @ts-ignore
     category: values.category,
   };
-  console.log('nom')
+  console.log('nom');
   assetStore.addAsset(submission);
 });
 
 const clearState = () => {
-  assetStore.assets = []
-}
+  assetStore.assets = [];
+};
 </script>
 
 <template>

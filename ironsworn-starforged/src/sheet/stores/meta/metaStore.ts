@@ -32,15 +32,16 @@ export const useMetaStore = defineStore('meta', () => {
 
   // Stubs for store consistency
 
-  const dehydrate = () => Effect.sync(() => {
-    return {
-      name: name.value,
-      avatar: avatar.value,
-      bio: bio.value,
-      gmNotes: gmNotes.value,
-      campaignId: campaignId.value,
-    };
-  });
+  const dehydrate = () =>
+    Effect.sync(() => {
+      return {
+        name: name.value,
+        avatar: avatar.value,
+        bio: bio.value,
+        gmNotes: gmNotes.value,
+        campaignId: campaignId.value,
+      };
+    });
 
   const hydrate = (hydrateStore: MetaHydrate) => {
     id.value = hydrateStore.id ?? id.value;

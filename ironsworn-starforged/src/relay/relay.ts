@@ -28,7 +28,7 @@ const relayConfig = {
     onSharedSettingsChange,
     onTranslationsRequest,
     onDragOver,
-  }
+  },
 };
 
 // This is the typescript type for the initial values that the sheet will use when it starts.

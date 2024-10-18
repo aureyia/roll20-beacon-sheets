@@ -32,14 +32,14 @@ export const rollMove = async (
 
 const calculatePrerollAssetModifiers = (assets: any) => 0;
 
-export const followUpRoll = async (opts: any) =>{
+export const followUpRoll = async (opts: any) => {
   console.log(opts);
 
   sendRollToChat(initValues.character.id, {
     type: 'move-compact',
     parameters: {
       characterName: initValues.character.name,
-      // TODO: Fix move name not displaying  
+      // TODO: Fix move name not displaying
       title: 'Rolling ' + opts.move.Text,
       dice: opts.dice,
       outcome: opts.outcome,

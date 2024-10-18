@@ -6,4 +6,3 @@ export type FormattedRoll = {
     'dice-2'?: AvailableDice;
   };
 };
-

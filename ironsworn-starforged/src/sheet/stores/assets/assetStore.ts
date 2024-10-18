@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
 import { starforged, type IAsset, type IAssetType } from 'dataforged';
 import { Effect, pipe } from 'effect';
-import type { Ability, AssetCategory, Asset} from './types/asset-types';
+import type { Ability, AssetCategory, Asset } from './types/asset-types';
 import { getAssetAbilities } from './helpers/assets';
 
 export type AssetsHydrate = {
@@ -15,56 +15,55 @@ export type AssetSubmission = {
   dataforgedId: string;
   name: string;
   category: AssetCategory;
-  meter?: number
-}
+  meter?: number;
+};
 
 const formatAbilities = (
   formatter: typeof objectToArray | typeof arrayToObject,
-  assets: AssetsHydrate | any
+  assets: AssetsHydrate | any,
 ) => {
   if (!assets) {
-    return Effect.fail(new Error('No assets were provided'))
+    return Effect.fail(new Error('No assets were provided'));
   }
 
   const mappedAssets = assets.map((asset: any) => {
-    const abilities = Effect.runSync(formatter(asset.abilities))
+    const abilities = Effect.runSync(formatter(asset.abilities));
     return {
       ...asset,
-      abilities: abilities
-    }
-  })
+      abilities: abilities,
+    };
+  });
 
-  return Effect.succeed(mappedAssets)
-}
+  return Effect.succeed(mappedAssets);
+};
 
 export const useAssetStore = defineStore('asset', () => {
   const assets: Ref<Array<Asset>> = ref([]);
 
-
   const addAsset = (opts: AssetSubmission) => {
-    const abilities: Ability[] = Effect.runSync(getAssetAbilities(opts.dataforgedId, opts.category))
+    const abilities: Ability[] = Effect.runSync(
+      getAssetAbilities(opts.dataforgedId, opts.category),
+    );
     assets.value.push({
       _id: createId(),
       dataforgedId: opts.dataforgedId,
       name: opts.name,
       category: opts.category,
       abilities,
-      meter: opts.meter
+      meter: opts.meter,
     });
-  }
+  };
 
   const dehydrate = () => {
-    const updatedAssets = Effect.runSync(formatAbilities(arrayToObject, assets.value))
+    const updatedAssets = Effect.runSync(formatAbilities(arrayToObject, assets.value));
     return Effect.succeed({
       assets: Effect.runSync(arrayToObject(updatedAssets)),
     });
   };
 
   const hydrate = (hydrateStore: AssetsHydrate) => {
-    const assetsList = Effect.runSync(objectToArray(hydrateStore.assets))
-    const updatedAssets = Effect.runSync(
-      formatAbilities(objectToArray, assetsList)
-    )
+    const assetsList = Effect.runSync(objectToArray(hydrateStore.assets));
+    const updatedAssets = Effect.runSync(formatAbilities(objectToArray, assetsList));
     assets.value = updatedAssets ?? assets.value;
   };
 

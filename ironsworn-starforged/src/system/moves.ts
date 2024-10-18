@@ -1,23 +1,23 @@
 type Add = {
-  Amount: number
-}
+  Amount: number;
+};
 
 type Using = {
-  Name: string
-}
+  Name: string;
+};
 
 type PresetActionDie = {
-  Value: number
-}
+  Value: number;
+};
 
 type RerollDice = {
-  Type: 'All'
-}
+  Type: 'All';
+};
 
 type Mark = {
-  Type: 'combat' | 'vow' | 'legacy'
-  Amount: number
-}
+  Type: 'combat' | 'vow' | 'legacy';
+  Amount: number;
+};
 
 type MoveAlter = {
   id: string;
@@ -40,6 +40,4 @@ type MoveAlter = {
   };
 };
 
-export const REQUIRED_ALTERED_MOVE_DATA: MoveAlter[] = [
-
-] as const
+export const REQUIRED_ALTERED_MOVE_DATA: MoveAlter[] = [] as const;

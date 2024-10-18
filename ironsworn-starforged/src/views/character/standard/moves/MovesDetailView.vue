@@ -2,16 +2,15 @@
 import { MoveActiveCard, MoveAssetControl, MoveSelect } from '@/components/moves';
 import { inject, computed } from 'vue';
 
-const { activeMove }:any = inject('move')
+const { activeMove }: any = inject('move');
 
-const categoryClass = computed(() => activeMove.value.split('/')[2].toLowerCase().replaceAll('_', '-'))
+const categoryClass = computed(() =>
+  activeMove.value.split('/')[2].toLowerCase().replaceAll('_', '-'),
+);
 </script>
 
 <template>
-  <div 
-    class="move-details flex flex-row gap-10 mx-10"
-    :class="categoryClass"
-    >
+  <div class="move-details mx-10 flex flex-row gap-10" :class="categoryClass">
     <div class="move-select basis-1/4">
       <MoveSelect />
     </div>

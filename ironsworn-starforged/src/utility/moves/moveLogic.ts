@@ -7,40 +7,52 @@ import { Effect } from 'effect';
 import { useAssetStore } from '@/sheet/stores/assets/assetStore';
 import { starforged } from 'dataforged';
 
-const getDfAssets = () => starforged['Asset Types']
+const getDfAssets = () => starforged['Asset Types'];
 
-const alterMove = (alteredMoves, move: IMove) => { return move }
+const alterMove = (alteredMoves, move: IMove) => {
+  return move;
+};
 
 const assetCheck = (move: IMove) => {
   // TODO: Check assets for alter moves / Triggers
   selectedMove.value = move;
   const hasAssetTriggers = false;
   // Get assets from store
-  const playerAssets = useAssetStore().assets
-  const activeAssetAbilities = playerAssets.map((asset) => {
-    const enabledAbilities = asset.abilities.filter((abilitiy) => abilitiy.enabled === true)
-    if(enabledAbilities.length > 0) {
-      return enabledAbilities
-    }
-    return []
-  }).flat()
+  const playerAssets = useAssetStore().assets;
+  const activeAssetAbilities = playerAssets
+    .map((asset) => {
+      const enabledAbilities = asset.abilities.filter((abilitiy) => abilitiy.enabled === true);
+      if (enabledAbilities.length > 0) {
+        return enabledAbilities;
+      }
+      return [];
+    })
+    .flat();
   const activeDataforgedAbilities = activeAssetAbilities.map((ability) => {
-    const matchedAssetType = starforged['Asset Types'].find((assetType) => ability.dataforgedId.includes(assetType.$id))
-    const matchedAsset = matchedAssetType?.Assets.find((asset) => ability.dataforgedId.includes(asset.$id))
-    const matchedAbility = matchedAsset?.Abilities.find((dfAbility) => ability.dataforgedId === dfAbility.$id)
-    return matchedAbility
-  })
-  const alterMoves = activeDataforgedAbilities.map((ability) => {
-    return ability?.['Alter Moves']
-  }).flat()
-  const validMoves = alterMoves.filter((alterMove) => alterMove?.Moves?.includes(move.$id))
-  const unknownMoves = alterMoves.filter((alterMove) => alterMove?.Moves === null)
-  console.log('validMoves', validMoves)
-  console.log('unknownMoves', unknownMoves)
+    const matchedAssetType = starforged['Asset Types'].find((assetType) =>
+      ability.dataforgedId.includes(assetType.$id),
+    );
+    const matchedAsset = matchedAssetType?.Assets.find((asset) =>
+      ability.dataforgedId.includes(asset.$id),
+    );
+    const matchedAbility = matchedAsset?.Abilities.find(
+      (dfAbility) => ability.dataforgedId === dfAbility.$id,
+    );
+    return matchedAbility;
+  });
+  const alterMoves = activeDataforgedAbilities
+    .map((ability) => {
+      return ability?.['Alter Moves'];
+    })
+    .flat();
+  const validMoves = alterMoves.filter((alterMove) => alterMove?.Moves?.includes(move.$id));
+  const unknownMoves = alterMoves.filter((alterMove) => alterMove?.Moves === null);
+  console.log('validMoves', validMoves);
+  console.log('unknownMoves', unknownMoves);
   // TODO: Enrich alter moves
-  const enrichedAlters = validMoves
-  const alteredMoves = alterMove(validMoves, move)
-  unknownMoves.length > 0 ? (assetSelectionDialog.value = true) : optionsCheck(alterMoves)
+  const enrichedAlters = validMoves;
+  const alteredMoves = alterMove(validMoves, move);
+  unknownMoves.length > 0 ? (assetSelectionDialog.value = true) : optionsCheck(alterMoves);
 
   // If true
   // Enrich alter move with missing data
@@ -57,7 +69,6 @@ const optionsCheck = (move: IMove) => {
     ? (optionSelectionDialog.value = true)
     : moveRoll(selectedMove.value.Trigger.Options[0]);
 };
-
 
 const moveRoll = async (option: any) => {
   console.log(selectedOption);
@@ -79,7 +90,6 @@ const momentumBurnDialog = ref(false);
 const optionSelectionDialog = ref(false);
 const assetSelectionDialog = ref(false);
 const resourcesStore = useResourcesStore();
-
 
 const selectOptionAndRoll = () => {
   moveRoll(selectedOption.value);
