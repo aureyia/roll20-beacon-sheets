@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
 import { Effect } from 'effect';
+import { assert } from '@/utility/assert';
+import { isNumberBetween } from '@/utility/isNumberBetween';
 
 export type ResourcesHydrate = {
   resources: {
@@ -11,10 +13,17 @@ export type ResourcesHydrate = {
     xp: number;
     spentXp: number;
     momentum: number;
-    momentumMax: number;
-    momentumReset: number;
   };
 };
+
+const assertStoreValues = (values: any) => {
+  assert(isNumberBetween(values.health, 0, 5), `values.health: ${values.health}`)
+  assert(isNumberBetween(values.spirit, 0, 5), `values.spirit: ${values.spirit}`)
+  assert(isNumberBetween(values.supply, 0, 5), `values.supply: ${values.supply}`)
+  assert(isNumberBetween(values.momentum, -6, 10), `values.momentum: ${values.momentum}`)
+  assert(values.xp >= 0, `values.xp: ${values.xp}`)
+  assert(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`)
+}
 
 export const useResourcesStore = defineStore('resources', () => {
   const impacts = useImpactsStore();
@@ -31,19 +40,23 @@ export const useResourcesStore = defineStore('resources', () => {
   );
 
   const dehydrate = () => {
-    return Effect.succeed({
-      resources: {
-        health: health.value,
-        spirit: spirit.value,
-        supply: supply.value,
-        xp: xp.value,
-        spentXp: spentXp.value,
-        momentum: momentum.value,
-      },
-    });
+    const resources = {
+      health: health.value,
+      spirit: spirit.value,
+      supply: supply.value,
+      xp: xp.value,
+      spentXp: spentXp.value,
+      momentum: momentum.value,
+    }
+
+    assertStoreValues(resources)
+    
+    return Effect.succeed({ resources, });
   };
 
   const hydrate = (hydrateStore: ResourcesHydrate) => {
+    assertStoreValues(hydrateStore.resources)
+
     health.value = hydrateStore.resources.health ?? health.value;
     spirit.value = hydrateStore.resources.spirit ?? spirit.value;
     supply.value = hydrateStore.resources.supply ?? supply.value;
