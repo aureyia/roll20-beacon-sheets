@@ -2,7 +2,7 @@ import { useResourcesStore } from './resourcesStore';
 import { createPinia } from 'pinia';
 import { describe, test, expect } from 'vitest';
 import { Effect } from 'effect';
-import { boundsData } from './fixtures/bounds'
+import { boundsData } from './fixtures/bounds';
 
 describe('resourcesStore', () => {
   const pinia = createPinia();
@@ -19,7 +19,7 @@ describe('resourcesStore', () => {
         xp: 0,
         spentXp: 0,
         momentum: 2,
-      }
+      },
     });
   });
 
@@ -32,14 +32,14 @@ describe('resourcesStore', () => {
         xp: 1,
         spentXp: 1,
         momentum: 4,
-      }
-    }
+      },
+    };
 
     expect(store.hydrate(values));
     expect(Effect.runSync(store.dehydrate())).toEqual(values);
   });
 
-  boundsData.forEach(({ fixture, error}) => {
+  boundsData.forEach(({ fixture, error }) => {
     test('Assert fails for each upper bound', () => {
       expect(() => store.hydrate(fixture)).toThrowError(error);
     });

@@ -17,13 +17,13 @@ export type ResourcesHydrate = {
 };
 
 const assertStoreValues = (values: any) => {
-  assert(isNumberBetween(values.health, 0, 5), `values.health: ${values.health}`)
-  assert(isNumberBetween(values.spirit, 0, 5), `values.spirit: ${values.spirit}`)
-  assert(isNumberBetween(values.supply, 0, 5), `values.supply: ${values.supply}`)
-  assert(isNumberBetween(values.momentum, -6, 10), `values.momentum: ${values.momentum}`)
-  assert(values.xp >= 0, `values.xp: ${values.xp}`)
-  assert(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`)
-}
+  assert(isNumberBetween(values.health, 0, 5), `values.health: ${values.health}`);
+  assert(isNumberBetween(values.spirit, 0, 5), `values.spirit: ${values.spirit}`);
+  assert(isNumberBetween(values.supply, 0, 5), `values.supply: ${values.supply}`);
+  assert(isNumberBetween(values.momentum, -6, 10), `values.momentum: ${values.momentum}`);
+  assert(values.xp >= 0, `values.xp: ${values.xp}`);
+  assert(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`);
+};
 
 export const useResourcesStore = defineStore('resources', () => {
   const impacts = useImpactsStore();
@@ -47,15 +47,15 @@ export const useResourcesStore = defineStore('resources', () => {
       xp: xp.value,
       spentXp: spentXp.value,
       momentum: momentum.value,
-    }
+    };
 
-    assertStoreValues(resources)
-    
-    return Effect.succeed({ resources, });
+    assertStoreValues(resources);
+
+    return Effect.succeed({ resources });
   };
 
   const hydrate = (hydrateStore: ResourcesHydrate) => {
-    assertStoreValues(hydrateStore.resources)
+    assertStoreValues(hydrateStore.resources);
 
     health.value = hydrateStore.resources.health ?? health.value;
     spirit.value = hydrateStore.resources.spirit ?? spirit.value;

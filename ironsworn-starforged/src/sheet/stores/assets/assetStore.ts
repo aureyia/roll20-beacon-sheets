@@ -2,8 +2,7 @@ import { objectToArray, arrayToObject } from '@/utility/objectify';
 import { createId } from '@paralleldrive/cuid2';
 import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
-import { starforged, type IAsset, type IAssetType } from 'dataforged';
-import { Effect, pipe } from 'effect';
+import { Effect } from 'effect';
 import type { Ability, AssetCategory, Asset } from './types/asset-types';
 import { getAssetAbilities } from './helpers/assets';
 

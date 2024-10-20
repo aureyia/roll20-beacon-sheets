@@ -1,14 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { useResourcesStore } from '../resources/resourcesStore';
-import { createRollTemplate } from '@/rolltemplates/rolltemplates';
-import { dispatchRef, initValues } from '@/relay/relay';
-import type { Dispatch } from '@roll20-official/beacon-sdk';
-import { convertResultsToDice, formatDiceComponents } from '@/utility/rolls/convertResultsToDice';
-import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
-
-import { actionDice } from '@/system/dice';
 import { Effect } from 'effect';
+import { assert } from '@/utility/assert';
 
 export type Stats = {
   edge: number;
@@ -28,6 +21,14 @@ export type StatsHydrate = {
   };
 };
 
+const assertStoreValues = (values: any) => {
+  assert(typeof values.edge === 'number', `values.edge type: ${typeof values.edge}`);
+  assert(typeof values.heart === 'number', `values.heart type: ${typeof values.heart}`);
+  assert(typeof values.iron === 'number', `values.edge type: ${typeof values.iron}`);
+  assert(typeof values.shadow === 'number', `values.edge type: ${typeof values.shadow}`);
+  assert(typeof values.wits === 'number', `values.edge type: ${typeof values.wits}`);
+};
+
 export const useStatsStore = defineStore('stats', () => {
   const edge = ref(0);
   const heart = ref(0);
@@ -35,66 +36,22 @@ export const useStatsStore = defineStore('stats', () => {
   const shadow = ref(0);
   const wits = ref(0);
 
-  /**
-   * Rolls a stat and posts the result to the chat log.
-   *
-   * @param label The label to display for the stat.
-   * @param value The value of the stat to roll.
-   * @param modifier The modifier to apply to the roll.
-   * @param customDispatch The dispatch function to use to post the roll template. If not provided, the default dispatch function will be used.
-   * @returns The result of the roll as an array of dice results.
-   */
-  const roll = async (
-    label: string,
-    value: number,
-    modifier: number = 0,
-    customDispatch?: Dispatch,
-  ) => {
-    // TODO: Roll is out of date, requires refactor
-    const dispatch = customDispatch || (dispatchRef.value as Dispatch);
-    const { momentum } = useResourcesStore();
-    const formattedDice = formatDiceComponents(actionDice);
-    const rollResults = await rollDiceWithBeacon({ rolls: formattedDice });
-    const rolledDice = convertResultsToDice(actionDice, rollResults);
-
-    const rollTemplate = createRollTemplate({
-      type: 'stat',
-      parameters: {
-        characterName: initValues.character.name,
-        title: 'Rolling ' + label,
-        dice: rolledDice,
-        label,
-        value,
-        momentum,
-        modifier,
-      },
-    });
-
-    await dispatch.post({
-      characterId: initValues.character.id,
-      content: rollTemplate,
-      options: {
-        whisper: undefined,
-        secret: undefined,
-      },
-    });
-
-    return rolledDice;
-  };
-
   const dehydrate = () => {
-    return Effect.succeed({
-      stats: {
-        edge: edge.value,
-        heart: heart.value,
-        iron: iron.value,
-        shadow: shadow.value,
-        wits: wits.value,
-      },
-    });
+    const stats = {
+      edge: edge.value,
+      heart: heart.value,
+      iron: iron.value,
+      shadow: shadow.value,
+      wits: wits.value,
+    };
+
+    assertStoreValues(stats);
+    return Effect.succeed({ stats });
   };
 
   const hydrate = (hydrateStore: StatsHydrate) => {
+    assertStoreValues(hydrateStore.stats);
+
     edge.value = hydrateStore.stats.edge ?? edge.value;
     heart.value = hydrateStore.stats.heart ?? heart.value;
     iron.value = hydrateStore.stats.iron ?? iron.value;
@@ -108,7 +65,6 @@ export const useStatsStore = defineStore('stats', () => {
     iron,
     shadow,
     wits,
-    roll,
     dehydrate,
     hydrate,
   };
