@@ -1,16 +1,27 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAssetStore, type Asset } from '@/sheet/stores/assets/assetStore';
+import { useAssetStore } from '@/sheet/stores/assets/assetStore';
 import { starforged, type IAsset } from 'dataforged';
-import { pipe } from 'effect';
+import { Effect } from 'effect'
+import AssetAddDialog from "@/components/assets/AssetAddDialog.vue";
+import AssetCard from "@/components/assets/AssetCard.vue";
 
 const assetStore = useAssetStore();
 const removeMode = ref(false);
 
-const getAssetById = (asset: Asset) =>
-  starforged['Asset Types']
-    .find((x) => x.Name === asset.category)
-    ?.Assets.find((x) => x.$id === asset.dataforgedId);
+const getAssetById = (asset: Asset): Effect.Effect<IAsset> => {
+  const assets = starforged['Asset Types'].find((x) => x.Name === asset.category).Assets;
+  if (!assets) {
+    return Effect.fail(new Error(`No assets found for category: ${asset.category}`));
+  };
+
+  const selectedAsset = assets.find((x) => x.$id === asset.dataforgedId);
+  if (!selectedAsset) {
+    return Effect.fail(new Error(`No asset found for: ${asset.dataforgedId}`));
+  };
+
+  return Effect.succeed(selectedAsset);
+};
 </script>
 
 <template>
@@ -30,7 +41,8 @@ const getAssetById = (asset: Asset) =>
         v-for="asset in assetStore.assets"
         :abilities="asset.abilities"
         :storedAsset="asset"
-        :dataforgedAsset="getAssetById(asset)"
+        :dataforgedAsset="Effect.runSync(getAssetById(asset))"
+        :key="asset"
       />
     </div>
   </div>

@@ -5,6 +5,7 @@ import MovesDetailView from '@/views/character/standard/moves/MovesDetailView.vu
 
 const viewMode = ref(false);
 const activeMove = ref('');
+const selectedOption = ref('')
 
 const updateActiveMove = (moveId: string) => {
   viewMode.value = true;
@@ -18,6 +19,7 @@ const clearActiveMove = () => {
 
 provide('move', {
   activeMove,
+  selectedOption,
   updateActiveMove,
   clearActiveMove,
 });

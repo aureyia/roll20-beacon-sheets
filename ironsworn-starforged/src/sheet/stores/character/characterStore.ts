@@ -11,9 +11,9 @@ export type CharacterHydrate = {
 };
 
 const assertStoreValues = (values: any) => {
-  assert(typeof values.callsign === 'string', `invalid callsign type: ${values.callsign}`)
-  assert(typeof values.pronouns === 'string', `invalid pronouns type: ${values.pronouns}`)
-}
+  assert(typeof values.callsign === 'string', `invalid callsign type: ${values.callsign}`);
+  assert(typeof values.pronouns === 'string', `invalid pronouns type: ${values.pronouns}`);
+};
 
 export const useCharacterStore = defineStore('character', () => {
   const callsign = ref('');
@@ -25,12 +25,12 @@ export const useCharacterStore = defineStore('character', () => {
       pronouns: pronouns.value,
     };
 
-    assertStoreValues(character)
+    assertStoreValues(character);
     return Effect.succeed({ character });
   };
 
   const hydrate = (hydrateStore: CharacterHydrate) => {
-    assertStoreValues(hydrateStore.character)
+    assertStoreValues(hydrateStore.character);
 
     callsign.value = hydrateStore.character.callsign ?? callsign.value;
     pronouns.value = hydrateStore.character.pronouns ?? pronouns.value;

@@ -2,7 +2,7 @@
 import * as z from 'zod';
 import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { FormField, FormItem, FormLabel } from '../ui/form';
-import { starforged, type IAsset } from 'dataforged';
+import { type IAsset } from 'dataforged';
 import { Select, SelectContent, SelectTrigger, SelectValue } from '../ui/select';
 import { useAssetStore, type AssetSubmission } from '@/sheet/stores/assets/assetStore';
 import { getAllAssetsForCategory } from '@/sheet/stores/assets/helpers/assetType';
@@ -10,6 +10,8 @@ import type { AssetCategory } from '@/sheet/stores/assets/types/asset-types';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { Effect } from 'effect';
+import { FormControl } from '@/components/ui/form';
+import { DialogFooter } from '@/components/ui/dialog';
 
 const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const;
 const assetStore = useAssetStore();

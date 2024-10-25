@@ -5,7 +5,7 @@ import { actionDice } from '@/system/dice';
 import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
 import { calculateActionScore } from '@/utility/rolls/calculateActionScore';
 import { isEligibleForMomentumBurn } from '../rolls/momentumEligibility';
-import { Effect, Context } from 'effect';
+import { Effect } from 'effect';
 import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 
 // TODO: Refactor so it doesn't have state called during the function execution.
@@ -13,8 +13,6 @@ import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 export const moveOptionsCheck = (move: any) => move.Trigger.Options.length > 1;
 
 export const rollMove = async (
-  move: any,
-  assets: any,
   value: number,
   modifier: number,
   option: any,
@@ -22,15 +20,14 @@ export const rollMove = async (
   const rolledDice = await Effect.runPromise(rollDiceWithBeacon(actionDice));
   const { momentum } = useResourcesStore();
 
-  const assetModifiers = calculatePrerollAssetModifiers(assets);
-
-  const actionScore = calculateActionScore(rolledDice, value, modifier + assetModifiers, momentum);
+  const actionScore = calculateActionScore(rolledDice, value, modifier, momentum);
   const { dice, outcome } = Effect.runSync(calculateOutcome(actionScore.score, rolledDice));
   const momentumBurn = isEligibleForMomentumBurn(dice, outcome, momentum, option);
-  return { dice, outcome, actionScore, momentumBurn, move };
+
+  return { dice, outcome, actionScore, momentumBurn };
 };
 
-const calculatePrerollAssetModifiers = (assets: any) => 0;
+const calculatePrerollAssetModifiers = () => 0;
 
 export const followUpRoll = async (opts: any) => {
   console.log(opts);
