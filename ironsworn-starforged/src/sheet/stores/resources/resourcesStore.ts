@@ -50,7 +50,6 @@ export const useResourcesStore = defineStore('resources', () => {
     };
 
     assertStoreValues(resources);
-
     return Effect.succeed({ resources });
   };
 

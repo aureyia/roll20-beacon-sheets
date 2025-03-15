@@ -18,6 +18,7 @@ const assertStoreValues = (values: any) => {
 export const useCharacterStore = defineStore('character', () => {
   const callsign = ref('');
   const pronouns = ref('');
+  console.log()
 
   const dehydrate = () => {
     const character = {

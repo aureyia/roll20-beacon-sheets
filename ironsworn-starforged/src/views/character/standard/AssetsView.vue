@@ -2,9 +2,9 @@
 import { ref } from 'vue';
 import { useAssetStore } from '@/sheet/stores/assets/assetStore';
 import { starforged, type IAsset } from 'dataforged';
-import { Effect } from 'effect'
-import AssetAddDialog from "@/components/assets/AssetAddDialog.vue";
-import AssetCard from "@/components/assets/AssetCard.vue";
+import { Effect } from 'effect';
+import AssetAddDialog from '@/components/assets/AssetAddDialog.vue';
+import AssetCard from '@/components/assets/AssetCard.vue';
 
 const assetStore = useAssetStore();
 const removeMode = ref(false);
@@ -13,12 +13,12 @@ const getAssetById = (asset: Asset): Effect.Effect<IAsset> => {
   const assets = starforged['Asset Types'].find((x) => x.Name === asset.category).Assets;
   if (!assets) {
     return Effect.fail(new Error(`No assets found for category: ${asset.category}`));
-  };
+  }
 
   const selectedAsset = assets.find((x) => x.$id === asset.dataforgedId);
   if (!selectedAsset) {
     return Effect.fail(new Error(`No asset found for: ${asset.dataforgedId}`));
-  };
+  }
 
   return Effect.succeed(selectedAsset);
 };

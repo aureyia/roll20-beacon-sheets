@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { MoveActiveCard, MoveAssetControl, MoveSelect, MoveRollOptionsCard } from '@/components/moves';
+import {
+  MoveActiveCard,
+  MoveAssetControl,
+  MoveSelect,
+  MoveRollOptionsCard,
+} from '@/components/moves';
 import { inject, computed, ref, provide } from 'vue';
 
 const rollMode = ref(false);
@@ -7,7 +12,7 @@ const { activeMove }: any = inject('move');
 
 provide('roll', {
   rollMode,
-})
+});
 
 const categoryClass = computed(() =>
   activeMove.value.split('/')[2].toLowerCase().replaceAll('_', '-'),
@@ -20,8 +25,8 @@ const categoryClass = computed(() =>
       <MoveSelect />
     </div>
     <div class="active-move basis-1/2">
-      <MoveRollOptionsCard v-if="rollMode"/>
-      <MoveActiveCard v-else/>
+      <MoveRollOptionsCard v-if="rollMode" />
+      <MoveActiveCard v-else />
     </div>
     <div class="assets-control basis-1/4">
       <MoveAssetControl />

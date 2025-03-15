@@ -74,8 +74,9 @@ const moveRoll = async (option: any) => {
   console.log(selectedOption);
   console.log('option', option);
   const value = Effect.runSync(resourceValues(option));
-  const result = await rollMove(option, null, value, 0, option);
+  const result = await rollMove();
   currentResult.value = result;
+  console.log('result', result)
   if (result.momentumBurn.eligibility) {
     momentumBurnDialog.value = result.momentumBurn.eligibility;
   } else {

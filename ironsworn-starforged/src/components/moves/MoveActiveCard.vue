@@ -1,25 +1,31 @@
 <script setup lang="ts">
-import { Effect } from 'effect';
+import { Effect, Layer } from 'effect';
 import { CardHeader, Card, CardContent, CardFooter } from '../ui/card';
-import {inject, computed, provide} from 'vue';
+import { Button } from '../ui/button';
+import { inject, computed, provide } from 'vue';
 import { marked } from 'marked';
-import { getMoveData } from '@/utility/moves/getMoveData'
-import { MoveActions } from "@/components/moves";
+import { getMoveData } from '@/utility/moves/getMoveData';
+import { MoveActions } from '@/components/moves';
+import { roll } from '@/internal/rolls/bootstrap/roll-handler'
 
 const { activeMove }: any = inject('move');
 
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
+const testRoll = async () => {
+  console.log(await roll(2))
+}
 </script>
 
 <template>
-  <Card class="rounded-lg mb-20">
+  <Card class="mb-20 rounded-lg">
     <CardHeader class="pb-2 text-lg font-bold">{{ moveData.Name }}</CardHeader>
     <CardContent>
       <!-- TODO: Build translation parser for i18n -->
-      <div class="text-sm move-content" v-html="marked.parse(moveData.Text)"/>
+      <div class="move-content text-sm" v-html="marked.parse(moveData.Text)" />
     </CardContent>
-    <CardFooter class="bg-muted-secondary rounded-b-lg justify-between flex p-3 empty:hidden">
+    <CardFooter class="rounded-b-lg bg-muted-secondary p-0 empty:hidden">
       <MoveActions :move="moveData" />
+      <Button @click="testRoll">TestRoll</Button>
     </CardFooter>
   </Card>
 </template>
