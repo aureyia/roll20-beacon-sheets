@@ -16,7 +16,11 @@ const showTriggers = ref(false);
     <!-- <ItemSearch /> -->
     <!-- TODO: instead of roll buttons build a new menu for moves and new move group for assets -->
     <div class="moves-container mx-20 mb-20 columns-3 gap-4">
-      <LabelledSwitch class="flex" label="Show Triggers" v-model="showTriggers" />
+      <LabelledSwitch
+        class="flex"
+        label="Show Triggers"
+        v-model="showTriggers"
+      />
       <MovesGroup
         class="group"
         v-for="group in moves"

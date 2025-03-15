@@ -11,14 +11,20 @@ export type CharacterHydrate = {
 };
 
 const assertStoreValues = (values: any) => {
-  assert(typeof values.callsign === 'string', `invalid callsign type: ${values.callsign}`);
-  assert(typeof values.pronouns === 'string', `invalid pronouns type: ${values.pronouns}`);
+  assert(
+    typeof values.callsign === 'string',
+    `invalid callsign type: ${values.callsign}`,
+  );
+  assert(
+    typeof values.pronouns === 'string',
+    `invalid pronouns type: ${values.pronouns}`,
+  );
 };
 
 export const useCharacterStore = defineStore('character', () => {
   const callsign = ref('');
   const pronouns = ref('');
-  console.log()
+  console.log();
 
   const dehydrate = () => {
     const character = {

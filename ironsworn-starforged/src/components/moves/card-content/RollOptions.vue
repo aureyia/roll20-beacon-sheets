@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { inject, computed, ref } from 'vue';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { RadioGroup } from '@/components/ui/radio-group';
@@ -20,7 +26,9 @@ const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
       <RadioGroup class="mt-2" v-model="selectedOption" default-value="">
         <div v-for="option in moveData.Trigger.Options" :key="option.$id">
           <RadioGroupItem :id="option.$id" :value="option.$id" />
-          <Label class="ml-2 cursor-pointer" :for="option.$id">{{ option.Text }}</Label>
+          <Label class="ml-2 cursor-pointer" :for="option.$id">{{
+            option.Text
+          }}</Label>
         </div>
       </RadioGroup>
     </CardContent>

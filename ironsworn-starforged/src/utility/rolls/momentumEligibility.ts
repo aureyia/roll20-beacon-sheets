@@ -4,7 +4,10 @@ type EligibilityResult = {
   eligibility: boolean;
   newOutcome?: string;
 };
-const formatResult = (eligibility: boolean, newOutcome?: string): EligibilityResult => ({
+const formatResult = (
+  eligibility: boolean,
+  newOutcome?: string,
+): EligibilityResult => ({
   eligibility,
   ...(newOutcome && { newOutcome }),
 });
@@ -44,7 +47,9 @@ export const isEligibleForMomentumBurn = (
   }
 
   if (isComplication) {
-    return d1IsEligible && d2IsEligible ? formatResult(true, 'opportunity') : formatResult(false);
+    return d1IsEligible && d2IsEligible
+      ? formatResult(true, 'opportunity')
+      : formatResult(false);
   }
 
   if (isMiss) {

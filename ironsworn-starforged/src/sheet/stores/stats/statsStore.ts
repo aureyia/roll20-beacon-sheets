@@ -22,11 +22,26 @@ export type StatsHydrate = {
 };
 
 const assertStoreValues = (values: any) => {
-  assert(typeof values.edge === 'number', `values.edge type: ${typeof values.edge}`);
-  assert(typeof values.heart === 'number', `values.heart type: ${typeof values.heart}`);
-  assert(typeof values.iron === 'number', `values.edge type: ${typeof values.iron}`);
-  assert(typeof values.shadow === 'number', `values.edge type: ${typeof values.shadow}`);
-  assert(typeof values.wits === 'number', `values.edge type: ${typeof values.wits}`);
+  assert(
+    typeof values.edge === 'number',
+    `values.edge type: ${typeof values.edge}`,
+  );
+  assert(
+    typeof values.heart === 'number',
+    `values.heart type: ${typeof values.heart}`,
+  );
+  assert(
+    typeof values.iron === 'number',
+    `values.edge type: ${typeof values.iron}`,
+  );
+  assert(
+    typeof values.shadow === 'number',
+    `values.edge type: ${typeof values.shadow}`,
+  );
+  assert(
+    typeof values.wits === 'number',
+    `values.edge type: ${typeof values.wits}`,
+  );
 };
 
 export const useStatsStore = defineStore('stats', () => {

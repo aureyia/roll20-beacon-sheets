@@ -18,10 +18,15 @@ const taskStore = useTaskStore();
 const differenceOf = (a: string) => (b: string) => parseInt(b) - parseInt(a);
 const progressUpdate = (id: string, value: string) => {
   parseInt(props.ticks as string) !== parseInt(value)
-    ? taskStore.manualProgressUpdate(id, differenceOf(props.ticks as string)(value))
+    ? taskStore.manualProgressUpdate(
+        id,
+        differenceOf(props.ticks as string)(value),
+      )
     : null;
 
-  selectedValue.value !== props.ticks ? (selectedValue.value = props.ticks) : selectedValue.value;
+  selectedValue.value !== props.ticks
+    ? (selectedValue.value = props.ticks)
+    : selectedValue.value;
 };
 
 watch(
@@ -44,7 +49,9 @@ watch(
       </SelectTrigger>
       <SelectContent class="min-w-20">
         <SelectGroup>
-          <SelectItem v-for="value in INPUTS" :value="value">{{ value }}</SelectItem>
+          <SelectItem v-for="value in INPUTS" :value="value">{{
+            value
+          }}</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

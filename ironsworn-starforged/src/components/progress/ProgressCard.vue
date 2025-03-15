@@ -27,9 +27,15 @@ const props = defineProps({
               >Delete</Button
             >
           </Transition>
-          <Input v-model="task.description" class="h-10 bg-card-input text-lg drop-shadow-sm" />
+          <Input
+            v-model="task.description"
+            class="h-10 bg-card-input text-lg drop-shadow-sm"
+          />
         </div>
-        <DifficultyList v-model:selectedDifficulty="task.difficulty" :id="task._id" />
+        <DifficultyList
+          v-model:selectedDifficulty="task.difficulty"
+          :id="task._id"
+        />
       </CardHeader>
       <CardContent>
         <ProgressTrack :task="task" :id="task._id" />

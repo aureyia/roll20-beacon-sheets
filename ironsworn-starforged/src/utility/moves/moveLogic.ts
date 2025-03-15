@@ -1,4 +1,8 @@
-import { rollMove, moveOptionsCheck, followUpRoll } from '@/utility/moves/rollMove';
+import {
+  rollMove,
+  moveOptionsCheck,
+  followUpRoll,
+} from '@/utility/moves/rollMove';
 import { ref } from 'vue';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { IMove } from 'dataforged';
@@ -21,7 +25,9 @@ const assetCheck = (move: IMove) => {
   const playerAssets = useAssetStore().assets;
   const activeAssetAbilities = playerAssets
     .map((asset) => {
-      const enabledAbilities = asset.abilities.filter((abilitiy) => abilitiy.enabled === true);
+      const enabledAbilities = asset.abilities.filter(
+        (abilitiy) => abilitiy.enabled === true,
+      );
       if (enabledAbilities.length > 0) {
         return enabledAbilities;
       }
@@ -45,14 +51,20 @@ const assetCheck = (move: IMove) => {
       return ability?.['Alter Moves'];
     })
     .flat();
-  const validMoves = alterMoves.filter((alterMove) => alterMove?.Moves?.includes(move.$id));
-  const unknownMoves = alterMoves.filter((alterMove) => alterMove?.Moves === null);
+  const validMoves = alterMoves.filter((alterMove) =>
+    alterMove?.Moves?.includes(move.$id),
+  );
+  const unknownMoves = alterMoves.filter(
+    (alterMove) => alterMove?.Moves === null,
+  );
   console.log('validMoves', validMoves);
   console.log('unknownMoves', unknownMoves);
   // TODO: Enrich alter moves
   const enrichedAlters = validMoves;
   const alteredMoves = alterMove(validMoves, move);
-  unknownMoves.length > 0 ? (assetSelectionDialog.value = true) : optionsCheck(alterMoves);
+  unknownMoves.length > 0
+    ? (assetSelectionDialog.value = true)
+    : optionsCheck(alterMoves);
 
   // If true
   // Enrich alter move with missing data
@@ -76,7 +88,7 @@ const moveRoll = async (option: any) => {
   const value = Effect.runSync(resourceValues(option));
   const result = await rollMove();
   currentResult.value = result;
-  console.log('result', result)
+  console.log('result', result);
   if (result.momentumBurn.eligibility) {
     momentumBurnDialog.value = result.momentumBurn.eligibility;
   } else {
@@ -107,5 +119,6 @@ const preFollowUpRoll = async (opts: any) => {
 const doesMoveHaveRoll = (move: IMove) =>
   move.Trigger.Options?.some(
     (option: any) =>
-      option['Roll type'] === 'Action roll' || option['Roll type'] === 'Progress roll',
+      option['Roll type'] === 'Action roll' ||
+      option['Roll type'] === 'Progress roll',
   );

@@ -17,7 +17,15 @@ import {
   onTranslationsRequest,
   onDragOver,
 } from './handlers/handlers';
-import { reactive, ref, watch, nextTick, type Ref, type App, shallowRef } from 'vue';
+import {
+  reactive,
+  ref,
+  watch,
+  nextTick,
+  type Ref,
+  type App,
+  shallowRef,
+} from 'vue';
 import { createId } from '@paralleldrive/cuid2';
 
 const relayConfig = {
@@ -64,9 +72,14 @@ const sheetId = ref(createId());
 This is the function that is called when the character data is updated.
 logMode is a flag that can be used to log the updates to the console. This is useful for debugging.
 */
-const doUpdate = (dispatch: Dispatch, update: Record<string, any>, logMode = false) => {
+const doUpdate = (
+  dispatch: Dispatch,
+  update: Record<string, any>,
+  logMode = false,
+) => {
   if (logMode) console.info('➡️ starforged: Updating Firebase');
-  if (logMode) console.dir(`Firebase Update: ${initValues.character.id}`, update);
+  if (logMode)
+    console.dir(`Firebase Update: ${initValues.character.id}`, update);
   const character: Record<string, any> = {
     character: {
       id: initValues.character.id,
@@ -88,7 +101,8 @@ This is useful for testing the sheet without having to connect to the server.
 const devRelay = async () =>
   ({
     update: (...args: any[]) => console.log('devRelay update', args),
-    updateCharacter: (...args: any[]) => console.log('devRelay updateCharacter', args),
+    updateCharacter: (...args: any[]) =>
+      console.log('devRelay updateCharacter', args),
     characters: {},
     updateTokensByCharacter: () => '',
   }) as any as Dispatch;

@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { calculateOutcome, updateExceededChallengeDie } from '@/utility/rolls/calculateOutcome';
+import {
+  calculateOutcome,
+  updateExceededChallengeDie,
+} from '@/utility/rolls/calculateOutcome';
 import { Effect } from 'effect';
 
 describe('calculateOutcome', () => {
@@ -99,27 +102,35 @@ describe('updateExceededChallengeDie', () => {
       { label: 'Challenge Die: 1', value: 5, exceeded: true },
       { label: 'Challenge Die: 2', value: 5, exceeded: true },
     ];
-    expect(updateExceededChallengeDie(dice, true, true)).toStrictEqual(expectedDice);
+    expect(updateExceededChallengeDie(dice, true, true)).toStrictEqual(
+      expectedDice,
+    );
   });
   it('all false', () => {
     const expectedDice = [
       { label: 'Challenge Die: 1', value: 5, exceeded: false },
       { label: 'Challenge Die: 2', value: 5, exceeded: false },
     ];
-    expect(updateExceededChallengeDie(dice, false, false)).toStrictEqual(expectedDice);
+    expect(updateExceededChallengeDie(dice, false, false)).toStrictEqual(
+      expectedDice,
+    );
   });
   it('challenger dice 1 true', () => {
     const expectedDice = [
       { label: 'Challenge Die: 1', value: 5, exceeded: true },
       { label: 'Challenge Die: 2', value: 5, exceeded: false },
     ];
-    expect(updateExceededChallengeDie(dice, true, false)).toStrictEqual(expectedDice);
+    expect(updateExceededChallengeDie(dice, true, false)).toStrictEqual(
+      expectedDice,
+    );
   });
   it('challenge dice 2 true', () => {
     const expectedDice = [
       { label: 'Challenge Die: 1', value: 5, exceeded: false },
       { label: 'Challenge Die: 2', value: 5, exceeded: true },
     ];
-    expect(updateExceededChallengeDie(dice, false, true)).toStrictEqual(expectedDice);
+    expect(updateExceededChallengeDie(dice, false, true)).toStrictEqual(
+      expectedDice,
+    );
   });
 });

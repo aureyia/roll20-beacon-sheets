@@ -1,4 +1,9 @@
-import { MeterAlias, MeterType, ProgressTypeStarforged, Stat } from '@/system/enums';
+import {
+  MeterAlias,
+  MeterType,
+  ProgressTypeStarforged,
+  Stat,
+} from '@/system/enums';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { useStatsStore } from '@/sheet/stores/stats/statsStore';
 import { Effect, pipe, Console } from 'effect';
@@ -12,7 +17,9 @@ const getOptionValueTypeList = (using: string[]): OptionType[] => {
     .map((use) => {
       const isStat = (<any>Object).values(Stat).includes(use);
       const isResource = (<any>Object).values(MeterType).includes(use);
-      const isProgress = (<any>Object).values(ProgressTypeStarforged).includes(use);
+      const isProgress = (<any>Object)
+        .values(ProgressTypeStarforged)
+        .includes(use);
       const isAsset = (<any>Object).values(MeterAlias).includes(use);
       const isCustom = use.includes('Custom_stat');
 
@@ -35,7 +42,9 @@ const getOptionValueTypeList = (using: string[]): OptionType[] => {
     .filter((x): x is OptionType => x !== undefined);
 };
 
-const lookupStoreValue = (options: OptionType[]): Effect.Effect<number[], Error> => {
+const lookupStoreValue = (
+  options: OptionType[],
+): Effect.Effect<number[], Error> => {
   const values = options
     .map((option) => {
       const key: string = Object.keys(option)[0];
@@ -86,7 +95,10 @@ type ValidRollOption = {
   Using: string[];
 };
 
-const getValue = (option: ValidRollOption, values: number[]): Effect.Effect<number, Error> => {
+const getValue = (
+  option: ValidRollOption,
+  values: number[],
+): Effect.Effect<number, Error> => {
   const isMethodAny = option.Method === 'Any';
   const isMethodHighest = option.Method === 'Highest';
   const isMethodLowest = option.Method === 'Lowest';
@@ -111,7 +123,9 @@ const getValue = (option: ValidRollOption, values: number[]): Effect.Effect<numb
     return Effect.succeed(0);
   }
 
-  return Effect.fail(new Error(`Unsupported Method was used: ${option.Method}`));
+  return Effect.fail(
+    new Error(`Unsupported Method was used: ${option.Method}`),
+  );
 };
 
 export const resourceValues = (option: ValidRollOption) =>
@@ -127,7 +141,9 @@ if (import.meta.vitest) {
 
   describe('getUseOptionTypes', () => {
     it('stat - Heart', () => {
-      expect(getOptionValueTypeList(['Heart'])).toStrictEqual([{ Heart: 'stat' }]);
+      expect(getOptionValueTypeList(['Heart'])).toStrictEqual([
+        { Heart: 'stat' },
+      ]);
     });
     it('unknown - Gooble', () => {
       expect(getOptionValueTypeList(['Gooble'])).toStrictEqual([]);

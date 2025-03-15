@@ -5,7 +5,10 @@ import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
 import { dispatchRef, initValues } from '@/relay/relay';
 import { type LimitedRange } from '@/utility/limitedRange';
-import { convertResultsToDice, formatDiceComponents } from '@/utility/rolls/convertResultsToDice';
+import {
+  convertResultsToDice,
+  formatDiceComponents,
+} from '@/utility/rolls/convertResultsToDice';
 import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { taskDice } from '@/system/dice';
@@ -25,7 +28,12 @@ export type Task = {
 
 export type Vow = Omit<Task, 'countdown'>;
 export type GenericTask = Omit<Task, 'countdown'>;
-export type Difficulty = 'troublesome' | 'dangerous' | 'formidable' | 'extreme' | 'epic';
+export type Difficulty =
+  | 'troublesome'
+  | 'dangerous'
+  | 'formidable'
+  | 'extreme'
+  | 'epic';
 export type TaskCategory = 'vow' | 'generic' | 'challenge';
 export type TaskStatus = 'active' | 'completed' | 'failed' | 'abandoned';
 export type Countdown = 0 | 1 | 2 | 3 | 4;
@@ -34,7 +42,11 @@ type taskHydrate = { tasks: Task[] };
 export const useTaskStore = defineStore('task', () => {
   const tasks: Ref<Array<Task>> = ref([]);
 
-  const addTask = (description: string, category: TaskCategory, difficulty: Difficulty) => {
+  const addTask = (
+    description: string,
+    category: TaskCategory,
+    difficulty: Difficulty,
+  ) => {
     tasks.value.push({
       _id: createId(),
       description,
@@ -135,7 +147,8 @@ export const useTaskStore = defineStore('task', () => {
   };
 
   const hydrate = (hydrateStore: taskHydrate) => {
-    tasks.value = Effect.runSync(objectToArray(hydrateStore.tasks)) ?? tasks.value;
+    tasks.value =
+      Effect.runSync(objectToArray(hydrateStore.tasks)) ?? tasks.value;
   };
 
   return {

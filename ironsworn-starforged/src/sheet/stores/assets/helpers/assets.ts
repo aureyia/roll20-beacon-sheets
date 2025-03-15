@@ -8,7 +8,10 @@ const getAssets = (assetType: IAssetType): IAsset[] => {
   return assetType.Assets;
 };
 
-const getAssetById = (assets: IAsset[], id: string): Effect.Effect<IAsset, Error> => {
+const getAssetById = (
+  assets: IAsset[],
+  id: string,
+): Effect.Effect<IAsset, Error> => {
   const asset: IAsset | undefined = assets.find((x) => x.$id === id);
 
   if (!asset) {
@@ -34,19 +37,27 @@ export const getAssetAbilities = (
   id: string,
   category: AssetCategory,
 ): Effect.Effect<Ability[], Error> => {
-  const selectedCategory = starforged['Asset Types'].find((x) => x.Name === category);
+  const selectedCategory = starforged['Asset Types'].find(
+    (x) => x.Name === category,
+  );
 
   if (!selectedCategory) {
     return Effect.fail(new Error('No category found'));
   }
 
-  const abilities = selectedCategory.Assets.find((x) => x.$id === id)?.Abilities;
+  const abilities = selectedCategory.Assets.find(
+    (x) => x.$id === id,
+  )?.Abilities;
 
   if (!abilities) {
     return Effect.fail(new Error('No abilities found for Asset'));
   }
 
   return Effect.succeed(
-    abilities.map((x) => ({ _id: createId(), dataforgedId: x.$id, enabled: x.Enabled })),
+    abilities.map((x) => ({
+      _id: createId(),
+      dataforgedId: x.$id,
+      enabled: x.Enabled,
+    })),
   );
 };

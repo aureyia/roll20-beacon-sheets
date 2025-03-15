@@ -54,7 +54,9 @@ export const useAssetStore = defineStore('asset', () => {
   };
 
   const dehydrate = () => {
-    const updatedAssets = Effect.runSync(formatAbilities(arrayToObject, assets.value));
+    const updatedAssets = Effect.runSync(
+      formatAbilities(arrayToObject, assets.value),
+    );
     return Effect.succeed({
       assets: Effect.runSync(arrayToObject(updatedAssets)),
     });
@@ -62,7 +64,9 @@ export const useAssetStore = defineStore('asset', () => {
 
   const hydrate = (hydrateStore: AssetsHydrate) => {
     const assetsList = Effect.runSync(objectToArray(hydrateStore.assets));
-    const updatedAssets = Effect.runSync(formatAbilities(objectToArray, assetsList));
+    const updatedAssets = Effect.runSync(
+      formatAbilities(objectToArray, assetsList),
+    );
     assets.value = updatedAssets ?? assets.value;
   };
 

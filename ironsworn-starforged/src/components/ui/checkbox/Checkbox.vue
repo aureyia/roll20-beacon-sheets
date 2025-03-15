@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue';
 import type { CheckboxRootEmits, CheckboxRootProps } from 'radix-vue';
-import { CheckboxIndicator, CheckboxRoot, useForwardPropsEmits } from 'radix-vue';
+import {
+  CheckboxIndicator,
+  CheckboxRoot,
+  useForwardPropsEmits,
+} from 'radix-vue';
 import { Check } from 'lucide-vue-next';
 import { cn } from '@/utility/shadcn';
 
-const props = defineProps<CheckboxRootProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  CheckboxRootProps & { class?: HTMLAttributes['class'] }
+>();
 const emits = defineEmits<CheckboxRootEmits>();
 
 const delegatedProps = computed(() => {
@@ -27,7 +33,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
       )
     "
   >
-    <CheckboxIndicator class="flex h-full w-full items-center justify-center text-current">
+    <CheckboxIndicator
+      class="flex h-full w-full items-center justify-center text-current"
+    >
       <slot>
         <Check class="h-4 w-4" />
       </slot>

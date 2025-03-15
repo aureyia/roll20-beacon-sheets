@@ -5,7 +5,9 @@ import { type HTMLAttributes, computed } from 'vue';
 import { Minus } from 'lucide-vue-next';
 import { cn } from '@/utility/shadcn';
 
-const props = defineProps<NumberFieldDecrementProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  NumberFieldDecrementProps & { class?: HTMLAttributes['class'] }
+>();
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props;

@@ -12,7 +12,9 @@ import {
 import { X } from 'lucide-vue-next';
 import { cn } from '@/utility/shadcn';
 
-const props = defineProps<DialogContentProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  DialogContentProps & { class?: HTMLAttributes['class'] }
+>();
 const emits = defineEmits<DialogContentEmits>();
 
 const delegatedProps = computed(() => {

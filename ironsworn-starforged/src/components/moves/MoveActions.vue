@@ -9,12 +9,12 @@ import {
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import type { IMoveTriggerOptionAction } from 'dataforged';
-import {followUpRoll, rollMove} from '@/utility/moves/rollMove';
-import {moveRollV2} from '@/utility/moves/rollMoveV2';
+import { followUpRoll, rollMove } from '@/utility/moves/rollMove';
+import { moveRollV2 } from '@/utility/moves/rollMoveV2';
 import { inject, ref } from 'vue';
-import { pipe, Effect } from 'effect'
-import { useResourcesStore } from "@/sheet/stores/resources/resourcesStore";
-import { useStatsStore } from "@/sheet/stores/stats/statsStore";
+import { pipe, Effect } from 'effect';
+import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
+import { useStatsStore } from '@/sheet/stores/stats/statsStore';
 
 const props = defineProps({
   move: {
@@ -33,14 +33,14 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
     return;
   }
 
-  const { momentum } = useResourcesStore()
-  const stats = useStatsStore()
+  const { momentum } = useResourcesStore();
+  const stats = useStatsStore();
 
-  const formattedModifier = Number(modifier.value)
-  const roll = await rollMove(2, formattedModifier, options[0], momentum)
-  const roll2 = await Effect.runPromise(await moveRollV2(2, formattedModifier))
-  console.log('roll2', roll2)
-  await followUpRoll(roll)
+  const formattedModifier = Number(modifier.value);
+  const roll = await rollMove(2, formattedModifier, options[0], momentum);
+  const roll2 = await Effect.runPromise(await moveRollV2(2, formattedModifier));
+  console.log('roll2', roll2);
+  await followUpRoll(roll);
 };
 </script>
 
@@ -62,7 +62,9 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
       </NumberFieldContent>
     </NumberField>
     <Button v-if="props.move.Oracles">Roll Oracle</Button>
-    <Button v-if="props.move.Trigger.Options" @click="startMoveRoll(props.move.Trigger.Options)"
+    <Button
+      v-if="props.move.Trigger.Options"
+      @click="startMoveRoll(props.move.Trigger.Options)"
       >Roll</Button
     >
   </div>

@@ -1,1 +1,7 @@
-export const DIFFICULTIES = ['troublesome', 'dangerous', 'formidable', 'extreme', 'epic'] as const;
+export const DIFFICULTIES = [
+  'troublesome',
+  'dangerous',
+  'formidable',
+  'extreme',
+  'epic',
+] as const;

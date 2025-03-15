@@ -25,7 +25,10 @@ import {
   VowsView as CharacterEdgeVowsView,
 } from '../views/character/edge';
 
-import { MainView as GuideMainView, OraclesView as GuideOraclesView } from '@/views/guide';
+import {
+  MainView as GuideMainView,
+  OraclesView as GuideOraclesView,
+} from '@/views/guide';
 
 import { MainView as LocationsMainView } from '@/views/locations';
 

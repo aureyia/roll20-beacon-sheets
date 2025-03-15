@@ -17,10 +17,22 @@ export type ResourcesHydrate = {
 };
 
 const assertStoreValues = (values: any) => {
-  assert(isNumberBetween(values.health, 0, 5), `values.health: ${values.health}`);
-  assert(isNumberBetween(values.spirit, 0, 5), `values.spirit: ${values.spirit}`);
-  assert(isNumberBetween(values.supply, 0, 5), `values.supply: ${values.supply}`);
-  assert(isNumberBetween(values.momentum, -6, 10), `values.momentum: ${values.momentum}`);
+  assert(
+    isNumberBetween(values.health, 0, 5),
+    `values.health: ${values.health}`,
+  );
+  assert(
+    isNumberBetween(values.spirit, 0, 5),
+    `values.spirit: ${values.spirit}`,
+  );
+  assert(
+    isNumberBetween(values.supply, 0, 5),
+    `values.supply: ${values.supply}`,
+  );
+  assert(
+    isNumberBetween(values.momentum, -6, 10),
+    `values.momentum: ${values.momentum}`,
+  );
   assert(values.xp >= 0, `values.xp: ${values.xp}`);
   assert(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`);
 };
@@ -34,7 +46,9 @@ export const useResourcesStore = defineStore('resources', () => {
   const xp = ref(0);
   const spentXp = ref(0);
   const momentum = ref(2);
-  const momentumMax = computed(() => (impacts.list.length > 10 ? 0 : 10 - impacts.list.length));
+  const momentumMax = computed(() =>
+    impacts.list.length > 10 ? 0 : 10 - impacts.list.length,
+  );
   const momentumReset = computed(() =>
     impacts.list.length === 1 ? 1 : impacts.list.length >= 2 ? 0 : 2,
   );

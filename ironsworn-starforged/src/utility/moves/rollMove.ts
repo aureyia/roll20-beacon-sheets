@@ -12,14 +12,31 @@ import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 // Momentum and dice roll
 export const moveOptionsCheck = (move: any) => move.Trigger.Options.length > 1;
 
-export const rollMove = async (value: number, modifier: number, option: any, momentum: number) => {
+export const rollMove = async (
+  value: number,
+  modifier: number,
+  option: any,
+  momentum: number,
+) => {
   const rolledDice = await Effect.runPromise(rollDiceWithBeacon(actionDice));
-  const actionScore = calculateActionScore(rolledDice, value, modifier, momentum);
+  const actionScore = calculateActionScore(
+    rolledDice,
+    value,
+    modifier,
+    momentum,
+  );
 
-  const { dice, outcome } = Effect.runSync(calculateOutcome(actionScore.score, rolledDice));
-  console.log('dice', dice)
-  console.log('outcome', outcome)
-  const momentumBurn = isEligibleForMomentumBurn(dice, outcome, momentum, option);
+  const { dice, outcome } = Effect.runSync(
+    calculateOutcome(actionScore.score, rolledDice),
+  );
+  console.log('dice', dice);
+  console.log('outcome', outcome);
+  const momentumBurn = isEligibleForMomentumBurn(
+    dice,
+    outcome,
+    momentum,
+    option,
+  );
 
   return { dice, outcome, actionScore, momentumBurn };
 };

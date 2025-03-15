@@ -104,13 +104,19 @@ const onSubmit = form.handleSubmit((values) => {
                   :disabled="!form.values.category"
                   v-bind="componentField"
                 />
-                <Select v-else :disabled="!form.values.category" v-bind="componentField">
+                <Select
+                  v-else
+                  :disabled="!form.values.category"
+                  v-bind="componentField"
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select impact" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup
-                      v-for="impact in IMPACTS[form.values.category as keyof typeof IMPACTS]"
+                      v-for="impact in IMPACTS[
+                        form.values.category as keyof typeof IMPACTS
+                      ]"
                     >
                       <SelectItem :value="impact">
                         <SelectLabel class="pl-0">{{ impact }}</SelectLabel>

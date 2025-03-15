@@ -7,7 +7,12 @@ export const IMPACTS = {
 
 export type Impact = {
   _id: string;
-  category: 'misfortunes' | 'lastingEffects' | 'burdens' | 'currentVehicle' | 'other';
+  category:
+    | 'misfortunes'
+    | 'lastingEffects'
+    | 'burdens'
+    | 'currentVehicle'
+    | 'other';
   description?: string;
 };
 
@@ -28,4 +33,9 @@ export type Other = Impact & {
   name: string;
 };
 
-export type AnyImpact = Misfortune | LastingEffect | Burden | CurrentVehicle | Other;
+export type AnyImpact =
+  | Misfortune
+  | LastingEffect
+  | Burden
+  | CurrentVehicle
+  | Other;

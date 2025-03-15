@@ -1,10 +1,15 @@
 import type { DiceComponent } from '../rolltemplates';
 
-export const calculateOutcome = (score: number, dice: DiceComponent[]): string => {
+export const calculateOutcome = (
+  score: number,
+  dice: DiceComponent[],
+): string => {
   const [challengeDie1, challengeDie2] = dice
     .filter((die) => die.label?.startsWith('Challenge Die'))
     .map((die) => die.value)
-    .sort((a, b) => (typeof a === 'number' && typeof b === 'number' ? a - b : 0));
+    .sort((a, b) =>
+      typeof a === 'number' && typeof b === 'number' ? a - b : 0,
+    );
 
   if (!challengeDie1 || !challengeDie2) {
     throw new Error('Challenge die not found');

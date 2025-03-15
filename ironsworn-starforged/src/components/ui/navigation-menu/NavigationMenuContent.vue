@@ -8,7 +8,9 @@ import {
 } from 'radix-vue';
 import { cn } from '@/utility/shadcn';
 
-const props = defineProps<NavigationMenuContentProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  NavigationMenuContentProps & { class?: HTMLAttributes['class'] }
+>();
 
 const emits = defineEmits<NavigationMenuContentEmits>();
 

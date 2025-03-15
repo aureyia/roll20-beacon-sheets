@@ -10,7 +10,9 @@ import {
 import { Circle } from 'lucide-vue-next';
 import { cn } from '@/utility/shadcn';
 
-const props = defineProps<DropdownMenuRadioItemProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  DropdownMenuRadioItemProps & { class?: HTMLAttributes['class'] }
+>();
 
 const emits = defineEmits<DropdownMenuRadioItemEmits>();
 

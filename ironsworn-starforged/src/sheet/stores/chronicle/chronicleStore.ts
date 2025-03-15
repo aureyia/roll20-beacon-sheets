@@ -45,7 +45,8 @@ export const useChronicleStore = defineStore('chronicle', () => {
   };
 
   const hydrate = (hydrateStore: chronicleHydrate) => {
-    chronicle.value = Effect.runSync(objectToArray(hydrateStore.chronicle)) ?? chronicle.value;
+    chronicle.value =
+      Effect.runSync(objectToArray(hydrateStore.chronicle)) ?? chronicle.value;
   };
 
   return {

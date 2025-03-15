@@ -15,7 +15,9 @@ const getAllCategoryMoves = (moveId: string) => {
   );
 
   if (!dfMoveCategory) {
-    return Effect.fail(new Error(`No Move Category was found for: ${categoryId}`));
+    return Effect.fail(
+      new Error(`No Move Category was found for: ${categoryId}`),
+    );
   }
 
   return Effect.succeed(dfMoveCategory.Moves);

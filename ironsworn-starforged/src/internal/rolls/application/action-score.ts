@@ -13,7 +13,7 @@ export class ActionScore extends Context.Tag('ActionScore')<
 >() {}
 
 const calculateActionScore = (
-  actionDieResult: DiceComponent[],
+  dice: DiceComponent[],
   modifier: number,
   presetActionScore: number | null = null,
 ): Effect.Effect<number, Error> => {
@@ -21,22 +21,27 @@ const calculateActionScore = (
     return Effect.succeed(presetActionScore);
   }
 
-  if (actionDieResult.length < 1) {
-    return Effect.fail(new Error('actionDieResult is empty'));
-  }
+  const actionDieResult = dice.find((die) => die.label === 'Action Die');
 
-  if (!actionDieResult[0].value) {
+  if (!actionDieResult) {
     return Effect.fail(new Error('actionDieResult value is undefined'));
   }
 
-  return Effect.succeed(Math.min(actionDieResult[0].value + modifier, 10));
+  if (!actionDieResult.value) {
+    return Effect.fail(new Error('actionDieResult has no value'));
+  }
+
+  const actionScoreMaximum = 10;
+  return Effect.succeed(
+    Math.min(actionDieResult.value + modifier, actionScoreMaximum),
+  );
 };
 
 export const ActionScoreLive = Layer.effect(
   ActionScore,
   Effect.gen(function* () {
     return {
-      calculate: calculateActionScore
-    }
-  })
-)
+      calculate: calculateActionScore,
+    };
+  }),
+);

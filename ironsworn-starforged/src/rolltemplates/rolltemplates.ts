@@ -56,7 +56,10 @@ handlebars.registerPartial('rollComponents', rollComponents);
 
 // Starforged handlebars HTML partials
 handlebars.registerPartial('characterRollHeader', characterRollHeader);
-handlebars.registerPartial('compactCharacterRollHeader', compactCharacterRollHeader);
+handlebars.registerPartial(
+  'compactCharacterRollHeader',
+  compactCharacterRollHeader,
+);
 handlebars.registerPartial('actionScore', actionScore);
 handlebars.registerPartial('compactActionScore', compactActionScore);
 handlebars.registerPartial('rollOutcome', rollOutcome);
@@ -86,9 +89,12 @@ handlebars.registerHelper('assign', function (varName, value, options) {
   options.data.root[varName] = value;
 });
 
-handlebars.registerHelper('assignActionScore', function (varName, value, options) {
-  options.data.root[varName] = value.score;
-});
+handlebars.registerHelper(
+  'assignActionScore',
+  function (varName, value, options) {
+    options.data.root[varName] = value.score;
+  },
+);
 
 // Starforged Helper functions
 handlebars.registerHelper('getChallengeDie', getChallengeDie);

@@ -29,56 +29,60 @@ export const moveOptionsCheck = (move: any) => move.Trigger.Options.length > 1;
 //   return { dice, outcome, actionScore, momentumBurn };
 // };
 
-export const actionDieResult = 
-  (presetActionDie: number|null): Effect.Effect<DiceComponent[], UnknownException> => 
-    presetActionDie !== null ? Effect.succeed([{ value: presetActionDie }]) : rollDiceWithBeacon(actionDie)
+export const actionDieResult = (
+  presetActionDie: number | null,
+): Effect.Effect<DiceComponent[], UnknownException> =>
+  presetActionDie !== null
+    ? Effect.succeed([{ value: presetActionDie }])
+    : rollDiceWithBeacon(actionDie);
 
 export const actionScore = (
   actionDieResult: DiceComponent[],
   modifier: number,
-  presetActionScore: number|null = null
+  presetActionScore: number | null = null,
 ): Effect.Effect<number, Error> => {
-
   if (presetActionScore !== null) {
-    return Effect.succeed(presetActionScore)
+    return Effect.succeed(presetActionScore);
   }
 
   if (actionDieResult.length < 1) {
-    return Effect.fail(new Error('actionDieResult is empty'))
+    return Effect.fail(new Error('actionDieResult is empty'));
   }
 
   if (!actionDieResult[0].value) {
-    return Effect.fail(new Error('actionDieResult value is undefined'))
+    return Effect.fail(new Error('actionDieResult value is undefined'));
   }
 
-  return Effect.succeed(floor(actionDieResult[0].value + modifier, 10))
-}
+  return Effect.succeed(floor(actionDieResult[0].value + modifier, 10));
+};
 
-export const challengeDiceResult = () => Effect.runPromise(rollDiceWithBeacon(challengeDice))
+export const challengeDiceResult = () =>
+  Effect.runPromise(rollDiceWithBeacon(challengeDice));
 
 export const moveRollV2 = async (
   momentum: Momentum,
   modifier: number = 0,
-  presetActionDice: number|null = null,
-  presetActionScore: number|null = null
+  presetActionDice: number | null = null,
+  presetActionScore: number | null = null,
 ) =>
   pipe(
     presetActionDice,
     actionDieResult,
-    Effect.andThen((result) => actionScore(result, modifier, presetActionScore)),
-    Effect.andThen(async (score) => 
-      Effect.runPromise(calculateOutcome(score, await challengeDiceResult()))
-    )
-  )
+    Effect.andThen((result) =>
+      actionScore(result, modifier, presetActionScore),
+    ),
+    Effect.andThen(async (score) =>
+      Effect.runPromise(calculateOutcome(score, await challengeDiceResult())),
+    ),
+  );
 
-
-  //   presetActionDice,
-  //   actionDiceResult,
-  //   Effect.andThen((result) => actionScore(result, modifier, presetActionScore)),
-  //   Effect.andThen(async (score) => 
-  //     Effect.runPromise(calculateOutcome(score, await challengeDiceResult()))
-  //   )
-  // )
+//   presetActionDice,
+//   actionDiceResult,
+//   Effect.andThen((result) => actionScore(result, modifier, presetActionScore)),
+//   Effect.andThen(async (score) =>
+//     Effect.runPromise(calculateOutcome(score, await challengeDiceResult()))
+//   )
+// )
 
 // export const followUpRoll = async (opts: any) => {
 //   await sendRollToChat(initValues.character.id, {

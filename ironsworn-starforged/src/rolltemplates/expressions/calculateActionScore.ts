@@ -18,7 +18,9 @@ export const calculateActionScore = (
   const dieValue = actionDie?.value ?? 0;
   const isDieNegated = dieValue === -momentum;
 
-  const score = isDieNegated ? statValue + modifier : dieValue + statValue + modifier;
+  const score = isDieNegated
+    ? statValue + modifier
+    : dieValue + statValue + modifier;
   const finalScore = Math.min(score, 10);
 
   return { score: finalScore, dieNegated: isDieNegated };

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue';
-import { Toggle, type ToggleEmits, type ToggleProps, useForwardPropsEmits } from 'radix-vue';
+import {
+  Toggle,
+  type ToggleEmits,
+  type ToggleProps,
+  useForwardPropsEmits,
+} from 'radix-vue';
 import { type ToggleVariants, toggleVariants } from '.';
 import { cn } from '@/utility/shadcn';
 
@@ -31,7 +36,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-  <Toggle v-bind="forwarded" :class="cn(toggleVariants({ variant, size }), props.class)">
+  <Toggle
+    v-bind="forwarded"
+    :class="cn(toggleVariants({ variant, size }), props.class)"
+  >
     <slot />
   </Toggle>
 </template>

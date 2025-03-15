@@ -54,7 +54,9 @@ export const calculateOutcome = (
 };
 
 export const getChallengeDiceValue = (dice: DiceComponent[]) =>
-  dice.filter((die) => die.label?.startsWith('Challenge Die')).map((die) => die.value);
+  dice
+    .filter((die) => die.label?.startsWith('Challenge Die'))
+    .map((die) => die.value);
 
 export const updateExceededChallengeDie = (
   dice: DiceComponent[],

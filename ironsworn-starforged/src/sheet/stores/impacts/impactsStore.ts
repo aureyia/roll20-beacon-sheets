@@ -48,7 +48,13 @@ export const useImpactsStore = defineStore('impacts', () => {
       description: description || '',
     };
     if (
-      !['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(category)
+      ![
+        'misfortunes',
+        'lastingEffects',
+        'burdens',
+        'currentVehicle',
+        'other',
+      ].includes(category)
     ) {
       throw new Error(`Unknown category: ${category}`);
     }
@@ -80,23 +86,35 @@ export const useImpactsStore = defineStore('impacts', () => {
       throw new Error('_id is required when removing an impact');
     }
     if (
-      !['misfortunes', 'lastingEffects', 'burdens', 'currentVehicle', 'other'].includes(
-        impact.category,
-      )
+      ![
+        'misfortunes',
+        'lastingEffects',
+        'burdens',
+        'currentVehicle',
+        'other',
+      ].includes(impact.category)
     ) {
       throw new Error(`Unknown category: ${impact.category}`);
     }
 
     switch (impact.category) {
       case 'misfortunes':
-        misfortunes.value = misfortunes.value.filter((entry) => entry.name !== impact.name);
-        lastingEffects.value = lastingEffects.value.filter((entry) => entry.name !== impact.name);
+        misfortunes.value = misfortunes.value.filter(
+          (entry) => entry.name !== impact.name,
+        );
+        lastingEffects.value = lastingEffects.value.filter(
+          (entry) => entry.name !== impact.name,
+        );
         break;
       case 'burdens':
-        burdens.value = burdens.value.filter((entry) => entry.name !== impact.name);
+        burdens.value = burdens.value.filter(
+          (entry) => entry.name !== impact.name,
+        );
         break;
       case 'currentVehicle':
-        currentVehicle.value = currentVehicle.value.filter((entry) => entry.name !== impact.name);
+        currentVehicle.value = currentVehicle.value.filter(
+          (entry) => entry.name !== impact.name,
+        );
         break;
       case 'other':
         other.value = other.value.filter((entry) => entry.name !== impact.name);
@@ -126,13 +144,19 @@ export const useImpactsStore = defineStore('impacts', () => {
 
   const hydrate = (hydrateStore: ImpactsHydrate) => {
     misfortunes.value =
-      Effect.runSync(objectToArray(hydrateStore.impacts.misfortunes)) ?? misfortunes.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.misfortunes)) ??
+      misfortunes.value;
     lastingEffects.value =
-      Effect.runSync(objectToArray(hydrateStore.impacts.lastingEffects)) ?? lastingEffects.value;
-    burdens.value = Effect.runSync(objectToArray(hydrateStore.impacts.burdens)) ?? burdens.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.lastingEffects)) ??
+      lastingEffects.value;
+    burdens.value =
+      Effect.runSync(objectToArray(hydrateStore.impacts.burdens)) ??
+      burdens.value;
     currentVehicle.value =
-      Effect.runSync(objectToArray(hydrateStore.impacts.currentVehicle)) ?? currentVehicle.value;
-    other.value = Effect.runSync(objectToArray(hydrateStore.impacts.other)) ?? other.value;
+      Effect.runSync(objectToArray(hydrateStore.impacts.currentVehicle)) ??
+      currentVehicle.value;
+    other.value =
+      Effect.runSync(objectToArray(hydrateStore.impacts.other)) ?? other.value;
   };
 
   const list = computed(() => {

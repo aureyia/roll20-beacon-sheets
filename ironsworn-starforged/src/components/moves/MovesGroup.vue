@@ -20,7 +20,10 @@ const { updateActiveMove }: any = inject('move');
 <template>
   <div class="moves-group break-inside-avoid-column">
     <div>{{ group.Name }}</div>
-    <Card v-for="move in group.Moves" class="mx-1 my-1 bg-card-input/[0.4] p-0 text-sm">
+    <Card
+      v-for="move in group.Moves"
+      class="mx-1 my-1 bg-card-input/[0.4] p-0 text-sm"
+    >
       <div class="h7 my-1 flex items-center">
         <div class="button-container mr-1 h-7 w-7 items-center leading-3">
           <Button

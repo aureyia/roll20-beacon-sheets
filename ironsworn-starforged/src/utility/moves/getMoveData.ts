@@ -8,7 +8,9 @@ export const getMoveData = (moveId: string) => {
   );
 
   if (!dfMoveCategory) {
-    return Effect.fail(new Error(`\n No Move Category was found for: ${moveId}`));
+    return Effect.fail(
+      new Error(`\n No Move Category was found for: ${moveId}`),
+    );
   }
 
   const dfMove = dfMoveCategory.Moves.find((move) => move.$id === moveId);

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { ref } from 'vue';
-import { useTaskStore, type Difficulty } from '@/sheet/stores/chronicle/tasksStore';
+import {
+  useTaskStore,
+  type Difficulty,
+} from '@/sheet/stores/chronicle/tasksStore';
 import { DIFFICULTIES } from '@/system/tasks';
 
 const taskStore = useTaskStore();

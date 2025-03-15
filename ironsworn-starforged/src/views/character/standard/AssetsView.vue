@@ -10,9 +10,13 @@ const assetStore = useAssetStore();
 const removeMode = ref(false);
 
 const getAssetById = (asset: Asset): Effect.Effect<IAsset> => {
-  const assets = starforged['Asset Types'].find((x) => x.Name === asset.category).Assets;
+  const assets = starforged['Asset Types'].find(
+    (x) => x.Name === asset.category,
+  ).Assets;
   if (!assets) {
-    return Effect.fail(new Error(`No assets found for category: ${asset.category}`));
+    return Effect.fail(
+      new Error(`No assets found for category: ${asset.category}`),
+    );
   }
 
   const selectedAsset = assets.find((x) => x.$id === asset.dataforgedId);

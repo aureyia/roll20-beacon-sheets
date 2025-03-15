@@ -10,7 +10,9 @@ import {
 } from 'radix-vue';
 import { cn } from '@/utility/shadcn';
 
-const props = defineProps<AlertDialogContentProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  AlertDialogContentProps & { class?: HTMLAttributes['class'] }
+>();
 const emits = defineEmits<AlertDialogContentEmits>();
 
 const delegatedProps = computed(() => {

@@ -10,7 +10,9 @@ import {
 import { Check } from 'lucide-vue-next';
 import { cn } from '@/utility/shadcn';
 
-const props = defineProps<DropdownMenuCheckboxItemProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  DropdownMenuCheckboxItemProps & { class?: HTMLAttributes['class'] }
+>();
 const emits = defineEmits<DropdownMenuCheckboxItemEmits>();
 
 const delegatedProps = computed(() => {

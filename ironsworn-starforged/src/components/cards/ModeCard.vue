@@ -31,14 +31,18 @@ defineProps({
   <div class="mode-card m-2">
     <Card>
       <CardHeader>
-        <CardTitle i18n="mode-card-character-standard-title">{{ mode }}</CardTitle>
+        <CardTitle i18n="mode-card-character-standard-title">{{
+          mode
+        }}</CardTitle>
         <CardDescription i18n="mode-card-character-standard-description">{{
           mode
         }}</CardDescription>
       </CardHeader>
       <CardContent i18n="">{{ mode }} image</CardContent>
       <CardFooter>
-        <Button i18n="button-text-select" @click="selectMode(mode)">Select</Button>
+        <Button i18n="button-text-select" @click="selectMode(mode)"
+          >Select</Button
+        >
       </CardFooter>
     </Card>
   </div>

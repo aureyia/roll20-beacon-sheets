@@ -48,7 +48,9 @@ const removeImpact = (impact: AnyImpact) => {
           <DialogFooter>
             <DialogClose class="flex w-full justify-between gap-2">
               <Button>Cancel</Button>
-              <Button variant="destructive" @click="removeImpact(impact)">Delete</Button>
+              <Button variant="destructive" @click="removeImpact(impact)"
+                >Delete</Button
+              >
             </DialogClose>
           </DialogFooter>
         </DialogContent>

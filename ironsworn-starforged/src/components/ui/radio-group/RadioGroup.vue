@@ -8,7 +8,9 @@ import {
 } from 'radix-vue';
 import { computed, type HTMLAttributes } from 'vue';
 
-const props = defineProps<RadioGroupRootProps & { class?: HTMLAttributes['class'] }>();
+const props = defineProps<
+  RadioGroupRootProps & { class?: HTMLAttributes['class'] }
+>();
 const emits = defineEmits<RadioGroupRootEmits>();
 
 const delegatedProps = computed(() => {

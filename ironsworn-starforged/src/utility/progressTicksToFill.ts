@@ -34,6 +34,9 @@ export const progressTicksToFill: ProgressTicksToFill = (
     (lowestTicks) => Math.max(NO_TICKS, lowestTicks),
   );
 
-  assert(isNumberBetween(result, NO_TICKS, MAX_TICKS_PER_BOX), `result: ${result}`);
+  assert(
+    isNumberBetween(result, NO_TICKS, MAX_TICKS_PER_BOX),
+    `result: ${result}`,
+  );
   return result;
 };

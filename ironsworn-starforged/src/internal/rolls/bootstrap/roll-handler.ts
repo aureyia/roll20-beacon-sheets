@@ -3,7 +3,12 @@ import { RollOutcome, RollOutcomeLive } from '../application/roll-outcome';
 import { ActionScore, ActionScoreLive } from '../application/action-score';
 import { Beacon, BeaconLive } from '../infrastructure/beacon';
 import { Effect, Context, Layer } from 'effect';
-import { actionDice } from '@/system/dice';
+import {
+  actionDice,
+  type RolledActionDie,
+  type RolledChallengeDie,
+  type RolledDie,
+} from '@/system/dice';
 
 type Outcome = {
   outcome: string;
@@ -15,6 +20,27 @@ class RollHandler extends Context.Tag('RollHandler')<
   { readonly roll: (score: number) => Effect.Effect<Outcome, Error> }
 >() {}
 
+function getDieByLabel(
+  dice: RolledDie[],
+  label: 'Challenge Die: 1' | 'Challenge Die: 2',
+): Effect.Effect<RolledChallengeDie, Error>;
+function getDieByLabel(
+  dice: RolledDie[],
+  label: 'Action Die',
+): Effect.Effect<RolledActionDie, Error>;
+function getDieByLabel<T extends RolledDie>(
+  dice: T[],
+  label: T['label'],
+): Effect.Effect<T, Error> {
+  const die = dice.find((die): die is T => die.label === label);
+
+  if (!die) {
+    return Effect.fail(Error(`Could not find die with label: ${label}`));
+  }
+
+  return Effect.succeed(die);
+}
+
 const RollHandlerLive = Layer.effect(
   RollHandler,
   Effect.gen(function* () {
@@ -25,9 +51,34 @@ const RollHandlerLive = Layer.effect(
     return {
       roll: (score: number) =>
         Effect.gen(function* () {
-          const rolledDice = Effect.promise(() => Effect.runPromise(beacon.roll(actionDice)));
-          const totalActionScore = actionScore.calculate(yield* rolledDice, score, null);
-          return Effect.runSync(rollOutcome.calculate(yield* totalActionScore, yield* rolledDice));
+          const rolledDice = yield* Effect.promise(() =>
+            Effect.runPromise(beacon.roll(actionDice)),
+          );
+          const totalActionScore = yield* actionScore.calculate(
+            rolledDice,
+            score,
+            null,
+          );
+          const challengeDie1 = yield* getDieByLabel(
+            rolledDice,
+            'Challenge Die: 1',
+          );
+          const challengeDie2 = yield* getDieByLabel(
+            rolledDice,
+            'Challenge Die: 2',
+          );
+          const actionDie = yield* getDieByLabel(rolledDice, 'Action Die');
+          const outcome = Effect.runSync(
+            rollOutcome.calculate(
+              totalActionScore,
+              challengeDie1,
+              challengeDie2,
+            ),
+          );
+          return {
+            dice: [actionDie, ...outcome.dice],
+            outcome: outcome.outcome,
+          };
         }),
     };
   }),

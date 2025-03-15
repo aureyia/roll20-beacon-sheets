@@ -6,14 +6,14 @@ import { inject, computed, provide } from 'vue';
 import { marked } from 'marked';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { MoveActions } from '@/components/moves';
-import { roll } from '@/internal/rolls/bootstrap/roll-handler'
+import { roll } from '@/internal/rolls/bootstrap/roll-handler';
 
 const { activeMove }: any = inject('move');
 
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
 const testRoll = async () => {
-  console.log(await roll(2))
-}
+  console.log(await roll(2));
+};
 </script>
 
 <template>

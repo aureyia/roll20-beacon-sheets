@@ -32,11 +32,15 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'vee-validate';
-import { useTaskStore, type TaskCategory } from '@/sheet/stores/chronicle/tasksStore';
+import {
+  useTaskStore,
+  type TaskCategory,
+} from '@/sheet/stores/chronicle/tasksStore';
 import { DIFFICULTIES } from '@/system/tasks';
 import { inject, watch } from 'vue';
 
-const categories: TaskCategory[] = (inject('categories') as TaskCategory[]) ?? [];
+const categories: TaskCategory[] =
+  (inject('categories') as TaskCategory[]) ?? [];
 
 if (categories.length === 0) {
   throw new Error('Categories must have at least one element');
@@ -55,7 +59,11 @@ const form = useForm({
 const taskStore = useTaskStore();
 
 const onSubmit = form.handleSubmit((values) => {
-  taskStore.addTask(values.description, values.category as TaskCategory, values.difficulty);
+  taskStore.addTask(
+    values.description,
+    values.category as TaskCategory,
+    values.difficulty,
+  );
 });
 </script>
 
@@ -89,7 +97,10 @@ const onSubmit = form.handleSubmit((values) => {
             <FormItem class="mt-2">
               <FormLabel>Type *</FormLabel>
               <FormControl>
-                <Select :disabled="!form.values.description" v-bind="componentField">
+                <Select
+                  :disabled="!form.values.description"
+                  v-bind="componentField"
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
@@ -109,7 +120,10 @@ const onSubmit = form.handleSubmit((values) => {
             <FormItem class="mt-2">
               <FormLabel>Difficulty *</FormLabel>
               <FormControl>
-                <Select :disabled="!form.values.description" v-bind="componentField">
+                <Select
+                  :disabled="!form.values.description"
+                  v-bind="componentField"
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select difficulty" />
                   </SelectTrigger>

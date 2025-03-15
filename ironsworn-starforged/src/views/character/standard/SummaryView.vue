@@ -29,9 +29,21 @@ const toggleImpactRemoval = ref(false);
   <div class="summary mx-10">
     <div class="descriptors">
       <div class="character-info m-3 flex flex-row gap-6">
-        <LabelledInput class="flex basis-2/4" label="Name" v-model="meta.name" />
-        <LabelledInput class="flex basis-1/4" label="Callsign" v-model="character.callsign" />
-        <LabelledInput class="flex basis-1/4" label="Pronouns" v-model="character.pronouns" />
+        <LabelledInput
+          class="flex basis-2/4"
+          label="Name"
+          v-model="meta.name"
+        />
+        <LabelledInput
+          class="flex basis-1/4"
+          label="Callsign"
+          v-model="character.callsign"
+        />
+        <LabelledInput
+          class="flex basis-1/4"
+          label="Pronouns"
+          v-model="character.pronouns"
+        />
       </div>
       <div class="resources m-3 flex flex-row gap-6">
         <LabelledNumberField
@@ -64,7 +76,11 @@ const toggleImpactRemoval = ref(false);
           label="XP"
           v-model="resources.xp"
         />
-        <LabelledSwitch class="flex basis-1/4" label="Edit Stats" v-model="toggleStatsEdit" />
+        <LabelledSwitch
+          class="flex basis-1/4"
+          label="Edit Stats"
+          v-model="toggleStatsEdit"
+        />
       </div>
     </div>
     <div class="stats mt-10 flex justify-center gap-5" v-if="toggleStatsEdit">
