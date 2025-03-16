@@ -20,10 +20,12 @@ export type RolledDie = Die & { value: number };
 
 export type ActionDie = Die<6, 'Action Die'>;
 export type ChallengeDie = Die<10, 'Challenge Die: 1' | 'Challenge Die: 2'>;
+export type OracleDie = Die<100, 'Oracle Die'>;
 
 export type RolledFrom<T extends Die> = T & { value: number };
 export type RolledActionDie = RolledFrom<ActionDie>;
 export type RolledChallengeDie = RolledFrom<ChallengeDie>;
+export type RolledOracleDie = RolledFrom<OracleDie>;
 
 export type EvaluatedChallengeDice = RolledChallengeDie & {
   exceeded: boolean;

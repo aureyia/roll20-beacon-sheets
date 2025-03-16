@@ -3,7 +3,8 @@ import { Effect, Context, Layer } from 'effect';
 
 type Outcome = {
   outcome: string;
-  dice: EvaluatedChallengeDice[];
+  challengeDie1: EvaluatedChallengeDice;
+  challengeDie2: EvaluatedChallengeDice;
 };
 
 export class RollOutcome extends Context.Tag('RollOutcome')<
@@ -17,26 +18,16 @@ export class RollOutcome extends Context.Tag('RollOutcome')<
   }
 >() {}
 
-const updateExceededChallengeDie = (
-  challengeDie1: RolledChallengeDie,
-  challengeDie2: RolledChallengeDie,
-  die1Exceeded: boolean,
-  die2Exceeded: boolean,
-): Effect.Effect<EvaluatedChallengeDice[]> =>
-  Effect.succeed([
-    {
-      sides: challengeDie1.sides,
-      label: challengeDie1.label,
-      value: challengeDie1.value,
-      exceeded: die1Exceeded,
-    },
-    {
-      sides: challengeDie2.sides,
-      label: challengeDie2.label,
-      value: challengeDie2.value,
-      exceeded: die2Exceeded,
-    },
-  ]);
+const updateChallengeDie = (
+  challengeDie: RolledChallengeDie,
+  dieExceeded: boolean,
+): Effect.Effect<EvaluatedChallengeDice> =>
+  Effect.succeed({
+    sides: challengeDie.sides,
+    label: challengeDie.label,
+    value: challengeDie.value,
+    exceeded: dieExceeded,
+  });
 
 export const RollOutcomeLive = Layer.effect(
   RollOutcome,
@@ -52,64 +43,40 @@ export const RollOutcomeLive = Layer.effect(
             if (score > challengeDie1.value) {
               return yield* Effect.succeed({
                 outcome: 'opportunity',
-                dice: yield* updateExceededChallengeDie(
-                  challengeDie1,
-                  challengeDie2,
-                  true,
-                  true,
-                ),
+                challengeDie1: yield* updateChallengeDie(challengeDie1, true),
+                challengeDie2: yield* updateChallengeDie(challengeDie2, true),
               });
             } else {
               return yield* Effect.succeed({
                 outcome: 'complication',
-                dice: yield* updateExceededChallengeDie(
-                  challengeDie1,
-                  challengeDie2,
-                  false,
-                  false,
-                ),
+                challengeDie1: yield* updateChallengeDie(challengeDie1, false),
+                challengeDie2: yield* updateChallengeDie(challengeDie2, false),
               });
             }
           } else {
             if (score > challengeDie1.value && score > challengeDie2.value) {
               return yield* Effect.succeed({
                 outcome: 'strong-hit',
-                dice: yield* updateExceededChallengeDie(
-                  challengeDie1,
-                  challengeDie2,
-                  true,
-                  true,
-                ),
+                challengeDie1: yield* updateChallengeDie(challengeDie1, true),
+                challengeDie2: yield* updateChallengeDie(challengeDie2, true),
               });
             } else if (score > challengeDie1.value) {
               return yield* Effect.succeed({
                 outcome: 'weak-hit',
-                dice: yield* updateExceededChallengeDie(
-                  challengeDie1,
-                  challengeDie2,
-                  true,
-                  false,
-                ),
+                challengeDie1: yield* updateChallengeDie(challengeDie1, true),
+                challengeDie2: yield* updateChallengeDie(challengeDie2, false),
               });
             } else if (score > challengeDie2.value) {
               return yield* Effect.succeed({
                 outcome: 'weak-hit',
-                dice: yield* updateExceededChallengeDie(
-                  challengeDie1,
-                  challengeDie2,
-                  false,
-                  true,
-                ),
+                challengeDie1: yield* updateChallengeDie(challengeDie1, false),
+                challengeDie2: yield* updateChallengeDie(challengeDie2, true),
               });
             } else {
               return yield* Effect.succeed({
                 outcome: 'miss',
-                dice: yield* updateExceededChallengeDie(
-                  challengeDie1,
-                  challengeDie2,
-                  false,
-                  false,
-                ),
+                challengeDie1: yield* updateChallengeDie(challengeDie1, false),
+                challengeDie2: yield* updateChallengeDie(challengeDie2, false),
               });
             }
           }

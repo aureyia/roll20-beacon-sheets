@@ -6,13 +6,17 @@ import { inject, computed, provide } from 'vue';
 import { marked } from 'marked';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { MoveActions } from '@/components/moves';
-import { roll } from '@/internal/rolls/bootstrap/roll-handler';
+import { roll as actionRoll } from '@/internal/rolls/bootstrap/action-roll-handler';
+import { roll as progressRoll } from '@/internal/rolls/bootstrap/progress-roll-handler';
+import { roll as oracleRoll } from '@/internal/rolls/bootstrap/oracle-roll-handler';
 
 const { activeMove }: any = inject('move');
 
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
 const testRoll = async () => {
-  console.log(await roll(2));
+  console.log(await actionRoll(2));
+  console.log(await progressRoll(5));
+  console.log(await oracleRoll());
 };
 </script>
 

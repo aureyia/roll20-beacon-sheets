@@ -3,60 +3,49 @@ import { RollOutcome, RollOutcomeLive } from '../application/roll-outcome';
 import { ActionScore, ActionScoreLive } from '../application/action-score';
 import { Beacon, BeaconLive } from '../infrastructure/beacon';
 import { Effect, Context, Layer } from 'effect';
-import {
-  actionDice,
-  type RolledActionDie,
-  type RolledChallengeDie,
-  type RolledDie,
-} from '@/system/dice';
+import { actionDice } from '@/system/dice';
+import { getDieByLabel } from '../application/get-die-by-label';
 
-type Outcome = {
+type ActionRollResult = {
   outcome: string;
-  dice: DiceComponent[];
+  score: number;
+  modifier: number;
+  actionDie: {
+    roll: number;
+  };
+  challengeDie1: {
+    roll: number;
+    exceeded: boolean;
+  };
+  challengeDie2: {
+    roll: number;
+    exceeded: boolean;
+  };
 };
 
-class RollHandler extends Context.Tag('RollHandler')<
-  RollHandler,
-  { readonly roll: (score: number) => Effect.Effect<Outcome, Error> }
+class ActionRollHandler extends Context.Tag('ActionRollHandler')<
+  ActionRollHandler,
+  {
+    readonly roll: (modifier: number) => Effect.Effect<ActionRollResult, Error>;
+  }
 >() {}
 
-function getDieByLabel(
-  dice: RolledDie[],
-  label: 'Challenge Die: 1' | 'Challenge Die: 2',
-): Effect.Effect<RolledChallengeDie, Error>;
-function getDieByLabel(
-  dice: RolledDie[],
-  label: 'Action Die',
-): Effect.Effect<RolledActionDie, Error>;
-function getDieByLabel<T extends RolledDie>(
-  dice: T[],
-  label: T['label'],
-): Effect.Effect<T, Error> {
-  const die = dice.find((die): die is T => die.label === label);
-
-  if (!die) {
-    return Effect.fail(Error(`Could not find die with label: ${label}`));
-  }
-
-  return Effect.succeed(die);
-}
-
-const RollHandlerLive = Layer.effect(
-  RollHandler,
+const ActionRollHandlerLive = Layer.effect(
+  ActionRollHandler,
   Effect.gen(function* () {
     const beacon = yield* Beacon;
     const rollOutcome = yield* RollOutcome;
     const actionScore = yield* ActionScore;
 
     return {
-      roll: (score: number) =>
+      roll: (modifier: number) =>
         Effect.gen(function* () {
           const rolledDice = yield* Effect.promise(() =>
             Effect.runPromise(beacon.roll(actionDice)),
           );
           const totalActionScore = yield* actionScore.calculate(
             rolledDice,
-            score,
+            modifier,
             null,
           );
           const challengeDie1 = yield* getDieByLabel(
@@ -76,15 +65,27 @@ const RollHandlerLive = Layer.effect(
             ),
           );
           return {
-            dice: [actionDie, ...outcome.dice],
             outcome: outcome.outcome,
+            score: totalActionScore,
+            modifier: modifier,
+            actionDie: {
+              roll: actionDie.value,
+            },
+            challengeDie1: {
+              roll: outcome.challengeDie1.value,
+              exceeded: outcome.challengeDie1.exceeded,
+            },
+            challengeDie2: {
+              roll: outcome.challengeDie2.value,
+              exceeded: outcome.challengeDie2.exceeded,
+            },
           };
         }),
     };
   }),
 );
 
-const MainLive = RollHandlerLive.pipe(
+const MainLive = ActionRollHandlerLive.pipe(
   Layer.provide(BeaconLive),
   Layer.provide(ActionScoreLive),
   Layer.provide(RollOutcomeLive),
@@ -92,7 +93,7 @@ const MainLive = RollHandlerLive.pipe(
 
 const rollOutput = (score: number) =>
   Effect.gen(function* () {
-    const rollHandler = yield* RollHandler;
+    const rollHandler = yield* ActionRollHandler;
     return Effect.runPromise(rollHandler.roll(score));
   });
 

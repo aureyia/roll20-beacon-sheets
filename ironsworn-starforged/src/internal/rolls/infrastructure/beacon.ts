@@ -1,4 +1,3 @@
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
 import { Effect, Context, Layer } from 'effect';
 import { UnknownException } from 'effect/Cause';
 import { dispatchRef } from '@/relay/relay';
