@@ -8,7 +8,7 @@ import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { IMove } from 'dataforged';
 import { resourceValues } from '@/utility/moves/moveChecks';
 import { Effect } from 'effect';
-import { useAssetStore } from '@/sheet/stores/assets/assetStore';
+import { useAssetStore } from '@/internal/assets/infrastructure/asset-store';
 import { starforged } from 'dataforged';
 
 const getDfAssets = () => starforged['Asset Types'];

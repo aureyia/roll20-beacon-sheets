@@ -3,7 +3,7 @@ import { CardFooter, Card, CardHeader, CardContent } from '../ui/card';
 import { Checkbox } from '../ui/checkbox';
 import { marked } from 'marked';
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group';
-import { Ability } from '@/sheet/stores/assets/types/asset-types';
+import { Ability } from '@/internal/assets/application/types';
 
 const props = defineProps({
   dataforgedAsset: {

@@ -12,9 +12,9 @@ import {
 import {
   useAssetStore,
   type AssetSubmission,
-} from '@/sheet/stores/assets/assetStore';
-import { getAllAssetsForCategory } from '@/sheet/stores/assets/helpers/assetType';
-import type { AssetCategory } from '@/sheet/stores/assets/types/asset-types';
+} from '@/internal/assets/infrastructure/asset-store';
+import { getAllAssetsForCategory } from '@/internal/assets/application/fetching-assets';
+import type { AssetCategory } from '@/internal/assets/application/types';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { Effect } from 'effect';

@@ -22,5 +22,5 @@ export type Asset = {
   name: string;
   category: AssetCategory;
   abilities: Ability[];
-  meter?: number;
+  meter: number | null;
 };

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAssetStore } from '@/sheet/stores/assets/assetStore';
+import { useAssetStore } from '@/internal/assets/infrastructure/asset-store';
 import { starforged, type IAsset } from 'dataforged';
 import { Effect } from 'effect';
 import AssetAddDialog from '@/components/assets/AssetAddDialog.vue';

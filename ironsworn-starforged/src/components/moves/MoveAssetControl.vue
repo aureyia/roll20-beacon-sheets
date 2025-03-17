@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAssetStore } from '@/sheet/stores/assets/assetStore';
+import { useAssetStore } from '@/internal/assets/infrastructure/asset-store';
 import { Card, CardContent, CardTitle } from '../ui/card';
 import { Toggle } from '../ui/toggle';
 

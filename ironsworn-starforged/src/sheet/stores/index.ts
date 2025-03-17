@@ -9,7 +9,7 @@ import { useChronicleStore } from '@/sheet/stores/chronicle/chronicleStore';
 import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
-import { useAssetStore } from './assets/assetStore';
+import { useAssetStore } from '../../internal/assets/infrastructure/asset-store';
 import { Effect } from 'effect';
 
 /*

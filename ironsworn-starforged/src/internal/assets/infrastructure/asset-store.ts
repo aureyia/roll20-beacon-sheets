@@ -3,8 +3,8 @@ import { createId } from '@paralleldrive/cuid2';
 import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
 import { Effect } from 'effect';
-import type { Ability, AssetCategory, Asset } from './types/asset-types';
-import { getAssetAbilities } from './helpers/assets';
+import type { Ability, AssetCategory, Asset } from '../application/types';
+import { getAssetAbilities } from '../application/assets';
 
 export type AssetsHydrate = {
   assets: Asset[];
@@ -14,7 +14,7 @@ export type AssetSubmission = {
   dataforgedId: string;
   name: string;
   category: AssetCategory;
-  meter?: number;
+  meter: number | null;
 };
 
 const formatAbilities = (
@@ -43,6 +43,7 @@ export const useAssetStore = defineStore('asset', () => {
     const abilities: Ability[] = Effect.runSync(
       getAssetAbilities(opts.dataforgedId, opts.category),
     );
+
     assets.value.push({
       _id: createId(),
       dataforgedId: opts.dataforgedId,

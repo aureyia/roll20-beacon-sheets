@@ -1,7 +1,7 @@
-import { Effect, pipe, Either } from 'effect';
+import { Effect, pipe } from 'effect';
 import { starforged, type IAsset, type IAssetType } from 'dataforged';
-import { getAssetType } from './assetType';
-import type { Ability, AssetCategory } from '../types/asset-types';
+import { getAssetType } from './get-asset-type';
+import type { Ability, AssetCategory } from './types';
 import { createId } from '@paralleldrive/cuid2';
 
 const getAssets = (assetType: IAssetType): IAsset[] => {
