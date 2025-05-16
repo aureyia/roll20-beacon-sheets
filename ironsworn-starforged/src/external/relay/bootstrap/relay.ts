@@ -16,7 +16,7 @@ import {
   onSharedSettingsChange,
   onTranslationsRequest,
   onDragOver,
-} from './handlers/handlers';
+} from '../application/handlers';
 import {
   reactive,
   ref,

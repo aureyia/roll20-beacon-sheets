@@ -1,4 +1,4 @@
-import { initValues } from '@/relay/relay';
+import { initValues } from '@/external/relay/bootstrap/relay';
 import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
 import { sendRollToChat } from '@/utility/sendRollToChat';
 import { actionDice } from '@/internal/rolls/application/dice';

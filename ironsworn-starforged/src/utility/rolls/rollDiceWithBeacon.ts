@@ -1,6 +1,6 @@
 import { Effect } from 'effect';
 import { UnknownException } from 'effect/Cause';
-import { dispatchRef } from '@/relay/relay';
+import { dispatchRef } from '@/external/relay/bootstrap/relay';
 import {
   convertResultsToDice,
   formatDiceComponents,

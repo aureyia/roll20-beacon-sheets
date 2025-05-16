@@ -1,6 +1,6 @@
 import { Effect, Context, Layer } from 'effect';
 import { UnknownException } from 'effect/Cause';
-import { dispatchRef } from '@/relay/relay';
+import { dispatchRef } from '@/external/relay/bootstrap/relay';
 import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
 import type { RolledDie, Die } from '@/internal/rolls/application/dice';
 
