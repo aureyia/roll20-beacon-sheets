@@ -4,8 +4,8 @@ import { ref } from 'vue';
 import {
   useTaskStore,
   type Difficulty,
-} from '@/sheet/stores/chronicle/tasksStore';
-import { DIFFICULTIES } from '@/system/tasks';
+} from '@/internal/tasks/infrastructure/tasksStore';
+import { DIFFICULTIES } from '@/internal/tasks/application/tasks';
 
 const taskStore = useTaskStore();
 

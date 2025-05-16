@@ -3,7 +3,7 @@ import {
   taskRollResults,
   oracleRollResults,
 } from '@/utility/__mocks__/example-rolls';
-import { oracleDie, actionDice, taskDice } from '@/system/dice';
+import { oracleDie, actionDice, taskDice } from '@/internal/rolls/application/dice';
 import {
   convertResultsToDice,
   formatDiceComponents,

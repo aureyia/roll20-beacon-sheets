@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ImpactList } from '@/components/impacts';
-import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
-import { type Impact } from '@/system/impacts';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
+import { type Impact } from '@/internal/impacts/application/impacts';
 import { useAttrs } from 'vue';
 const attrs = useAttrs();
 

@@ -1,7 +1,7 @@
 import { initValues } from '@/relay/relay';
-import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
+import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
 import { sendRollToChat } from '@/utility/sendRollToChat';
-import { actionDice } from '@/system/dice';
+import { actionDice } from '@/internal/rolls/application/dice';
 import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
 import { calculateActionScore } from '@/utility/rolls/calculateActionScore';
 import { isEligibleForMomentumBurn } from '../rolls/momentumEligibility';

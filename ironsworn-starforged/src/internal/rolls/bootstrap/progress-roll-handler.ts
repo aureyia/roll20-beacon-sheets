@@ -1,8 +1,8 @@
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
+import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
 import { RollOutcome, RollOutcomeLive } from '../application/roll-outcome';
 import { Beacon, BeaconLive } from '../infrastructure/beacon';
 import { Effect, Context, Layer } from 'effect';
-import { challengeDice } from '@/system/dice';
+import { challengeDice } from '@/internal/rolls/application/dice';
 import { getDieByLabel } from '../application/get-die-by-label';
 
 type ProgressRollResult = {

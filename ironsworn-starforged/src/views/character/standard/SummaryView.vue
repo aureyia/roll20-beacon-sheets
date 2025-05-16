@@ -5,14 +5,14 @@ import LabelledInput from '@/components/inputs/LabelledInput.vue';
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
 import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue';
 import { ImpactCategory } from '@/components/impacts';
-import { useStatsStore, type Stats } from '@/sheet/stores/stats/statsStore';
-import { useCharacterStore } from '@/sheet/stores/character/characterStore';
-import { useMetaStore } from '@/sheet/stores/meta/metaStore';
-import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
+import { useStatsStore, type Stats } from '@/internal/stats/infrastructure/statsStore';
+import { useCharacterStore } from '@/internal/character/infrastructure/characterStore';
+import { useMetaStore } from '@/external/meta/infrastructure/metaStore';
+import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
 import { Toggle } from '@/components/ui/toggle/index';
 import { ref } from 'vue';
-import { IMPACTS } from '@/system/impacts';
-import { STAT_LIST } from '@/system/stats';
+import { IMPACTS } from '@/internal/impacts/application/impacts';
+import { STAT_LIST } from '@/internal/stats/application/stats';
 
 import { ImpactDialog } from '@/components/impacts';
 

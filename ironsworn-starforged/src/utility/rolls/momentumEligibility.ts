@@ -1,4 +1,4 @@
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
+import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
 
 type EligibilityResult = {
   eligibility: boolean;

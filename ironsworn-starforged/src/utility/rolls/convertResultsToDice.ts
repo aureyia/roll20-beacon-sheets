@@ -1,5 +1,5 @@
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
-import type { RolledDice } from '@/system/dice';
+import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
+import type { RolledDice } from '@/internal/rolls/application/dice';
 import type { FormattedRoll } from '@/utility/rolls/rollTypes';
 import { Effect } from 'effect';
 

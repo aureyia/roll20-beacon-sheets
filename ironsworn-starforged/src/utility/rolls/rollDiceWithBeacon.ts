@@ -5,8 +5,8 @@ import {
   convertResultsToDice,
   formatDiceComponents,
 } from './convertResultsToDice';
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
-import type { RolledDice } from '@/system/dice';
+import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
+import type { RolledDice } from '@/internal/rolls/application/dice';
 
 export const rollDiceWithBeacon = (
   dice: DiceComponent[],

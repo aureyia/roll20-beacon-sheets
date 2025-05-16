@@ -4,7 +4,7 @@ import type {
   RolledChallengeDie,
   RolledActionDie,
   RolledOracleDie,
-} from '@/system/dice';
+} from '@/internal/rolls/application/dice';
 
 export function getDieByLabel(
   dice: RolledDie[],

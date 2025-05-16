@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { isEligibleForMomentumBurn } from './momentumEligibility';
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
+import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
 
 describe('isEligibleForMomentumBurn', () => {
   it('complication -> opportunity', () => {

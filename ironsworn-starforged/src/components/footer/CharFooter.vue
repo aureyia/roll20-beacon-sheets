@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
+import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
 import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
 
 const resourcesStore = useResourcesStore();

@@ -33,8 +33,8 @@ import {
   Dialog,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { IMPACTS, AnyImpact } from '@/system/impacts';
-import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
+import { IMPACTS, AnyImpact } from '@/internal/impacts/application/impacts';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
 
 const impactsStore = useImpactsStore();
 

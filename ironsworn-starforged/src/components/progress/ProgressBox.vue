@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ref, watch } from 'vue';
-import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
+import { useTaskStore } from '@/internal/tasks/infrastructure/tasksStore';
 
 const INPUTS = ['0', '1', '2', '3', '4'] as const;
 const props = defineProps({ id: String, ticks: String });

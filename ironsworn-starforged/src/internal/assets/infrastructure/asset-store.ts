@@ -17,6 +17,15 @@ export type AssetSubmission = {
   meter: number | null;
 };
 
+// export class Assets extends Context.Tag('Assets')<
+//   Assets,
+//   {
+//     readonly addAsset: (assestSubmission: AssetSubmission) => void;
+//     readonly dehydrate: () => void;
+//     readonly hydrate: () => void
+//   }
+// >() {}
+
 const formatAbilities = (
   formatter: typeof objectToArray | typeof arrayToObject,
   assets: AssetsHydrate | any,

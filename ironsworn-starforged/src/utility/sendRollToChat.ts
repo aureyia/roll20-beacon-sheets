@@ -1,7 +1,7 @@
 import {
   createRollTemplate,
   type AnyRollTemplate,
-} from '@/rolltemplates/rolltemplates';
+} from '@/internal/rolls/application/rolltemplates/rolltemplates';
 import { dispatchRef } from '@/relay/relay';
 import type { Dispatch, PostArgs } from '@roll20-official/beacon-sdk';
 

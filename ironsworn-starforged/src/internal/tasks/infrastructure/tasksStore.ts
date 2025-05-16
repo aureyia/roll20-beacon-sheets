@@ -11,8 +11,8 @@ import {
 } from '@/utility/rolls/convertResultsToDice';
 import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
-import { taskDice } from '@/system/dice';
-import { createRollTemplate } from '@/rolltemplates/rolltemplates';
+import { taskDice } from '@/internal/rolls/application/dice';
+import { createRollTemplate } from '@/internal/rolls/application/rolltemplates/rolltemplates';
 import { Effect } from 'effect';
 
 export type ProgressRange = LimitedRange<0, 40>;

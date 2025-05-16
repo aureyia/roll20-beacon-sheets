@@ -4,7 +4,7 @@ import {
   followUpRoll,
 } from '@/utility/moves/rollMove';
 import { ref } from 'vue';
-import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
+import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
 import { IMove } from 'dataforged';
 import { resourceValues } from '@/utility/moves/moveChecks';
 import { Effect } from 'effect';

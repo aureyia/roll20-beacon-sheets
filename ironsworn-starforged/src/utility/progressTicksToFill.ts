@@ -1,4 +1,4 @@
-import { type Task } from '@/sheet/stores/chronicle/tasksStore';
+import { type Task } from '@/internal/tasks/infrastructure/tasksStore';
 import { pipe } from 'effect';
 import { assert } from '@/utility/assert';
 import { isNumberBetween } from './isNumberBetween';

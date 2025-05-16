@@ -4,8 +4,8 @@ import {
   ProgressTypeStarforged,
   Stat,
 } from '@/system/enums';
-import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
-import { useStatsStore } from '@/sheet/stores/stats/statsStore';
+import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
+import { useStatsStore } from '@/internal/stats/infrastructure/statsStore';
 import { Effect, pipe, Console } from 'effect';
 
 type OptionType = {

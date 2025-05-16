@@ -35,8 +35,8 @@ import { useForm } from 'vee-validate';
 import {
   useTaskStore,
   type TaskCategory,
-} from '@/sheet/stores/chronicle/tasksStore';
-import { DIFFICULTIES } from '@/system/tasks';
+} from '@/internal/tasks/infrastructure/tasksStore';
+import { DIFFICULTIES } from '@/internal/tasks/application/tasks';
 import { inject, watch } from 'vue';
 
 const categories: TaskCategory[] =

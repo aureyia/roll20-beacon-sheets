@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import jp from 'jsonpath';
-import { useMetaStore, type MetaHydrate } from '@/sheet/stores/meta/metaStore';
-import { useCharacterStore } from '@/sheet/stores/character/characterStore';
-import { useStatsStore } from '@/sheet/stores/stats/statsStore';
-import { useImpactsStore } from '@/sheet/stores/impacts/impactsStore';
-import { useChronicleStore } from '@/sheet/stores/chronicle/chronicleStore';
-import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
-import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
-import { useTaskStore } from '@/sheet/stores/chronicle/tasksStore';
-import { useAssetStore } from '../../internal/assets/infrastructure/asset-store';
+import { useMetaStore, type MetaHydrate } from '@/external/meta/infrastructure/metaStore';
+import { useCharacterStore } from '@/internal/character/infrastructure/characterStore';
+import { useStatsStore } from '@/internal/stats/infrastructure/statsStore';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
+import { useSettingsStore } from '@/sheet/stores/settingsStore';
+import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
+import { useTaskStore } from '@/internal/tasks/infrastructure/tasksStore';
+import { useAssetStore } from '../../../internal/assets/infrastructure/asset-store';
 import { Effect } from 'effect';
 
 /*
@@ -29,7 +28,6 @@ export const useStarforgedSheetStore = defineStore(
       stats: useStatsStore(),
       resources: useResourcesStore(),
       impacts: useImpactsStore(),
-      chronicle: useChronicleStore(),
       settings: useSettingsStore(),
       tasks: useTaskStore(),
       assets: useAssetStore(),

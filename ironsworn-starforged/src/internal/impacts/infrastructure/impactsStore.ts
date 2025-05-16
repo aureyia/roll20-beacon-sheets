@@ -10,7 +10,7 @@ import type {
   LastingEffect,
   Misfortune,
   Other,
-} from '@/system/impacts';
+} from '@/internal/impacts/application/impacts';
 import { Effect } from 'effect';
 
 export type ImpactsHydrate = {

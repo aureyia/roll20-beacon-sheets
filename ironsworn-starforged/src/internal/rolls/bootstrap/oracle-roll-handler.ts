@@ -1,6 +1,6 @@
 import { Beacon, BeaconLive } from '../infrastructure/beacon';
 import { Effect, Context, Layer } from 'effect';
-import { oracleDie } from '@/system/dice';
+import { oracleDie } from '@/internal/rolls/application/dice';
 import { getDieByLabel } from '../application/get-die-by-label';
 
 type OracleRollResult = {

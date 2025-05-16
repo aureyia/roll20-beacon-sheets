@@ -1,4 +1,4 @@
-import type { RolledChallengeDie, EvaluatedChallengeDice } from '@/system/dice';
+import type { RolledChallengeDie, EvaluatedChallengeDice } from '@/internal/rolls/application/dice';
 import { Effect, Context, Layer } from 'effect';
 
 type Outcome = {

@@ -1,5 +1,5 @@
 import { Effect, Context, Layer } from 'effect';
-import type { DiceComponent } from '@/rolltemplates/rolltemplates';
+import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
 
 export class ActionScore extends Context.Tag('ActionScore')<
   ActionScore,
