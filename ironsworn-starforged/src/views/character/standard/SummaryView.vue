@@ -5,7 +5,10 @@ import LabelledInput from '@/components/inputs/LabelledInput.vue';
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
 import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue';
 import { ImpactCategory } from '@/components/impacts';
-import { useStatsStore, type Stats } from '@/internal/stats/infrastructure/statsStore';
+import {
+  useStatsStore,
+  type Stats,
+} from '@/internal/stats/infrastructure/statsStore';
 import { useCharacterStore } from '@/internal/character/infrastructure/characterStore';
 import { useMetaStore } from '@/external/meta/infrastructure/metaStore';
 import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';

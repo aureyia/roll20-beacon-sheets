@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import jp from 'jsonpath';
-import { useMetaStore, type MetaHydrate } from '@/external/meta/infrastructure/metaStore';
+import {
+  useMetaStore,
+  type MetaHydrate,
+} from '@/external/meta/infrastructure/metaStore';
 import { useCharacterStore } from '@/internal/character/infrastructure/characterStore';
 import { useStatsStore } from '@/internal/stats/infrastructure/statsStore';
 import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
