@@ -1,5 +1,5 @@
 import { initValues } from '@/external/relay/bootstrap/relay';
-import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
+import { useResourcesStore } from '@/internal/resources/infrastructure/store';
 import { sendRollToChat } from '@/utility/sendRollToChat';
 import { actionDice } from '@/internal/rolls/application/dice';
 import { calculateOutcome } from '@/utility/rolls/calculateOutcome';

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
 import {
   DialogTrigger,
   Dialog,

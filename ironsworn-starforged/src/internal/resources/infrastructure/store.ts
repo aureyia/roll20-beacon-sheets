@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
 import { Effect } from 'effect';
 import { assert } from '@/utility/assert';
 import { isNumberBetween } from '@/utility/isNumberBetween';

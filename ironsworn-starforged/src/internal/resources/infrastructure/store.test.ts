@@ -1,4 +1,4 @@
-import { useResourcesStore } from './resourcesStore';
+import { useResourcesStore } from './store';
 import { createPinia } from 'pinia';
 import { describe, test, expect } from 'vitest';
 import { Effect } from 'effect';

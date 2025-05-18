@@ -8,10 +8,10 @@ import { ImpactCategory } from '@/components/impacts';
 import {
   useStatsStore,
   type Stats,
-} from '@/internal/stats/infrastructure/statsStore';
-import { useCharacterStore } from '@/internal/character/infrastructure/characterStore';
-import { useMetaStore } from '@/external/meta/infrastructure/metaStore';
-import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
+} from '@/internal/stats/infrastructure/store';
+import { useCharacterStore } from '@/internal/character/infrastructure/store';
+import { useMetaStore } from '@/external/meta/infrastructure/store';
+import { useResourcesStore } from '@/internal/resources/infrastructure/store';
 import { Toggle } from '@/components/ui/toggle/index';
 import { ref } from 'vue';
 import { IMPACTS } from '@/internal/impacts/application/impacts';

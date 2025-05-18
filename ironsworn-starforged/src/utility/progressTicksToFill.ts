@@ -1,4 +1,4 @@
-import { type Task } from '@/internal/tasks/infrastructure/tasksStore';
+import { type Task } from '@/internal/tasks/infrastructure/store';
 import { pipe } from 'effect';
 import { assert } from '@/utility/assert';
 import { isNumberBetween } from './isNumberBetween';

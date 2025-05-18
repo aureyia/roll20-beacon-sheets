@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import ProgressTrack from '@/components/progress/ProgressTrack.vue';
 import Input from '@/components/ui/input/Input.vue';
 import DifficultyList from '@/components/progress/DifficultyList.vue';
-import { useTaskStore } from '@/internal/tasks/infrastructure/tasksStore';
+import { useTaskStore } from '@/internal/tasks/infrastructure/store';
 
 const taskStore = useTaskStore();
 

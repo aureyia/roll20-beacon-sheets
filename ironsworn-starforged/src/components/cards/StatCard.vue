@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useStatsStore } from '@/internal/stats/infrastructure/statsStore';
+import { useStatsStore } from '@/internal/stats/infrastructure/store';
 
 const stats = useStatsStore();
 

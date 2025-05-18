@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ImpactList } from '@/components/impacts';
-import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
 import { type Impact } from '@/internal/impacts/application/impacts';
 import { useAttrs } from 'vue';
 const attrs = useAttrs();

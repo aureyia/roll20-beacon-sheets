@@ -4,13 +4,13 @@ import jp from 'jsonpath';
 import {
   useMetaStore,
   type MetaHydrate,
-} from '@/external/meta/infrastructure/metaStore';
-import { useCharacterStore } from '@/internal/character/infrastructure/characterStore';
-import { useStatsStore } from '@/internal/stats/infrastructure/statsStore';
-import { useImpactsStore } from '@/internal/impacts/infrastructure/impactsStore';
-import { useSettingsStore } from '@/internal/settings/infrastructure/settingsStore';
-import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
-import { useTaskStore } from '@/internal/tasks/infrastructure/tasksStore';
+} from '@/external/meta/infrastructure/store';
+import { useCharacterStore } from '@/internal/character/infrastructure/store';
+import { useStatsStore } from '@/internal/stats/infrastructure/store';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
+import { useSettingsStore } from '@/internal/settings/infrastructure/store';
+import { useResourcesStore } from '@/internal/resources/infrastructure/store';
+import { useTaskStore } from '@/internal/tasks/infrastructure/store';
 import { useAssetStore } from '../../../internal/assets/infrastructure/asset-store';
 import { Effect } from 'effect';
 
