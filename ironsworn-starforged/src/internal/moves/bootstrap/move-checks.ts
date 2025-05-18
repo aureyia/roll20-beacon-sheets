@@ -3,7 +3,7 @@ import {
   MeterType,
   ProgressTypeStarforged,
   Stat,
-} from '@/system/enums';
+} from '@/internal/moves/application/enums';
 import { useResourcesStore } from '@/internal/resources/infrastructure/resourcesStore';
 import { useStatsStore } from '@/internal/stats/infrastructure/statsStore';
 import { Effect, pipe, Console } from 'effect';
@@ -136,7 +136,9 @@ export const resourceValues = (option: ValidRollOption) =>
     Effect.andThen((x) => getValue(option, x)),
   );
 
+// @ts-ignore
 if (import.meta.vitest) {
+  // @ts-ignore
   const { it, expect, describe } = import.meta.vitest;
 
   describe('getUseOptionTypes', () => {

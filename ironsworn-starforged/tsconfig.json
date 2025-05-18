@@ -9,7 +9,7 @@
       "@/*": ["./src/*"]
     },
     "types": [
-      "vitest/ImportMeta"
+      "vitest/globals"
     ]
   },
   "references": [

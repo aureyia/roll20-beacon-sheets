@@ -1,5 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "extends": "@vue/tsconfig/tsconfig.json",
   "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*"],
   "compilerOptions": {
     "baseUrl": ".",
@@ -9,7 +9,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node", "vitest/ImportMeta"],
+    "types": ["node", "vitest/globals"],
     "target": "ES2022",
     "ignoreDeprecations": "5.0",
   }

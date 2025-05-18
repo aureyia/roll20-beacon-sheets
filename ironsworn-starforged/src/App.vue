@@ -3,7 +3,7 @@ import { useStarforgedSheetStore } from '@/external/store/infrastructure';
 import { useRouter } from 'vue-router';
 
 // TODO: Remove after testing
-import { useSettingsStore } from '@/sheet/stores/settingsStore';
+import { useSettingsStore } from '@/internal/settings/infrastructure/settingsStore';
 const settings = useSettingsStore();
 const router = useRouter();
 
