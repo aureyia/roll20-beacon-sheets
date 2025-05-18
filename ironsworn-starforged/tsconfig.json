@@ -6,7 +6,8 @@
     "alwaysStrict": true,
     "exactOptionalPropertyTypes": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "dataforged": ["node_modules/dataforged/dist/types/index.d.ts"]
     },
     "types": [
       "vitest/globals"

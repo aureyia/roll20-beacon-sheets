@@ -8,7 +8,7 @@ import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
 import { Effect, Context, Console, pipe } from 'effect';
 // import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
-import type { Momentum } from '@/internal/momentum/application/momentum';
+import type { Momentum } from '@/internal/momentum/application/types';
 import { floor } from 'lodash';
 import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 import { UnknownException } from 'effect/Cause';

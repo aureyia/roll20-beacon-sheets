@@ -10,7 +10,7 @@ import type {
   LastingEffect,
   Misfortune,
   Other,
-} from '@/internal/impacts/application/impacts';
+} from '@/internal/impacts/application/types';
 import { Effect } from 'effect';
 
 export type ImpactsHydrate = {
@@ -22,6 +22,15 @@ export type ImpactsHydrate = {
     other: Other[];
   };
 };
+
+const isValidCategory = (category: string) =>
+  [
+    'misfortunes',
+    'lastingEffects',
+    'burdens',
+    'currentVehicle',
+    'other',
+  ].includes(category);
 
 export const useImpactsStore = defineStore('impacts', () => {
   const misfortunes: Ref<Array<Misfortune>> = ref([]);
@@ -38,26 +47,21 @@ export const useImpactsStore = defineStore('impacts', () => {
     if (!category) {
       throw new Error('Category is required when adding an impact');
     }
+
     if (!name) {
       throw new Error('Option is required when adding an impact');
     }
+
+    if (!isValidCategory(category)) {
+      throw new Error(`Unknown category: ${category}`);
+    }
+
     const impact: AnyImpact = {
       _id: createId(),
       category: category,
       name: name,
       description: description || '',
     };
-    if (
-      ![
-        'misfortunes',
-        'lastingEffects',
-        'burdens',
-        'currentVehicle',
-        'other',
-      ].includes(category)
-    ) {
-      throw new Error(`Unknown category: ${category}`);
-    }
 
     switch (category) {
       case 'misfortunes':
@@ -75,6 +79,8 @@ export const useImpactsStore = defineStore('impacts', () => {
       case 'other':
         other.value.push(impact as Other);
         break;
+      default:
+        throw new Error(`Unknown case: ${category}`);
     }
   };
 
@@ -85,15 +91,7 @@ export const useImpactsStore = defineStore('impacts', () => {
     if (!impact._id) {
       throw new Error('_id is required when removing an impact');
     }
-    if (
-      ![
-        'misfortunes',
-        'lastingEffects',
-        'burdens',
-        'currentVehicle',
-        'other',
-      ].includes(impact.category)
-    ) {
+    if (!isValidCategory(impact.category)) {
       throw new Error(`Unknown category: ${impact.category}`);
     }
 

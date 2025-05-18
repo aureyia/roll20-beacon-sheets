@@ -9,7 +9,7 @@ import {
   DialogClose,
 } from '../ui/dialog';
 import { Button } from '../ui/button';
-import type { AnyImpact } from '@/internal/impacts/application/impacts';
+import type { AnyImpact } from '@/internal/impacts/application/types';
 
 const impacts = useImpactsStore();
 const getImpactsByCategory = (category: string) =>

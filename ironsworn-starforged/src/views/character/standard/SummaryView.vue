@@ -14,7 +14,7 @@ import { useMetaStore } from '@/external/meta/infrastructure/store';
 import { useResourcesStore } from '@/internal/resources/infrastructure/store';
 import { Toggle } from '@/components/ui/toggle/index';
 import { ref } from 'vue';
-import { IMPACTS } from '@/internal/impacts/application/impacts';
+import { IMPACTS } from '@/internal/impacts/application/types';
 import { STAT_LIST } from '@/internal/stats/application/stats';
 
 import { ImpactDialog } from '@/components/impacts';

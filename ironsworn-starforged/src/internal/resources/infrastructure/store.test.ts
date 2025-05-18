@@ -18,7 +18,6 @@ describe('resourcesStore', () => {
         supply: 5,
         xp: 0,
         spentXp: 0,
-        momentum: 2,
       },
     });
   });
@@ -31,7 +30,6 @@ describe('resourcesStore', () => {
         supply: 4,
         xp: 1,
         spentXp: 1,
-        momentum: 4,
       },
     };
 

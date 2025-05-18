@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
 import { Effect } from 'effect';
 import { assert } from '@/utility/assert';
@@ -12,7 +12,6 @@ export type ResourcesHydrate = {
     supply: number;
     xp: number;
     spentXp: number;
-    momentum: number;
   };
 };
 
@@ -29,10 +28,6 @@ const assertStoreValues = (values: any) => {
     isNumberBetween(values.supply, 0, 5),
     `values.supply: ${values.supply}`,
   );
-  assert(
-    isNumberBetween(values.momentum, -6, 10),
-    `values.momentum: ${values.momentum}`,
-  );
   assert(values.xp >= 0, `values.xp: ${values.xp}`);
   assert(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`);
 };
@@ -45,13 +40,6 @@ export const useResourcesStore = defineStore('resources', () => {
   const supply = ref(5);
   const xp = ref(0);
   const spentXp = ref(0);
-  const momentum = ref(2);
-  const momentumMax = computed(() =>
-    impacts.list.length > 10 ? 0 : 10 - impacts.list.length,
-  );
-  const momentumReset = computed(() =>
-    impacts.list.length === 1 ? 1 : impacts.list.length >= 2 ? 0 : 2,
-  );
 
   const dehydrate = () => {
     const resources = {
@@ -60,7 +48,6 @@ export const useResourcesStore = defineStore('resources', () => {
       supply: supply.value,
       xp: xp.value,
       spentXp: spentXp.value,
-      momentum: momentum.value,
     };
 
     assertStoreValues(resources);
@@ -75,7 +62,6 @@ export const useResourcesStore = defineStore('resources', () => {
     supply.value = hydrateStore.resources.supply ?? supply.value;
     xp.value = hydrateStore.resources.xp ?? xp.value;
     spentXp.value = hydrateStore.resources.spentXp ?? spentXp.value;
-    momentum.value = hydrateStore.resources.momentum ?? momentum.value;
   };
 
   return {
@@ -84,9 +70,6 @@ export const useResourcesStore = defineStore('resources', () => {
     supply,
     xp,
     spentXp,
-    momentum,
-    momentumMax,
-    momentumReset,
     dehydrate,
     hydrate,
   };

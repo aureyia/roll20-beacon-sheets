@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import { ImpactList } from '@/components/impacts';
-import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
-import { type Impact } from '@/internal/impacts/application/impacts';
-import { useAttrs } from 'vue';
-const attrs = useAttrs();
-
-console.log(attrs);
 
 defineProps({
   label: {
@@ -14,7 +8,6 @@ defineProps({
   },
 });
 
-const impacts = useImpactsStore();
 </script>
 
 <template>
