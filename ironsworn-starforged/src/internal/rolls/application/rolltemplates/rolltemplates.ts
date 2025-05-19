@@ -2,8 +2,8 @@ import handlebars from 'handlebars';
 
 import * as partials from './partials';
 import * as templates from './templates';
-import * as expressions from './expressions'
-import * as system from './system'
+import * as expressions from './expressions';
+import * as system from './system';
 
 // Re-usable handlebars HTML partials.
 handlebars.registerPartial('wrapper', partials.wrapper);

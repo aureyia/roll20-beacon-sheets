@@ -1,78 +1,71 @@
-import { starforged, type IAsset, type IMove } from 'dataforged'
+import { starforged, type IAsset, type IMove } from 'dataforged';
 
-const assets = starforged['Asset Types']
-const moves = starforged['Move Categories']
-const oracles = starforged['Oracle Categories']
+const assets = starforged['Asset Types'];
+const moves = starforged['Move Categories'];
+const oracles = starforged['Oracle Categories'];
 
 type Ability = {
-  enabled: boolean
-}
+  enabled: boolean;
+};
 
 type Usage = {
-  shared: boolean
-}
+  shared: boolean;
+};
 
-type Requirement = {
+type Requirement = {};
 
-}
+type Input = {};
 
-type Input = {
-
-}
-
-type ConditionMeter = {
-
-}
+type ConditionMeter = {};
 
 type Asset = {
-  id: string,
-  name: string,
-  type: string,
-  usage: Usage,
-  abilities: Ability[],
-  requirement?: Requirement,
-  inputs?: Input[]
-  attachments?: Asset[],
-  conditionMeter?: ConditionMeter
-}
+  id: string;
+  name: string;
+  type: string;
+  usage: Usage;
+  abilities: Ability[];
+  requirement?: Requirement;
+  inputs?: Input[];
+  attachments?: Asset[];
+  conditionMeter?: ConditionMeter;
+};
 
 const normaliseAssetTypeText = (assetType: string) => {
-  const typeParts = assetType.split('/')
-  return typeParts[typeParts.length - 1].toLowerCase()
-}
+  const typeParts = assetType.split('/');
+  return typeParts[typeParts.length - 1].toLowerCase();
+};
 
-let flattenedAssets: IAsset[] = []
-let assetMoves: IMove[] = []
+let flattenedAssets: IAsset[] = [];
+let assetMoves: IMove[] = [];
 
-assets
-  .forEach((assetType) => {
-    assetType.Assets.forEach((asset: IAsset) => {
-      flattenedAssets.push(asset)
-    })
-  })
-  
+assets.forEach((assetType) => {
+  assetType.Assets.forEach((asset: IAsset) => {
+    flattenedAssets.push(asset);
+  });
+});
+
 const transformedAssets = flattenedAssets.map((asset) => {
   let formattedAsset: Asset = {
     id: '',
     name: '',
     type: '',
     usage: { shared: false },
-    abilities: []
-  }
-  
-  console.log('id', asset.$id)
-  formattedAsset.id = asset.$id.split('/').join('-').toLowerCase()
-  formattedAsset.name = asset.Name.toLowerCase()
-  formattedAsset.type = normaliseAssetTypeText(asset['Asset Type'])
-  formattedAsset.usage.shared = asset.Usage.Shared
+    abilities: [],
+  };
+
+  console.log('id', asset.$id);
+  formattedAsset.id = asset.$id.split('/').join('-').toLowerCase();
+  formattedAsset.name = asset.Name.toLowerCase();
+  formattedAsset.type = normaliseAssetTypeText(asset['Asset Type']);
+  formattedAsset.usage.shared = asset.Usage.Shared;
 
   formattedAsset.abilities = asset.Abilities.map((ability) => {
-    return ({
-      enabled: ability.Enabled
-    })
-  })
+    return {
+      enabled: ability.Enabled,
+    };
+  });
 
-  return formattedAsset
-})
+  return formattedAsset;
+});
 
-console.log(transformedAssets)
+console.log(transformedAssets);

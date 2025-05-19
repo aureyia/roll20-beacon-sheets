@@ -12,8 +12,8 @@ import type { IMoveTriggerOptionAction } from 'dataforged';
 import { followUpRoll, rollMove } from '@/utility/moves/rollMove';
 import { moveRollV2 } from '@/utility/moves/rollMoveV2';
 import { inject, ref } from 'vue';
-import { pipe, Effect } from 'effect';
-import { useResourcesStore } from '@/internal/resources/infrastructure/store';
+import { Effect } from 'effect';
+import { useMomentumStore } from '@/internal/momentum/infrastructure/store';
 import { useStatsStore } from '@/internal/stats/infrastructure/store';
 
 const props = defineProps({
@@ -33,7 +33,7 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
     return;
   }
 
-  const { momentum } = useResourcesStore();
+  const { momentum } = useMomentumStore();
   const stats = useStatsStore();
 
   const formattedModifier = Number(modifier.value);

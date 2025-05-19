@@ -100,6 +100,8 @@ export const useImpactsStore = defineStore('impacts', () => {
         misfortunes.value = misfortunes.value.filter(
           (entry) => entry.name !== impact.name,
         );
+        break;
+      case 'lastingEffects':
         lastingEffects.value = lastingEffects.value.filter(
           (entry) => entry.name !== impact.name,
         );

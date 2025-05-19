@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
 import { Effect } from 'effect';
 import { assert } from '@/utility/assert';
 import { isNumberBetween } from '@/utility/isNumberBetween';
@@ -33,8 +32,6 @@ const assertStoreValues = (values: any) => {
 };
 
 export const useResourcesStore = defineStore('resources', () => {
-  const impacts = useImpactsStore();
-
   const health = ref(5);
   const spirit = ref(5);
   const supply = ref(5);

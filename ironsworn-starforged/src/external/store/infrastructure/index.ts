@@ -12,6 +12,7 @@ import { useSettingsStore } from '@/internal/settings/infrastructure/store';
 import { useResourcesStore } from '@/internal/resources/infrastructure/store';
 import { useTaskStore } from '@/internal/tasks/infrastructure/store';
 import { useAssetStore } from '../../../internal/assets/infrastructure/asset-store';
+import { useMomentumStore } from '@/internal/momentum/infrastructure/store';
 import { Effect } from 'effect';
 
 /*
@@ -34,6 +35,7 @@ export const useStarforgedSheetStore = defineStore(
       settings: useSettingsStore(),
       tasks: useTaskStore(),
       assets: useAssetStore(),
+      momentum: useMomentumStore(),
     };
 
     const pageLoading = ref(false);

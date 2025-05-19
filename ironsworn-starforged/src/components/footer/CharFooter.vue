@@ -1,9 +1,22 @@
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { useResourcesStore } from '@/internal/resources/infrastructure/store';
+import { useMomentumStore } from '@/internal/momentum/infrastructure/store';
+import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
+import {
+  momentumMax,
+  momentumReset,
+} from '@/internal/momentum/application/helpers';
+import { computed } from 'vue';
 import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
 
-const resourcesStore = useResourcesStore();
+const impacts = useImpactsStore();
+const momentumStore = useMomentumStore();
+
+const numberOfImpacts = computed(() => impacts.list.length);
+
+const burnMomentum = (resetValue: number) => {
+  momentumStore.momentum = resetValue;
+};
 
 defineProps({
   edgeMode: Boolean,
@@ -26,26 +39,28 @@ defineProps({
       <ToggleGroup
         type="single"
         class="mr-2"
-        :modelValue="resourcesStore.momentum.toString()"
+        :modelValue="momentumStore.momentum.toString()"
         @update:modelValue="
-          resourcesStore.momentum = parseInt($event.toString())
+          momentumStore.momentum = parseInt($event.toString())
         "
       >
         <ToggleGroupItem
           v-for="option in Array.from(
-            { length: resourcesStore.momentumMax + 7 },
+            { length: momentumMax(numberOfImpacts) + 7 },
             (_, i) => i - 6,
           )"
           :key="option"
           :value="option.toString()"
           class="text-foreground hover:bg-muted-accent data-[state=on]:bg-muted-accent data-[state=off]:text-foreground data-[state=on]:text-foreground"
-          :class="{ 'momentum-reset': option === resourcesStore.momentumReset }"
+          :class="{
+            'momentum-reset': option === momentumReset(numberOfImpacts),
+          }"
           >{{ option }}</ToggleGroupItem
         >
       </ToggleGroup>
       <Button
         class="h-8 w-24 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
-        @click="resourcesStore.momentum = resourcesStore.momentumReset"
+        @click="burnMomentum(momentumReset(numberOfImpacts))"
         >Burn</Button
       >
     </div>
