@@ -1,4 +1,4 @@
-import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
+import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import { Effect } from 'effect';
 
 type Outcome = {

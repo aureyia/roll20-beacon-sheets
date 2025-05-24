@@ -1,14 +1,14 @@
 // import { initValues } from '@/relay/relay';
 // import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 // import { sendRollToChat } from '@/utility/sendRollToChat';
-import { actionDie, challengeDice } from '@/internal/rolls/application/dice';
+import { actionDie, challengeDice } from '@/system/rolls/dice';
 import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
 // import { calculateActionScore } from '@/utility/rolls/calculateActionScore';
 // import { isEligibleForMomentumBurn } from '../rolls/momentumEligibility';
 import { Effect, Context, Console, pipe } from 'effect';
 // import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
-import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
-import type { Momentum } from '@/internal/momentum/application/types';
+import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
+import type { Momentum } from '@/system/momentum/types';
 import { floor } from 'lodash';
 import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 import { UnknownException } from 'effect/Cause';

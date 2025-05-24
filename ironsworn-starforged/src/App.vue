@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useStarforgedSheetStore } from '@/external/store/infrastructure';
+import { useStarforgedSheetStore } from '@/external/store';
 import { useRouter } from 'vue-router';
 
 // TODO: Remove after testing
-import { useSettingsStore } from '@/internal/settings/infrastructure/store';
+import { useSettingsStore } from '@/system/settings/store';
 const settings = useSettingsStore();
 const router = useRouter();
 

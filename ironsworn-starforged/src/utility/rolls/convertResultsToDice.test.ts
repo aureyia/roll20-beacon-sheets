@@ -7,7 +7,7 @@ import {
   oracleDie,
   actionDice,
   taskDice,
-} from '@/internal/rolls/application/dice';
+} from '@/system/rolls/dice';
 import {
   convertResultsToDice,
   formatDiceComponents,

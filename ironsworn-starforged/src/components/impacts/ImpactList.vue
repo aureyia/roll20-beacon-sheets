@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
+import { useImpactsStore } from '@/system/impacts/store';
 import {
   DialogTrigger,
   Dialog,
@@ -9,7 +9,7 @@ import {
   DialogClose,
 } from '../ui/dialog';
 import { Button } from '../ui/button';
-import type { AnyImpact } from '@/internal/impacts/application/types';
+import type { AnyImpact } from '@/system/impacts/types';
 
 const impacts = useImpactsStore();
 const getImpactsByCategory = (category: string) =>

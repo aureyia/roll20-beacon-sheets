@@ -31,11 +31,8 @@ import {
 } from '@/views/guide';
 
 import { MainView as LocationsMainView } from '@/views/locations';
-
 import { MainView as OrcalesMainView } from '@/views/orcales';
-
 import { MainView as SharedMainView } from '@/views/ship';
-
 import { MainView as ShipMainView } from '@/views/ship';
 
 const characterStandardViews: any = {
@@ -84,10 +81,6 @@ const characterEdgeRoutes = () =>
     alias: `/character-${view}`,
   }));
 
-/*
- * Vue Router is used for switching between the 2 different views in the sheet.
- * It's a good solution for when using tabs, character builder, settings page, etc.
- * */
 const router = createRouter({
   // @ts-ignore
   history: createWebHistory(import.meta.env.BASE_URL),

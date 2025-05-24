@@ -1,7 +1,35 @@
+import { Effect, Context, Layer } from 'effect';
+import { UnknownException } from 'effect/Cause';
+import { dispatchRef } from '@/external/relay/relay';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
-import type { RolledDice } from '@/system/rolls/dice';
-import type { FormattedRoll } from '@/utility/rolls/rollTypes';
-import { Effect } from 'effect';
+import type { RolledDie, Die } from '@/system/rolls/dice';
+
+export class Beacon extends Context.Tag('Beacon')<
+  Beacon,
+  {
+    readonly roll: (
+      dice: Die[],
+    ) => Effect.Effect<RolledDie[], UnknownException>;
+  }
+>() {}
+
+export const BeaconLive = Layer.effect(
+  Beacon,
+  Effect.gen(function* () {
+    return {
+      roll: (dice: Die[]) => {
+        const formattedDice = formatDiceComponents(dice);
+
+        return Effect.gen(function* () {
+          const output = Effect.promise(() =>
+            dispatchRef.value.roll({ rolls: formattedDice }),
+          );
+          return Effect.runSync(convertResultsToDice(dice, yield* output));
+        });
+      },
+    };
+  }),
+);
 
 export const formatDieKey = (index: number) => `dice-${index}`;
 export const formatDie = (dieCount: number, sides: number) =>
@@ -35,7 +63,7 @@ const isValidDie = (
 export const convertResultsToDice = (
   dice: DiceComponent[],
   rollResults: any,
-): Effect.Effect<RolledDice[], Error> => {
+): Effect.Effect<RolledDie[], Error> => {
   if (!dice.every(isValidDie)) {
     return Effect.fail(Error('Dice from beacon do not meet criteria'));
   }

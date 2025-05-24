@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useSettingsStore } from '@/internal/settings/infrastructure/store';
+import { useSettingsStore } from '@/system/settings/store';
 
 // Pass { disableTransition: false } to enable transitions
 // const settings = useSettingsStore()

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { useMomentumStore } from '@/internal/momentum/infrastructure/store';
-import { useImpactsStore } from '@/internal/impacts/infrastructure/store';
+import { useMomentumStore } from '@/system/momentum/store';
+import { useImpactsStore } from '@/system/impacts/store';
 import {
   momentumMax,
   momentumReset,
-} from '@/internal/momentum/application/helpers';
+} from '@/system/momentum/helpers';
 import { computed } from 'vue';
 import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
 

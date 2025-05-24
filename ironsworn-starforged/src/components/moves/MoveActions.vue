@@ -13,8 +13,8 @@ import { followUpRoll, rollMove } from '@/utility/moves/rollMove';
 import { moveRollV2 } from '@/utility/moves/rollMoveV2';
 import { inject, ref } from 'vue';
 import { Effect } from 'effect';
-import { useMomentumStore } from '@/internal/momentum/infrastructure/store';
-import { useStatsStore } from '@/internal/stats/infrastructure/store';
+import { useMomentumStore } from '@/system/momentum/store';
+import { useStatsStore } from '@/system/stats/store';
 
 const props = defineProps({
   move: {

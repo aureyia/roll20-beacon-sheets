@@ -6,9 +6,9 @@ import { inject, computed, provide } from 'vue';
 import { marked } from 'marked';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { MoveActions } from '@/components/moves';
-import { roll as actionRoll } from '@/internal/rolls/bootstrap/action-roll-handler';
-import { roll as progressRoll } from '@/internal/rolls/bootstrap/progress-roll-handler';
-import { roll as oracleRoll } from '@/internal/rolls/bootstrap/oracle-roll-handler';
+import { roll as actionRoll } from '@/system/rolls/bootstrap/action-roll-handler';
+import { roll as progressRoll } from '@/system/rolls/bootstrap/progress-roll-handler';
+import { roll as oracleRoll } from '@/system/rolls/bootstrap/oracle-roll-handler';
 
 const { activeMove }: any = inject('move');
 

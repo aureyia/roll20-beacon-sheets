@@ -1,4 +1,4 @@
-import type { DiceComponent } from '@/internal/rolls/application/rolltemplates/rolltemplates';
+import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 
 /**
  * Calculates the Action Score for a given roll, taking into account the stat value, modifier, and momentum.

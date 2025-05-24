@@ -2,7 +2,7 @@
 import { ProgressCard } from '@/components/progress';
 import { ProgressDialog } from '@/components/progress';
 import { Toggle } from '@/components/ui/toggle';
-import { useTaskStore } from '@/internal/tasks/infrastructure/store';
+import { useTaskStore } from '@/system/tasks/store';
 import { ref, provide } from 'vue';
 
 const taskStore = useTaskStore();

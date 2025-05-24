@@ -1,8 +1,8 @@
 import {
   createRollTemplate,
   type AnyRollTemplate,
-} from '@/internal/rolls/application/rolltemplates/rolltemplates';
-import { dispatchRef } from '@/external/relay/bootstrap/relay';
+} from '@/system/rolls/rolltemplates/rolltemplates';
+import { dispatchRef } from '@/external/relay/relay';
 import type { Dispatch, PostArgs } from '@roll20-official/beacon-sdk';
 
 export const sendRollToChat = async (

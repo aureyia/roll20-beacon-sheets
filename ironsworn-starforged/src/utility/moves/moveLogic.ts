@@ -4,11 +4,11 @@ import {
   followUpRoll,
 } from '@/utility/moves/rollMove';
 import { ref } from 'vue';
-import { useResourcesStore } from '@/internal/resources/infrastructure/store';
-import { IMove } from 'dataforged';
-import { resourceValues } from '@/internal/moves/bootstrap/move-checks';
+import { useResourcesStore } from '@/system/resources/store';
+import type { IMove } from 'dataforged';
+import { resourceValues } from '@/system/moves/move-checks';
 import { Effect } from 'effect';
-import { useAssetStore } from '@/internal/assets/infrastructure/asset-store';
+import { useAssetStore } from '@/system/assets/store';
 import { starforged } from 'dataforged';
 
 const getDfAssets = () => starforged['Asset Types'];
