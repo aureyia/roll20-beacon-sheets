@@ -3,11 +3,7 @@ import { Effect, Context, Layer } from 'effect';
 import { oracleDie } from '@/system/rolls/dice';
 import { getDieByLabel } from '@/system/rolls/get-die-by-label';
 
-type OracleRollResult = {
-  oracleDie: {
-    roll: number;
-  };
-};
+type OracleRollResult = { oracleDie: { roll: number } };
 
 class OracleRoll extends Context.Tag('OracleRoll')<
   OracleRoll,
@@ -22,10 +18,7 @@ const OracleRollLive = Layer.effect(
     return {
       roll: () =>
         Effect.gen(function* () {
-          const rolledDice = yield* Effect.promise(() =>
-            Effect.runPromise(beacon.roll(oracleDie)),
-          );
-
+          const rolledDice = yield* beacon.roll(oracleDie);
           const die = yield* getDieByLabel(rolledDice, 'Oracle Die');
 
           return {
@@ -33,18 +26,15 @@ const OracleRollLive = Layer.effect(
               roll: die.value,
             },
           };
-        }),
+        })
     };
   }),
 );
 
 const MainLive = OracleRollLive.pipe(Layer.provide(BeaconLive));
 
-const rollOutput = () =>
-  Effect.gen(function* () {
-    const rollHandler = yield* OracleRoll;
-    return Effect.runPromise(rollHandler.roll());
-  });
-
 export const roll = () =>
-  Effect.runPromise(Effect.provide(rollOutput(), MainLive));
+  Effect.provide(
+    Effect.flatMap(OracleRoll, (handler) => handler.roll()),
+    MainLive,
+  );

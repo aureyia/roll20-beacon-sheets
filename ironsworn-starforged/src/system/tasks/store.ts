@@ -5,11 +5,11 @@ import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
 import { dispatchRef, initValues } from '@/external/relay';
 import { type LimitedRange } from '@/utility/limitedRange';
-import {
-  convertResultsToDice,
-  formatDiceComponents,
-} from '@/utility/rolls/convertResultsToDice';
-import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
+// import {
+//   convertResultsToDice,
+//   formatDiceComponents,
+// } from '@/utility/rolls/convertResultsToDice';
+// import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
 import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { taskDice } from '@/system/rolls/dice';
 import { createRollTemplate } from '@/system/rolls/rolltemplates/rolltemplates';
@@ -110,35 +110,35 @@ export const useTaskStore = defineStore('task', () => {
     });
   };
   // TODO: Roll is out of date, requires refacor using rollDiceWithBeacon
-  const roll = async (id: Task['_id']) => {
-    const dispatch = dispatchRef.value as Dispatch;
-    const task = tasks.value.find((task) => task._id === id);
-    const calculatedProgress = Math.floor((task?.progress ?? 0) / 4);
-    const formattedDice = formatDiceComponents(taskDice);
-    const rollResults = await rollDiceWithBeacon({ rolls: formattedDice });
-    const rolledDice = convertResultsToDice(taskDice, rollResults);
+  // const roll = async (id: Task['_id']) => {
+  //   const dispatch = dispatchRef.value as Dispatch;
+  //   const task = tasks.value.find((task) => task._id === id);
+  //   const calculatedProgress = Math.floor((task?.progress ?? 0) / 4);
+  //   const formattedDice = formatDiceComponents(taskDice);
+  //   const rollResults = await rollDiceWithBeacon({ rolls: formattedDice });
+  //   const rolledDice = convertResultsToDice(taskDice, rollResults);
 
-    const rollTemplate = createRollTemplate({
-      type: 'task',
-      parameters: {
-        characterName: initValues.character.name,
-        title: 'Rolling ' + task?.category,
-        dice: rolledDice,
-        progress: calculatedProgress,
-      },
-    });
+  //   const rollTemplate = createRollTemplate({
+  //     type: 'task',
+  //     parameters: {
+  //       characterName: initValues.character.name,
+  //       title: 'Rolling ' + task?.category,
+  //       dice: rolledDice,
+  //       progress: calculatedProgress,
+  //     },
+  //   });
 
-    await dispatch.post({
-      characterId: initValues.character.id,
-      content: rollTemplate,
-      options: {
-        whisper: undefined,
-        secret: undefined,
-      },
-    });
+  //   await dispatch.post({
+  //     characterId: initValues.character.id,
+  //     content: rollTemplate,
+  //     options: {
+  //       whisper: undefined,
+  //       secret: undefined,
+  //     },
+  //   });
 
-    return rolledDice;
-  };
+  //   return rolledDice;
+  // };
 
   const dehydrate = () => {
     return Effect.succeed({
@@ -157,7 +157,7 @@ export const useTaskStore = defineStore('task', () => {
     manualProgressUpdate,
     removeTask,
     addTask,
-    roll,
+    // roll,
     clearProgress,
     markProgress,
     dehydrate,

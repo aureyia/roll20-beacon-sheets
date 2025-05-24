@@ -35,9 +35,7 @@ const ProgressRollHandlerLive = Layer.effect(
     return {
       roll: (progress: number) =>
         Effect.gen(function* () {
-          const rolledDice = yield* Effect.promise(() =>
-            Effect.runPromise(beacon.roll(challengeDice)),
-          );
+          const rolledDice = yield* beacon.roll(challengeDice);
           const challengeDie1 = yield* getDieByLabel(
             rolledDice,
             'Challenge Die: 1',
@@ -47,8 +45,10 @@ const ProgressRollHandlerLive = Layer.effect(
             'Challenge Die: 2',
           );
 
-          const outcome = Effect.runSync(
-            rollOutcome.calculate(progress, challengeDie1, challengeDie2),
+          const outcome = yield* rollOutcome.calculate(
+            progress,
+            challengeDie1,
+            challengeDie2,
           );
 
           return {
@@ -73,11 +73,8 @@ const MainLive = ProgressRollHandlerLive.pipe(
   Layer.provide(RollOutcomeLive),
 );
 
-const rollOutput = (score: number) =>
-  Effect.gen(function* () {
-    const rollHandler = yield* ProgressRollHandler;
-    return Effect.runPromise(rollHandler.roll(score));
-  });
-
 export const roll = (score: number) =>
-  Effect.runPromise(Effect.provide(rollOutput(score), MainLive));
+  Effect.provide(
+    Effect.flatMap(ProgressRollHandler, (handler) => handler.roll(score)),
+    MainLive,
+  );

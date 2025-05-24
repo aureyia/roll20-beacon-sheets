@@ -14,9 +14,9 @@ const { activeMove }: any = inject('move');
 
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
 const testRoll = async () => {
-  console.log(await actionRoll(2));
-  console.log(await progressRoll(5));
-  console.log(await oracleRoll());
+  console.log(await Effect.runPromise(actionRoll(2)));
+  console.log(await Effect.runPromise(progressRoll(5)));
+  console.log(await Effect.runPromise(oracleRoll()));
 };
 </script>
 

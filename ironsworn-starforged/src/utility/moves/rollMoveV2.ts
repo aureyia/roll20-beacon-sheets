@@ -2,7 +2,7 @@
 // import { useResourcesStore } from '@/sheet/stores/resources/resourcesStore';
 // import { sendRollToChat } from '@/utility/sendRollToChat';
 import { actionDie, challengeDice } from '@/system/rolls/dice';
-import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
+// import { calculateOutcome } from '@/utility/rolls/calculateOutcome';
 // import { calculateActionScore } from '@/utility/rolls/calculateActionScore';
 // import { isEligibleForMomentumBurn } from '../rolls/momentumEligibility';
 import { Effect, Context, Console, pipe } from 'effect';
@@ -10,7 +10,7 @@ import { Effect, Context, Console, pipe } from 'effect';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import type { Momentum } from '@/system/momentum/types';
 import { floor } from 'lodash';
-import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
+// import { rollDiceWithBeacon } from '../rolls/rollDiceWithBeacon';
 import { UnknownException } from 'effect/Cause';
 
 // TODO: Refactor so it doesn't have state called during the function execution.
@@ -29,52 +29,52 @@ export const moveOptionsCheck = (move: any) => move.Trigger.Options.length > 1;
 //   return { dice, outcome, actionScore, momentumBurn };
 // };
 
-export const actionDieResult = (
-  presetActionDie: number | null,
-): Effect.Effect<DiceComponent[], UnknownException> =>
-  presetActionDie !== null
-    ? Effect.succeed([{ value: presetActionDie }])
-    : rollDiceWithBeacon(actionDie);
+// export const actionDieResult = (
+//   presetActionDie: number | null,
+// ): Effect.Effect<DiceComponent[], UnknownException> =>
+//   presetActionDie !== null
+//     ? Effect.succeed([{ value: presetActionDie }])
+//     : rollDiceWithBeacon(actionDie);
 
-export const actionScore = (
-  actionDieResult: DiceComponent[],
-  modifier: number,
-  presetActionScore: number | null = null,
-): Effect.Effect<number, Error> => {
-  if (presetActionScore !== null) {
-    return Effect.succeed(presetActionScore);
-  }
+// export const actionScore = (
+//   actionDieResult: DiceComponent[],
+//   modifier: number,
+//   presetActionScore: number | null = null,
+// ): Effect.Effect<number, Error> => {
+//   if (presetActionScore !== null) {
+//     return Effect.succeed(presetActionScore);
+//   }
 
-  if (actionDieResult.length < 1) {
-    return Effect.fail(new Error('actionDieResult is empty'));
-  }
+//   if (actionDieResult.length < 1) {
+//     return Effect.fail(new Error('actionDieResult is empty'));
+//   }
 
-  if (!actionDieResult[0].value) {
-    return Effect.fail(new Error('actionDieResult value is undefined'));
-  }
+//   if (!actionDieResult[0].value) {
+//     return Effect.fail(new Error('actionDieResult value is undefined'));
+//   }
 
-  return Effect.succeed(floor(actionDieResult[0].value + modifier, 10));
-};
+//   return Effect.succeed(floor(actionDieResult[0].value + modifier, 10));
+// };
 
-export const challengeDiceResult = () =>
-  Effect.runPromise(rollDiceWithBeacon(challengeDice));
+// export const challengeDiceResult = () =>
+//   Effect.runPromise(rollDiceWithBeacon(challengeDice));
 
-export const moveRollV2 = async (
-  momentum: Momentum,
-  modifier: number = 0,
-  presetActionDice: number | null = null,
-  presetActionScore: number | null = null,
-) =>
-  pipe(
-    presetActionDice,
-    actionDieResult,
-    Effect.andThen((result) =>
-      actionScore(result, modifier, presetActionScore),
-    ),
-    Effect.andThen(async (score) =>
-      Effect.runPromise(calculateOutcome(score, await challengeDiceResult())),
-    ),
-  );
+// export const moveRollV2 = async (
+//   momentum: Momentum,
+//   modifier: number = 0,
+//   presetActionDice: number | null = null,
+//   presetActionScore: number | null = null,
+// ) =>
+//   pipe(
+//     presetActionDice,
+//     actionDieResult,
+//     Effect.andThen((result) =>
+//       actionScore(result, modifier, presetActionScore),
+//     ),
+//     Effect.andThen(async (score) =>
+//       Effect.runPromise(calculateOutcome(score, await challengeDiceResult())),
+//     ),
+//   );
 
 //   presetActionDice,
 //   actionDiceResult,
