@@ -4,7 +4,7 @@ import jp from 'jsonpath';
 import {
   useMetaStore,
   type MetaHydrate,
-} from '@/external/meta/store';
+} from '@/external/meta-store';
 import { useCharacterStore } from '@/system/character/store';
 import { useStatsStore } from '@/system/stats/store';
 import { useImpactsStore } from '@/system/impacts/store';
@@ -74,6 +74,7 @@ export const useStarforgedSheetStore = defineStore(
           character.gmNotes = gmNotes;
           character.avatar = avatar;
         } else {
+          // @ts-ignore
           character.attributes[key] = Effect.runSync(stores[key].dehydrate());
         }
       });
@@ -86,7 +87,6 @@ export const useStarforgedSheetStore = defineStore(
       if (partial) {
         storeRegistry.forEach((store) => {
           if (!partial[store]) return;
-          //if (store === "rolls") return;
           stores[store].hydrate(partial[store]);
         });
       }

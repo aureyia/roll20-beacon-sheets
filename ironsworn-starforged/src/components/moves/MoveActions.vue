@@ -9,7 +9,6 @@ import {
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import type { IMoveTriggerOptionAction } from 'dataforged';
-import { followUpRoll, rollMove } from '@/utility/moves/rollMove';
 import { moveRollV2 } from '@/utility/moves/rollMoveV2';
 import { inject, ref } from 'vue';
 import { Effect } from 'effect';
@@ -37,10 +36,8 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
   const stats = useStatsStore();
 
   const formattedModifier = Number(modifier.value);
-  const roll = await rollMove(2, formattedModifier, options[0], momentum);
-  const roll2 = await Effect.runPromise(await moveRollV2(2, formattedModifier));
-  console.log('roll2', roll2);
-  await followUpRoll(roll);
+  const roll = await Effect.runPromise(await moveRollV2(2, formattedModifier));
+  console.log('roll', roll);
 };
 </script>
 

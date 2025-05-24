@@ -8,7 +8,7 @@ import router from './router';
 import './sheet/scss/index.scss';
 import './sheet/css/index.css';
 
-import { createRelay } from './external/relay/relay';
+import { createRelay } from './external/relay';
 
 // @ts-ignore
 const env = import.meta.env.MODE || '';

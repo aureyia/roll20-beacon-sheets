@@ -16,7 +16,7 @@ import {
   onSharedSettingsChange,
   onTranslationsRequest,
   onDragOver,
-} from '@/external/relay/handlers';
+} from '@/external/relay-handlers';
 import {
   reactive,
   ref,

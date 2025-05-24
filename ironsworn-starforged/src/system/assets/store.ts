@@ -3,8 +3,8 @@ import { createId } from '@paralleldrive/cuid2';
 import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
 import { Effect } from 'effect';
-import type { Ability, AssetCategory, Asset } from '../application/types';
-import { getAssetAbilities } from '../application/assets';
+import type { Ability, AssetCategory, Asset } from '@/system/assets/types';
+import { getAssetAbilities } from '@/system/assets/assets';
 
 export type AssetsHydrate = {
   assets: Asset[];

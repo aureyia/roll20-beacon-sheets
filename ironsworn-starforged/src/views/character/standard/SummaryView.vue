@@ -10,7 +10,7 @@ import {
   type Stats,
 } from '@/system/stats/store';
 import { useCharacterStore } from '@/system/character/store';
-import { useMetaStore } from '@/external/meta/store';
+import { useMetaStore } from '@/external/meta-store';
 import { useResourcesStore } from '@/system/resources/store';
 import { Toggle } from '@/components/ui/toggle/index';
 import { ref } from 'vue';

@@ -9,13 +9,13 @@ type OracleRollResult = {
   };
 };
 
-class OracleRollHandler extends Context.Tag('OracleRollHandler')<
-  OracleRollHandler,
+class OracleRoll extends Context.Tag('OracleRoll')<
+  OracleRoll,
   { readonly roll: () => Effect.Effect<OracleRollResult, Error> }
 >() {}
 
-const OracleRollHandlerLive = Layer.effect(
-  OracleRollHandler,
+const OracleRollLive = Layer.effect(
+  OracleRoll,
   Effect.gen(function* () {
     const beacon = yield* Beacon;
 
@@ -38,11 +38,11 @@ const OracleRollHandlerLive = Layer.effect(
   }),
 );
 
-const MainLive = OracleRollHandlerLive.pipe(Layer.provide(BeaconLive));
+const MainLive = OracleRollLive.pipe(Layer.provide(BeaconLive));
 
 const rollOutput = () =>
   Effect.gen(function* () {
-    const rollHandler = yield* OracleRollHandler;
+    const rollHandler = yield* OracleRoll;
     return Effect.runPromise(rollHandler.roll());
   });
 

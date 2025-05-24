@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
-import { dispatchRef, initValues } from '@/external/relay/relay';
+import { dispatchRef, initValues } from '@/external/relay';
 import { type LimitedRange } from '@/utility/limitedRange';
 import {
   convertResultsToDice,

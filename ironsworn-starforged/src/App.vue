@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStarforgedSheetStore } from '@/external/store';
+import { useStarforgedSheetStore } from '@/external/sheet-store';
 import { useRouter } from 'vue-router';
 
 // TODO: Remove after testing

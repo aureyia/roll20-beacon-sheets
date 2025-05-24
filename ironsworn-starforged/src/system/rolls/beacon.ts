@@ -1,9 +1,17 @@
 import { Effect, Context, Layer } from 'effect';
 import { UnknownException } from 'effect/Cause';
-import { dispatchRef } from '@/external/relay/relay';
+import { dispatchRef } from '@/external/relay';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import type { RolledDie, Die } from '@/system/rolls/dice';
 
+type AvailableDice = '1d6' | '1d10' | '1d100';
+type FormattedRoll = {
+  rolls: {
+    'dice-0'?: AvailableDice;
+    'dice-1'?: AvailableDice;
+    'dice-2'?: AvailableDice;
+  };
+};
 export class Beacon extends Context.Tag('Beacon')<
   Beacon,
   {
