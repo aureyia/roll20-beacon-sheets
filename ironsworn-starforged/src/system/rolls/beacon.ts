@@ -1,5 +1,4 @@
-import { Effect, Context, Layer } from 'effect';
-import { UnknownException } from 'effect/Cause';
+import { Effect, Context, Layer, Data } from 'effect';
 import { dispatchRef } from '@/external/relay';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import type { RolledDie, Die } from '@/system/rolls/dice';
@@ -15,25 +14,23 @@ type FormattedRoll = {
 export class Beacon extends Context.Tag('Beacon')<
   Beacon,
   {
-    readonly roll: (
-      dice: Die[],
-    ) => Effect.Effect<RolledDie[], UnknownException>;
+    readonly roll: (dice: Die[]) => Effect.Effect<RolledDie[], InvalidDie>;
   }
 >() {}
 
 export const BeaconLive = Layer.effect(
   Beacon,
+  // @ts-ignore
   Effect.gen(function* () {
     return {
       roll: (dice: Die[]) => {
         const formattedDice = formatDiceComponents(dice);
 
-        return Effect.gen(function* () {
-          const output = Effect.promise(() =>
-            dispatchRef.value.roll({ rolls: formattedDice }),
-          );
-          return Effect.runSync(convertResultsToDice(dice, yield* output));
-        });
+        const output = Effect.promise(() =>
+          dispatchRef.value.roll({ rolls: formattedDice }),
+        );
+
+        return convertResultsToDice(dice, output);
       },
     };
   }),
@@ -68,19 +65,25 @@ const isValidDie = (
 ): die is Required<Pick<DiceComponent, 'sides' | 'label'>> =>
   die.sides !== undefined && die.label !== undefined;
 
-export const convertResultsToDice = (
-  dice: DiceComponent[],
-  rollResults: any,
-): Effect.Effect<RolledDie[], Error> => {
-  if (!dice.every(isValidDie)) {
-    return Effect.fail(Error('Dice from beacon do not meet criteria'));
-  }
+export class InvalidDie extends Data.TaggedError('InvalidDie')<{
+  message: string;
+}> {}
 
-  return Effect.succeed(
-    dice.map((die, index) => ({
-      sides: die.sides,
-      label: die.label,
-      value: rollResults.results[formatDieKey(index)].results.result,
-    })),
-  );
-};
+export const convertResultsToDice = (dice: DiceComponent[], rollResults: any) =>
+  Effect.gen(function* () {
+    const results = yield* rollResults;
+
+    if (!dice.every(isValidDie)) {
+      return yield* Effect.fail(
+        new InvalidDie({ message: 'Dice from beacon do not meet criteria' }),
+      );
+    }
+
+    return yield* Effect.succeed(
+      dice.map((die, index) => ({
+        sides: die.sides,
+        label: die.label,
+        value: results.results[formatDieKey(index)].results.result,
+      })),
+    );
+  });

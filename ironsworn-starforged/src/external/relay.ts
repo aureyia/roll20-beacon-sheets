@@ -27,6 +27,7 @@ import {
   shallowRef,
 } from 'vue';
 import { createId } from '@paralleldrive/cuid2';
+import { Effect } from 'effect';
 
 const relayConfig = {
   handlers: {
@@ -77,21 +78,24 @@ const doUpdate = (
   update: Record<string, any>,
   logMode = false,
 ) => {
-  if (logMode) console.info('➡️ starforged: Updating Firebase');
-  if (logMode)
+  if (logMode) {
+    console.info('➡️ starforged: Updating Firebase');
     console.dir(`Firebase Update: ${initValues.character.id}`, update);
+  }
+
+  console.log('dispatch', dispatch);
+  console.log('update', update);
+
   const character: Record<string, any> = {
     character: {
       id: initValues.character.id,
       ...update,
     },
   };
+
   character.character.attributes.updateId = sheetId.value;
   dispatch.updateCharacter(character as UpdateArgs);
 };
-
-// This is a debounced version of the update function that will only be called after 800ms of inactivity.
-const debounceUpdate = debounce(doUpdate, 800);
 
 /* 
 Dev relay is used to run the sheet in a web browser
@@ -115,64 +119,141 @@ It will return the relayPinia and relayVue objects that can be used to install t
 We use a watcher of beaconPulse value to trigger a re-render of the sheet when the value changes, see the onChange handler.
 This is just one way to trigger a re-render, you can implement your own logic to trigger a re-render.
 */
-export const createRelay = async ({
+export const createRelay = ({
   devMode = false,
   primaryStore = 'starforgedSheetStore',
   logMode = false,
-}) => {
-  // @ts-ignore
-  const dispatch = await (devMode ? devRelay() : initRelay(relayConfig));
-  const relayPinia = (context: PiniaPluginContext) => {
-    if (context.store.$id !== primaryStore) return;
-    const store = context.store;
+}) =>
+  Effect.gen(function* () {
+    const devDispatch = devRelay();
+    const dispatch = yield* Effect.promise(() => initRelay(relayConfig));
 
-    dispatchRef.value = dispatch;
+    const relayXstate = (context) => {};
 
-    // Init Store
-    const { attributes, ...profile } = initValues.character;
-    store.hydrateStore(attributes, profile);
+    const relayPinia = (context: PiniaPluginContext) => {
+      if (context.store.$id !== primaryStore) return;
+      const store = context.store;
 
-    // Beacon Provides access to settings, like campaign id for example
-    store.setCampaignId(initValues.settings.campaignId);
-    store.setPermissions(initValues.settings.owned, initValues.settings.gm);
+      dispatchRef.value = dispatch;
 
-    // Watch for changes
-    store.$subscribe(() => {
-      if (blockUpdate.value === true) return;
-      const update = store.dehydrateStore();
-      debounceUpdate(dispatch, update, logMode);
-    });
-
-    // Watch for changes from the Beacon SDK, triggered everytime the Beacon Pulse value changes
-    watch(beaconPulse, async (newValue, oldValue) => {
-      if (logMode) console.log('❤️ Beacon Pulse', { newValue, oldValue });
-      const characterId = initValues.character.id;
-      blockUpdate.value = true;
-      if (logMode) console.log('🔒🔴 locking changes');
-      const { attributes, ...profile } = dispatch.characters[characterId];
-      if (attributes.updateId === sheetId.value) {
-        blockUpdate.value = false;
-        return;
-      }
+      // Init Store
+      const { attributes, ...profile } = initValues.character;
       store.hydrateStore(attributes, profile);
-      await nextTick();
-      if (logMode) console.log('🔓🟢 unlocking changes');
-      blockUpdate.value = false;
-    });
+
+      // Beacon Provides access to settings, like campaign id for example
+      store.setCampaignId(initValues.settings.campaignId);
+      store.setPermissions(initValues.settings.owned, initValues.settings.gm);
+
+      // Watch for changes
+      store.$subscribe(() => {
+        if (blockUpdate.value === true) return;
+        const update = store.dehydrateStore();
+        const debounceUpdate = debounce(doUpdate, 800);
+        debounceUpdate(dispatch, update, logMode);
+      });
+
+      // Watch for changes from the Beacon SDK, triggered everytime the Beacon Pulse value changes
+      watch(beaconPulse, async (newValue, oldValue) => {
+        if (logMode) console.log('❤️ Beacon Pulse', { newValue, oldValue });
+        const characterId = initValues.character.id;
+        blockUpdate.value = true;
+        if (logMode) console.log('🔒🔴 locking changes');
+        const { attributes, ...profile } = dispatch.characters[characterId];
+        if (attributes.updateId === sheetId.value) {
+          blockUpdate.value = false;
+          return;
+        }
+        store.hydrateStore(attributes, profile);
+        await nextTick();
+        if (logMode) console.log('🔓🟢 unlocking changes');
+        blockUpdate.value = false;
+      });
+
+      return {
+        ...dispatch,
+      };
+    };
+
+    const relayVue = {
+      install(app: App) {
+        app.provide('dispatch', dispatch);
+      },
+    };
 
     return {
-      ...dispatch,
+      relayPinia,
+      relayVue,
     };
-  };
+  });
 
-  const relayVue = {
-    install(app: App) {
-      app.provide('dispatch', dispatch);
+import { setup } from 'xstate';
+
+export const machine = setup({
+  types: {
+    context: {} as {},
+    events: {} as
+      | { type: 'retrievedStoreData' }
+      | { type: 'storeUpdated' }
+      | { type: 'syncCompleted' },
+  },
+  actions: {
+    initialise: function ({ context, event }, params) {
+
+      // ...
     },
-  };
-
-  return {
-    relayPinia,
-    relayVue,
-  };
-};
+    triggerSync: function ({ context, event }, params) {
+      // Add your action code here
+      // ...
+    },
+    hydrateStores: function ({ context, event }, params) {
+      // Add your action code here
+      // ...
+    },
+  },
+}).createMachine({
+  context: {
+    character: {
+      id: '',
+      character: {
+        attributes: {},
+      } as Character,
+      settings: {} as Settings,
+      compendiumDrop: null,
+    },
+    updateId:''
+  },
+  id: 'Syncing',
+  initial: 'initialising',
+  states: {
+    initialising: {
+      on: {
+        retrievedStoreData: {
+          target: 'waitingForUpdate',
+          actions: {
+            type: 'hydrateStores',
+          },
+        },
+      },
+      entry: {
+        type: 'initialise',
+      },
+    },
+    waitingForUpdate: {
+      on: {
+        storeUpdated: {
+          target: 'syncing',
+        },
+      },
+    },
+    syncing: {
+      on: {
+        syncCompleted: {
+          target: 'waitingForUpdate',
+        },
+      },
+      entry: {
+        type: 'triggerSync',
+      },
+    },
+  },
+});

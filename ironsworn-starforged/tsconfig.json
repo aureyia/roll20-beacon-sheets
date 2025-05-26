@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "strict": true,
     "alwaysStrict": true,
+    "strictNullChecks": true,
     "exactOptionalPropertyTypes": true,
     "paths": {
       "@/*": ["./src/*"],

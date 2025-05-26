@@ -1,7 +1,7 @@
 import type { InitArgs } from '@roll20-official/beacon-sdk';
 import { initValues, beaconPulse } from '@/external/relay';
 
-// onInit is called when the Relay is first loaded. 
+// onInit is called when the Relay is first loaded.
 // It is used to set up the initial values of the sheet.
 export const onInit = ({
   character,
@@ -15,14 +15,14 @@ export const onInit = ({
   console.log('onInit -> Strarforged Sheet Relay');
 };
 
-// onChange is called when the character data is updated. 
+// onChange is called when the character data is updated.
 // This is where you will update the sheet with the new data.
 export const onChange = async ({
   character,
 }: {
   character: Record<string, any>;
 }) => {
-  // This is a way to trigger a re-render of the sheet, 
+  // This is a way to trigger a re-render of the sheet,
   // see relay.ts for more information.
   const old = beaconPulse.value;
   beaconPulse.value = old + 1;

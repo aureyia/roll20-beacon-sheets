@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia';
+import { createStore } from '@xstate/store';
 import { ref } from 'vue';
 import jp from 'jsonpath';
-import {
-  useMetaStore,
-  type MetaHydrate,
-} from '@/external/meta-store';
+import { useMetaStore, type MetaHydrate } from '@/external/meta-store';
 import { useCharacterStore } from '@/system/character/store';
 import { useStatsStore } from '@/system/stats/store';
 import { useImpactsStore } from '@/system/impacts/store';
@@ -14,6 +12,7 @@ import { useTaskStore } from '@/system/tasks/store';
 import { useAssetStore } from '@/system/assets/store';
 import { useMomentumStore } from '@/system/momentum/store';
 import { Effect } from 'effect';
+import { momentumStore } from '@/system/momentum/store.x';
 
 /*
  * This is the master store for the entire character sheet.
@@ -117,3 +116,18 @@ export const useStarforgedSheetStore = defineStore(
     };
   },
 );
+
+// const starforgedSheetStore = createStore({
+//   context: {
+//     meta: metaStore(),
+//     character: characterStore(),
+//     stats: statsStore(),
+//     resources: resourcesStore(),
+//     impacts: impactsStore(),
+//     settings: settingsStore(),
+//     tasks: taskStore(),
+//     assets: assetStore(),
+//     momentum: momentumStore,
+//   },
+//   on: {},
+// });

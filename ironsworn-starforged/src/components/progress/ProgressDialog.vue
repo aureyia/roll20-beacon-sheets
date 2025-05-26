@@ -32,10 +32,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'vee-validate';
-import {
-  useTaskStore,
-  type TaskCategory,
-} from '@/system/tasks/store';
+import { useTaskStore, type TaskCategory } from '@/system/tasks/store';
 import { DIFFICULTIES } from '@/system/tasks/tasks';
 import { inject, watch } from 'vue';
 

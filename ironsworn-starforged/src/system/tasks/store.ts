@@ -1,18 +1,10 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
-import { dispatchRef, initValues } from '@/external/relay';
 import { type LimitedRange } from '@/utility/limitedRange';
-// import {
-//   convertResultsToDice,
-//   formatDiceComponents,
-// } from '@/utility/rolls/convertResultsToDice';
-// import { rollDiceWithBeacon } from '@/utility/rolls/rollDiceWithBeacon';
-import type { Dispatch } from '@roll20-official/beacon-sdk';
-import { taskDice } from '@/system/rolls/dice';
-import { createRollTemplate } from '@/system/rolls/rolltemplates/rolltemplates';
+
 import { Effect } from 'effect';
 
 export type ProgressRange = LimitedRange<0, 40>;

@@ -26,7 +26,7 @@ const OracleRollLive = Layer.effect(
               roll: die.value,
             },
           };
-        })
+        }),
     };
   }),
 );

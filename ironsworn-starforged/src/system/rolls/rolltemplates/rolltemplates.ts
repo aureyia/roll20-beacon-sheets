@@ -19,6 +19,10 @@ handlebars.registerPartial('actionScore', partials.actionScore);
 handlebars.registerPartial('compactActionScore', partials.compactActionScore);
 handlebars.registerPartial('rollOutcome', partials.rollOutcome);
 handlebars.registerPartial('compactRollOutcome', partials.compactRollOutcome);
+handlebars.registerPartial(
+  'compactMomentumBurned',
+  partials.compactMomentumBurned,
+);
 handlebars.registerPartial('challengeDice', partials.challengeDice);
 handlebars.registerPartial(
   'compactChallengeDice',
@@ -94,9 +98,18 @@ type CommonParameters = {
 export type RollStat = {
   type: 'stat' | 'stat-compact' | 'move' | 'move-compact';
   parameters: CommonParameters & {
-    dice: DiceComponent[];
+    dice: {
+      challengeDie1: number;
+      challengeDie2: number;
+      // TODO: Support passing action die
+      // actionDie: {
+      //   value: number,
+      //   negated: boolean,
+      // }
+    };
     outcome: string;
     score: number;
+    burnedMomentum: boolean;
   };
 };
 

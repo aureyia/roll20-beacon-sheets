@@ -17,7 +17,7 @@ export class RollOutcome extends Context.Tag('RollOutcome')<
       score: number,
       challengeDie1: RolledChallengeDie,
       challengeDie2: RolledChallengeDie,
-    ) => Effect.Effect<Outcome, Error>;
+    ) => Effect.Effect<Outcome>;
   }
 >() {}
 
@@ -40,7 +40,7 @@ export const RollOutcomeLive = Layer.effect(
         score: number,
         challengeDie1: RolledChallengeDie,
         challengeDie2: RolledChallengeDie,
-      ): Effect.Effect<Outcome, Error> =>
+      ) =>
         Effect.gen(function* () {
           if (challengeDie1.value === challengeDie2.value) {
             if (score > challengeDie1.value) {

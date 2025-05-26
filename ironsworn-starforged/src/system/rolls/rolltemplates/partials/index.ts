@@ -10,6 +10,7 @@ export { default as challengeDice } from './full-size/challenge-dice.hbs?raw';
 export { default as compactCharacterRollHeader } from './compact/character-roll-header.hbs?raw';
 export { default as compactActionScore } from './compact/action-score.hbs?raw';
 export { default as compactRollOutcome } from './compact/roll-outcome.hbs?raw';
+export { default as compactMomentumBurned } from './compact/momentum-burned.hbs?raw';
 export { default as compactChallengeDice } from './compact/challenge-dice.hbs?raw';
 
 export { default as successBg } from './backgrounds/success-bg.hbs?raw';

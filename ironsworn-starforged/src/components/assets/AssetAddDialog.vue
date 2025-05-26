@@ -9,10 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import {
-  useAssetStore,
-  type AssetSubmission,
-} from '@/system/assets/store';
+import { useAssetStore, type AssetSubmission } from '@/system/assets/store';
 import { getAllAssetsForCategory } from '@/system/assets/fetching-assets';
 import type { AssetCategory } from '@/system/assets/types';
 import { useForm } from 'vee-validate';
