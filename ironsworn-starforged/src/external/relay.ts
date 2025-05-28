@@ -93,6 +93,8 @@ const doUpdate = (
     },
   };
 
+  console.log('character', character)
+
   character.character.attributes.updateId = sheetId.value;
   dispatch.updateCharacter(character as UpdateArgs);
 };
@@ -126,134 +128,59 @@ export const createRelay = ({
 }) =>
   Effect.gen(function* () {
     const devDispatch = devRelay();
-    const dispatch = yield* Effect.promise(() => initRelay(relayConfig));
-
-    const relayXstate = (context) => {};
+    // const dispatch = yield* Effect.promise(() => initRelay(relayConfig));
 
     const relayPinia = (context: PiniaPluginContext) => {
-      if (context.store.$id !== primaryStore) return;
-      const store = context.store;
+      // if (context.store.$id !== primaryStore) return;
+      // const store = context.store;
 
-      dispatchRef.value = dispatch;
+      // dispatchRef.value = dispatch;
 
-      // Init Store
-      const { attributes, ...profile } = initValues.character;
-      store.hydrateStore(attributes, profile);
+      // // Init Store
+      // const { attributes, ...profile } = initValues.character;
+      // store.hydrateStore(attributes, profile);
 
-      // Beacon Provides access to settings, like campaign id for example
-      store.setCampaignId(initValues.settings.campaignId);
-      store.setPermissions(initValues.settings.owned, initValues.settings.gm);
+      // // Beacon Provides access to settings, like campaign id for example
+      // store.setCampaignId(initValues.settings.campaignId);
+      // store.setPermissions(initValues.settings.owned, initValues.settings.gm);
 
-      // Watch for changes
-      store.$subscribe(() => {
-        if (blockUpdate.value === true) return;
-        const update = store.dehydrateStore();
-        const debounceUpdate = debounce(doUpdate, 800);
-        debounceUpdate(dispatch, update, logMode);
-      });
+      // // Watch for changes
+      // store.$subscribe(() => {
+      //   if (blockUpdate.value === true) return;
+      //   const update = store.dehydrateStore();
+      //   const debounceUpdate = debounce(doUpdate, 800);
+      //   debounceUpdate(dispatch, update, logMode);
+      // });
 
-      // Watch for changes from the Beacon SDK, triggered everytime the Beacon Pulse value changes
-      watch(beaconPulse, async (newValue, oldValue) => {
-        if (logMode) console.log('❤️ Beacon Pulse', { newValue, oldValue });
-        const characterId = initValues.character.id;
-        blockUpdate.value = true;
-        if (logMode) console.log('🔒🔴 locking changes');
-        const { attributes, ...profile } = dispatch.characters[characterId];
-        if (attributes.updateId === sheetId.value) {
-          blockUpdate.value = false;
-          return;
-        }
-        store.hydrateStore(attributes, profile);
-        await nextTick();
-        if (logMode) console.log('🔓🟢 unlocking changes');
-        blockUpdate.value = false;
-      });
+      // // Watch for changes from the Beacon SDK, triggered 
+      // // everytime the Beacon Pulse value changes
+      // watch(beaconPulse, async (newValue, oldValue) => {
+      //   const characterId = initValues.character.id;
+      //   blockUpdate.value = true;
+      //   const { attributes, ...profile } = dispatch.characters[characterId];
+      //   if (attributes.updateId === sheetId.value) {
+      //     blockUpdate.value = false;
+      //     return;
+      //   }
+      //   store.hydrateStore(attributes, profile);
+      //   await nextTick();
+      //   blockUpdate.value = false;
+      // });
 
-      return {
-        ...dispatch,
-      };
+      // return {
+      //   ...dispatch,
+      // };
     };
 
-    const relayVue = {
-      install(app: App) {
-        app.provide('dispatch', dispatch);
-      },
-    };
+    // const relayVue = {
+    //   install(app: App) {
+    //     app.provide('dispatch', dispatch);
+    //   },
+    // };
 
     return {
-      relayPinia,
-      relayVue,
+      // dispatch,
+      // relayPinia,
+      // relayVue,
     };
   });
-
-import { setup } from 'xstate';
-
-export const machine = setup({
-  types: {
-    context: {} as {},
-    events: {} as
-      | { type: 'retrievedStoreData' }
-      | { type: 'storeUpdated' }
-      | { type: 'syncCompleted' },
-  },
-  actions: {
-    initialise: function ({ context, event }, params) {
-
-      // ...
-    },
-    triggerSync: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-    hydrateStores: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-  },
-}).createMachine({
-  context: {
-    character: {
-      id: '',
-      character: {
-        attributes: {},
-      } as Character,
-      settings: {} as Settings,
-      compendiumDrop: null,
-    },
-    updateId:''
-  },
-  id: 'Syncing',
-  initial: 'initialising',
-  states: {
-    initialising: {
-      on: {
-        retrievedStoreData: {
-          target: 'waitingForUpdate',
-          actions: {
-            type: 'hydrateStores',
-          },
-        },
-      },
-      entry: {
-        type: 'initialise',
-      },
-    },
-    waitingForUpdate: {
-      on: {
-        storeUpdated: {
-          target: 'syncing',
-        },
-      },
-    },
-    syncing: {
-      on: {
-        syncCompleted: {
-          target: 'waitingForUpdate',
-        },
-      },
-      entry: {
-        type: 'triggerSync',
-      },
-    },
-  },
-});

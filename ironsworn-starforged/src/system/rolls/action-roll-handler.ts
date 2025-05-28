@@ -1,38 +1,20 @@
-import { RollOutcome, RollOutcomeLive } from '@/system/rolls/roll-outcome';
 import { ActionScore, ActionScoreLive } from '@/system/rolls/action-score';
 import { Beacon, InvalidDie, BeaconLive } from '@/system/rolls/beacon';
 import { Effect, Context, Layer, Either } from 'effect';
 import { actionDice } from '@/system/rolls/dice';
 import { getDieByLabel, DieNotFound } from '@/system/rolls/get-die-by-label';
-import { type outcomeActor } from './machines/calculate-outcome';
-import type { StateMachine, Actor } from 'xstate';
+import { type OutcomeActor } from './machines/calculate-outcome';
+import { initValues } from '@/external/sync';
 
 class ActionRollHandler extends Context.Tag('ActionRollHandler')<
   ActionRollHandler,
   {
     readonly roll: (
-      actor: outcomeActor,
+      actor: OutcomeActor,
       modifier: number,
-    ) => Effect.Effect<
-      // {
-      //   outcome: string;
-      //   score: number;
-      //   modifier: number;
-      //   actionDie: {
-      //     roll: number;
-      //   };
-      //   challengeDie1: {
-      //     roll: number;
-      //     exceeded: boolean;
-      //   };
-      //   challengeDie2: {
-      //     roll: number;
-      //     exceeded: boolean;
-      //   };
-      // },
-      void,
-      Error | InvalidDie | DieNotFound
-    >;
+      momentum: number,
+      rollName: string,
+    ) => Effect.Effect<void, Error | InvalidDie | DieNotFound>;
   }
 >() {}
 
@@ -43,7 +25,7 @@ const ActionRollHandlerLive = Layer.effect(
     const actionScore = yield* ActionScore;
 
     return {
-      roll: (actor, modifier) =>
+      roll: (actor, modifier, momentum, rollName) =>
         Effect.gen(function* () {
           const beaconResult = yield* Effect.either(beacon.roll(actionDice));
           console.log('beaconResult', beaconResult);
@@ -57,6 +39,7 @@ const ActionRollHandlerLive = Layer.effect(
           const totalActionScore = yield* actionScore.calculate(
             rolledDice,
             modifier,
+            momentum,
             null,
           );
 
@@ -80,11 +63,19 @@ const ActionRollHandlerLive = Layer.effect(
           actor.send({
             type: 'params',
             value: {
-              name: 'Hello',
+              name: rollName,
+              character: {
+                name: initValues.character.name,
+                id: initValues.character.id,
+              },
               challengeDie1: challengeDie1.value,
               challengeDie2: challengeDie2.value,
+              actionDie: {
+                value: actionDie.value,
+                negated: false,
+              },
               actionScore: totalActionScore,
-              momentum: 10,
+              momentum: momentum,
             },
           });
         }),
@@ -95,13 +86,17 @@ const ActionRollHandlerLive = Layer.effect(
 const MainLive = ActionRollHandlerLive.pipe(
   Layer.provide(BeaconLive),
   Layer.provide(ActionScoreLive),
-  Layer.provide(RollOutcomeLive),
 );
 
-export const roll = (actor: outcomeActor, modifier: number) =>
+export const roll = (
+  actor: OutcomeActor,
+  modifier: number,
+  momentum: number,
+  rollName: string,
+) =>
   Effect.provide(
     Effect.flatMap(ActionRollHandler, (handler) =>
-      handler.roll(actor, modifier),
+      handler.roll(actor, modifier, momentum, rollName),
     ),
     MainLive,
   );

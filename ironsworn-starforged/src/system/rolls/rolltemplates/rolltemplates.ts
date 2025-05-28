@@ -101,11 +101,10 @@ export type RollStat = {
     dice: {
       challengeDie1: number;
       challengeDie2: number;
-      // TODO: Support passing action die
-      // actionDie: {
-      //   value: number,
-      //   negated: boolean,
-      // }
+      actionDie: {
+        value: number,
+        negated: boolean,
+      }
     };
     outcome: string;
     score: number;

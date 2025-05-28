@@ -27,15 +27,16 @@
     "cypress:report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "dependencies": {
+    "@effect/platform-browser": "^0.63.0",
     "@paralleldrive/cuid2": "2.2.2",
-    "@roll20-official/beacon-sdk": "0.0.31",
+    "@roll20-official/beacon-sdk": "^0.0.31",
     "@vee-validate/zod": "4.15.0",
     "@vueuse/core": "13.2.0",
     "@xstate/store": "^3.6.2",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "dataforged": "1.5.3",
-    "effect": "3.15.4",
+    "effect": "^3.15.5",
     "handlebars": "4.7.8",
     "jsonpath": "1.1.1",
     "lodash": "4.17.21",

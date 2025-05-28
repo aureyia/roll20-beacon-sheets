@@ -1,44 +1,42 @@
 <script setup lang="ts">
-import { Effect, Layer, ManagedRuntime, pipe, Ref, Runtime } from 'effect';
+import { Effect } from 'effect';
 import { CardHeader, Card, CardContent, CardFooter } from '../ui/card';
 import { Button } from '../ui/button';
 import { inject, computed, provide, ref, onMounted, onUnmounted } from 'vue';
 import { marked } from 'marked';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { MoveActions } from '@/components/moves';
+import { momentumStore } from '@/system/momentum/store.x';
 import { roll as actionRoll } from '@/system/rolls/action-roll-handler';
 import { roll as progressRoll } from '@/system/rolls/progress-roll-handler';
 import { roll as oracleRoll } from '@/system/rolls/oracle-roll-handler';
-import {
+import {  
   machine,
-  type outcomeActor,
 } from '@/system/rolls/machines/calculate-outcome';
 import { createActor } from 'xstate';
 
 const { activeMove }: any = inject('move');
 const actor = createActor(machine);
 
+const momentum = ref(momentumStore.get().context.momentum)
 const showDialog = ref(false);
 
 onMounted(() => {
-  console.log('mounted');
   actor.subscribe((snapshot) => {
-    // Check if it's in the state where you want to show the element
     const matched =
       snapshot.matches('Eligible for Opportunity') ||
       snapshot.matches('Hitting: Eligible for Strong Hit') ||
       snapshot.matches('Missing: Eligible for Strong Hit') ||
       snapshot.matches('Eligible for Weak Hit');
 
-    console.log(snapshot);
     showDialog.value = matched;
   });
 });
 
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
 
-const testRoll = async () => {
-  await Effect.runPromise(actionRoll(actor, 2));
+const testRoll = async (moveData: any) => {
+  await Effect.runPromise(actionRoll(actor, 2, momentum.value, moveData.Name));
 };
 
 const burnMomentum = (choice: boolean) => {
@@ -51,11 +49,6 @@ const burnMomentum = (choice: boolean) => {
 
 onUnmounted(() => {
   actor.stop();
-  actor.send({
-    type: 'test',
-    value: 'test',
-  });
-  console.log('unmounted');
 });
 </script>
 
@@ -78,7 +71,7 @@ onUnmounted(() => {
     <CardFooter class="rounded-b-lg bg-muted-secondary p-0 empty:hidden">
       <MoveActions v-if="!showDialog" :move="moveData" />
       <div class="m-3 flex gap-3">
-        <Button v-if="!showDialog" prevent.click @mousedown="testRoll"
+        <Button v-if="!showDialog" prevent.click @mousedown="testRoll(moveData)"
           >TestRoll</Button
         >
         <Button

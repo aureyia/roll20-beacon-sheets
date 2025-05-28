@@ -3,7 +3,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useMomentumStore } from '@/system/momentum/store';
 import { useImpactsStore } from '@/system/impacts/store';
 import { momentumMax, momentumReset } from '@/system/momentum/helpers';
-import { computed, ref } from 'vue';
+import { computed, ref, inject } from 'vue';
 import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
 import { momentumStore } from '@/system/momentum/store.x';
 
@@ -11,6 +11,7 @@ const impacts = useImpactsStore();
 // const momentumStore = useMomentumStore();
 const momentum = momentumStore.select((state) => state.momentum);
 const momentumRef = ref(momentum.get());
+const sync = inject('sync')
 
 momentum.subscribe((momentum) => {
   momentumRef.value = momentum;
@@ -21,6 +22,32 @@ const numberOfImpacts = computed(() => impacts.list.length);
 const burnMomentum = (resetValue: number) => {
   momentumStore.trigger.set({ value: resetValue });
 };
+
+momentumStore.subscribe((snapshot) => {
+  console.log('snapshot', snapshot);
+  sync.send({
+    type: 'update',
+    // store: 'momentum',
+    // entries: [
+    //   {
+    //     name: 'momentum',
+    //     value: snapshot.context.momentum,
+    //   },
+    // ],
+  });
+});
+
+const nom = () => {
+  sync.send({
+    type: 'initialised'
+  })
+}
+
+const nom2 = () => {
+  sync.send({
+    type: 'synced'
+  })
+}
 
 defineProps({
   edgeMode: Boolean,
@@ -66,6 +93,16 @@ defineProps({
         class="h-8 w-24 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
         @click="burnMomentum(momentumReset(numberOfImpacts))"
         >Burn</Button
+      >
+      <Button
+        class="h-8 w-16 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
+        @click="nom()"
+        >Init</Button
+      >
+      <Button
+        class="h-8 w-16 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
+        @click="nom2()"
+        >Synced</Button
       >
     </div>
     <div

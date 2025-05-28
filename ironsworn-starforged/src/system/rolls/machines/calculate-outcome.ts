@@ -1,6 +1,6 @@
 import { setup, assertEvent, type ActorRefFrom } from 'xstate';
 import { sendRollToChat } from '@/utility/sendRollToChat';
-import { initValues } from '@/external/relay';
+import { actionDie } from '../dice';
 
 type Outcome =
   | 'opportunity'
@@ -8,7 +8,7 @@ type Outcome =
   | 'weak-hit'
   | 'miss'
   | 'complication';
-export type outcomeActor = ActorRefFrom<typeof machine>;
+export type OutcomeActor = ActorRefFrom<typeof machine>;
 export const machine = setup({
   types: {
     context: {} as {
@@ -17,7 +17,16 @@ export const machine = setup({
       challengeDie1?: number;
       challengeDie2?: number;
       actionScore?: number;
+      actionDie: {
+        value?: number;
+        negated?: boolean;
+      };
       momentum?: number;
+      character: {
+        name: string;
+        id: string;
+      };
+      previousOutcome: string;
     },
     events: {} as
       | {
@@ -27,7 +36,15 @@ export const machine = setup({
       | {
           type: 'params';
           value: {
+            character: {
+              name: string;
+              id: string;
+            };
             name: string;
+            actionDie: {
+              value: number;
+              negated: boolean;
+            };
             challengeDie1: number;
             challengeDie2: number;
             actionScore: number;
@@ -36,51 +53,53 @@ export const machine = setup({
         },
   },
   actions: {
-    showEligibiltyDialog: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
     resetMomentum: function ({ context, event }, params) {
       context.burnedMomentum = true;
       // Add your action code here
       // ...
     },
     saveParamsToContext: function ({ context, event }, params) {
-      console.log('saveParamsToContext: event', event);
       assertEvent(event, 'params');
+      context.actionDie.value = event.value.actionDie.value;
+      context.actionDie.negated = event.value.actionDie.negated;
       context.actionScore = event.value.actionScore;
       context.challengeDie1 = event.value.challengeDie1;
       context.challengeDie2 = event.value.challengeDie2;
       context.momentum = event.value.momentum;
       context.name = event.value.name;
-      console.log('saveParamsToContext: context', context);
+      context.character.name = event.value.character.name;
+      context.character.id = event.value.character.id;
     },
     sendOutcomeToChat: async function (
-      { context, event },
+      { context },
       params: { outcome: Outcome },
     ) {
-      console.log('params', params);
-      console.log('context', context);
       if (
         !context.name ||
         !context.actionScore ||
         !context.challengeDie1 ||
         !context.challengeDie2 ||
-        context.burnedMomentum === undefined
+        !context.actionDie.value ||
+        context.actionDie.negated === undefined ||
+        context.character.id === '' ||
+        context.character.name === ''
       ) {
-        throw new Error('Missing context for sendOutcomeToChat');
+        const errorContext = JSON.stringify(context)
+        throw new Error(`Missing context for sendOutcomeToChat ${errorContext}`);
       }
-      console.log('context.burnedMomentum', context.burnedMomentum);
-      await sendRollToChat(initValues.character.id, {
+      context.previousOutcome = params.outcome;
+      await sendRollToChat(context.character.id, {
         type: 'move-compact',
         parameters: {
-          characterName: initValues.character.name,
+          characterName: context.character.name,
           title: `Rolling ${context.name}`,
           dice: {
             challengeDie1: context.challengeDie1,
             challengeDie2: context.challengeDie2,
-            // TODO: Support passing action die
-            // actionDie: context.challengeDie1
+            actionDie: {
+              value: context.actionDie.value,
+              negated: context.actionDie.negated,
+            },
           },
           outcome: params.outcome,
           score: context.actionScore,
@@ -159,6 +178,12 @@ export const machine = setup({
 }).createMachine({
   context: {
     burnedMomentum: false,
+    previousOutcome: '',
+    actionDie: {},
+    character: {
+      name: '',
+      id: '',
+    },
   },
   id: 'calculateOutcome',
   initial: 'waiting for params',
@@ -252,13 +277,6 @@ export const machine = setup({
           },
         ],
       },
-      entry: {
-        type: 'showEligibiltyDialog',
-        params: {
-          burn: 'Strong Hit',
-          current: 'Complication',
-        },
-      },
     },
     Complication: {
       always: {
@@ -331,13 +349,6 @@ export const machine = setup({
           },
         ],
       },
-      entry: {
-        type: 'showEligibiltyDialog',
-        params: {
-          burn: 'Strong Hit',
-          current: 'Weak Hit',
-        },
-      },
     },
     'Weak Hit': {
       always: {
@@ -367,13 +378,6 @@ export const machine = setup({
           },
         ],
       },
-      entry: {
-        type: 'showEligibiltyDialog',
-        params: {
-          burn: 'Strong Hit',
-          current: 'Miss',
-        },
-      },
     },
     'Eligible for Weak Hit': {
       on: {
@@ -391,13 +395,6 @@ export const machine = setup({
             target: 'Miss',
           },
         ],
-      },
-      entry: {
-        type: 'showEligibiltyDialog',
-        params: {
-          burn: 'Weak Hit',
-          current: 'Miss',
-        },
       },
     },
     Miss: {

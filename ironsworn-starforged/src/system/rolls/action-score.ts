@@ -7,6 +7,7 @@ export class ActionScore extends Context.Tag('ActionScore')<
     readonly calculate: (
       dice: DiceComponent[],
       modifier: number,
+      momentum: number,
       presetActionScore: number | null,
     ) => Effect.Effect<number, Error>;
   }
