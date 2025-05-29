@@ -14,10 +14,19 @@ export type MetaHydrate = {
   token: Record<string, any>;
 };
 
+export type MetaDehydrate = {
+  id: string;
+  name: string;
+  avatar: string;
+  bio: string;
+  gmNotes: string;
+  token: Record<string, any>;
+};
+
 export type Permissions = {
-  isOwner: boolean,
-  isGM: boolean,
-}
+  isOwner: boolean;
+  isGM: boolean;
+};
 
 export const metaStore = createStore({
   context: {
@@ -43,11 +52,23 @@ export const metaStore = createStore({
       context.token = event.token ?? context.token;
     },
     setPermissions: (context, event: Permissions) => {
-      context.permissions.isGM = event.isGM
-      context.permissions.isOwner = event.isOwner
+      context.permissions.isGM = event.isGM;
+      context.permissions.isOwner = event.isOwner;
     },
     setCampaignId: (context, event: { id: number | undefined }) => {
-      context.campaignId = event.id
-    }
+      context.campaignId = event.id;
+    },
   },
 });
+
+export const dehydrate = (): MetaDehydrate => {
+  const context = metaStore.get().context;
+  return {
+    id: context.id,
+    name: context.name,
+    avatar: context.avatar,
+    bio: context.bio,
+    gmNotes: context.gmNotes,
+    token: context.token,
+  }
+};

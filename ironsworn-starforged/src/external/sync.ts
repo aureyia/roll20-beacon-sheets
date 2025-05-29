@@ -11,6 +11,8 @@ import {
 } from '@roll20-official/beacon-sdk';
 import { type App, reactive, ref, watch, nextTick } from 'vue';
 import { metaStore } from './meta.store';
+import { Dehydration, DehydrationLive } from './services/dehydration';
+import { Hydration, HydrationLive } from './services/hydration';
 
 export const beaconPulse = ref(0);
 
@@ -36,6 +38,9 @@ const sheetId = ref(createId());
 
 const update = (dispatch: Dispatch, data: any) =>
   Effect.gen(function* () {
+    const dehydration = yield* Dehydration
+    const character: Record<string, any> = {};
+
     const char: Record<string, any> = {
       character: {
         id: initValues.character.id,
@@ -105,9 +110,10 @@ const update = (dispatch: Dispatch, data: any) =>
         avatar: '',
       },
     };
-    char.character.attributes.updateId = sheetId.value;
-    dispatch.updateCharacter(char as UpdateArgs);
-  });
+    character.character.attributes = yield* dehydration.dehydrateStores()
+    character.character.attributes.updateId = sheetId.value;
+    dispatch.updateCharacter(character as UpdateArgs);
+  }).pipe(Effect.provide(DehydrationLive))
 
 export type SyncActor = ActorRefFrom<typeof machine>;
 const machine = (dispatch: Dispatch) =>
@@ -215,15 +221,20 @@ export const syncPlugin = (dispatch: Dispatch) =>
       }
 
       if (snapshot.value === 'hydrating') {
-        watch(beaconPulse, async (newValue, oldValue) => {
-          const characterId = initValues.character.id;
-          const { attributes, ...profile } = dispatch.characters[characterId];
-          if (attributes.updateId === sheetId.value) {
-            return;
-          }
-          // store.hydrateStore(attributes, profile);
-          await nextTick();
-        });
+        const characterId = initValues.character.id;
+        const { attributes, ...profile } = dispatch.characters[characterId];
+        
+        if (attributes.updateId === sheetId.value) {
+          return;
+        }
+
+        Effect.runPromise(
+          Effect.gen(function* () {
+            const hydration = yield* Hydration
+
+            return hydration.hydrateStores(attributes)
+          }).pipe(Effect.provide(HydrationLive))
+        )
       }
     });
 

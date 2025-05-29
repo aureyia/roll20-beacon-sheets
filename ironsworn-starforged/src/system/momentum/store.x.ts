@@ -25,3 +25,6 @@ export const momentumStore = createStore({
     },
   },
 });
+
+export const dehydrate = () =>
+  ({ momentum: momentumStore.get().context.momentum })
