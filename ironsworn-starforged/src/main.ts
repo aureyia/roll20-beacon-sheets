@@ -11,8 +11,6 @@ import './sheet/css/index.css';
 
 import { getVueRelay } from './external/vue.relay';
 import { syncPlugin } from './external/sync';
-import { createActor } from 'xstate';
-import { createRelay } from './external/relay'
 
 // @ts-ignore
 const env = import.meta.env.MODE || '';

@@ -27,7 +27,7 @@ describe('calculate-outcome-machine', () => {
             const name = `${challengeDie1}-${challengeDie2}-${momentum}-${actionScore}-${burn}`;
 
             test(name, async () => {
-              const sendRollToChat = vi
+              const sendRollToChat = vi 
                 .spyOn(exports, 'sendRollToChat')
                 .mockImplementation(async () => {});
               const actor = createActor(machine);
@@ -43,9 +43,7 @@ describe('calculate-outcome-machine', () => {
                   snapshot.matches('Missing: Eligible for Strong Hit') ||
                   snapshot.matches('Eligible for Weak Hit');
                 if (eligibleMatched) {
-                  if (burn) {
-                    burnOutcome = true;
-                  }
+                  burnOutcome = burn
 
                   actor.send({
                     type: 'burnChoice',
@@ -106,15 +104,15 @@ describe('calculate-outcome-machine', () => {
 
               if (regenerate) {
                 newOutcomes[key] = sendRollToChatParams;
-                actor.stop();
               } else {
                 const expected = outcomes[key];
                 expect(sendRollToChat).toBeCalledWith(
                   expected.param1,
                   expected.data,
                 );
-                actor.stop();
               }
+              
+              actor.stop();
             });
           }
         }

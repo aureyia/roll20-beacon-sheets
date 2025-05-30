@@ -6,8 +6,8 @@ import { getDieByLabel, DieNotFound } from '@/system/rolls/get-die-by-label';
 import { type OutcomeActor } from './machines/calculate-outcome';
 import { initValues } from '@/external/sync';
 
-class ActionRollHandler extends Context.Tag('ActionRollHandler')<
-  ActionRollHandler,
+class ActionRoll extends Context.Tag('ActionRoll')<
+  ActionRoll,
   {
     readonly roll: (
       actor: OutcomeActor,
@@ -18,8 +18,8 @@ class ActionRollHandler extends Context.Tag('ActionRollHandler')<
   }
 >() {}
 
-const ActionRollHandlerLive = Layer.effect(
-  ActionRollHandler,
+const ActionRollLive = Layer.effect(
+  ActionRoll,
   Effect.gen(function* () {
     const beacon = yield* Beacon;
     const actionScore = yield* ActionScore;
@@ -27,15 +27,8 @@ const ActionRollHandlerLive = Layer.effect(
     return {
       roll: (actor, modifier, momentum, rollName) =>
         Effect.gen(function* () {
-          const beaconResult = yield* Effect.either(beacon.roll(actionDice));
-          console.log('beaconResult', beaconResult);
+          const rolledDice = yield* beacon.roll(actionDice);
 
-          if (Either.isLeft(beaconResult)) {
-            const error = beaconResult.left;
-            return yield* Effect.fail(error);
-          }
-
-          const rolledDice = beaconResult.right;
           const totalActionScore = yield* actionScore.calculate(
             rolledDice,
             modifier,
@@ -43,21 +36,13 @@ const ActionRollHandlerLive = Layer.effect(
             null,
           );
 
-          const transformedDice = yield* Effect.either(
-            Effect.all({
+          const { challengeDie1, challengeDie2, actionDie } = yield* Effect.all(
+            {
               challengeDie1: getDieByLabel(rolledDice, 'Challenge Die: 1'),
               challengeDie2: getDieByLabel(rolledDice, 'Challenge Die: 2'),
               actionDie: getDieByLabel(rolledDice, 'Action Die'),
-            }),
+            },
           );
-
-          if (Either.isLeft(transformedDice)) {
-            const error = transformedDice.left;
-            return yield* Effect.fail(error);
-          }
-
-          const { challengeDie1, challengeDie2, actionDie } =
-            transformedDice.right;
 
           actor.start();
           actor.send({
@@ -83,7 +68,7 @@ const ActionRollHandlerLive = Layer.effect(
   }),
 );
 
-const MainLive = ActionRollHandlerLive.pipe(
+const MainLive = ActionRollLive.pipe(
   Layer.provide(BeaconLive),
   Layer.provide(ActionScoreLive),
 );
@@ -95,8 +80,8 @@ export const roll = (
   rollName: string,
 ) =>
   Effect.provide(
-    Effect.flatMap(ActionRollHandler, (handler) =>
-      handler.roll(actor, modifier, momentum, rollName),
+    Effect.flatMap(ActionRoll, (actionRoll) =>
+      actionRoll.roll(actor, modifier, momentum, rollName),
     ),
     MainLive,
   );

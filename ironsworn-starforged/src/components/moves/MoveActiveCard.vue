@@ -7,18 +7,16 @@ import { marked } from 'marked';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { MoveActions } from '@/components/moves';
 import { momentumStore } from '@/system/momentum/store.x';
-import { roll as actionRoll } from '@/system/rolls/action-roll-handler';
+import { roll as actionRoll } from '@/system/rolls/action-roll';
 import { roll as progressRoll } from '@/system/rolls/progress-roll-handler';
 import { roll as oracleRoll } from '@/system/rolls/oracle-roll-handler';
-import {  
-  machine,
-} from '@/system/rolls/machines/calculate-outcome';
+import { machine } from '@/system/rolls/machines/calculate-outcome';
 import { createActor } from 'xstate';
 
 const { activeMove }: any = inject('move');
 const actor = createActor(machine);
 
-const momentum = ref(momentumStore.get().context.momentum)
+const momentum = ref(momentumStore.get().context.momentum);
 const showDialog = ref(false);
 
 onMounted(() => {

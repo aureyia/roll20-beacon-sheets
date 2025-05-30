@@ -7,7 +7,7 @@ export class Assert extends Data.TaggedError('Assert')<{
 
 export const assert = (predicate: boolean, context: any) => {
   if (!predicate) {
-    return Effect.fail(
+    return Effect.die(
       new Assert({
         message: 'Assertion failed.',
         context: context,

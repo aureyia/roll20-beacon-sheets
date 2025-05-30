@@ -11,10 +11,12 @@ type FormattedRoll = {
     'dice-2'?: AvailableDice;
   };
 };
+
 class DispatchError extends Data.TaggedError('DispatchError')<{
   cause?: unknown;
   message?: string;
 }> {}
+
 export class Beacon extends Context.Tag('Beacon')<
   Beacon,
   {

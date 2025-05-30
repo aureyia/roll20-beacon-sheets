@@ -10,17 +10,6 @@ type Outcome = {
   challengeDie2: EvaluatedChallengeDice;
 };
 
-export class RollOutcome extends Context.Tag('RollOutcome')<
-  RollOutcome,
-  {
-    readonly calculate: (
-      score: number,
-      challengeDie1: RolledChallengeDie,
-      challengeDie2: RolledChallengeDie,
-    ) => Effect.Effect<Outcome>;
-  }
->() {}
-
 const updateChallengeDie = (
   challengeDie: RolledChallengeDie,
   dieExceeded: boolean,
@@ -31,6 +20,17 @@ const updateChallengeDie = (
     value: challengeDie.value,
     exceeded: dieExceeded,
   });
+
+export class RollOutcome extends Context.Tag('RollOutcome')<
+  RollOutcome,
+  {
+    readonly calculate: (
+      score: number,
+      challengeDie1: RolledChallengeDie,
+      challengeDie2: RolledChallengeDie,
+    ) => Effect.Effect<Outcome>;
+  }
+>() {}
 
 export const RollOutcomeLive = Layer.effect(
   RollOutcome,

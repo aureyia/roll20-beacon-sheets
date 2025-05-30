@@ -1,5 +1,6 @@
 import type { Token } from '@roll20-official/beacon-sdk';
 import { createStore } from '@xstate/store';
+import { sync } from './sync';
 
 /* Every Character, regardless of sheet, has these meta fields
  * and they must be saved to firebase in this specific way.
@@ -54,9 +55,15 @@ export const metaStore = createStore({
     setPermissions: (context, event: Permissions) => {
       context.permissions.isGM = event.isGM;
       context.permissions.isOwner = event.isOwner;
+      sync.send({
+        type: 'update',
+      });
     },
     setCampaignId: (context, event: { id: number | undefined }) => {
       context.campaignId = event.id;
+      sync.send({
+        type: 'update',
+      });
     },
   },
 });

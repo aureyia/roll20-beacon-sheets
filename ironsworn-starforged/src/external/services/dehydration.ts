@@ -1,11 +1,25 @@
 import { Effect, Context, Layer } from 'effect';
 
-import { dehydrate as meta } from '../meta.store';
+import { dehydrate as meta } from '@/external/store.x';
+import { dehydrate as character } from '@/system/character/store.x';
+import { dehydrate as assets } from '@/system/assets/store.x';
+import { dehydrate as stats } from '@/system/stats/store.x';
+import { dehydrate as resources } from '@/system/resources/store.x';
 import { dehydrate as momentum } from '@/system/momentum/store.x';
+import { dehydrate as impacts } from '@/system/impacts/store.x';
+import { dehydrate as settings } from '@/system/settings/store.x';
+import { dehydrate as tasks } from '@/system/tasks/store.x';
 
 const stores = {
   meta,
+  character,
+  assets,
+  stats,
+  resources,
   momentum,
+  impacts,
+  settings,
+  tasks,
 };
 
 export class Dehydration extends Context.Tag('Dehydration')<

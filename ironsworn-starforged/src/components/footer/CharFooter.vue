@@ -8,10 +8,8 @@ import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
 import { momentumStore } from '@/system/momentum/store.x';
 
 const impacts = useImpactsStore();
-// const momentumStore = useMomentumStore();
 const momentum = momentumStore.select((state) => state.momentum);
 const momentumRef = ref(momentum.get());
-const sync = inject('sync')
 
 momentum.subscribe((momentum) => {
   momentumRef.value = momentum;
@@ -22,32 +20,6 @@ const numberOfImpacts = computed(() => impacts.list.length);
 const burnMomentum = (resetValue: number) => {
   momentumStore.trigger.set({ value: resetValue });
 };
-
-momentumStore.subscribe((snapshot) => {
-  console.log('snapshot', snapshot);
-  sync.send({
-    type: 'update',
-    // store: 'momentum',
-    // entries: [
-    //   {
-    //     name: 'momentum',
-    //     value: snapshot.context.momentum,
-    //   },
-    // ],
-  });
-});
-
-const nom = () => {
-  sync.send({
-    type: 'initialised'
-  })
-}
-
-const nom2 = () => {
-  sync.send({
-    type: 'synced'
-  })
-}
 
 defineProps({
   edgeMode: Boolean,

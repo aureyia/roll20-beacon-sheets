@@ -1,4 +1,4 @@
-import { setup, createActor } from 'xstate';
+import { setup, createActor, assertEvent } from 'xstate';
 import { Effect, pipe } from 'effect';
 import type { ActorRefFrom } from 'xstate';
 import { createId } from '@paralleldrive/cuid2';
@@ -10,13 +10,12 @@ import {
   type UpdateArgs,
 } from '@roll20-official/beacon-sdk';
 import { type App, reactive, ref, watch, nextTick } from 'vue';
-import { metaStore } from './meta.store';
+import { metaStore } from './store.x';
 import { Dehydration, DehydrationLive } from './services/dehydration';
 import { Hydration, HydrationLive } from './services/hydration';
 
 export const beaconPulse = ref(0);
 
-// This is the typescript type for the initial values that the sheet will use when it starts.
 export type InitValues = {
   id: string;
   character: Character;
@@ -24,7 +23,6 @@ export type InitValues = {
   compendiumDrop: CompendiumDragDropData | null;
 };
 
-// Almost everything below here is Boilerplate and you probably want to keep it intact.
 export const initValues: InitValues = reactive({
   id: '',
   character: {
@@ -38,7 +36,7 @@ const sheetId = ref(createId());
 
 const update = (dispatch: Dispatch, data: any) =>
   Effect.gen(function* () {
-    const dehydration = yield* Dehydration
+    const dehydration = yield* Dehydration;
     const character: Record<string, any> = {};
 
     const char: Record<string, any> = {
@@ -110,139 +108,130 @@ const update = (dispatch: Dispatch, data: any) =>
         avatar: '',
       },
     };
-    character.character.attributes = yield* dehydration.dehydrateStores()
+    character.character.attributes = yield* dehydration.dehydrateStores();
     character.character.attributes.updateId = sheetId.value;
     dispatch.updateCharacter(character as UpdateArgs);
-  }).pipe(Effect.provide(DehydrationLive))
+  }).pipe(Effect.provide(DehydrationLive));
 
 export type SyncActor = ActorRefFrom<typeof machine>;
-const machine = (dispatch: Dispatch) =>
-  setup({
-    types: {
-      context: {} as {
-        character: any;
-        dispatch: Dispatch;
-        updateId: string;
-      },
-      events: {} as
-        | { type: 'initialised' }
-        | { type: 'update' }
-        | { type: 'synced' }
-        | { type: 'hydrated' },
+export const machine = setup({
+  types: {
+    context: {} as {
+      character: any;
+      dispatch?: Dispatch;
+      updateId: string;
     },
-    actions: {
-      hydrate: function ({ context, event }, params) {
-        // Add your action code here
-        // ...
-      },
+    events: {} as
+      | { type: 'initialised'; dispatch: Dispatch }
+      | { type: 'update' }
+      | { type: 'synced' }
+      | { type: 'hydrated' },
+  },
+  actions: {
+    saveDispatchToContext: function ({ context, event }) {
+      assertEvent(event, 'initialised');
+      context.dispatch = event.dispatch;
     },
-  }).createMachine({
-    context: {
+  },
+}).createMachine({
+  context: {
+    character: {
+      id: '',
       character: {
-        id: '',
-        character: {
-          attributes: {},
-        } as Character,
-        settings: {} as Settings,
-        compendiumDrop: null,
-      },
-      updateId: '',
-      dispatch: dispatch,
+        attributes: {},
+      } as Character,
+      settings: {} as Settings,
+      compendiumDrop: null,
     },
-    id: 'Syncing',
-    initial: 'initialising',
-    states: {
-      initialising: {
-        on: {
-          initialised: {
-            target: 'waiting',
-          },
-        },
-      },
-      waiting: {
-        on: {
-          update: {
-            target: 'syncing',
-          },
-        },
-      },
-      syncing: {
-        on: {
-          synced: {
-            target: 'hydrating',
-          },
-        },
-      },
-      hydrating: {
-        on: {
-          hydrated: {
-            target: 'waiting',
+    updateId: '',
+  },
+  id: 'Syncing',
+  initial: 'initialising',
+  states: {
+    initialising: {
+      on: {
+        initialised: {
+          target: 'hydrating',
+          actions: {
+            type: 'saveDispatchToContext',
           },
         },
       },
     },
-  });
+    hydrating: {
+      on: {
+        update: {
+          target: 'syncing',
+        },
+      },
+    },
+    syncing: {
+      on: {
+        synced: {
+          target: 'hydrating',
+        },
+      },
+    },
+  },
+});
 
+export const sync = createActor(machine);
 export const syncPlugin = (dispatch: Dispatch) =>
   Effect.gen(function* () {
-    const syncActor = createActor(machine(dispatch));
-    syncActor.subscribe(async (snapshot) => {
-      console.log('syncActor: snapshot', snapshot);
+    sync.subscribe(async (snapshot) => {
+      console.log('sync: snapshot', snapshot);
 
       if (snapshot.value === 'initialising') {
         metaStore.send({
           type: 'setCampaignId',
           id: initValues.settings.campaignId,
         });
+
         metaStore.send({
           type: 'setPermissions',
           isOwner: initValues.settings.owned,
           isGM: initValues.settings.gm,
         });
-        const characterId = initValues.character.id;
-        const { attributes, ...profile } = dispatch.characters[characterId];
-        if (attributes.updateId === sheetId.value) {
-          return;
-        }
-        console.log(attributes, profile);
-        // store.hydrateStore(attributes, profile);
-        syncActor.send({
-          type: 'initialised',
-        });
-      }
 
-      if (snapshot.value === 'syncing') {
-        Effect.runPromise(update(dispatch, 'nom')).then(() => {
-          console.log('synced');
-          syncActor.send({
-            type: 'synced',
-          });
+        sync.send({
+          type: 'initialised',
+          dispatch: dispatch,
         });
       }
 
       if (snapshot.value === 'hydrating') {
         const characterId = initValues.character.id;
         const { attributes, ...profile } = dispatch.characters[characterId];
-        
+
         if (attributes.updateId === sheetId.value) {
           return;
         }
 
         Effect.runPromise(
           Effect.gen(function* () {
-            const hydration = yield* Hydration
+            const hydration = yield* Hydration;
 
-            return hydration.hydrateStores(attributes)
-          }).pipe(Effect.provide(HydrationLive))
-        )
+            return hydration.hydrateStores(attributes);
+          }).pipe(Effect.provide(HydrationLive)),
+        );
+
+        await nextTick();
+      }
+
+      if (snapshot.value === 'syncing') {
+        Effect.runPromise(update(dispatch, 'nom'));
+
+        sync.send({
+          type: 'synced',
+        });
       }
     });
 
-    syncActor.start();
+    sync.start();
 
     return {
       install(app: App) {
-        app.provide('sync', syncActor);
+        app.provide('sync', sync);
       },
     };
   });
