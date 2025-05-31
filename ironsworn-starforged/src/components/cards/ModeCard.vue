@@ -8,11 +8,12 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useSettingsStore } from '@/system/settings/store';
+import { settingsStore } from '@/system/settings/store.x';
 import { useRouter } from 'vue-router';
 
-const settings = useSettingsStore();
+const settings = settingsStore.get();
 const router = useRouter();
+
 const selectMode = (mode: string) => {
   settings.setMode(mode);
   console.log('selectMode', mode);

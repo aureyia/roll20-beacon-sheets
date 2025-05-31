@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import StandardNav from '../nav/StandardNav.vue';
 import { Button } from '@/components/ui/button';
-import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
-import { boolean } from 'zod';
 
 defineProps({
   edgeMode: Boolean,

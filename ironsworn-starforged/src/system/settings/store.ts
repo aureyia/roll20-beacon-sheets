@@ -1,48 +1,38 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { Effect } from 'effect';
+import { createStore } from '@xstate/store';
+import { sync } from '@/external/sync';
 
-export type SettingsHydrate = {
-  settings: {
-    mode:
-      | 'character-standard'
-      | 'character-edge'
-      | 'guide'
-      | 'locations'
-      | 'orcales'
-      | 'shared'
-      | 'ship';
-    darkMode: 'dark' | 'light' | 'auto' | 'unset';
-  };
+type DarkMode = 'dark' | 'light' | 'auto' | 'unset';
+type SheetMode =
+  | 'character-standard'
+  | 'character-edge'
+  | 'guide'
+  | 'locations'
+  | 'mode-select'
+  | 'orcales'
+  | 'shared'
+  | 'ship';
+
+export type Settings = {
+  mode: SheetMode;
+  darkMode: DarkMode;
 };
 
-export const useSettingsStore = defineStore('settings', () => {
-  const mode = ref('');
-  const darkMode = ref('unset');
-
-  const setMode = (arg: string) => (mode.value = arg);
-  const clearMode = () => (mode.value = '');
-
-  const dehydrate = () => {
-    return Effect.succeed({
-      settings: {
-        mode: mode.value,
-        darkMode: darkMode.value,
-      },
-    });
-  };
-
-  const hydrate = (hydrateStore: SettingsHydrate) => {
-    mode.value = hydrateStore.settings.mode ?? mode.value;
-    darkMode.value = hydrateStore.settings.darkMode ?? darkMode.value;
-  };
-
-  return {
-    mode,
-    darkMode,
-    setMode,
-    clearMode,
-    dehydrate,
-    hydrate,
-  };
+export const settingsStore = createStore({
+  context: {
+    mode: 'mode-select',
+    darkMode: 'unset',
+  },
+  on: {
+    hydrate: (context, event: Settings) => {
+      context.mode = event.mode;
+      context.darkMode = event.darkMode;
+    },
+    set: (
+      context,
+      event: { label: keyof Settings; value: SheetMode | DarkMode },
+    ) => {
+      context[event.label] = event.value;
+      sync.send({ type: 'update' });
+    },
+  },
 });

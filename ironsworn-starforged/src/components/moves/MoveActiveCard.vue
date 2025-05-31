@@ -6,7 +6,7 @@ import { inject, computed, provide, ref, onMounted, onUnmounted } from 'vue';
 import { marked } from 'marked';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { MoveActions } from '@/components/moves';
-import { momentumStore } from '@/system/momentum/store.x';
+import { momentumStore } from '@/system/momentum/store';
 import { roll as actionRoll } from '@/system/rolls/action-roll';
 import { roll as progressRoll } from '@/system/rolls/progress-roll-handler';
 import { roll as oracleRoll } from '@/system/rolls/oracle-roll-handler';

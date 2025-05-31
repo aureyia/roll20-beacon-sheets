@@ -1,7 +1,6 @@
-import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
-import { Effect, pipe } from 'effect';
+import { Effect } from 'effect';
 
 import App from './App.vue';
 import router from './router';

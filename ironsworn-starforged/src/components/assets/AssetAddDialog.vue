@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { useAssetStore, type AssetSubmission } from '@/system/assets/store';
+import { assetsStore, type AssetSubmission } from '@/system/assets/store';
 import { getAllAssetsForCategory } from '@/system/assets/fetching-assets';
 import type { AssetCategory } from '@/system/assets/types';
 import { useForm } from 'vee-validate';
@@ -19,7 +19,7 @@ import { FormControl } from '@/components/ui/form';
 import { DialogFooter } from '@/components/ui/dialog';
 
 const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const;
-const assetStore = useAssetStore();
+const assetStore = assetsStore.get().context;
 
 const formSchema = toTypedSchema(
   z

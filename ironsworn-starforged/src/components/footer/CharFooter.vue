@@ -1,21 +1,28 @@
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { useMomentumStore } from '@/system/momentum/store';
-import { useImpactsStore } from '@/system/impacts/store';
-import { momentumMax, momentumReset } from '@/system/momentum/helpers';
-import { computed, ref, inject } from 'vue';
+import { impactsStore } from '@/system/impacts/store';
+import { momentumMax, momentumReset } from '@/system/momentum/utils';
+import { computed, ref } from 'vue';
 import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
-import { momentumStore } from '@/system/momentum/store.x';
+import { momentumStore } from '@/system/momentum/store';
 
-const impacts = useImpactsStore();
+const impacts = impactsStore.get();
 const momentum = momentumStore.select((state) => state.momentum);
 const momentumRef = ref(momentum.get());
+
+const impactsList = [
+  ...impacts.context.misfortunes,
+  ...impacts.context.lastingEffects,
+  ...impacts.context.burdens,
+  ...impacts.context.currentVehicle,
+  ...impacts.context.other,
+];
 
 momentum.subscribe((momentum) => {
   momentumRef.value = momentum;
 });
 
-const numberOfImpacts = computed(() => impacts.list.length);
+const numberOfImpacts = computed(() => impactsList.length);
 
 const burnMomentum = (resetValue: number) => {
   momentumStore.trigger.set({ value: resetValue });
@@ -65,16 +72,6 @@ defineProps({
         class="h-8 w-24 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
         @click="burnMomentum(momentumReset(numberOfImpacts))"
         >Burn</Button
-      >
-      <Button
-        class="h-8 w-16 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
-        @click="nom()"
-        >Init</Button
-      >
-      <Button
-        class="h-8 w-16 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
-        @click="nom2()"
-        >Synced</Button
       >
     </div>
     <div

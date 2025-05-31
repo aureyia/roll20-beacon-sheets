@@ -55,15 +55,11 @@ export const metaStore = createStore({
     setPermissions: (context, event: Permissions) => {
       context.permissions.isGM = event.isGM;
       context.permissions.isOwner = event.isOwner;
-      sync.send({
-        type: 'update',
-      });
+      sync.send({ type: 'update' });
     },
     setCampaignId: (context, event: { id: number | undefined }) => {
       context.campaignId = event.id;
-      sync.send({
-        type: 'update',
-      });
+      sync.send({ type: 'update' });
     },
   },
 });
@@ -77,5 +73,5 @@ export const dehydrate = (): MetaDehydrate => {
     bio: context.bio,
     gmNotes: context.gmNotes,
     token: context.token,
-  }
+  };
 };

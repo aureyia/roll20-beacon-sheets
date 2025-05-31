@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAssetStore } from '@/system/assets/store';
+import { assetsStore } from '@/system/assets/store';
+// @ts-ignore
 import { starforged, type IAsset } from 'dataforged';
 import { Effect } from 'effect';
 import AssetAddDialog from '@/components/assets/AssetAddDialog.vue';
 import AssetCard from '@/components/assets/AssetCard.vue';
 
-const assetStore = useAssetStore();
+const assetStore = ref(assetsStore.get().context);
 const removeMode = ref(false);
 
-const getAssetById = (asset: Asset): Effect.Effect<IAsset> => {
+const getAssetById = (asset: IAsset) => {
   const assets = starforged['Asset Types'].find(
-    (x) => x.Name === asset.category,
+    (x: IAsset) => x.Name === asset.category,
   ).Assets;
   if (!assets) {
     return Effect.fail(
@@ -19,7 +20,10 @@ const getAssetById = (asset: Asset): Effect.Effect<IAsset> => {
     );
   }
 
-  const selectedAsset = assets.find((x) => x.$id === asset.dataforgedId);
+  const selectedAsset = assets.find(
+    (x: IAsset) => x.$id === asset.dataforgedId,
+  );
+
   if (!selectedAsset) {
     return Effect.fail(new Error(`No asset found for: ${asset.dataforgedId}`));
   }

@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { Effect } from 'effect';
 import { assert } from '@/utility/assert';
+import { createStore } from '@xstate/store';
+import { sync } from '@/external/sync';
 
 export type Stats = {
   edge: number;
@@ -9,16 +11,6 @@ export type Stats = {
   iron: number;
   shadow: number;
   wits: number;
-};
-
-export type StatsHydrate = {
-  stats: {
-    edge: number;
-    heart: number;
-    iron: number;
-    shadow: number;
-    wits: number;
-  };
 };
 
 const assertStoreValues = (values: any) => {
@@ -44,43 +36,25 @@ const assertStoreValues = (values: any) => {
   );
 };
 
-export const useStatsStore = defineStore('stats', () => {
-  const edge = ref(0);
-  const heart = ref(0);
-  const iron = ref(0);
-  const shadow = ref(0);
-  const wits = ref(0);
-
-  const dehydrate = () => {
-    const stats = {
-      edge: edge.value,
-      heart: heart.value,
-      iron: iron.value,
-      shadow: shadow.value,
-      wits: wits.value,
-    };
-
-    assertStoreValues(stats);
-    return Effect.succeed({ stats });
-  };
-
-  const hydrate = (hydrateStore: StatsHydrate) => {
-    assertStoreValues(hydrateStore.stats);
-
-    edge.value = hydrateStore.stats.edge ?? edge.value;
-    heart.value = hydrateStore.stats.heart ?? heart.value;
-    iron.value = hydrateStore.stats.iron ?? iron.value;
-    shadow.value = hydrateStore.stats.shadow ?? shadow.value;
-    wits.value = hydrateStore.stats.wits ?? wits.value;
-  };
-
-  return {
-    edge,
-    heart,
-    iron,
-    shadow,
-    wits,
-    dehydrate,
-    hydrate,
-  };
-});
+export const statStore = createStore({
+  context: {
+    edge: 0,
+    heart: 0,
+    iron: 0,
+    shadow: 0,
+    wits: 0,
+  },
+  on: {
+    set: (context, event: { label: keyof Stats, value: number }) => {
+      context[event.label] = event.value
+      sync.send({ type: 'update' });
+    },
+    hydrate: (context, event: Stats) => {
+      context['edge'] = event.edge
+      context['heart'] = event.heart
+      context['iron'] = event.iron
+      context['shadow'] = event.shadow
+      context['wits'] = event.wits
+    }
+  }
+})

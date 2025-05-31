@@ -33,10 +33,8 @@ import {
   Dialog,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { IMPACTS, AnyImpact } from '@/system/impacts/types';
-import { useImpactsStore } from '@/system/impacts/store';
-
-const impactsStore = useImpactsStore();
+import { IMPACTS, type AnyImpact } from '@/system/impacts/types';
+import { impactsStore, type AddImpact } from '@/system/impacts/store';
 
 const fullImpactList = {
   ...IMPACTS,
@@ -56,12 +54,8 @@ const form = useForm({
 });
 
 const onSubmit = form.handleSubmit((values) => {
-  impactsStore.addImpact(
-    values.name as AnyImpact['name'],
-    values.category as AnyImpact['category'],
-    values?.description,
-  );
-});
+  impactsStore.trigger.add({ ...values } as AddImpact);
+})
 </script>
 
 <template>

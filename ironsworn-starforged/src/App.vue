@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { useStarforgedSheetStore } from '@/external/sheet-store';
 import { useRouter } from 'vue-router';
 
 // TODO: Remove after testing
-import { useSettingsStore } from '@/system/settings/store';
-const settings = useSettingsStore();
+import { settingsStore } from '@/system/settings/store.x';
 const router = useRouter();
 
-useStarforgedSheetStore();
-router.push({ name: settings.mode ?? 'root' });
+router.push({ name: settingsStore.get().context.mode ?? 'root' });
 </script>
 
 <template>

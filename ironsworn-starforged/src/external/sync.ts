@@ -10,7 +10,7 @@ import {
   type UpdateArgs,
 } from '@roll20-official/beacon-sdk';
 import { type App, reactive, ref, watch, nextTick } from 'vue';
-import { metaStore } from './store.x';
+import { metaStore } from './store';
 import { Dehydration, DehydrationLive } from './services/dehydration';
 import { Hydration, HydrationLive } from './services/hydration';
 

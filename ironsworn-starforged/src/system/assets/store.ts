@@ -1,10 +1,10 @@
 import { objectToArray, arrayToObject } from '@/utility/objectify';
 import { createId } from '@paralleldrive/cuid2';
-import { defineStore } from 'pinia';
-import { ref, type Ref } from 'vue';
 import { Effect } from 'effect';
 import type { Ability, AssetCategory, Asset } from '@/system/assets/types';
 import { getAssetAbilities } from '@/system/assets/assets';
+import { createStore } from '@xstate/store';
+import { sync } from '@/external/sync';
 
 export type AssetsHydrate = {
   assets: Asset[];
@@ -16,15 +16,6 @@ export type AssetSubmission = {
   category: AssetCategory;
   meter: number | null;
 };
-
-// export class Assets extends Context.Tag('Assets')<
-//   Assets,
-//   {
-//     readonly addAsset: (assestSubmission: AssetSubmission) => void;
-//     readonly dehydrate: () => void;
-//     readonly hydrate: () => void
-//   }
-// >() {}
 
 const formatAbilities = (
   formatter: typeof objectToArray | typeof arrayToObject,
@@ -45,45 +36,35 @@ const formatAbilities = (
   return Effect.succeed(mappedAssets);
 };
 
-export const useAssetStore = defineStore('asset', () => {
-  const assets: Ref<Array<Asset>> = ref([]);
+export const assetsStore = createStore({
+  context: {
+    assets: [],
+  },
+  on: {
+    hydrate: (context: any, event: Asset[]) =>
+      Effect.gen(function* () {
+        const assetList = yield* objectToArray(event);
+        const updatedAssets = yield* formatAbilities(objectToArray, assetList);
 
-  const addAsset = (opts: AssetSubmission) => {
-    const abilities: Ability[] = Effect.runSync(
-      getAssetAbilities(opts.dataforgedId, opts.category),
-    );
+        context.assets = updatedAssets;
+      }),
+    add: (context: any, event: AssetSubmission) =>
+      Effect.gen(function* () {
+        const abilities: Ability[] = yield* getAssetAbilities(
+          event.dataforgedId,
+          event.category,
+        );
 
-    assets.value.push({
-      _id: createId(),
-      dataforgedId: opts.dataforgedId,
-      name: opts.name,
-      category: opts.category,
-      abilities,
-      meter: opts.meter,
-    });
-  };
+        context.assets.push({
+          _id: createId(),
+          dataforgedId: event.dataforgedId,
+          name: event.name,
+          category: event.category,
+          abilities,
+          meter: event.meter,
+        });
 
-  const dehydrate = () => {
-    const updatedAssets = Effect.runSync(
-      formatAbilities(arrayToObject, assets.value),
-    );
-    return Effect.succeed({
-      assets: Effect.runSync(arrayToObject(updatedAssets)),
-    });
-  };
-
-  const hydrate = (hydrateStore: AssetsHydrate) => {
-    const assetsList = Effect.runSync(objectToArray(hydrateStore.assets));
-    const updatedAssets = Effect.runSync(
-      formatAbilities(objectToArray, assetsList),
-    );
-    assets.value = updatedAssets ?? assets.value;
-  };
-
-  return {
-    addAsset,
-    assets,
-    dehydrate,
-    hydrate,
-  };
+        sync.send({ type: 'update' });
+      }),
+  },
 });
