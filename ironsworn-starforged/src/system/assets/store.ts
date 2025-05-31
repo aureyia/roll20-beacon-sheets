@@ -1,10 +1,9 @@
 import { objectToArray, arrayToObject } from '@/utility/objectify';
 import { createId } from '@paralleldrive/cuid2';
-import { Effect } from 'effect';
+import { Context, Effect, Layer } from 'effect';
 import type { Ability, AssetCategory, Asset } from '@/system/assets/types';
 import { getAssetAbilities } from '@/system/assets/assets';
 import { createStore } from '@xstate/store';
-import { sync } from '@/external/sync';
 
 export type AssetsHydrate = {
   assets: Asset[];
@@ -38,33 +37,57 @@ const formatAbilities = (
 
 export const assetsStore = createStore({
   context: {
-    assets: [],
+    list: [] as Asset[],
   },
   on: {
-    hydrate: (context: any, event: Asset[]) =>
-      Effect.gen(function* () {
-        const assetList = yield* objectToArray(event);
-        const updatedAssets = yield* formatAbilities(objectToArray, assetList);
+    hydrate: (context: any, event: Asset[]) => {
+      const assetList = Effect.runSync(objectToArray(event));
+      const updatedAssets = Effect.runSync(
+        formatAbilities(objectToArray, assetList),
+      );
 
-        context.assets = updatedAssets;
-      }),
-    add: (context: any, event: AssetSubmission) =>
-      Effect.gen(function* () {
-        const abilities: Ability[] = yield* getAssetAbilities(
-          event.dataforgedId,
-          event.category,
-        );
+      context.assets = updatedAssets ?? context.assets;
+    },
+    add: (context: any, event: AssetSubmission) => {
+      const abilities: Ability[] = Effect.runSync(
+        getAssetAbilities(event.dataforgedId, event.category),
+      );
 
-        context.assets.push({
-          _id: createId(),
-          dataforgedId: event.dataforgedId,
-          name: event.name,
-          category: event.category,
-          abilities,
-          meter: event.meter,
-        });
-
-        sync.send({ type: 'update' });
-      }),
+      context.list.push({
+        _id: createId(),
+        dataforgedId: event.dataforgedId,
+        name: event.name,
+        category: event.category,
+        abilities,
+        meter: event.meter,
+      });
+    },
+    remove: (context, id: string) => {
+      context.list = context.list.filter((asset: Asset) => asset._id !== id);
+    },
+    clear: (context) => {
+      context.list = [];
+    },
   },
 });
+
+export class DehydrateAssets extends Context.Tag('DehydrateAssets')<
+  DehydrateAssets,
+  {
+    readonly dehydrate: () => Effect.Effect<Record<string, any>, Error>
+  }
+>() {}
+
+export const DehydrateAssetsLive = Layer.effect(
+  DehydrateAssets,
+  Effect.gen(function* () {
+    return {
+      dehydrate: () =>
+        Effect.gen(function* () {
+          const context = assetsStore.get().context.list as Asset[];
+          const updatedAssets = yield* formatAbilities(arrayToObject, context);
+          return yield* arrayToObject(updatedAssets);
+        })
+    }
+  })
+)

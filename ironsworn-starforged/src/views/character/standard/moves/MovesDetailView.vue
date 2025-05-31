@@ -29,7 +29,7 @@ const categoryClass = computed(() =>
       <MoveActiveCard v-else />
     </div>
     <div class="assets-control basis-1/4">
-      <MoveAssetControl />
+      <!-- <MoveAssetControl /> -->
     </div>
   </div>
 </template>

@@ -1,9 +1,6 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { Effect } from 'effect';
+import { Effect, Layer, Context } from 'effect';
 import { assert } from '@/utility/assert';
 import { createStore } from '@xstate/store';
-import { sync } from '@/external/sync';
 
 export type Stats = {
   edge: number;
@@ -36,7 +33,7 @@ const assertStoreValues = (values: any) => {
   );
 };
 
-export const statStore = createStore({
+export const statsStore = createStore({
   context: {
     edge: 0,
     heart: 0,
@@ -45,16 +42,42 @@ export const statStore = createStore({
     wits: 0,
   },
   on: {
-    set: (context, event: { label: keyof Stats, value: number }) => {
-      context[event.label] = event.value
-      sync.send({ type: 'update' });
+    set: (context, event: { label: keyof Stats; value: number }) => {
+      context[event.label] = event.value;
     },
     hydrate: (context, event: Stats) => {
-      context['edge'] = event.edge
-      context['heart'] = event.heart
-      context['iron'] = event.iron
-      context['shadow'] = event.shadow
-      context['wits'] = event.wits
-    }
+      context['edge'] = event.edge ?? context['edge'];
+      context['heart'] = event.heart ?? context['edge'];
+      context['iron'] = event.iron ?? context['edge'];
+      context['shadow'] = event.shadow ?? context['edge'];
+      context['wits'] = event.wits ?? context['edge'];
+    },
+  },
+});
+
+export class DehydrateStats extends Context.Tag('DehydrateStats')<
+  DehydrateStats,
+  {
+    readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>;
   }
-})
+>() {}
+
+export const DehydrateStatsLive =
+  Layer.effect(
+    DehydrateStats,
+    Effect.gen(function* () {
+      return {
+        dehydrate: () =>
+          Effect.gen(function* () {
+            const context = statsStore.get().context;
+            return {
+              edge: context.edge,
+              heart: context.heart,
+              iron: context.iron,
+              shadow: context.shadow,
+              wits: context.wits,
+            };
+          }),
+      };
+    }),
+  );

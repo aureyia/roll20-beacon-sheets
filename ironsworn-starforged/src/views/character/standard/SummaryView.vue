@@ -5,10 +5,10 @@ import LabelledInput from '@/components/inputs/LabelledInput.vue';
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
 import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue';
 import { ImpactCategory } from '@/components/impacts';
-import { useStatsStore, type Stats } from '@/system/stats/store';
-import { useCharacterStore } from '@/system/character/store';
-import { useMetaStore } from '@/external/meta-store';
-import { useResourcesStore } from '@/system/resources/store';
+import { statsStore, type Stats } from '@/system/stats/store';
+import { characterStore } from '@/system/character/store';
+import { metaStore } from '@/external/store';
+import { resourcesStore } from '@/system/resources/store';
 import { Toggle } from '@/components/ui/toggle/index';
 import { ref } from 'vue';
 import { IMPACTS } from '@/system/impacts/types';
@@ -16,13 +16,49 @@ import { STAT_LIST } from '@/system/stats/stats';
 
 import { ImpactDialog } from '@/components/impacts';
 
-const stats: Stats = useStatsStore();
-const character = useCharacterStore();
-const meta = useMetaStore();
-const resources = useResourcesStore();
+const stores = {
+  meta: metaStore,
+  character: characterStore,
+  resources: resourcesStore,
+  stats: statsStore,
+};
 
 const toggleStatsEdit = ref(false);
 const toggleImpactRemoval = ref(false);
+
+const name = metaStore.select((context) => context.name);
+const character = ref(stores.character.get().context);
+const characterName = ref('');
+const stats = ref(stores.stats.get().context);
+const resources = ref(stores.resources.get().context);
+
+console.log(stats.value)
+
+name.subscribe((context) => {
+  characterName.value = context;
+});
+
+characterStore.subscribe((snapshot) => {
+  character.value = snapshot.context;
+});
+
+resourcesStore.subscribe((snapshot) => {
+  console.log('1', snapshot)
+  resources.value = snapshot.context;
+});
+
+statsStore.subscribe((snapshot) => {
+  stats.value = snapshot.context;
+});
+
+const update = (
+  store: keyof typeof stores,
+  label: string,
+  event: number | string,
+) => {
+  console.log('nom')
+  stores[store].trigger.set({ label: label, event: event });
+};
 </script>
 
 <template>
@@ -32,17 +68,26 @@ const toggleImpactRemoval = ref(false);
         <LabelledInput
           class="flex basis-2/4"
           label="Name"
-          v-model="meta.name"
+          :modelValue="characterName"
+          @onUpdate:modelValue="
+            (event: string) => update('meta', 'name', event)
+          "
         />
         <LabelledInput
           class="flex basis-1/4"
           label="Callsign"
-          v-model="character.callsign"
+          :modelValue="character.callsign"
+          @onUpdate:modelValue="
+            (event: string) => update('character', 'name', event)
+          "
         />
         <LabelledInput
           class="flex basis-1/4"
           label="Pronouns"
-          v-model="character.pronouns"
+          :modelValue="character.pronouns"
+          @onUpdate:modelValue="
+            (event: string) => update('character', 'name', event)
+          "
         />
       </div>
       <div class="resources m-3 flex flex-row gap-6">
@@ -50,7 +95,8 @@ const toggleImpactRemoval = ref(false);
           class="flex basis-1/4"
           type="number"
           label="Health"
-          v-model="resources.health"
+          :modelValue="resources.health"
+          @update:modelValue="(event: number) => update('resources', 'health', event)"
           :max="5"
           :min="0"
         />
@@ -58,7 +104,10 @@ const toggleImpactRemoval = ref(false);
           class="flex basis-1/4"
           type="number"
           label="Spirit"
-          v-model="resources.spirit"
+          :modelValue="resources.spirit"
+          @update:modelValue="
+            (event: number) => update('resources', 'spirit', event)
+          "
           :max="5"
           :min="0"
         />
@@ -66,7 +115,10 @@ const toggleImpactRemoval = ref(false);
           class="flex basis-1/4"
           type="number"
           label="Supply"
-          v-model="resources.supply"
+          :modelValue="resources.supply"
+          @update:modelValue="
+            (event: number) => update('resources', 'supply', event)
+          "
           :max="5"
           :min="0"
         />
@@ -74,7 +126,10 @@ const toggleImpactRemoval = ref(false);
           class="flex basis-1/4"
           type="number"
           label="XP"
-          v-model="resources.xp"
+          :modelValue="resources.xp"
+          @update:modelValue="
+            (event: number) => update('resources', 'xp', event)
+          "
         />
         <LabelledSwitch
           class="flex basis-1/4"
@@ -89,7 +144,10 @@ const toggleImpactRemoval = ref(false);
         v-for="stat in STAT_LIST"
         :key="stat"
         :label="stat"
-        v-model="stats[stat as keyof Stats]"
+        :modelValue="stats[stat]"
+        @onUpdate:modelValue="
+          (event: number) => update('stats', stat, event)
+        "
         input-modifier="py-12 font-bold text-2xl"
       />
     </div>

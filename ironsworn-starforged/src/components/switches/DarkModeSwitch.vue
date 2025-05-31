@@ -8,12 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useSettingsStore } from '@/system/settings/store';
 
-// Pass { disableTransition: false } to enable transitions
-// const settings = useSettingsStore()
 let mode = useColorMode();
-// mode = settings.darkMode === 'unset' ? 'auto' : settings.darkMode
 </script>
 
 <template>

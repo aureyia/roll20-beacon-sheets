@@ -2,16 +2,16 @@ import { Effect, Data } from 'effect';
 
 export class Assert extends Data.TaggedError('Assert')<{
   message: string;
-  context: any;
+  cause: any;
 }> {}
 
 export const assert = (predicate: boolean, context: any) => {
   if (!predicate) {
-    return Effect.die(
+    return Effect.runSync(Effect.die(
       new Assert({
-        message: 'Assertion failed.',
-        context: context,
-      }),
+        message: `Assertion failed. ${context}`,
+        cause: context,
+      })),
     );
   }
 };

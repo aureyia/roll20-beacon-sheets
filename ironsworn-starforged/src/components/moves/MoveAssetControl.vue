@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useAssetStore } from '@/system/assets/store';
+import { assetsStore } from '@/system/assets/store';
 import { Card, CardContent, CardTitle } from '../ui/card';
 import { Toggle } from '../ui/toggle';
 
-const assetStore = useAssetStore();
+const assetStore = assetsStore.get().context.list;
 </script>
 
 <template>

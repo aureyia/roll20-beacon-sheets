@@ -5,16 +5,15 @@ import type {
   AnyImpact,
   Burden,
   CurrentVehicle,
+  Impact,
   LastingEffect,
   Misfortune,
   Other,
 } from '@/system/impacts/types';
-import { Effect } from 'effect';
+import { Effect, Layer, Context } from 'effect';
 import { createStore } from '@xstate/store';
-import { sync } from '@/external/sync';
 
 export type AddImpact = {
-  _id: string,
   name: AnyImpact['name'];
   category: AnyImpact['category'];
   description?: string;
@@ -72,44 +71,58 @@ export const impactsStore = createStore({
   },
   on: {
     hydrate: (context, event: HydrateEvent) => {
-      context.misfortunes = Effect.runSync(objectToArray(event.misfortunes));
-      context.lastingEffects = Effect.runSync(
-        objectToArray(event.lastingEffects),
-      );
-      context.burdens = Effect.runSync(objectToArray(event.burdens));
-      context.currentVehicle = Effect.runSync(
-        objectToArray(event.currentVehicle),
-      );
-      context.other = Effect.runSync(objectToArray(event.other));
+      context.misfortunes =
+        Effect.runSync(objectToArray(event.misfortunes)) ?? context.misfortunes;
+      context.lastingEffects =
+        Effect.runSync(objectToArray(event.lastingEffects)) ??
+        context.lastingEffects;
+      context.burdens =
+        Effect.runSync(objectToArray(event.burdens)) ?? context.burdens;
+      context.currentVehicle =
+        Effect.runSync(objectToArray(event.currentVehicle)) ??
+        context.currentVehicle;
+      context.other =
+        Effect.runSync(objectToArray(event.other)) ?? context.other;
     },
     add: (context, event: AddImpact) => {
       assertAddImpact(event);
 
-      context[event.category].push({
+      const impact: AnyImpact = {
         ...event,
         _id: createId(),
-      });
+      };
 
-      sync.send({ type: 'update' });
+      context[event.category].push(impact as any);
     },
     remove: (context, event: AnyImpact) => {
       assertRemoveImpact(event);
       filterOutImpact(context, event);
-
-      sync.send({ type: 'update' });
     },
   },
 });
 
-export const dehydrate = (impacts: ImpactsGrouped) =>
+export class DehydrateImpacts extends Context.Tag('DehydrateImpacts')<
+  DehydrateImpacts,
+  {
+    readonly dehydrate: () => Effect.Effect<Record<string, any>, Error, never>;
+  }
+>() {}
+
+export const DehydrateImpactsLive = Layer.effect(
+  DehydrateImpacts,
   Effect.gen(function* () {
     return {
-      impacts: {
-        misfortunes: yield* arrayToObject(impacts.misfortunes),
-        lastingEffects: yield* arrayToObject(impacts.lastingEffects),
-        burdens: yield* arrayToObject(impacts.burdens),
-        currentVehicle: yield* arrayToObject(impacts.currentVehicle),
-        other: yield* arrayToObject(impacts.other),
-      },
+      dehydrate: () =>
+        Effect.gen(function* () {
+          const context = impactsStore.get().context;
+          return {
+            misfortunes: yield* arrayToObject(context.misfortunes),
+            lastingEffects: yield* arrayToObject(context.lastingEffects),
+            burdens: yield* arrayToObject(context.burdens),
+            currentVehicle: yield* arrayToObject(context.currentVehicle),
+            other: yield* arrayToObject(context.other),
+          };
+        }),
     };
-  });
+  }),
+);

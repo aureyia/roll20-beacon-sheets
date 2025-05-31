@@ -8,14 +8,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { settingsStore } from '@/system/settings/store.x';
+import { settingsStore, type Settings } from '@/system/settings/store';
 import { useRouter } from 'vue-router';
 
-const settings = settingsStore.get();
 const router = useRouter();
 
-const selectMode = (mode: string) => {
-  settings.setMode(mode);
+const selectMode = (mode: Settings['mode']) => {
+  settingsStore.trigger.set({ label: 'mode', value: mode });
   console.log('selectMode', mode);
   router.push({ name: mode });
 };
@@ -41,7 +40,9 @@ defineProps({
       </CardHeader>
       <CardContent i18n="">{{ mode }} image</CardContent>
       <CardFooter>
-        <Button i18n="button-text-select" @click="selectMode(mode)"
+        <Button
+          i18n="button-text-select"
+          @click="selectMode(mode as Settings['mode'])"
           >Select</Button
         >
       </CardFooter>

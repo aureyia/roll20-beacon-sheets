@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useStatsStore } from '@/system/stats/store';
+import { statsStore } from '@/system/stats/store';
 
-const stats = useStatsStore();
+const stats = statsStore.get().context;
 
 defineProps({
   name: {

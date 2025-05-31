@@ -2,10 +2,10 @@
 import { ProgressCard } from '@/components/progress';
 import { ProgressDialog } from '@/components/progress';
 import { Toggle } from '@/components/ui/toggle';
-import { useTaskStore } from '@/system/tasks/store';
+import { tasksStore } from '@/system/tasks/store';
 import { ref, provide } from 'vue';
 
-const taskStore = useTaskStore();
+const taskStore = tasksStore.get().context.list;
 const removeMode = ref(false);
 const TASK_CATEGORIES = ['generic', 'challenge'] as const;
 

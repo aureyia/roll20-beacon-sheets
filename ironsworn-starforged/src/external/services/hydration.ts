@@ -1,41 +1,46 @@
 import { Effect, Context, Layer } from 'effect';
 
 import { metaStore as meta } from '@/external/store';
-import { characterStore as character } from '@/system/character/store.x';
+import { characterStore as character } from '@/system/character/store';
 import { assetsStore as assets } from '@/system/assets/store';
-import { statsStore as stats } from '@/system/stats/store.x';
-import { resourcesStore as resources } from '@/system/resources/store.x';
+import { statsStore as stats } from '@/system/stats/store';
+import { resourcesStore as resources } from '@/system/resources/store';
 import { momentumStore as momentum } from '@/system/momentum/store';
 import { impactsStore as impacts } from '@/system/impacts/store';
-import { settingsStore as settings } from '@/system/settings/store.x';
-import { tasksStore as tasks } from '@/system/tasks/store.x';
-
-const stores = {
-  meta,
-  character,
-  assets,
-  stats,
-  resources,
-  momentum,
-  impacts,
-  settings,
-  tasks,
-};
+import { settingsStore as settings} from '@/system/settings/store';
+import { tasksStore as tasks } from '@/system/tasks/store';
 
 export class Hydration extends Context.Tag('Dehydration')<
   Hydration,
   {
-    readonly hydrateStores: (context: any) => void;
+    readonly hydrateStores: (context: any, meta: any) => void;
   }
 >() {}
 
 export const HydrationLive = Layer.effect(
   Hydration,
   Effect.gen(function* () {
+    const stores = {
+      meta,
+      character,
+      assets,
+      stats,
+      resources,
+      momentum,
+      impacts,
+      settings,
+      tasks
+    };
+
     return {
-      hydrateStores: (context) => {
+      hydrateStores: (context, meta) => {
         const storeKeys = Object.keys(stores) as (keyof typeof stores)[];
         storeKeys.forEach((key) => {
+          console.log(`hydrating ${key}`);
+          if (key === 'meta') {
+            context = meta
+          }
+
           stores[key].send({ type: 'hydrate', context });
         });
       },

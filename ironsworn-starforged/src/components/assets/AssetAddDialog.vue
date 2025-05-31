@@ -17,9 +17,9 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { Effect } from 'effect';
 import { FormControl } from '@/components/ui/form';
 import { DialogFooter } from '@/components/ui/dialog';
+import type { an } from 'vitest/dist/chunks/reporters.d.DG9VKi4m.js';
 
 const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const;
-const assetStore = assetsStore.get().context;
 
 const formSchema = toTypedSchema(
   z
@@ -37,17 +37,23 @@ type SupportedAssets = {
   [key: string]: IAsset[];
 };
 
-const allAssets: SupportedAssets = {
-  Path: Effect.runSync(getAllAssetsForCategory('Path')),
-  Companion: Effect.runSync(getAllAssetsForCategory('Companion')),
-  Deed: Effect.runSync(getAllAssetsForCategory('Deed')),
-};
+const getAllAssets = () =>
+  Effect.gen(function* () {
+    return {
+      Path: yield* getAllAssetsForCategory('Path'),
+      Companion: yield* getAllAssetsForCategory('Companion'),
+      Deed: yield* getAllAssetsForCategory('Deed'),
+    };
+  });
 
 const form = useForm({
   validationSchema: formSchema,
 });
 
 const onSubmit = form.handleSubmit((values) => {
+  const allAssets = Effect.runSync(getAllAssets());
+  // TODO: fix type here using Effect
+  // @ts-ignore
   const selectedAsset = allAssets[values.category].find(
     (asset: IAsset) => asset.Name === values.asset,
   );
@@ -59,15 +65,15 @@ const onSubmit = form.handleSubmit((values) => {
   const submission: AssetSubmission = {
     dataforgedId: selectedAsset.$id,
     name: values.asset,
-    // @ts-ignore
-    category: values.category,
+    category: values.category as AssetSubmission['category'],
+    meter: null,
   };
-  console.log('nom');
-  assetStore.addAsset(submission);
+
+  assetsStore.trigger.add(submission);
 });
 
 const clearState = () => {
-  assetStore.assets = [];
+  assetsStore.trigger.clear();
 };
 </script>
 

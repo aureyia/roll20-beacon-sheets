@@ -55,7 +55,7 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit((values) => {
   impactsStore.trigger.add({ ...values } as AddImpact);
-})
+});
 </script>
 
 <template>

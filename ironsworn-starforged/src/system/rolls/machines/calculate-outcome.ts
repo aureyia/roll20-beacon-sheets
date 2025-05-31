@@ -84,8 +84,10 @@ export const machine = setup({
         context.character.id === '' ||
         context.character.name === ''
       ) {
-        const errorContext = JSON.stringify(context)
-        throw new Error(`Missing context for sendOutcomeToChat ${errorContext}`);
+        const errorContext = JSON.stringify(context);
+        throw new Error(
+          `Missing context for sendOutcomeToChat ${errorContext}`,
+        );
       }
       context.previousOutcome = params.outcome;
       await sendRollToChat(context.character.id, {

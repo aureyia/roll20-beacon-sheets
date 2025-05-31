@@ -10,7 +10,7 @@ export class ObjectTransform extends Context.Tag('ArrayTransform')<
   {
     readonly objectToArray: (
       array: [],
-    ) => Effect.Effect<any [] | ObjectTransformError>;
+    ) => Effect.Effect<any[] | ObjectTransformError>;
   }
 >() {}
 

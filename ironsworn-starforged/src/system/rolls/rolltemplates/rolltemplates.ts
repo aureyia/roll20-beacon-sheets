@@ -102,9 +102,9 @@ export type RollStat = {
       challengeDie1: number;
       challengeDie2: number;
       actionDie: {
-        value: number,
-        negated: boolean,
-      }
+        value: number;
+        negated: boolean;
+      };
     };
     outcome: string;
     score: number;

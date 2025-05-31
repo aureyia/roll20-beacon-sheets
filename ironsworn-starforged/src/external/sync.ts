@@ -1,5 +1,5 @@
 import { setup, createActor, assertEvent } from 'xstate';
-import { Effect, pipe } from 'effect';
+import { Effect, Layer } from 'effect';
 import type { ActorRefFrom } from 'xstate';
 import { createId } from '@paralleldrive/cuid2';
 import {
@@ -13,6 +13,15 @@ import { type App, reactive, ref, watch, nextTick } from 'vue';
 import { metaStore } from './store';
 import { Dehydration, DehydrationLive } from './services/dehydration';
 import { Hydration, HydrationLive } from './services/hydration';
+import { DehydrateMetaLive } from '@/external/store';
+import { DehydrateCharacterLive } from '@/system/character/store';
+import { DehydrateAssetsLive } from '@/system/assets/store';
+import { DehydrateStatsLive } from '@/system/stats/store';
+import { DehydrateResourcesLive } from '@/system/resources/store';
+import { DehydrateMomentumLive } from '@/system/momentum/store';
+import { DehydrateImpactsLive } from '@/system/impacts/store';
+import { DehydrateSettingsLive } from '@/system/settings/store';
+import { DehydrateTasksLive } from '@/system/tasks/store';
 
 export const beaconPulse = ref(0);
 
@@ -34,84 +43,29 @@ export const initValues: InitValues = reactive({
 
 const sheetId = ref(createId());
 
+const DehydrationServicesLive = Layer.mergeAll(
+  DehydrateMetaLive,
+  DehydrateCharacterLive,
+  DehydrateAssetsLive,
+  DehydrateStatsLive,
+  DehydrateResourcesLive,
+  DehydrateMomentumLive,
+  DehydrateImpactsLive,
+  DehydrateSettingsLive,
+  DehydrateTasksLive,
+);
+
+const MainLive = DehydrationLive.pipe(Layer.provide(DehydrationServicesLive));
+
 const update = (dispatch: Dispatch, data: any) =>
   Effect.gen(function* () {
     const dehydration = yield* Dehydration;
     const character: Record<string, any> = {};
 
-    const char: Record<string, any> = {
-      character: {
-        id: initValues.character.id,
-        attributes: {
-          character: {
-            character: {
-              callsign: '',
-              pronouns: '',
-            },
-          },
-          stats: {
-            stats: {
-              edge: 3,
-              heart: 3,
-              iron: 3,
-              shadow: 2,
-              wits: 3,
-            },
-          },
-          resources: {
-            resources: {
-              health: 5,
-              spirit: 5,
-              supply: 4,
-              xp: 0,
-              spentXp: 0,
-            },
-          },
-          impacts: {
-            impacts: {
-              misfortunes: {},
-              lastingEffects: {},
-              burdens: {},
-              currentVehicle: {},
-              other: {},
-            },
-          },
-          settings: {
-            settings: {
-              mode: 'character-standard',
-              darkMode: 'unset',
-            },
-          },
-          tasks: {
-            tasks: {
-              uqonbxdsc4z6e2sj4gcx2029: {
-                arrayPosition: 0,
-                category: 'vow',
-                description: 'jhjk',
-                difficulty: 'formidable',
-                progress: 0,
-                status: 'active',
-              },
-            },
-          },
-          assets: {
-            assets: {},
-          },
-          momentum: {
-            momentum: 4,
-          },
-          updateId: 'udr7exupbdsjwdhe2blmcu79',
-        },
-        name: 'Yha Eshe',
-        bio: '',
-        gmNotes: '',
-        avatar: '',
-      },
-    };
     character.character.attributes = yield* dehydration.dehydrateStores();
     character.character.attributes.updateId = sheetId.value;
     dispatch.updateCharacter(character as UpdateArgs);
-  }).pipe(Effect.provide(DehydrationLive));
+  }).pipe(Effect.provide(MainLive));
 
 export type SyncActor = ActorRefFrom<typeof machine>;
 export const machine = setup({
@@ -207,11 +161,14 @@ export const syncPlugin = (dispatch: Dispatch) =>
           return;
         }
 
+        console.log(initValues)
+        console.log(attributes)
+
         Effect.runPromise(
           Effect.gen(function* () {
             const hydration = yield* Hydration;
 
-            return hydration.hydrateStores(attributes);
+            return hydration.hydrateStores(attributes, profile);
           }).pipe(Effect.provide(HydrationLive)),
         );
 

@@ -1,12 +1,8 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import type { Ref } from 'vue';
 import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
 import { type LimitedRange } from '@/utility/limitedRange';
-import { sync } from '@/external/sync';
 
-import { Effect } from 'effect';
+import { Effect, Layer, Context } from 'effect';
 import { createStore } from '@xstate/store';
 
 export type ProgressRange = LimitedRange<0, 40>;
@@ -129,31 +125,68 @@ type taskHydrate = { tasks: Task[] };
 //   };
 // });
 
-export const taskStore = createStore({
+type SetEvent = {
+  label: keyof Vow | keyof GenericTask;
+  id: string;
+  value: Vow[keyof Vow] | GenericTask[keyof GenericTask];
+};
+
+export const tasksStore = createStore({
   context: {
-    tasks: [] as Task[],
+    list: [] as GenericTask[] | Vow[],
   },
   on: {
     hydrate: (
       context,
       event: { type: 'hydrate'; tasks: Record<string, any> },
     ) => {
-      context.tasks = Effect.runSync(objectToArray(event.tasks));
+      context.list = Effect.runSync(objectToArray(event.tasks)) ?? context.list;
     },
     add: (context, event) => {
+      //     description: string,
+      //     category: TaskCategory,
+      //     difficulty: Difficulty,
+      //   ) => {
+      //     tasks.value.push({
+      //       _id: createId(),
+      //       description,
+      //       category,
+      //       progress: 0,
+      //       difficulty,
+      //       status: 'active',
+      //     });
+    },
+    remove: () => {},
+    set: (context, event: SetEvent) => {
+      context.list = context.list.map((task) => {
+        if (task._id === event.id) {
+          // TODO: Fix types
+          // @ts-ignore
+          task[event.label] = event.value;
+        }
 
-//     description: string,
-//     category: TaskCategory,
-//     difficulty: Difficulty,
-//   ) => {
-//     tasks.value.push({
-//       _id: createId(),
-//       description,
-//       category,
-//       progress: 0,
-//       difficulty,
-//       status: 'active',
-//     });
-    }
+        return task;
+      });
+    },
   },
 });
+
+export class DehydrateTasks extends Context.Tag('DehydrateTasks')<
+  DehydrateTasks,
+  {
+    readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>;
+  }
+>() {}
+
+export const DehydrateTasksLive = Layer.effect(
+  DehydrateTasks,
+  Effect.gen(function* () {
+    return {
+      dehydrate: () =>
+        Effect.gen(function* () {
+          const context = tasksStore.get().context.list;
+          return yield* arrayToObject(context);
+        }),
+    };
+  }),
+);

@@ -32,7 +32,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'vee-validate';
-import { useTaskStore, type TaskCategory } from '@/system/tasks/store';
+import { tasksStore, type TaskCategory } from '@/system/tasks/store';
 import { DIFFICULTIES } from '@/system/tasks/tasks';
 import { inject, watch } from 'vue';
 
@@ -53,7 +53,7 @@ const formSchema = toTypedSchema(
 const form = useForm({
   validationSchema: formSchema,
 });
-const taskStore = useTaskStore();
+const taskStore = tasksStore.get().context.list;
 
 const onSubmit = form.handleSubmit((values) => {
   taskStore.addTask(

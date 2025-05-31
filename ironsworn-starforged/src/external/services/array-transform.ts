@@ -1,4 +1,4 @@
-import { Effect, Context, Data, Layer, Array } from "effect";
+import { Effect, Context, Data, Layer, Array } from 'effect';
 
 class ArrayTransformError extends Data.TaggedError('ArrayTransformError')<{
   cause: Object;
@@ -10,9 +10,9 @@ export class ArrayTransform extends Context.Tag('ArrayTransform')<
   {
     readonly arrayToObject: (
       array: [],
-    ) => 
-      Effect.Effect<Record<string, any>> | 
-      Effect.Effect<never, ArrayTransformError> ;
+    ) =>
+      | Effect.Effect<Record<string, any>>
+      | Effect.Effect<never, ArrayTransformError>;
   }
 >() {}
 

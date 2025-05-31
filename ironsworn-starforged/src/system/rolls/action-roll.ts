@@ -68,6 +68,11 @@ const ActionRollLive = Layer.effect(
   }),
 );
 
+const test = Layer.mergeAll(
+  BeaconLive,
+  ActionScoreLive
+)
+
 const MainLive = ActionRollLive.pipe(
   Layer.provide(BeaconLive),
   Layer.provide(ActionScoreLive),

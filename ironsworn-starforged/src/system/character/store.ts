@@ -1,6 +1,6 @@
 import { assert } from '@/utility/assert';
-import { sync } from '@/external/sync';
 import { createStore } from '@xstate/store';
+import { Effect, Layer, Context } from 'effect';
 
 export type Character = {
   callsign: string;
@@ -25,13 +25,36 @@ export const characterStore = createStore({
   },
   on: {
     hydrate: (context, event: Character) => {
-      assertStoreValues(event)
-      context['callsign'] = event.callsign
-      context['pronouns'] = event.pronouns
+      // assertStoreValues(event);
+      context['callsign'] = event.callsign ?? context['callsign'];
+      context['pronouns'] = event.pronouns ?? context['callsign'];
     },
-    set: (context, event: { label: keyof Character, value: string }) => {
-      context[event.label] = event.value
-      sync.send({ type: 'update' });
-    }
+    set: (context, event: { label: keyof Character; value: string }) => {
+      context[event.label] = event.value;
+    },
+  },
+});
+
+export class DehydrateCharacter extends Context.Tag('DehydrateCharacter')<
+  DehydrateCharacter,
+  {
+    readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>;
   }
-})
+>() {}
+
+export const DehydrateCharacterLive = 
+  Layer.effect(
+    DehydrateCharacter,
+    Effect.gen(function* () {
+      return {
+        dehydrate: () =>
+          Effect.gen(function* () {
+            const context = characterStore.get().context;
+            return {
+              callsign: context.callsign,
+              pronouns: context.pronouns,
+            };
+          }),
+      };
+    }),
+  );

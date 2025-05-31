@@ -7,8 +7,8 @@ import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
 import { momentumStore } from '@/system/momentum/store';
 
 const impacts = impactsStore.get();
-const momentum = momentumStore.select((state) => state.momentum);
-const momentumRef = ref(momentum.get());
+const momentum = momentumStore.get().context.momentum;
+const momentumRef = ref(momentum);
 
 const impactsList = [
   ...impacts.context.misfortunes,
@@ -17,10 +17,6 @@ const impactsList = [
   ...impacts.context.currentVehicle,
   ...impacts.context.other,
 ];
-
-momentum.subscribe((momentum) => {
-  momentumRef.value = momentum;
-});
 
 const numberOfImpacts = computed(() => impactsList.length);
 

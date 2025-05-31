@@ -8,12 +8,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ref, watch } from 'vue';
-import { useTaskStore } from '@/system/tasks/store';
+import { tasksStore } from '@/system/tasks/store';
 
 const INPUTS = ['0', '1', '2', '3', '4'] as const;
 const props = defineProps({ id: String, ticks: String });
 const selectedValue = ref(props.ticks);
-const taskStore = useTaskStore();
+const taskStore = tasksStore.get().context.list;
 
 const differenceOf = (a: string) => (b: string) => parseInt(b) - parseInt(a);
 const progressUpdate = (id: string, value: string) => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useImpactsStore } from '@/system/impacts/store';
+import { impactsStore, type ImpactsGrouped } from '@/system/impacts/store';
 import {
   DialogTrigger,
   Dialog,
@@ -11,9 +11,9 @@ import {
 import { Button } from '../ui/button';
 import type { AnyImpact } from '@/system/impacts/types';
 
-const impacts = useImpactsStore();
-const getImpactsByCategory = (category: string) =>
-  impacts.list.filter((impact) => impact.category === category);
+const impacts = impactsStore;
+const getImpactsByCategory = (category: keyof ImpactsGrouped) =>
+  impactsStore.get().context[category];
 
 defineProps({
   label: {
@@ -24,14 +24,14 @@ defineProps({
 
 const removeImpact = (impact: AnyImpact) => {
   console.log(impact);
-  impacts.removeImpact(impact);
+  impacts.trigger.remove(impact);
 };
 </script>
 
 <template>
   <div class="impact-list">
     <div
-      v-for="impact in getImpactsByCategory(label)"
+      v-for="impact in getImpactsByCategory(label as keyof ImpactsGrouped)"
       :key="impact._id"
       class="relative z-0 mt-3 h-8 content-center"
     >

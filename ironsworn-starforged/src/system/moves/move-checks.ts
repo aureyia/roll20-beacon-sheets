@@ -4,8 +4,8 @@ import {
   ProgressTypeStarforged,
   Stat,
 } from '@/system/moves/enums';
-import { useResourcesStore } from '@/system/resources/store';
-import { useStatsStore } from '@/system/stats/store';
+import { resourcesStore } from '@/system/resources/store';
+import { statsStore } from '@/system/stats/store';
 import { Effect, pipe, Console } from 'effect';
 
 type OptionType = {
@@ -54,8 +54,8 @@ const lookupStoreValue = (
       }
 
       const formattedKey = key.toLocaleLowerCase();
-      const statsStore = useStatsStore();
-      const resourcesStore = useResourcesStore();
+      const statsStore = statsStore.get().context;
+      const resourcesStore = resourcesStore.get().context;
 
       if (option[key] === 'stat') {
         // @ts-ignore
