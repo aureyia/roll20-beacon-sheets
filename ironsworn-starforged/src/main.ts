@@ -23,12 +23,12 @@ const isDevEnvironment = ['development', 'test'].includes(env);
 
   const { vueRelay, dispatch } = await Effect.runPromise(getVueRelay());
   const sync = syncPlugin(dispatch);
-  const bus = busPlugin()
+  const bus = busPlugin();
 
   app.use(router);
   app.use(i18n);
   app.use(sync);
-  app.use(bus)
+  app.use(bus);
   app.use(vueRelay);
 
   app.mount('#app');

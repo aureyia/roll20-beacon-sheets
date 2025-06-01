@@ -1,5 +1,10 @@
-import { Effect, Context, Layer } from 'effect';
+import { Effect, Context, Layer, Data } from 'effect';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
+
+export class ActionScoreError extends Data.TaggedError('ActionScoreError')<{
+  cause?: unknown;
+  message?: string;
+}> {}
 
 export class ActionScore extends Context.Tag('ActionScore')<
   ActionScore,
@@ -9,7 +14,7 @@ export class ActionScore extends Context.Tag('ActionScore')<
       modifier: number,
       momentum: number,
       presetActionScore: number | null,
-    ) => Effect.Effect<number, Error>;
+    ) => Effect.Effect<number, ActionScoreError>;
   }
 >() {}
 
@@ -21,7 +26,7 @@ export const ActionScoreLive = Layer.effect(
         dice: DiceComponent[],
         modifier: number,
         presetActionScore: number | null = null,
-      ): Effect.Effect<number, Error> => {
+      ) => {
         if (presetActionScore !== null) {
           return Effect.succeed(presetActionScore);
         }
@@ -29,11 +34,17 @@ export const ActionScoreLive = Layer.effect(
         const actionDieResult = dice.find((die) => die.label === 'Action Die');
 
         if (!actionDieResult) {
-          return Effect.fail(new Error('actionDieResult value is undefined'));
+          return Effect.fail(
+            new ActionScoreError({
+              message: 'actionDieResult value is undefined',
+            }),
+          );
         }
 
         if (!actionDieResult.value) {
-          return Effect.fail(new Error('actionDieResult has no value'));
+          return Effect.fail(
+            new ActionScoreError({ message: 'actionDieResult has no value' }),
+          );
         }
 
         const actionScoreMaximum = 10;

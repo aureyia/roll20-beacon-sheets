@@ -2,7 +2,7 @@ import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
 import type { SetEvent } from '@/utility/store-types';
 
-type  SettingsSetEvent = SetEvent<Settings>;
+type SettingsSetEvent = SetEvent<Settings>;
 
 type DarkMode = 'dark' | 'light' | 'auto' | 'unset';
 type SheetMode =
@@ -30,16 +30,10 @@ export const settingsStore = createStore({
   },
   on: {
     hydrate: (context, event: Settings) => {
-      console.log('settingsStore', event, context)
       context.mode = event.mode ?? context.mode;
       context.darkMode = event.darkMode ?? context.darkMode;
     },
-    set: (
-      context,
-      event: SettingsSetEvent,
-      enqueue,
-    ) => {
-      console.log('settingsStore2', event, context)
+    set: (context, event: SettingsSetEvent, enqueue) => {
       context[event.label] = event.value;
       enqueue.emit.updated();
     },

@@ -1,12 +1,21 @@
-import { ActionScore, ActionScoreLive } from '@/system/rolls/action-score';
-import { Beacon, InvalidDie, BeaconLive } from '@/system/rolls/beacon';
+import {
+  ActionScore,
+  ActionScoreLive,
+  ActionScoreError,
+} from '@/system/rolls/action-score';
+import {
+  RollFormatter,
+  InvalidDie,
+  RollFormatterLive,
+} from '@/system/rolls/formatter';
 import { Effect, Context, Layer, Either } from 'effect';
 import { actionDice } from '@/system/rolls/dice';
 import { getDieByLabel, DieNotFound } from '@/system/rolls/get-die-by-label';
-import { type OutcomeActor } from './machines/calculate-outcome';
+import { type OutcomeActor } from '@/system/rolls/machines/calculate-outcome';
 import { initValues } from '@/external/sync';
+import { DispatchError, DispatchLive } from '@/system/rolls/dispatch';
 
-class ActionRoll extends Context.Tag('ActionRoll')<
+export class ActionRoll extends Context.Tag('ActionRoll')<
   ActionRoll,
   {
     readonly roll: (
@@ -14,21 +23,23 @@ class ActionRoll extends Context.Tag('ActionRoll')<
       modifier: number,
       momentum: number,
       rollName: string,
-    ) => Effect.Effect<void, Error | InvalidDie | DieNotFound>;
+    ) => Effect.Effect<
+      void,
+      ActionScoreError | InvalidDie | DieNotFound | DispatchError
+    >;
   }
 >() {}
 
-const ActionRollLive = Layer.effect(
+export const ActionRollLive = Layer.effect(
   ActionRoll,
   Effect.gen(function* () {
-    const beacon = yield* Beacon;
+    const formatter = yield* RollFormatter;
     const actionScore = yield* ActionScore;
 
     return {
       roll: (actor, modifier, momentum, rollName) =>
         Effect.gen(function* () {
-          const rolledDice = yield* beacon.roll(actionDice);
-
+          const rolledDice = yield* formatter.roll(actionDice);
           const totalActionScore = yield* actionScore.calculate(
             rolledDice,
             modifier,
@@ -68,13 +79,9 @@ const ActionRollLive = Layer.effect(
   }),
 );
 
-const test = Layer.mergeAll(
-  BeaconLive,
-  ActionScoreLive
-)
-
+const FormatAndRoll = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ActionRollLive.pipe(
-  Layer.provide(BeaconLive),
+  Layer.provide(FormatAndRoll),
   Layer.provide(ActionScoreLive),
 );
 

@@ -53,7 +53,6 @@ const transformedAssets = flattenedAssets.map((asset) => {
     abilities: [],
   };
 
-  console.log('id', asset.$id);
   formattedAsset.id = asset.$id.split('/').join('-').toLowerCase();
   formattedAsset.name = asset.Name.toLowerCase();
   formattedAsset.type = normaliseAssetTypeText(asset['Asset Type']);

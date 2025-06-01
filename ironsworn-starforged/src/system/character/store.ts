@@ -1,9 +1,9 @@
-import { assert } from '@/utility/assert';
+import { asserts } from '@/utility/asserts';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
 import type { SetEvent } from '@/utility/store-types';
 
-type  CharacterSetEvent = SetEvent<Character>;
+type CharacterSetEvent = SetEvent<Character>;
 
 export type Character = {
   callsign: string;
@@ -11,11 +11,11 @@ export type Character = {
 };
 
 const assertStoreValues = (values: any) => {
-  assert(
+  asserts(
     typeof values.callsign === 'string',
     `invalid callsign type: ${values.callsign}`,
   );
-  assert(
+  asserts(
     typeof values.pronouns === 'string',
     `invalid pronouns type: ${values.pronouns}`,
   );
@@ -27,17 +27,16 @@ export const characterStore = createStore({
     pronouns: '',
   },
   emits: {
-    updated: () => {}
+    updated: () => {},
   },
   on: {
     hydrate: (context, event: Character) => {
-      // assertStoreValues(event);
       context['callsign'] = event.callsign ?? context['callsign'];
       context['pronouns'] = event.pronouns ?? context['callsign'];
     },
     set: (context, event: CharacterSetEvent, enqueue) => {
       context[event.label] = event.value;
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
   },
 });
@@ -49,19 +48,18 @@ export class DehydrateCharacter extends Context.Tag('DehydrateCharacter')<
   }
 >() {}
 
-export const DehydrateCharacterLive = 
-  Layer.effect(
-    DehydrateCharacter,
-    Effect.gen(function* () {
-      return {
-        dehydrate: () =>
-          Effect.gen(function* () {
-            const context = characterStore.get().context;
-            return {
-              callsign: context.callsign,
-              pronouns: context.pronouns,
-            };
-          }),
-      };
-    }),
-  );
+export const DehydrateCharacterLive = Layer.effect(
+  DehydrateCharacter,
+  Effect.gen(function* () {
+    return {
+      dehydrate: () =>
+        Effect.gen(function* () {
+          const context = characterStore.get().context;
+          return {
+            callsign: context.callsign,
+            pronouns: context.pronouns,
+          };
+        }),
+    };
+  }),
+);

@@ -9,7 +9,7 @@ import { characterStore } from '@/system/character/store';
 import { metaStore } from '@/external/store';
 import { resourcesStore } from '@/system/resources/store';
 import { Toggle } from '@/components/ui/toggle/index';
-import {  ref } from 'vue';
+import { ref } from 'vue';
 import { IMPACTS } from '@/system/impacts/types';
 import { STAT_LIST } from '@/system/stats/stats';
 
@@ -42,13 +42,9 @@ statsStore.subscribe((snapshot) => {
   stats.value = snapshot.context;
 });
 
-type Store = keyof typeof stores
+type Store = keyof typeof stores;
 
-const update = (
-  store: Store,
-  label: any,
-  event: any,
-) => {
+const update = (store: Store, label: any, event: any) => {
   stores[store].trigger.set({ label, value: event });
 };
 </script>
@@ -61,9 +57,7 @@ const update = (
           class="flex basis-2/4"
           label="Name"
           :modelValue="name"
-          @update:modelValue="
-            (event: string) => update('meta', 'name', event)
-          "
+          @update:modelValue="(event: string) => update('meta', 'name', event)"
         />
         <LabelledInput
           class="flex basis-1/4"
@@ -88,7 +82,9 @@ const update = (
           type="number"
           label="Health"
           :modelValue="resources.health"
-          @update:modelValue="(event: number) => update('resources', 'health', event)"
+          @update:modelValue="
+            (event: number) => update('resources', 'health', event)
+          "
           :max="5"
           :min="0"
         />
@@ -137,9 +133,7 @@ const update = (
         :key="stat"
         :label="stat"
         :modelValue="stats[stat]"
-        @update:modelValue="
-          (event: number) => update('stats', stat, event)
-        "
+        @update:modelValue="(event: number) => update('stats', stat, event)"
         input-modifier="py-12 font-bold text-2xl"
       />
     </div>

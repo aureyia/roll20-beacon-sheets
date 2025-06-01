@@ -1,4 +1,4 @@
-import { setup, createActor, assertEvent } from 'xstate';
+import { setup, createActor } from 'xstate';
 import { Effect, Layer } from 'effect';
 import type { ActorRefFrom } from 'xstate';
 import { createId } from '@paralleldrive/cuid2';
@@ -62,7 +62,6 @@ const update = (dispatch: Dispatch, data: any) =>
     const dehydration = yield* Dehydration;
 
     const character = yield* dehydration.dehydrateStores();
-    console.log('character', character)
     character.character.attributes.updateId = createId();
 
     dispatch.updateCharacter(character as UpdateArgs);
@@ -84,7 +83,7 @@ export const machine = setup({
   },
   actions: {
     saveDispatchToContext: function ({ context, event }) {
-      assertEvent(event, 'initialised');
+      // assertEvent(event, 'initialised');
       context.dispatch = event.dispatch;
     },
   },
@@ -133,10 +132,8 @@ export const machine = setup({
 export const sync = createActor(machine);
 export const syncPlugin = (dispatch: Dispatch) => {
   sync.subscribe(async (snapshot) => {
-    console.log('sync: snapshot', snapshot);
-
     if (snapshot.value === 'initialising') {
-      console.log('Sync: Initialising')
+      console.log('Sync: Initialising');
       metaStore.send({
         type: 'setCampaignId',
         id: initValues.settings.campaignId,
@@ -155,12 +152,12 @@ export const syncPlugin = (dispatch: Dispatch) => {
     }
 
     if (snapshot.value === 'hydrating') {
-      console.log('Sync: Hydrating')
+      console.log('Sync: Hydrating');
       const characterId = initValues.character.id;
       const savedChar = dispatch.characters[characterId];
 
-      const { attributes } = savedChar
-      const { ...profile } = savedChar
+      const { attributes } = savedChar;
+      const { ...profile } = savedChar;
 
       await Effect.runPromise(
         Effect.gen(function* () {
@@ -172,8 +169,8 @@ export const syncPlugin = (dispatch: Dispatch) => {
     }
 
     if (snapshot.value === 'syncing') {
-      console.log('Sync: Hydrating')
-      await Effect.runPromise(update(dispatch, 'nom'))
+      console.log('Sync: Syncing');
+      await Effect.runPromise(update(dispatch, 'nom'));
       sync.send({
         type: 'synced',
       });

@@ -1,24 +1,34 @@
-import { Beacon, BeaconLive } from '@/system/rolls/beacon';
+import {
+  RollFormatterLive,
+  RollFormatter,
+  InvalidDie,
+} from '@/system/rolls/formatter';
+import { DispatchError, DispatchLive } from './dispatch';
 import { Effect, Context, Layer } from 'effect';
 import { oracleDie } from '@/system/rolls/dice';
-import { getDieByLabel } from '@/system/rolls/get-die-by-label';
+import { DieNotFound, getDieByLabel } from '@/system/rolls/get-die-by-label';
 
 type OracleRollResult = { oracleDie: { roll: number } };
 
 class OracleRoll extends Context.Tag('OracleRoll')<
   OracleRoll,
-  { readonly roll: () => Effect.Effect<OracleRollResult, Error> }
+  {
+    readonly roll: () => Effect.Effect<
+      OracleRollResult,
+      DispatchError | DieNotFound | InvalidDie
+    >;
+  }
 >() {}
 
 const OracleRollLive = Layer.effect(
   OracleRoll,
   Effect.gen(function* () {
-    const beacon = yield* Beacon;
+    const formatter = yield* RollFormatter;
 
     return {
       roll: () =>
         Effect.gen(function* () {
-          const rolledDice = yield* beacon.roll(oracleDie);
+          const rolledDice = yield* formatter.roll(oracleDie);
           const die = yield* getDieByLabel(rolledDice, 'Oracle Die');
 
           return {
@@ -31,7 +41,8 @@ const OracleRollLive = Layer.effect(
   }),
 );
 
-const MainLive = OracleRollLive.pipe(Layer.provide(BeaconLive));
+const FormatAndRoll = RollFormatterLive.pipe(Layer.provide(DispatchLive));
+const MainLive = OracleRollLive.pipe(Layer.provide(FormatAndRoll));
 
 export const roll = () =>
   Effect.provide(

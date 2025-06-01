@@ -1,5 +1,5 @@
-import type { App } from 'vue';
-import { Stream, Queue, Effect, Runtime } from 'effect';
+import { effect, type App } from 'vue';
+import { Stream, Queue, Effect } from 'effect';
 import { sync } from '@/external/sync';
 
 import { metaStore } from './store';
@@ -14,37 +14,31 @@ import { settingsStore } from '@/system/settings/store';
 
 export const busPlugin = () => {
   const dummyFn = () => {};
-  const eventBus = Effect.gen(function* () {
-    const queue = yield* Queue.bounded<string>(100);
 
-    const update = () =>
-      Effect.gen(function* () {
-        sync.send({ type: 'update' });
-        console.log('Event Bus: Update Sent');
-      });
+  let updateBlocked = false;
 
-    metaStore.on('updated', () => Queue.offer(queue, 'meta'));
-    characterStore.on('updated', () => Queue.offer(queue, 'character'));
-    resourcesStore.on('updated', () => Queue.offer(queue, 'resources'));
-    impactsStore.on('updated', () => Queue.offer(queue, 'impacts'));
-    momentumStore.on('updated', () => Queue.offer(queue, 'momentum'));
-    assetsStore.on('updated', () => Queue.offer(queue, 'assets'));
-    statsStore.on('updated', () => Queue.offer(queue, 'stats'));
-    tasksStore.on('updated', () => Queue.offer(queue, 'tasks'));
-    settingsStore.on('updated', () => Queue.offer(queue, 'settings'));
+  const update = (store: string) =>
+    Effect.gen(function* () {
+      if (updateBlocked) return;
 
-    const stream = Stream.fromQueue(queue).pipe(
-      Stream.debounce('800 millis'),
-      Stream.tap(() => update()),
-    );
+      updateBlocked = true;
+      yield* Effect.sleep('800 millis');
+      sync.send({ type: 'update' });
+      console.log('Event Bus: Update Sent');
+      updateBlocked = false;
+    });
 
-    console.log('Event Bus: Initialised');
+  metaStore.on('updated', () => Effect.runPromise(update('meta')));
+  characterStore.on('updated', () => Effect.runPromise(update('character')));
+  resourcesStore.on('updated', () => Effect.runPromise(update('resources')));
+  impactsStore.on('updated', () => Effect.runPromise(update('impacts')));
+  momentumStore.on('updated', () => Effect.runPromise(update('momentum')));
+  assetsStore.on('updated', () => Effect.runPromise(update('assets')));
+  statsStore.on('updated', () => Effect.runPromise(update('stats')));
+  tasksStore.on('updated', () => Effect.runPromise(update('tasks')));
+  settingsStore.on('updated', () => Effect.runPromise(update('settings')));
 
-    yield* stream.pipe(Stream.runDrain);
-  });
-
-  Effect.runPromise(eventBus);
-  // Effect.runFork(eventBus)
+  console.log('Event Bus: Initialised');
 
   return {
     install(app: App) {

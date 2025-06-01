@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { settingsStore } from "@/system/settings/store";
+import { settingsStore } from '@/system/settings/store';
 
 const modeList = [
   'character-standard',
@@ -10,7 +10,6 @@ const modeList = [
   'shared',
   'ship',
 ];
-
 </script>
 
 <template>

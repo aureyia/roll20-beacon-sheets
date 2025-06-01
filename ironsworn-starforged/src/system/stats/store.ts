@@ -1,9 +1,9 @@
 import { Effect, Layer, Context } from 'effect';
-import { assert } from '@/utility/assert';
+import { asserts } from '@/utility/asserts';
 import { createStore } from '@xstate/store';
 import type { SetEvent } from '@/utility/store-types';
 
-type  StatsSetEvent = SetEvent<Stats>;
+type StatsSetEvent = SetEvent<Stats>;
 
 export type Stats = {
   edge: number;
@@ -14,23 +14,23 @@ export type Stats = {
 };
 
 const assertStoreValues = (values: any) => {
-  assert(
+  asserts(
     typeof values.edge === 'number',
     `values.edge type: ${typeof values.edge}`,
   );
-  assert(
+  asserts(
     typeof values.heart === 'number',
     `values.heart type: ${typeof values.heart}`,
   );
-  assert(
+  asserts(
     typeof values.iron === 'number',
     `values.edge type: ${typeof values.iron}`,
   );
-  assert(
+  asserts(
     typeof values.shadow === 'number',
     `values.edge type: ${typeof values.shadow}`,
   );
-  assert(
+  asserts(
     typeof values.wits === 'number',
     `values.edge type: ${typeof values.wits}`,
   );
@@ -45,12 +45,12 @@ export const statsStore = createStore({
     wits: 0,
   },
   emits: {
-    updated: () => {}
+    updated: () => {},
   },
   on: {
     set: (context, event: StatsSetEvent, enqueue) => {
       context[event.label] = event.value;
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
     hydrate: (context, event: Stats) => {
       context['edge'] = event.edge ?? context['edge'];
@@ -69,22 +69,21 @@ export class DehydrateStats extends Context.Tag('DehydrateStats')<
   }
 >() {}
 
-export const DehydrateStatsLive =
-  Layer.effect(
-    DehydrateStats,
-    Effect.gen(function* () {
-      return {
-        dehydrate: () =>
-          Effect.gen(function* () {
-            const context = statsStore.get().context;
-            return {
-              edge: context.edge,
-              heart: context.heart,
-              iron: context.iron,
-              shadow: context.shadow,
-              wits: context.wits,
-            };
-          }),
-      };
-    }),
-  );
+export const DehydrateStatsLive = Layer.effect(
+  DehydrateStats,
+  Effect.gen(function* () {
+    return {
+      dehydrate: () =>
+        Effect.gen(function* () {
+          const context = statsStore.get().context;
+          return {
+            edge: context.edge,
+            heart: context.heart,
+            iron: context.iron,
+            shadow: context.shadow,
+            wits: context.wits,
+          };
+        }),
+    };
+  }),
+);

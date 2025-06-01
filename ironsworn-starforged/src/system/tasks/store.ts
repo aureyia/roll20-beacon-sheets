@@ -136,7 +136,7 @@ export const tasksStore = createStore({
     list: [] as GenericTask[] | Vow[],
   },
   emits: {
-    updated: () => {}
+    updated: () => {},
   },
   on: {
     hydrate: (
@@ -158,7 +158,7 @@ export const tasksStore = createStore({
       //       difficulty,
       //       status: 'active',
       //     });
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
     remove: () => {},
     set: (context, event: SetEvent, enqueue) => {
@@ -171,7 +171,7 @@ export const tasksStore = createStore({
 
         return task;
       });
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
   },
 });

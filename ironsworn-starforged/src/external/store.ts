@@ -2,7 +2,7 @@ import type { Token } from '@roll20-official/beacon-sdk';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
 import type { SetEvent } from '@/utility/store-types';
-import { assert } from '@/utility/assert';
+import { asserts } from '@/utility/asserts';
 
 /**
  * Every Character, regardless of sheet, has these meta fields
@@ -63,11 +63,11 @@ export const metaStore = createStore({
       context.campaignId = event.id;
     },
     set: (context, event: MetaSetEvent, enqueue) => {
-      assert(
+      asserts(
         event.label !== 'name',
         `Only 'name should be updated in the meta class`,
       );
-      assert(
+      asserts(
         typeof event.value !== 'string',
         `'value' should only ever be a string`,
       );

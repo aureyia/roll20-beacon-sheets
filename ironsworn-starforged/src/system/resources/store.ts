@@ -1,10 +1,10 @@
 import { createStore } from '@xstate/store';
-import { assert } from '@/utility/assert';
+import { asserts } from '@/utility/asserts';
 import { isNumberBetween } from '@/utility/isNumberBetween';
 import { Effect, Layer, Context } from 'effect';
 import type { SetEvent } from '@/utility/store-types';
 
-type  ResourcesSetEvent = SetEvent<Resources>;
+type ResourcesSetEvent = SetEvent<Resources>;
 
 type Resources = {
   health: number;
@@ -21,7 +21,7 @@ type ResourcesHydrate = {
     supply: number;
     xp: number;
     spentXp: number;
-  }
+  };
 };
 
 type ModifyEvent = {
@@ -41,20 +41,20 @@ const isResourceWithMaximum = (resource: keyof Resources) =>
   RESOURCE_LIMIT[resource];
 
 const assertStoreValues = (values: any) => {
-  assert(
+  asserts(
     isNumberBetween(values.health, 0, 5),
     `values.health: ${values.health}`,
   );
-  assert(
+  asserts(
     isNumberBetween(values.spirit, 0, 5),
     `values.spirit: ${values.spirit}`,
   );
-  assert(
+  asserts(
     isNumberBetween(values.supply, 0, 5),
     `values.supply: ${values.supply}`,
   );
-  assert(values.xp >= 0, `values.xp: ${values.xp}`);
-  assert(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`);
+  asserts(values.xp >= 0, `values.xp: ${values.xp}`);
+  asserts(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`);
 };
 
 export const resourcesStore = createStore({
@@ -66,7 +66,7 @@ export const resourcesStore = createStore({
     spentXp: 0,
   },
   emits: {
-    updated: () => {}
+    updated: () => {},
   },
   on: {
     hydrate: (context, event: Resources) => {
@@ -78,7 +78,7 @@ export const resourcesStore = createStore({
     },
     set: (context, event: ResourcesSetEvent, enqueue) => {
       context[event.label] = event.value;
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
     increase: (context, event: ModifyEvent, enqueue) => {
       const newValue = context[event.label] + event.by;
@@ -88,11 +88,11 @@ export const resourcesStore = createStore({
       } else {
         context[event.label] = newValue;
       }
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
     descrease: (context, event: ModifyEvent, enqueue) => {
       context[event.label] = Math.max(0, context[event.label] - event.by);
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
   },
 });
@@ -104,22 +104,21 @@ export class DehydrateResources extends Context.Tag('DehydrateResources')<
   }
 >() {}
 
-export const DehydrateResourcesLive =
-  Layer.effect(
-    DehydrateResources,
-    Effect.gen(function* () {
-      return {
-        dehydrate: () =>
-          Effect.gen(function* () {
-            const context = resourcesStore.get().context;
-            return {
-              health: context.health,
-              spirit: context.spirit,
-              supply: context.supply,
-              xp: context.xp,
-              spentXp: context.spentXp,
-            };
-          }),
-      };
-    }),
-  );
+export const DehydrateResourcesLive = Layer.effect(
+  DehydrateResources,
+  Effect.gen(function* () {
+    return {
+      dehydrate: () =>
+        Effect.gen(function* () {
+          const context = resourcesStore.get().context;
+          return {
+            health: context.health,
+            spirit: context.spirit,
+            supply: context.supply,
+            xp: context.xp,
+            spentXp: context.spentXp,
+          };
+        }),
+    };
+  }),
+);

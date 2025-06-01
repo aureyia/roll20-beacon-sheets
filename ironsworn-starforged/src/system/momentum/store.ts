@@ -1,4 +1,4 @@
-import { assert } from '@/utility/assert';
+import { asserts } from '@/utility/asserts';
 import { isNumberBetween } from '@/utility/isNumberBetween';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
@@ -8,22 +8,21 @@ export type MomentumHydrate = {
 };
 
 const assertMomentum = (momentum: number) => {
-  assert(isNumberBetween(momentum, -6, 10), `values.momentum: ${momentum}`);
+  asserts(isNumberBetween(momentum, -6, 10), `values.momentum: ${momentum}`);
 };
 
 export const momentumStore = createStore({
   context: { momentum: 2 },
   emits: {
-    updated: () => {}
+    updated: () => {},
   },
   on: {
     hydrate: (context, event: { momentum: number }) => {
-      console.log('event.momentum', event.momentum)
       context.momentum = event.momentum ?? context.momentum;
     },
     set: (context, event: { value: number }, enqueue) => {
       context.momentum = event.value;
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
   },
 });
@@ -35,15 +34,14 @@ export class DehydrateMomentum extends Context.Tag('DehydrateMomentum')<
   }
 >() {}
 
-export const DehydrateMomentumLive =
-  Layer.effect(
-    DehydrateMomentum,
-    Effect.gen(function* () {
-      return {
-        dehydrate: () =>
-          Effect.gen(function* () {
-            return { momentum: momentumStore.get().context.momentum };
-          }),
-      };
-    }),
-  );
+export const DehydrateMomentumLive = Layer.effect(
+  DehydrateMomentum,
+  Effect.gen(function* () {
+    return {
+      dehydrate: () =>
+        Effect.gen(function* () {
+          return { momentum: momentumStore.get().context.momentum };
+        }),
+    };
+  }),
+);

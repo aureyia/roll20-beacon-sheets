@@ -7,7 +7,7 @@ import { statsStore as stats } from '@/system/stats/store';
 import { resourcesStore as resources } from '@/system/resources/store';
 import { momentumStore as momentum } from '@/system/momentum/store';
 import { impactsStore as impacts } from '@/system/impacts/store';
-import { settingsStore as settings} from '@/system/settings/store';
+import { settingsStore as settings } from '@/system/settings/store';
 import { tasksStore as tasks } from '@/system/tasks/store';
 
 export class Hydration extends Context.Tag('Dehydration')<
@@ -29,7 +29,7 @@ export const HydrationLive = Layer.effect(
       momentum,
       impacts,
       settings,
-      tasks
+      tasks,
     };
 
     return {
@@ -37,9 +37,9 @@ export const HydrationLive = Layer.effect(
         const storeKeys = Object.keys(stores) as (keyof typeof stores)[];
         storeKeys.forEach((key) => {
           if (key === 'meta') {
-            stores[key].send({ type: 'hydrate', ...metaData })
+            stores[key].send({ type: 'hydrate', ...metaData });
           } else {
-            stores[key].send({ type: 'hydrate', ...context[key] })
+            stores[key].send({ type: 'hydrate', ...context[key] });
           }
         });
       },

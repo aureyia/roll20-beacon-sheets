@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
-import { assert } from '@/utility/assert';
+import { asserts } from '@/utility/asserts';
 import type {
   AnyImpact,
   Burden,
@@ -42,15 +42,21 @@ const filterOutImpact = (context: any, event: AnyImpact) =>
   );
 
 function assertAddImpact(data: AddImpact) {
-  assert(!data.category, 'Category is required when adding an impact');
-  assert(!data.name, 'Option is required when adding an impact');
-  assert(!isValidCategory(data.category), `Unknown category: ${data.category}`);
+  asserts(!data.category, 'Category is required when adding an impact');
+  asserts(!data.name, 'Option is required when adding an impact');
+  asserts(
+    !isValidCategory(data.category),
+    `Unknown category: ${data.category}`,
+  );
 }
 
 function assertRemoveImpact(data: AnyImpact) {
-  assert(!data.category, 'Category is required when adding an impact');
-  assert(!data._id, '_id is required when removing an impact');
-  assert(!isValidCategory(data.category), `Unknown category: ${data.category}`);
+  asserts(!data.category, 'Category is required when adding an impact');
+  asserts(!data._id, '_id is required when removing an impact');
+  asserts(
+    !isValidCategory(data.category),
+    `Unknown category: ${data.category}`,
+  );
 }
 
 export type HydrateEvent = {
@@ -70,7 +76,7 @@ export const impactsStore = createStore({
     other: [] as Other[],
   },
   emits: {
-    updated: () => {}
+    updated: () => {},
   },
   on: {
     hydrate: (context, event: HydrateEvent) => {
@@ -96,12 +102,12 @@ export const impactsStore = createStore({
       };
 
       context[event.category].push(impact as any);
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
     remove: (context, event: AnyImpact, enqueue) => {
       assertRemoveImpact(event);
       filterOutImpact(context, event);
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
   },
 });

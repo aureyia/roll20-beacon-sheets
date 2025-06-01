@@ -106,16 +106,12 @@ const getValue = (
   // const values = Effect.runSync(resourceValues(option))
 
   if (isMethodAny) {
-    const log = Console.log('Any');
-    Effect.runSync(log);
     return Effect.succeed(values[0]);
   }
   if (isMethodHighest) {
-    console.log('Highest');
     return Effect.succeed(Math.max(values[0], values[1]));
   }
   if (isMethodLowest) {
-    console.log('Lowest');
     return Effect.succeed(Math.min(values[0], values[1]));
   }
   if (isMethodAll) {

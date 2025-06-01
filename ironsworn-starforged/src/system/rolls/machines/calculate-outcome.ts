@@ -59,7 +59,7 @@ export const machine = setup({
       // ...
     },
     saveParamsToContext: function ({ context, event }, params) {
-      assertEvent(event, 'params');
+      // assertEvent(event, 'params');
       context.actionDie.value = event.value.actionDie.value;
       context.actionDie.negated = event.value.actionDie.negated;
       context.actionScore = event.value.actionScore;
@@ -144,7 +144,7 @@ export const machine = setup({
       );
     },
     choseToBurn: function ({ event }) {
-      assertEvent(event, 'burnChoice');
+      // assertEvent(event, 'burnChoice');
       return event.value;
     },
     exceedsOne: function ({ context }) {

@@ -40,7 +40,7 @@ export const assetsStore = createStore({
     list: [] as Asset[],
   },
   emits: {
-    updated: () => {}
+    updated: () => {},
   },
   on: {
     hydrate: (context: any, event: Asset[]) => {
@@ -65,15 +65,15 @@ export const assetsStore = createStore({
         meter: event.meter,
       });
 
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
     remove: (context, id: string, enqueue) => {
       context.list = context.list.filter((asset: Asset) => asset._id !== id);
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
     clear: (context, event, enqueue) => {
       context.list = [];
-      enqueue.emit.updated()
+      enqueue.emit.updated();
     },
   },
 });
@@ -81,7 +81,7 @@ export const assetsStore = createStore({
 export class DehydrateAssets extends Context.Tag('DehydrateAssets')<
   DehydrateAssets,
   {
-    readonly dehydrate: () => Effect.Effect<Record<string, any>, Error>
+    readonly dehydrate: () => Effect.Effect<Record<string, any>, Error>;
   }
 >() {}
 
@@ -94,7 +94,7 @@ export const DehydrateAssetsLive = Layer.effect(
           const context = assetsStore.get().context.list as Asset[];
           const updatedAssets = yield* formatAbilities(arrayToObject, context);
           return yield* arrayToObject(updatedAssets);
-        })
-    }
-  })
-)
+        }),
+    };
+  }),
+);

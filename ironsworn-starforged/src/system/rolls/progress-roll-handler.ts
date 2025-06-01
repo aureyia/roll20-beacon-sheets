@@ -1,5 +1,6 @@
 import { RollOutcome, RollOutcomeLive } from '@/system/rolls/roll-outcome';
-import { Beacon, BeaconLive } from '@/system/rolls/beacon';
+import { RollFormatter, RollFormatterLive } from '@/system/rolls/formatter';
+import { DispatchLive, Dispatch } from '@/system/rolls/dispatch';
 import { Effect, Context, Layer } from 'effect';
 import { challengeDice } from '@/system/rolls/dice';
 import { getDieByLabel } from '@/system/rolls/get-die-by-label';
@@ -29,13 +30,13 @@ class ProgressRollHandler extends Context.Tag('ProgressRollHandler')<
 const ProgressRollHandlerLive = Layer.effect(
   ProgressRollHandler,
   Effect.gen(function* () {
-    const beacon = yield* Beacon;
+    const formatter = yield* RollFormatter;
     const rollOutcome = yield* RollOutcome;
 
     return {
       roll: (progress: number) =>
         Effect.gen(function* () {
-          const rolledDice = yield* beacon.roll(challengeDice);
+          const rolledDice = yield* formatter.roll(challengeDice);
           const challengeDie1 = yield* getDieByLabel(
             rolledDice,
             'Challenge Die: 1',
@@ -68,8 +69,9 @@ const ProgressRollHandlerLive = Layer.effect(
   }),
 );
 
+const FormatAndRoll = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ProgressRollHandlerLive.pipe(
-  Layer.provide(BeaconLive),
+  Layer.provide(FormatAndRoll),
   Layer.provide(RollOutcomeLive),
 );
 
