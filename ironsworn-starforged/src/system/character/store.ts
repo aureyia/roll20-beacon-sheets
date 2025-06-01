@@ -1,4 +1,4 @@
-import { asserts } from '@/utility/asserts';
+import { assertEffect } from '@/utility/assertEffect';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
 import type { SetEvent } from '@/utility/store-types';
@@ -10,12 +10,12 @@ export type Character = {
   pronouns: string;
 };
 
-const assertStoreValues = (values: any) => {
-  asserts(
+const assertEffecttoreValues = (values: any) => {
+  assertEffect(
     typeof values.callsign === 'string',
     `invalid callsign type: ${values.callsign}`,
   );
-  asserts(
+  assertEffect(
     typeof values.pronouns === 'string',
     `invalid pronouns type: ${values.pronouns}`,
   );

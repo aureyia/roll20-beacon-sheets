@@ -1,15 +1,15 @@
 import { Effect, Data } from 'effect';
 
-export class Asserts extends Data.TaggedError('Asserts')<{
+export class assertEffect extends Data.TaggedError('assertEffect')<{
   message: string;
   cause: any;
 }> {}
 
-export const asserts = (predicate: boolean, context: any) => {
+export const assertEffect = (predicate: boolean, context: any) => {
   if (!predicate) {
     return Effect.runSync(
       Effect.die(
-        new Asserts({
+        new assertEffect({
           message: `Assertion failed. ${context}`,
           cause: context,
         }),
@@ -19,5 +19,5 @@ export const asserts = (predicate: boolean, context: any) => {
 };
 
 export const maybe = (predicate: boolean, context = null): void => {
-  asserts(predicate || !predicate, context);
+  assertEffect(predicate || !predicate, context);
 };

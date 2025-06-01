@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
-import { asserts } from '@/utility/asserts';
+import { assertEffect } from '@/utility/assertEffect';
 import type {
   AnyImpact,
   Burden,
@@ -42,18 +42,18 @@ const filterOutImpact = (context: any, event: AnyImpact) =>
   );
 
 function assertAddImpact(data: AddImpact) {
-  asserts(!data.category, 'Category is required when adding an impact');
-  asserts(!data.name, 'Option is required when adding an impact');
-  asserts(
+  assertEffect(!data.category, 'Category is required when adding an impact');
+  assertEffect(!data.name, 'Option is required when adding an impact');
+  assertEffect(
     !isValidCategory(data.category),
     `Unknown category: ${data.category}`,
   );
 }
 
 function assertRemoveImpact(data: AnyImpact) {
-  asserts(!data.category, 'Category is required when adding an impact');
-  asserts(!data._id, '_id is required when removing an impact');
-  asserts(
+  assertEffect(!data.category, 'Category is required when adding an impact');
+  assertEffect(!data._id, '_id is required when removing an impact');
+  assertEffect(
     !isValidCategory(data.category),
     `Unknown category: ${data.category}`,
   );

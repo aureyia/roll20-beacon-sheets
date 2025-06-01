@@ -1,4 +1,4 @@
-import { asserts } from '@/utility/asserts';
+import { assertEffect } from '@/utility/assertEffect';
 import { isNumberBetween } from '@/utility/isNumberBetween';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
@@ -8,7 +8,7 @@ export type MomentumHydrate = {
 };
 
 const assertMomentum = (momentum: number) => {
-  asserts(isNumberBetween(momentum, -6, 10), `values.momentum: ${momentum}`);
+  assertEffect(isNumberBetween(momentum, -6, 10), `values.momentum: ${momentum}`);
 };
 
 export const momentumStore = createStore({
