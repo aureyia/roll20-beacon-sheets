@@ -10,16 +10,21 @@ import { DehydrateImpacts } from '@/system/impacts/store';
 import { DehydrateSettings } from '@/system/settings/store';
 import { DehydrateTasks } from '@/system/tasks/store';
 
+import type { Character } from '@roll20-official/beacon-sdk';
+
+type DehydratedCharacter = {
+  character: Character
+}
+
 export class Dehydration extends Context.Tag('Dehydration')<
   Dehydration,
   {
-    dehydrateStores: () => Effect.Effect<Record<string, any>, Error>;
+    dehydrateStores: () => Effect.Effect<DehydratedCharacter, Error>;
   }
 >() {}
 
 export const DehydrationLive = Layer.effect(
   Dehydration,
-  // @ts-ignore
   Effect.gen(function* () {
     const stores = {
       meta: yield* DehydrateMeta,
@@ -36,24 +41,25 @@ export const DehydrationLive = Layer.effect(
     return {
       dehydrateStores: () =>
         Effect.gen(function* () {
-          const character: Record<string, any> = {};
-          character.attributes = {};
+          const dehydratedChar = { character: { attributes: {} }} as DehydratedCharacter;
           const storeKeys = Object.keys(stores) as (keyof typeof stores)[];
 
           for (const key of storeKeys) {
             if (key === 'meta') {
-              const { name, bio, gmNotes, avatar } = stores.meta.dehydrate;
+              const { name, bio, gmNotes, avatar, id } = yield* stores.meta.dehydrate();
 
-              character.name = name;
-              character.bio = bio;
-              character.gmNotes = gmNotes;
-              character.avatar = avatar;
+              dehydratedChar.character.id = id;
+              dehydratedChar.character.name = name;
+              dehydratedChar.character.bio = bio;
+              dehydratedChar.character.gmNotes = gmNotes;
+              dehydratedChar.character.avatar = avatar;
             } else {
-              character.attributes[key] = yield* stores[key].dehydrate();
+              const dehy = yield* stores[key].dehydrate()
+              dehydratedChar.character.attributes[key] = yield* stores[key].dehydrate();
             }
           }
 
-          return character;
+          return dehydratedChar;
         }),
     };
   }),

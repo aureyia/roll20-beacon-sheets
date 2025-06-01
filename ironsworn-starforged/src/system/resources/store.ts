@@ -2,11 +2,9 @@ import { createStore } from '@xstate/store';
 import { assert } from '@/utility/assert';
 import { isNumberBetween } from '@/utility/isNumberBetween';
 import { Effect, Layer, Context } from 'effect';
+import type { SetEvent } from '@/utility/store-types';
 
-type SetEvent = {
-  resource: keyof Resources;
-  value: number;
-};
+type  ResourcesSetEvent = SetEvent<Resources>;
 
 type Resources = {
   health: number;
@@ -16,8 +14,18 @@ type Resources = {
   spentXp: number;
 };
 
+type ResourcesHydrate = {
+  context: {
+    health: number;
+    spirit: number;
+    supply: number;
+    xp: number;
+    spentXp: number;
+  }
+};
+
 type ModifyEvent = {
-  resource: keyof Resources;
+  label: keyof Resources;
   by: number;
 };
 
@@ -57,29 +65,34 @@ export const resourcesStore = createStore({
     xp: 0,
     spentXp: 0,
   },
+  emits: {
+    updated: () => {}
+  },
   on: {
     hydrate: (context, event: Resources) => {
-      // assertStoreValues(event);
       context['health'] = event.health ?? context['health'];
       context['spirit'] = event.spirit ?? context['spirit'];
       context['supply'] = event.supply ?? context['supply'];
       context['xp'] = event.xp ?? context['xp'];
       context['spentXp'] = event.spentXp ?? context['spentXp'];
     },
-    set: (context, event: SetEvent) => {
-      context[event.resource] = event.value;
+    set: (context, event: ResourcesSetEvent, enqueue) => {
+      context[event.label] = event.value;
+      enqueue.emit.updated()
     },
-    increase: (context, event: ModifyEvent) => {
-      const newValue = context[event.resource] + event.by;
+    increase: (context, event: ModifyEvent, enqueue) => {
+      const newValue = context[event.label] + event.by;
 
-      if (isResourceWithMaximum(event.resource)) {
-        context[event.resource] = Math.min(5, newValue);
+      if (isResourceWithMaximum(event.label)) {
+        context[event.label] = Math.min(5, newValue);
       } else {
-        context[event.resource] = newValue;
+        context[event.label] = newValue;
       }
+      enqueue.emit.updated()
     },
-    descrease: (context, event: ModifyEvent) => {
-      context[event.resource] = Math.max(0, context[event.resource] - event.by);
+    descrease: (context, event: ModifyEvent, enqueue) => {
+      context[event.label] = Math.max(0, context[event.label] - event.by);
+      enqueue.emit.updated()
     },
   },
 });

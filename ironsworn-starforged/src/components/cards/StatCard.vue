@@ -2,14 +2,9 @@
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { statsStore } from '@/system/stats/store';
-
-const stats = statsStore.get().context;
 
 defineProps({
   name: {
@@ -29,7 +24,7 @@ defineProps({
 <template>
   <div class="mode-card min-w-44 text-center">
     <Card
-      @click="stats.roll(name, stat)"
+      @click=""
       class="cursor-pointer bg-muted uppercase shadow drop-shadow hover:bg-muted-accent"
     >
       <CardHeader>

@@ -1,5 +1,8 @@
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
+import type { SetEvent } from '@/utility/store-types';
+
+type  SettingsSetEvent = SetEvent<Settings>;
 
 type DarkMode = 'dark' | 'light' | 'auto' | 'unset';
 type SheetMode =
@@ -22,23 +25,26 @@ export const settingsStore = createStore({
     mode: 'mode-select',
     darkMode: 'unset',
   },
+  emits: {
+    updated: () => {},
+  },
   on: {
     hydrate: (context, event: Settings) => {
+      console.log('settingsStore', event, context)
       context.mode = event.mode ?? context.mode;
       context.darkMode = event.darkMode ?? context.darkMode;
     },
     set: (
       context,
-      event: { label: keyof Settings; value: SheetMode | DarkMode },
+      event: SettingsSetEvent,
+      enqueue,
     ) => {
+      console.log('settingsStore2', event, context)
       context[event.label] = event.value;
+      enqueue.emit.updated();
     },
   },
 });
-
-// export const syncUpdate = () => {
-//   sync.send({ type: 'update' });
-// };
 
 export class DehydrateSettings extends Context.Tag('DehydrateSettings')<
   DehydrateSettings,
@@ -47,19 +53,18 @@ export class DehydrateSettings extends Context.Tag('DehydrateSettings')<
   }
 >() {}
 
-export const DehydrateSettingsLive =
-  Layer.effect(
-    DehydrateSettings,
-    Effect.gen(function* () {
-      return {
-        dehydrate: () =>
-          Effect.gen(function* () {
-            const context = settingsStore.get().context;
-            return {
-              mode: context.mode,
-              darkMode: context.darkMode,
-            };
-          }),
-      };
-    }),
-  );
+export const DehydrateSettingsLive = Layer.effect(
+  DehydrateSettings,
+  Effect.gen(function* () {
+    return {
+      dehydrate: () =>
+        Effect.gen(function* () {
+          const context = settingsStore.get().context;
+          return {
+            mode: context.mode,
+            darkMode: context.darkMode,
+          };
+        }),
+    };
+  }),
+);

@@ -37,7 +37,6 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
 
   const formattedModifier = Number(modifier.value);
   // const roll = await Effect.runPromise(await moveRollV2(2, formattedModifier));
-  // console.log('roll', roll);
 };
 </script>
 

@@ -22,8 +22,8 @@ const isDevEnvironment = ['development', 'test'].includes(env);
   const app = createApp(App);
 
   const { vueRelay, dispatch } = await Effect.runPromise(getVueRelay());
-  const sync = Effect.runSync(syncPlugin(dispatch));
-  const bus = Effect.runSync(busPlugin(sync))
+  const sync = syncPlugin(dispatch);
+  const bus = busPlugin()
 
   app.use(router);
   app.use(i18n);

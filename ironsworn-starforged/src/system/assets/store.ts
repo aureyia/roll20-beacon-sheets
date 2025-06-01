@@ -39,6 +39,9 @@ export const assetsStore = createStore({
   context: {
     list: [] as Asset[],
   },
+  emits: {
+    updated: () => {}
+  },
   on: {
     hydrate: (context: any, event: Asset[]) => {
       const assetList = Effect.runSync(objectToArray(event));
@@ -48,7 +51,7 @@ export const assetsStore = createStore({
 
       context.assets = updatedAssets ?? context.assets;
     },
-    add: (context: any, event: AssetSubmission) => {
+    add: (context: any, event: AssetSubmission, enqueue) => {
       const abilities: Ability[] = Effect.runSync(
         getAssetAbilities(event.dataforgedId, event.category),
       );
@@ -61,12 +64,16 @@ export const assetsStore = createStore({
         abilities,
         meter: event.meter,
       });
+
+      enqueue.emit.updated()
     },
-    remove: (context, id: string) => {
+    remove: (context, id: string, enqueue) => {
       context.list = context.list.filter((asset: Asset) => asset._id !== id);
+      enqueue.emit.updated()
     },
-    clear: (context) => {
+    clear: (context, event, enqueue) => {
       context.list = [];
+      enqueue.emit.updated()
     },
   },
 });

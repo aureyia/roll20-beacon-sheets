@@ -60,10 +60,11 @@ const MainLive = DehydrationLive.pipe(Layer.provide(DehydrationServicesLive));
 const update = (dispatch: Dispatch, data: any) =>
   Effect.gen(function* () {
     const dehydration = yield* Dehydration;
-    const character: Record<string, any> = {};
 
-    character.character.attributes = yield* dehydration.dehydrateStores();
-    character.character.attributes.updateId = sheetId.value;
+    const character = yield* dehydration.dehydrateStores();
+    console.log('character', character)
+    character.character.attributes.updateId = createId();
+
     dispatch.updateCharacter(character as UpdateArgs);
   }).pipe(Effect.provide(MainLive));
 
@@ -130,65 +131,60 @@ export const machine = setup({
 });
 
 export const sync = createActor(machine);
-export const syncPlugin = (dispatch: Dispatch) =>
-  Effect.gen(function* () {
-    sync.subscribe(async (snapshot) => {
-      console.log('sync: snapshot', snapshot);
+export const syncPlugin = (dispatch: Dispatch) => {
+  sync.subscribe(async (snapshot) => {
+    console.log('sync: snapshot', snapshot);
 
-      if (snapshot.value === 'initialising') {
-        metaStore.send({
-          type: 'setCampaignId',
-          id: initValues.settings.campaignId,
-        });
+    if (snapshot.value === 'initialising') {
+      console.log('Sync: Initialising')
+      metaStore.send({
+        type: 'setCampaignId',
+        id: initValues.settings.campaignId,
+      });
 
-        metaStore.send({
-          type: 'setPermissions',
-          isOwner: initValues.settings.owned,
-          isGM: initValues.settings.gm,
-        });
+      metaStore.send({
+        type: 'setPermissions',
+        isOwner: initValues.settings.owned,
+        isGM: initValues.settings.gm,
+      });
 
-        sync.send({
-          type: 'initialised',
-          dispatch: dispatch,
-        });
-      }
+      sync.send({
+        type: 'initialised',
+        dispatch: dispatch,
+      });
+    }
 
-      if (snapshot.value === 'hydrating') {
-        const characterId = initValues.character.id;
-        const { attributes, ...profile } = dispatch.characters[characterId];
+    if (snapshot.value === 'hydrating') {
+      console.log('Sync: Hydrating')
+      const characterId = initValues.character.id;
+      const savedChar = dispatch.characters[characterId];
 
-        if (attributes.updateId === sheetId.value) {
-          return;
-        }
+      const { attributes } = savedChar
+      const { ...profile } = savedChar
 
-        console.log(initValues)
-        console.log(attributes)
+      await Effect.runPromise(
+        Effect.gen(function* () {
+          const hydration = yield* Hydration;
 
-        Effect.runPromise(
-          Effect.gen(function* () {
-            const hydration = yield* Hydration;
+          return hydration.hydrateStores(attributes, profile);
+        }).pipe(Effect.provide(HydrationLive)),
+      );
+    }
 
-            return hydration.hydrateStores(attributes, profile);
-          }).pipe(Effect.provide(HydrationLive)),
-        );
-
-        await nextTick();
-      }
-
-      if (snapshot.value === 'syncing') {
-        Effect.runPromise(update(dispatch, 'nom'));
-
-        sync.send({
-          type: 'synced',
-        });
-      }
-    });
-
-    sync.start();
-
-    return {
-      install(app: App) {
-        app.provide('sync', sync);
-      },
-    };
+    if (snapshot.value === 'syncing') {
+      console.log('Sync: Hydrating')
+      await Effect.runPromise(update(dispatch, 'nom'))
+      sync.send({
+        type: 'synced',
+      });
+    }
   });
+
+  sync.start();
+
+  return {
+    install(app: App) {
+      app.provide('sync', sync);
+    },
+  };
+};

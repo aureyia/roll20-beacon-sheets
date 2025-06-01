@@ -10,7 +10,6 @@ const selectedOption = ref('');
 const updateActiveMove = (moveId: string) => {
   viewMode.value = true;
   activeMove.value = moveId;
-  console.log(activeMove.value);
 };
 const clearActiveMove = () => {
   viewMode.value = false;

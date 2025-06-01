@@ -33,15 +33,14 @@ export const HydrationLive = Layer.effect(
     };
 
     return {
-      hydrateStores: (context, meta) => {
+      hydrateStores: (context, metaData) => {
         const storeKeys = Object.keys(stores) as (keyof typeof stores)[];
         storeKeys.forEach((key) => {
-          console.log(`hydrating ${key}`);
           if (key === 'meta') {
-            context = meta
+            stores[key].send({ type: 'hydrate', ...metaData })
+          } else {
+            stores[key].send({ type: 'hydrate', ...context[key] })
           }
-
-          stores[key].send({ type: 'hydrate', context });
         });
       },
     };

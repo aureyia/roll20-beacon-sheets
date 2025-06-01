@@ -1,48 +1,54 @@
-import type { App } from "vue";
-import { Effect } from "effect";
+import type { App } from 'vue';
+import { Stream, Queue, Effect, Runtime } from 'effect';
+import { sync } from '@/external/sync';
 
-import { metaStore } from "./store";
-import { characterStore } from "@/system/character/store";
-import { resourcesStore } from "@/system/resources/store";
-import { impactsStore } from "@/system/impacts/store";
-import { momentumStore } from "@/system/momentum/store";
-import { assetsStore } from "@/system/assets/store";
-import { statsStore } from "@/system/stats/store";
-import { tasksStore } from "@/system/tasks/store";
-import { settingsStore } from "@/system/settings/store";
+import { metaStore } from './store';
+import { characterStore } from '@/system/character/store';
+import { resourcesStore } from '@/system/resources/store';
+import { impactsStore } from '@/system/impacts/store';
+import { momentumStore } from '@/system/momentum/store';
+import { assetsStore } from '@/system/assets/store';
+import { statsStore } from '@/system/stats/store';
+import { tasksStore } from '@/system/tasks/store';
+import { settingsStore } from '@/system/settings/store';
 
-export const busPlugin = (sync: any) =>
-  Effect.gen(function* () {
-    const nom = () => {
-      return true
-    }
-      console.log('bus started')
+export const busPlugin = () => {
+  const dummyFn = () => {};
+  const eventBus = Effect.gen(function* () {
+    const queue = yield* Queue.bounded<string>(100);
 
-      const update = (snapshot) => {
-        console.log('snapshot', snapshot)
-        sync.send({ type: 'update' })
-      }
+    const update = () =>
+      Effect.gen(function* () {
+        sync.send({ type: 'update' });
+        console.log('Event Bus: Update Sent');
+      });
 
-      metaStore.on('set', update)
-      characterStore.on('set', update)
-      resourcesStore.on('set', update)
-      resourcesStore.on('increase', update)
-      resourcesStore.on('decrease', update)
-      impactsStore.on('add', update)
-      impactsStore.on('remove', update)
-      momentumStore.on('set', update)
-      assetsStore.on('add', update)
-      assetsStore.on('remove', update)
-      assetsStore.on('clear', update)
-      statsStore.on('set', update)
-      tasksStore.on('add', update)
-      tasksStore.on('remove', update)
-      tasksStore.on('set', update)
-      settingsStore.on('set', update)   
+    metaStore.on('updated', () => Queue.offer(queue, 'meta'));
+    characterStore.on('updated', () => Queue.offer(queue, 'character'));
+    resourcesStore.on('updated', () => Queue.offer(queue, 'resources'));
+    impactsStore.on('updated', () => Queue.offer(queue, 'impacts'));
+    momentumStore.on('updated', () => Queue.offer(queue, 'momentum'));
+    assetsStore.on('updated', () => Queue.offer(queue, 'assets'));
+    statsStore.on('updated', () => Queue.offer(queue, 'stats'));
+    tasksStore.on('updated', () => Queue.offer(queue, 'tasks'));
+    settingsStore.on('updated', () => Queue.offer(queue, 'settings'));
 
-    return {
-      install(app: App) {
-        app.provide('bus', nom);
-      },
-    };
+    const stream = Stream.fromQueue(queue).pipe(
+      Stream.debounce('800 millis'),
+      Stream.tap(() => update()),
+    );
+
+    console.log('Event Bus: Initialised');
+
+    yield* stream.pipe(Stream.runDrain);
   });
+
+  Effect.runPromise(eventBus);
+  // Effect.runFork(eventBus)
+
+  return {
+    install(app: App) {
+      app.provide('bus', dummyFn);
+    },
+  };
+};

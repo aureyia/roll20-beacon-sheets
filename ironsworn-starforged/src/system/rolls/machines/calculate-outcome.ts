@@ -144,7 +144,6 @@ export const machine = setup({
       );
     },
     choseToBurn: function ({ event }) {
-      console.log(event, 'burnChoice');
       assertEvent(event, 'burnChoice');
       return event.value;
     },

@@ -1,6 +1,9 @@
 import { assert } from '@/utility/assert';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
+import type { SetEvent } from '@/utility/store-types';
+
+type  CharacterSetEvent = SetEvent<Character>;
 
 export type Character = {
   callsign: string;
@@ -23,14 +26,18 @@ export const characterStore = createStore({
     callsign: '',
     pronouns: '',
   },
+  emits: {
+    updated: () => {}
+  },
   on: {
     hydrate: (context, event: Character) => {
       // assertStoreValues(event);
       context['callsign'] = event.callsign ?? context['callsign'];
       context['pronouns'] = event.pronouns ?? context['callsign'];
     },
-    set: (context, event: { label: keyof Character; value: string }) => {
+    set: (context, event: CharacterSetEvent, enqueue) => {
       context[event.label] = event.value;
+      enqueue.emit.updated()
     },
   },
 });

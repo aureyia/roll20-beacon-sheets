@@ -5,9 +5,13 @@ import { Toggle } from '@/components/ui/toggle';
 import { tasksStore } from '@/system/tasks/store';
 import { ref, provide } from 'vue';
 
-const taskStore = tasksStore.get().context.list;
+const tasks = ref(tasksStore.get().context.list);
 const removeMode = ref(false);
 const TASK_CATEGORIES = ['generic', 'challenge'] as const;
+
+tasksStore.subscribe((snapshot) => {
+  tasks.value = snapshot.context.list;
+});
 
 provide('categories', TASK_CATEGORIES);
 </script>
@@ -23,7 +27,7 @@ provide('categories', TASK_CATEGORIES);
       </Toggle>
     </div>
     <ProgressCard
-      v-for="task in taskStore.tasks.filter(
+      v-for="task in tasks.filter(
         (task) => task.category === 'generic' || task.category === 'challenge',
       )"
       :removeMode="removeMode"

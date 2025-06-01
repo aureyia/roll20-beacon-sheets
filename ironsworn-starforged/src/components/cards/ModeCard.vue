@@ -15,7 +15,6 @@ const router = useRouter();
 
 const selectMode = (mode: Settings['mode']) => {
   settingsStore.trigger.set({ label: 'mode', value: mode });
-  console.log('selectMode', mode);
   router.push({ name: mode });
 };
 

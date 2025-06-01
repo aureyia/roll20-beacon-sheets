@@ -87,7 +87,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'root',
+      name: 'mode-select',
       component: ModeSelectView,
     },
     {

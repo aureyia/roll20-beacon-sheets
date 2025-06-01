@@ -69,6 +69,9 @@ export const impactsStore = createStore({
     currentVehicle: [] as CurrentVehicle[],
     other: [] as Other[],
   },
+  emits: {
+    updated: () => {}
+  },
   on: {
     hydrate: (context, event: HydrateEvent) => {
       context.misfortunes =
@@ -84,7 +87,7 @@ export const impactsStore = createStore({
       context.other =
         Effect.runSync(objectToArray(event.other)) ?? context.other;
     },
-    add: (context, event: AddImpact) => {
+    add: (context, event: AddImpact, enqueue) => {
       assertAddImpact(event);
 
       const impact: AnyImpact = {
@@ -93,10 +96,12 @@ export const impactsStore = createStore({
       };
 
       context[event.category].push(impact as any);
+      enqueue.emit.updated()
     },
-    remove: (context, event: AnyImpact) => {
+    remove: (context, event: AnyImpact, enqueue) => {
       assertRemoveImpact(event);
       filterOutImpact(context, event);
+      enqueue.emit.updated()
     },
   },
 });

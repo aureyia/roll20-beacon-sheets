@@ -38,7 +38,6 @@ const testRoll = async (moveData: any) => {
 };
 
 const burnMomentum = (choice: boolean) => {
-  console.log('burnChoice', choice);
   actor.send({
     type: 'burnChoice',
     value: choice,

@@ -1,6 +1,9 @@
 import { Effect, Layer, Context } from 'effect';
 import { assert } from '@/utility/assert';
 import { createStore } from '@xstate/store';
+import type { SetEvent } from '@/utility/store-types';
+
+type  StatsSetEvent = SetEvent<Stats>;
 
 export type Stats = {
   edge: number;
@@ -41,9 +44,13 @@ export const statsStore = createStore({
     shadow: 0,
     wits: 0,
   },
+  emits: {
+    updated: () => {}
+  },
   on: {
-    set: (context, event: { label: keyof Stats; value: number }) => {
+    set: (context, event: StatsSetEvent, enqueue) => {
       context[event.label] = event.value;
+      enqueue.emit.updated()
     },
     hydrate: (context, event: Stats) => {
       context['edge'] = event.edge ?? context['edge'];

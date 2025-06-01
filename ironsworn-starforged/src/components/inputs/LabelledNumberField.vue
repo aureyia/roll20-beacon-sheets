@@ -27,7 +27,7 @@ defineProps({
     type: String,
   },
 });
-
+// TODO: Maybe add the subscriber here?
 const model = defineModel<number>({ required: true });
 </script>
 

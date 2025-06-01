@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
 import StatCard from '@/components/cards/StatCard.vue';
 import LabelledInput from '@/components/inputs/LabelledInput.vue';
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
@@ -10,7 +9,7 @@ import { characterStore } from '@/system/character/store';
 import { metaStore } from '@/external/store';
 import { resourcesStore } from '@/system/resources/store';
 import { Toggle } from '@/components/ui/toggle/index';
-import { ref } from 'vue';
+import {  ref } from 'vue';
 import { IMPACTS } from '@/system/impacts/types';
 import { STAT_LIST } from '@/system/stats/stats';
 
@@ -26,24 +25,16 @@ const stores = {
 const toggleStatsEdit = ref(false);
 const toggleImpactRemoval = ref(false);
 
-const name = metaStore.select((context) => context.name);
 const character = ref(stores.character.get().context);
-const characterName = ref('');
+const name = ref(stores.meta.get().context.name);
 const stats = ref(stores.stats.get().context);
 const resources = ref(stores.resources.get().context);
-
-console.log(stats.value)
-
-name.subscribe((context) => {
-  characterName.value = context;
-});
 
 characterStore.subscribe((snapshot) => {
   character.value = snapshot.context;
 });
 
 resourcesStore.subscribe((snapshot) => {
-  console.log('1', snapshot)
   resources.value = snapshot.context;
 });
 
@@ -51,13 +42,14 @@ statsStore.subscribe((snapshot) => {
   stats.value = snapshot.context;
 });
 
+type Store = keyof typeof stores
+
 const update = (
-  store: keyof typeof stores,
-  label: string,
-  event: number | string,
+  store: Store,
+  label: any,
+  event: any,
 ) => {
-  console.log('nom')
-  stores[store].trigger.set({ label: label, event: event });
+  stores[store].trigger.set({ label, value: event });
 };
 </script>
 
@@ -68,8 +60,8 @@ const update = (
         <LabelledInput
           class="flex basis-2/4"
           label="Name"
-          :modelValue="characterName"
-          @onUpdate:modelValue="
+          :modelValue="name"
+          @update:modelValue="
             (event: string) => update('meta', 'name', event)
           "
         />
@@ -77,16 +69,16 @@ const update = (
           class="flex basis-1/4"
           label="Callsign"
           :modelValue="character.callsign"
-          @onUpdate:modelValue="
-            (event: string) => update('character', 'name', event)
+          @update:modelValue="
+            (event: string) => update('character', 'callsign', event)
           "
         />
         <LabelledInput
           class="flex basis-1/4"
           label="Pronouns"
           :modelValue="character.pronouns"
-          @onUpdate:modelValue="
-            (event: string) => update('character', 'name', event)
+          @update:modelValue="
+            (event: string) => update('character', 'pronouns', event)
           "
         />
       </div>
@@ -145,7 +137,7 @@ const update = (
         :key="stat"
         :label="stat"
         :modelValue="stats[stat]"
-        @onUpdate:modelValue="
+        @update:modelValue="
           (event: number) => update('stats', stat, event)
         "
         input-modifier="py-12 font-bold text-2xl"

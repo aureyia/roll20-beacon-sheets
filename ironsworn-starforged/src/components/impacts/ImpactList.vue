@@ -23,7 +23,6 @@ defineProps({
 });
 
 const removeImpact = (impact: AnyImpact) => {
-  console.log(impact);
   impacts.trigger.remove(impact);
 };
 </script>

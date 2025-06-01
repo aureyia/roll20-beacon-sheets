@@ -8,20 +8,22 @@ export type MomentumHydrate = {
 };
 
 const assertMomentum = (momentum: number) => {
-  console.log(isNumberBetween(momentum, -6, 10))
   assert(isNumberBetween(momentum, -6, 10), `values.momentum: ${momentum}`);
 };
 
 export const momentumStore = createStore({
   context: { momentum: 2 },
+  emits: {
+    updated: () => {}
+  },
   on: {
     hydrate: (context, event: { momentum: number }) => {
       console.log('event.momentum', event.momentum)
-      // assertMomentum(event.momentum);
       context.momentum = event.momentum ?? context.momentum;
     },
-    set: (context, event: { value: number }) => {
+    set: (context, event: { value: number }, enqueue) => {
       context.momentum = event.value;
+      enqueue.emit.updated()
     },
   },
 });

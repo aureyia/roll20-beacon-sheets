@@ -21,7 +21,7 @@ router.push({ path: '/summary' });
 
 <style lang="sass" scoped>
 .fade-enter-active
-  transition: opacity 0.7s ease
+  transition: opacity 0.2s ease
   height: 0
 
 .fade-leave-active

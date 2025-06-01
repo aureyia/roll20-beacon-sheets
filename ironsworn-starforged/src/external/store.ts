@@ -1,29 +1,28 @@
 import type { Token } from '@roll20-official/beacon-sdk';
 import { createStore } from '@xstate/store';
-import { sync } from './sync';
 import { Effect, Layer, Context } from 'effect';
+import type { SetEvent } from '@/utility/store-types';
+import { assert } from '@/utility/assert';
 
-/* Every Character, regardless of sheet, has these meta fields
+/**
+ * Every Character, regardless of sheet, has these meta fields
  * and they must be saved to firebase in this specific way.
- * This store can be reused as-is for any other Vue project.
- * */
-export type MetaHydrate = {
+ */
+
+type MetaSetEvent = SetEvent<Meta>;
+
+type Meta = {
   id: string;
   name: string;
   avatar: string;
   bio: string;
   gmNotes: string;
   token: Record<string, any>;
+  campaignId: number | undefined;
+  permissions: Permissions;
 };
 
-export type MetaDehydrate = {
-  id: string;
-  name: string;
-  avatar: string;
-  bio: string;
-  gmNotes: string;
-  token: Record<string, any>;
-};
+export type MetaHydration = Omit<Meta, 'permissions' | 'campaignId'>;
 
 export type Permissions = {
   isOwner: boolean;
@@ -44,9 +43,11 @@ export const metaStore = createStore({
       isGM: false,
     },
   },
+  emits: {
+    updated: () => {},
+  },
   on: {
-    hydrate: (context, event: MetaHydrate) => {
-      console.log(event)
+    hydrate: (context, event: MetaHydration) => {
       context.id = event.id ?? context.id;
       context.name = event.name ?? context.name;
       context.avatar = event.avatar ?? context.avatar;
@@ -61,10 +62,24 @@ export const metaStore = createStore({
     setCampaignId: (context, event: { id: number | undefined }) => {
       context.campaignId = event.id;
     },
+    set: (context, event: MetaSetEvent, enqueue) => {
+      assert(
+        event.label !== 'name',
+        `Only 'name should be updated in the meta class`,
+      );
+      assert(
+        typeof event.value !== 'string',
+        `'value' should only ever be a string`,
+      );
+      if (event.label === 'name' && typeof event.value === 'string') {
+        context['name'] = event.value ?? context['name'];
+        enqueue.emit.updated();
+      }
+    },
   },
 });
 
-export const dehydrate = (): MetaDehydrate => {
+export const dehydrate = (): MetaHydration => {
   const context = metaStore.get().context;
   return {
     id: context.id,
@@ -79,7 +94,7 @@ export const dehydrate = (): MetaDehydrate => {
 export class DehydrateMeta extends Context.Tag('DehydrateMeta')<
   DehydrateMeta,
   {
-    readonly dehydrate: () => Effect.Effect<any>;
+    readonly dehydrate: () => Effect.Effect<MetaHydration>;
   }
 >() {}
 

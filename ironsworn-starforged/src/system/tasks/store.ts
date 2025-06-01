@@ -135,6 +135,9 @@ export const tasksStore = createStore({
   context: {
     list: [] as GenericTask[] | Vow[],
   },
+  emits: {
+    updated: () => {}
+  },
   on: {
     hydrate: (
       context,
@@ -142,7 +145,7 @@ export const tasksStore = createStore({
     ) => {
       context.list = Effect.runSync(objectToArray(event.tasks)) ?? context.list;
     },
-    add: (context, event) => {
+    add: (context, event, enqueue) => {
       //     description: string,
       //     category: TaskCategory,
       //     difficulty: Difficulty,
@@ -155,9 +158,10 @@ export const tasksStore = createStore({
       //       difficulty,
       //       status: 'active',
       //     });
+      enqueue.emit.updated()
     },
     remove: () => {},
-    set: (context, event: SetEvent) => {
+    set: (context, event: SetEvent, enqueue) => {
       context.list = context.list.map((task) => {
         if (task._id === event.id) {
           // TODO: Fix types
@@ -167,6 +171,7 @@ export const tasksStore = createStore({
 
         return task;
       });
+      enqueue.emit.updated()
     },
   },
 });
