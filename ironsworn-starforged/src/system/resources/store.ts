@@ -1,5 +1,5 @@
 import { createStore } from '@xstate/store';
-import { assertEffect } from '@/utility/assertEffect';
+import { assert } from '@/utility/assert';
 import { isNumberBetween } from '@/utility/isNumberBetween';
 import { Effect, Layer, Context } from 'effect';
 import type { SetEvent } from '@/utility/store-types';
@@ -40,21 +40,21 @@ const RESOURCE_LIMIT = {
 const isResourceWithMaximum = (resource: keyof Resources) =>
   RESOURCE_LIMIT[resource];
 
-const assertEffecttoreValues = (values: any) => {
-  assertEffect(
+const asserttoreValues = (values: any) => {
+  assert(
     isNumberBetween(values.health, 0, 5),
     `values.health: ${values.health}`,
   );
-  assertEffect(
+  assert(
     isNumberBetween(values.spirit, 0, 5),
     `values.spirit: ${values.spirit}`,
   );
-  assertEffect(
+  assert(
     isNumberBetween(values.supply, 0, 5),
     `values.supply: ${values.supply}`,
   );
-  assertEffect(values.xp >= 0, `values.xp: ${values.xp}`);
-  assertEffect(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`);
+  assert(values.xp >= 0, `values.xp: ${values.xp}`);
+  assert(values.spentXp >= 0, `values.spentXp: ${values.spentXp}`);
 };
 
 export const resourcesStore = createStore({

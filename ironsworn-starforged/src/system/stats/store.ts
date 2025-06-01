@@ -1,5 +1,5 @@
 import { Effect, Layer, Context } from 'effect';
-import { assertEffect } from '@/utility/assertEffect';
+import { assert } from '@/utility/assert';
 import { createStore } from '@xstate/store';
 import type { SetEvent } from '@/utility/store-types';
 
@@ -13,24 +13,24 @@ export type Stats = {
   wits: number;
 };
 
-const assertEffecttoreValues = (values: any) => {
-  assertEffect(
+const asserttoreValues = (values: any) => {
+  assert(
     typeof values.edge === 'number',
     `values.edge type: ${typeof values.edge}`,
   );
-  assertEffect(
+  assert(
     typeof values.heart === 'number',
     `values.heart type: ${typeof values.heart}`,
   );
-  assertEffect(
+  assert(
     typeof values.iron === 'number',
     `values.edge type: ${typeof values.iron}`,
   );
-  assertEffect(
+  assert(
     typeof values.shadow === 'number',
     `values.edge type: ${typeof values.shadow}`,
   );
-  assertEffect(
+  assert(
     typeof values.wits === 'number',
     `values.edge type: ${typeof values.wits}`,
   );

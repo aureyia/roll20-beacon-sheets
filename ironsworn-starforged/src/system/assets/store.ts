@@ -2,7 +2,7 @@ import { objectToArray, arrayToObject } from '@/utility/objectify';
 import { createId } from '@paralleldrive/cuid2';
 import { Context, Effect, Layer } from 'effect';
 import type { Ability, AssetCategory, Asset } from '@/system/assets/types';
-import { getAssetAbilities } from '@/system/assets/assets';
+import { getAssetAbilities } from '@/system/assets/asset';
 import { createStore } from '@xstate/store';
 
 export type AssetsHydrate = {
