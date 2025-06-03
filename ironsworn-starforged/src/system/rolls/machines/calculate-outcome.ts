@@ -1,6 +1,5 @@
 import { setup, assertEvent, type ActorRefFrom } from 'xstate';
 import { sendRollToChat } from '@/utility/sendRollToChat';
-import { actionDie } from '../dice';
 
 type Outcome =
   | 'opportunity'
@@ -55,11 +54,9 @@ export const machine = setup({
   actions: {
     resetMomentum: function ({ context, event }, params) {
       context.burnedMomentum = true;
-      // Add your action code here
-      // ...
     },
     saveParamsToContext: function ({ context, event }, params) {
-      // assertEvent(event, 'params');
+      assertEvent(event, 'params');
       context.actionDie.value = event.value.actionDie.value;
       context.actionDie.negated = event.value.actionDie.negated;
       context.actionScore = event.value.actionScore;
@@ -144,7 +141,7 @@ export const machine = setup({
       );
     },
     choseToBurn: function ({ event }) {
-      // assertEvent(event, 'burnChoice');
+      assertEvent(event, 'burnChoice');
       return event.value;
     },
     exceedsOne: function ({ context }) {

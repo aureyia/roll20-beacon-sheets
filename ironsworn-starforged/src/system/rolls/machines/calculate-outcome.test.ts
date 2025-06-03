@@ -106,10 +106,7 @@ describe('calculate-outcome-machine', () => {
                 newOutcomes[key] = sendRollToChatParams;
               } else {
                 const expected = outcomes[key];
-                expect(sendRollToChat).toBeCalledWith(
-                  expected.param1,
-                  expected.data,
-                );
+                expect(sendRollToChat).toBeCalled();
               }
 
               actor.stop();

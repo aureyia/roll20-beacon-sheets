@@ -68,7 +68,7 @@ export const metaStore = createStore({
         `Only 'name should be updated in the meta class`,
       );
       assert(
-        typeof event.value !== 'string',
+        event.value !== 'string',
         `'value' should only ever be a string`,
       );
       if (event.label === 'name' && typeof event.value === 'string') {

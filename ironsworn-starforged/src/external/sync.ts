@@ -1,4 +1,4 @@
-import { setup, createActor } from 'xstate';
+import { setup, createActor, assertEvent } from 'xstate';
 import { Effect, Layer } from 'effect';
 import type { ActorRefFrom } from 'xstate';
 import { createId } from '@paralleldrive/cuid2';
@@ -83,7 +83,7 @@ export const machine = setup({
   },
   actions: {
     saveDispatchToContext: function ({ context, event }) {
-      // assertEvent(event, 'initialised');
+      assertEvent(event, 'initialised');
       context.dispatch = event.dispatch;
     },
   },

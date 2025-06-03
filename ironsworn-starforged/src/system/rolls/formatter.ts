@@ -2,6 +2,7 @@ import { Effect, Context, Layer, Data } from 'effect';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import type { RolledDie, Die } from '@/system/rolls/dice';
 import { Dispatch, DispatchError } from './dispatch';
+import { assert } from '@/utility/assert';
 
 type AvailableDice = '1d6' | '1d10' | '1d100';
 type FormattedRoll = {
@@ -16,12 +17,19 @@ export class InvalidDie extends Data.TaggedError('InvalidDie')<{
   message: string;
 }> {}
 
+export class InvalidDispatch extends Data.TaggedError('InvalidDispatch')<{
+  message: string;
+}> {}
+
 export class RollFormatter extends Context.Tag('RollFormatter')<
   RollFormatter,
   {
     readonly roll: (
       dice: Die[],
-    ) => Effect.Effect<RolledDie[], DispatchError | InvalidDie>;
+    ) => Effect.Effect<
+      RolledDie[],
+      DispatchError | InvalidDie | InvalidDispatch
+    >;
   }
 >() {}
 
@@ -52,19 +60,7 @@ export const RollFormatterLive = Layer.effect(
             times: 3,
           });
 
-          console.log(output);
-
-          if (
-            !dice.every(
-              (die) => die.sides !== undefined && die.label !== undefined,
-            )
-          ) {
-            return yield* Effect.fail(
-              new InvalidDie({
-                message: 'Dice from beacon do not meet criteria',
-              }),
-            );
-          }
+          assert(output.results !== undefined)
 
           return dice.map((die, index) => ({
             sides: die.sides,

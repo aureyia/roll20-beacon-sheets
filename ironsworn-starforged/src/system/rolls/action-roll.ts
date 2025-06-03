@@ -7,8 +7,9 @@ import {
   RollFormatter,
   InvalidDie,
   RollFormatterLive,
+  InvalidDispatch,
 } from '@/system/rolls/formatter';
-import { Effect, Context, Layer, Either } from 'effect';
+import { Effect, Context, Layer, Either, Predicate } from 'effect';
 import { actionDice } from '@/system/rolls/dice';
 import { getDieByLabel, DieNotFound } from '@/system/rolls/get-die-by-label';
 import { type OutcomeActor } from '@/system/rolls/machines/calculate-outcome';
@@ -25,7 +26,11 @@ export class ActionRoll extends Context.Tag('ActionRoll')<
       rollName: string,
     ) => Effect.Effect<
       void,
-      ActionScoreError | InvalidDie | DieNotFound | DispatchError
+      | ActionScoreError
+      | InvalidDie
+      | DieNotFound
+      | DispatchError
+      | InvalidDispatch
     >;
   }
 >() {}
@@ -39,6 +44,8 @@ export const ActionRollLive = Layer.effect(
     return {
       roll: (actor, modifier, momentum, rollName) =>
         Effect.gen(function* () {
+          // assert(actor)
+
           const rolledDice = yield* formatter.roll(actionDice);
           const totalActionScore = yield* actionScore.calculate(
             rolledDice,
@@ -79,9 +86,9 @@ export const ActionRollLive = Layer.effect(
   }),
 );
 
-const FormatAndRoll = RollFormatterLive.pipe(Layer.provide(DispatchLive));
+const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ActionRollLive.pipe(
-  Layer.provide(FormatAndRoll),
+  Layer.provide(FormatAndRollLive),
   Layer.provide(ActionScoreLive),
 );
 

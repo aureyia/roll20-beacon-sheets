@@ -10,7 +10,7 @@ import './sheet/css/index.css';
 
 import { getVueRelay } from './external/vue.relay';
 import { syncPlugin } from './external/sync';
-import { busPlugin } from './external/bus';
+import { storeRelay } from './external/store.relay';
 
 // @ts-ignore
 const env = import.meta.env.MODE || '';
@@ -23,7 +23,7 @@ const isDevEnvironment = ['development', 'test'].includes(env);
 
   const { vueRelay, dispatch } = await Effect.runPromise(getVueRelay());
   const sync = syncPlugin(dispatch);
-  const bus = busPlugin();
+  const bus = storeRelay();
 
   app.use(router);
   app.use(i18n);
@@ -33,9 +33,3 @@ const isDevEnvironment = ['development', 'test'].includes(env);
 
   app.mount('#app');
 })();
-
-// const MainLive = pipe(
-//   main()
-// )
-
-// BrowserRuntime.runMain(MainLive);
