@@ -5,7 +5,7 @@ import { assert } from '@/utility/assert';
 import { ParseError } from 'effect/ParseResult';
 
 type AvailableDice = '1d6' | '1d10' | '1d100';
-export type DispatchResultsOutput = { results: DispatchResults}
+export type DispatchResultsOutput = { results: DispatchResults };
 
 export type FormattedRoll = {
   rolls: {
@@ -25,7 +25,7 @@ export class Dispatch extends Context.Tag('Dispatch')<
   {
     readonly roll: (
       dice: FormattedRoll['rolls'],
-    ) => Effect.Effect<DispatchResultsOutput, DispatchError | ParseError >;
+    ) => Effect.Effect<DispatchResultsOutput, DispatchError | ParseError>;
   }
 >() {}
 
@@ -59,5 +59,3 @@ export const DispatchLive = Layer.effect(
     };
   }),
 );
-
-

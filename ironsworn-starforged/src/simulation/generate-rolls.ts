@@ -26,7 +26,7 @@ actor.subscribe((snapshot) => {
     snapshot.matches('Eligible for Weak Hit');
 
   if (matched) {
-    console.log('matched')
+    console.log('matched');
     actor.send({
       type: 'burnChoice',
       value: true,
@@ -40,7 +40,8 @@ const momentum = momentumStore.get().context.momentum;
 
 const streamInit = Schedule.spaced('1000 millis');
 export const rollSteam = Stream.fromSchedule(streamInit).pipe(
-  Stream.runForEach((n) => actionRoll(actor, modifier, momentum, moveData.Name).pipe(
+  Stream.runForEach((n) =>
+    actionRoll(actor, modifier, momentum, moveData.Name).pipe(
       Effect.provide(MainLive),
     ),
   ),

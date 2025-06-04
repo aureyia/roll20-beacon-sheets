@@ -1,8 +1,8 @@
-import type { Dispatch } from "@roll20-official/beacon-sdk";
-import { rollResults } from "./roll-results";
-import { ref } from "vue";
+import type { Dispatch } from '@roll20-official/beacon-sdk';
+import { rollResults } from './roll-results';
+import { ref } from 'vue';
 
-export const postRef = ref()
+export const postRef = ref();
 
 const character = {
   id: '-ORfR02B4KDjtJ6bwU_p',
@@ -55,10 +55,10 @@ const character = {
     height: 70,
     layer: 'objects',
   },
-}
+};
 
 export const simRelay = async (relayConfig: any) => {
-  relayConfig.handlers.onInit({character, settings: {}})
+  relayConfig.handlers.onInit({ character, settings: {} });
   return {
     update: (...args: any[]) => console.log('devRelay update', args),
     updateCharacter: (...args: any[]) =>
@@ -69,6 +69,6 @@ export const simRelay = async (relayConfig: any) => {
     updateTokensByCharacter: () => '',
     updateSharedSettings: async (update: any) => await {},
     roll: async (roll: any) => await rollResults,
-    post: async (args: any) => postRef.value = args
+    post: async (args: any) => (postRef.value = args),
   } as any as Dispatch;
-}
+};

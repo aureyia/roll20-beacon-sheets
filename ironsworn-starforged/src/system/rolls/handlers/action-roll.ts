@@ -109,7 +109,8 @@ export const roll = (
       InvalidDie: (_InvalidDie) => Console.log('InvalidDie Error'),
       DieNotFound: (_DieNotFound) => Console.log('DieNotFound Error'),
       DispatchError: (_DispatchError) => Console.log('Dispatch Error'),
-      InvalidDispatch: (_InvalidDispatch) => Console.log('InvalidDispatch Error'),
-      ParseError: (_ParseError) => Console.log('Parse Error')
-    })
-  )
+      InvalidDispatch: (_InvalidDispatch) =>
+        Console.log('InvalidDispatch Error'),
+      ParseError: (_ParseError) => Console.log('Parse Error'),
+    }),
+  );

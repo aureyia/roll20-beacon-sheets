@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { postRef } from '@/simulation/dispatch.mock'
+import { postRef } from '@/simulation/dispatch.mock';
 import { metaStore } from '@/external/store';
 import { characterStore } from '@/system/character/store';
 import { resourcesStore } from '@/system/resources/store';
@@ -21,26 +21,26 @@ const stores = {
   stats: statsStore,
   tasks: tasksStore,
   settings: settingsStore,
-}
-
+};
 </script>
 
 <template>
   <div class="mt-50 mx-auto flex gap-10">
+    <div></div>
     <div>
-    </div>
-    <div>
-      <h2 class="text-xl mb-2">Roll Display</h2>
+      <h2 class="mb-2 text-xl">Roll Display</h2>
       <div class="w-[250px]" v-html="postRef.content" />
     </div>
     <div class="w-[800px]">
       <h2 class="text-xl">Stores</h2>
       <div class="flex flex-wrap gap-2">
-        <Card class="w-[200px]" v-for="store, key in stores">
+        <Card class="w-[200px]" v-for="(store, key) in stores">
           <CardHeader>
-            <CardTitle class="uppercase text-[18px]">{{ key }}</CardTitle>
+            <CardTitle class="text-[18px] uppercase">{{ key }}</CardTitle>
           </CardHeader>
-          <CardContent class="text-sm">{{ store.getSnapshot().context }}</CardContent>
+          <CardContent class="text-sm">{{
+            store.getSnapshot().context
+          }}</CardContent>
         </Card>
       </div>
     </div>
@@ -60,7 +60,7 @@ rolltemplate.starforged
   font-size: 1rem
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5)
   // font-family: 'Montserrat', sans-serif
-  
+
   .action-score__warning
     background-color: #783030
     width: 100%
@@ -77,7 +77,7 @@ rolltemplate.starforged
     padding: 0.2em
     margin-bottom: 0.3rem
     font-size: 0.9rem
-  
+
   .action-score__col
     flex-direction: column
 
@@ -111,7 +111,7 @@ rolltemplate.starforged
     padding: 0.2rem 0.3rem
     font-size: 0.9rem
     font-style: italic
-  
+
   .roll-outcome,
   .stat__body
     color: white
@@ -121,7 +121,7 @@ rolltemplate.starforged
 
   .compact-stat__body
     padding: 0.5rem
-  
+
   .compact-challenge-dice
     margin-top: 0.2rem
 
@@ -137,7 +137,7 @@ rolltemplate.starforged
     margin-right: 0.2rem
 
   .compact-challenge-dice__col-1
-    align-self: center 
+    align-self: center
 
   .compact-challenge-dice__sub-col-1,
   .compact-challenge-dice__sub-col-2
@@ -145,7 +145,7 @@ rolltemplate.starforged
     background: #545454
     border-radius: 0.3rem
     width: 1.7rem
-    text-align: center 
+    text-align: center
 
   .compact-row__gap
     width: 1.4rem
@@ -173,9 +173,9 @@ rolltemplate.starforged
 
   .compact-stat__footer
     background-color: #545454
-    border-radius: 0.5rem 
+    border-radius: 0.5rem
     box-shadow: 0 0 5px 0 rgba(0,0,0,0.5)
-    line-height: normal 
+    line-height: normal
 
   .compact-roll-outcome__box
     width: 0.7rem
@@ -184,7 +184,7 @@ rolltemplate.starforged
 
   .compact-roll-outcome__col-1
     margin-right: 0.5rem
-  
+
   .compact-roll-outcome__col-2
     align-self: center
 
@@ -193,7 +193,7 @@ rolltemplate.starforged
   .compact-roll-outcome__complication
     background: #d22e53
   .compact-roll-outcome__weak-hit
-    background: #83dbff 
+    background: #83dbff
   .compact-roll-outcome__strong-hit
     background: #63a9ca
   .compact-roll-outcome__opportunity

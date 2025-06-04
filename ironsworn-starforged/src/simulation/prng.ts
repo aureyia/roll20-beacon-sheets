@@ -4,8 +4,8 @@ import { createHash } from 'node:crypto';
 export class Fuzzer extends Context.Tag('Fuzzer')<
   Fuzzer,
   {
-    readonly next: () => number 
-    readonly generateRandomNumber: (seed: string) => number
+    readonly next: () => number;
+    readonly generateRandomNumber: (seed: string) => number;
   }
 >() {}
 
@@ -21,11 +21,10 @@ export const FuzzerLive = Layer.effect(
         const hash = createHash('sha256').update(seed).digest('hex');
         return (
           Number(
-            (BigInt('0x' + hash) * BigInt(LCG_CONSTANT)) %
-              BigInt(LCG_MOD),
+            (BigInt('0x' + hash) * BigInt(LCG_CONSTANT)) % BigInt(LCG_MOD),
           ) >>> 0
         );
-      }
-    }
-  })
+      },
+    };
+  }),
 );

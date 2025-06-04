@@ -7,18 +7,15 @@ import { describe, test, vi, expect } from 'vitest';
 import { ActionScoreLive } from '../action-score';
 import { ActionRollLive } from './action-roll';
 import { RollFormatterLive } from '../formatter';
-import type { DispatchResultsOutput } from '../dispatch'
+import type { DispatchResultsOutput } from '../dispatch';
 import * as exports from '@/utility/sendRollToChat';
 import { dispatchRef as dispatchRefVar } from '@/external/vue.relay';
 
 const rollResults = {};
 
-export const DispatchTest = Layer.succeed(
-  Dispatch,
-  {
-    roll: (_dice) => Effect.succeed(rollResults as DispatchResultsOutput),
-  }
-);
+export const DispatchTest = Layer.succeed(Dispatch, {
+  roll: (_dice) => Effect.succeed(rollResults as DispatchResultsOutput),
+});
 
 const FormatAndRollTest = RollFormatterLive.pipe(Layer.provide(DispatchTest));
 const MainTest = ActionRollLive.pipe(

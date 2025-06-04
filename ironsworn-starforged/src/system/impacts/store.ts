@@ -44,19 +44,13 @@ const filterOutImpact = (context: any, event: AnyImpact) =>
 function assertAddImpact(data: AddImpact) {
   assert(!data.category, 'Category is required when adding an impact');
   assert(!data.name, 'Option is required when adding an impact');
-  assert(
-    !isValidCategory(data.category),
-    `Unknown category: ${data.category}`,
-  );
+  assert(!isValidCategory(data.category), `Unknown category: ${data.category}`);
 }
 
 function assertRemoveImpact(data: AnyImpact) {
   assert(!data.category, 'Category is required when adding an impact');
   assert(!data._id, '_id is required when removing an impact');
-  assert(
-    !isValidCategory(data.category),
-    `Unknown category: ${data.category}`,
-  );
+  assert(!isValidCategory(data.category), `Unknown category: ${data.category}`);
 }
 
 export type HydrateEvent = {

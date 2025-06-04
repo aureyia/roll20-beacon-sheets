@@ -62,7 +62,7 @@ export const RollFormatterLive = Layer.effect(
             times: 3,
           });
 
-          assert(output.results['dice-0'].results !== undefined)
+          assert(output.results['dice-0'].results !== undefined);
           return dice.map((die, index) => ({
             sides: die.sides,
             label: die.label,

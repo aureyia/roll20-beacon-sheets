@@ -24,7 +24,7 @@ const isSimEnvironment = env === 'simulation';
   const app = createApp(App);
 
   const { sheetRelay, dispatch } = await Effect.runPromise(
-    isSimEnvironment ? simRelayPlugin() : sheetRelayPlugin(isDevEnvironment)
+    isSimEnvironment ? simRelayPlugin() : sheetRelayPlugin(isDevEnvironment),
   );
   const sync = syncPlugin(dispatch);
 
@@ -32,7 +32,7 @@ const isSimEnvironment = env === 'simulation';
   app.use(i18n);
   app.use(sync);
   app.use(sheetRelay);
-  
+
   Effect.runFork(storeRelay);
   if (isSimEnvironment) Effect.runFork(simRunner);
 

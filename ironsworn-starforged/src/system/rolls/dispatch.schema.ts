@@ -1,10 +1,12 @@
 import { Schema } from 'effect';
 
-export type DispatchResultsSchema = Schema.Schema.Type<typeof DispatchResultsSchema>
-export type DispatchResults = DispatchResultsSchema['results']
-export type DieKey = Schema.Schema.Type<typeof DieKey>
+export type DispatchResultsSchema = Schema.Schema.Type<
+  typeof DispatchResultsSchema
+>;
+export type DispatchResults = DispatchResultsSchema['results'];
+export type DieKey = Schema.Schema.Type<typeof DieKey>;
 
-export const DieKey = Schema.TemplateLiteral('dice-', Schema.Number)
+export const DieKey = Schema.TemplateLiteral('dice-', Schema.Number);
 export const DieExpression = Schema.TemplateLiteral(
   Schema.Number,
   'd',

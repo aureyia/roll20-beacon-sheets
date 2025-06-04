@@ -67,10 +67,7 @@ export const metaStore = createStore({
         event.label !== 'name',
         `Only 'name should be updated in the meta class`,
       );
-      assert(
-        event.value !== 'string',
-        `'value' should only ever be a string`,
-      );
+      assert(event.value !== 'string', `'value' should only ever be a string`);
       if (event.label === 'name' && typeof event.value === 'string') {
         context['name'] = event.value ?? context['name'];
         enqueue.emit.updated();
