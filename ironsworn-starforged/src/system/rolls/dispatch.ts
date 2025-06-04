@@ -1,7 +1,7 @@
-import { Effect, Context, Layer, Data, Schema } from 'effect';
+import { Effect, Context, Layer, Data, Schema, ParseResult } from 'effect';
 import { dispatchRef } from '@/external/vue.relay';
-import type { Dispatch as DispatchType } from '@roll20-official/beacon-sdk';
-import { DispatchResultsSchema } from './dispatch.schema';
+import { DispatchResultsSchema, type DispatchResults } from './dispatch.schema';
+import { assert } from '@/utility/assert'
 
 type AvailableDice = '1d6' | '1d10' | '1d100';
 
@@ -23,7 +23,7 @@ export class Dispatch extends Context.Tag('Dispatch')<
   {
     readonly roll: (
       dice: FormattedRoll['rolls'],
-    ) => Effect.Effect<unknown, DispatchError>;
+    ) => Effect.Effect<DispatchResults, DispatchError>;
   }
 >() {}
 
@@ -31,8 +31,10 @@ export const DispatchLive = Layer.effect(
   Dispatch,
   Effect.gen(function* () {
     return {
-      roll: async (dice) =>
+      roll: (dice) =>
         Effect.gen(function* () {
+          assert(Object.keys(dice).length > 0)
+
           const dispatchResult = yield* Effect.tryPromise({
             try: () =>
               dispatchRef.value.roll({
@@ -45,11 +47,12 @@ export const DispatchLive = Layer.effect(
               }),
           });
 
-          const { rawResults, ...results } = dispatchResult
+          const { rawResults, ...results } = Schema.decodeUnknownSync(
+            DispatchResultsSchema,
+          )(dispatchResult);
 
-          console.log(Schema.decodeUnknownSync(DispatchResultsSchema)(results))
-
-          return Effect.succeed(results);
+          assert(Object.keys(results.results).length > 0)
+          return results;
         }),
     };
   }),

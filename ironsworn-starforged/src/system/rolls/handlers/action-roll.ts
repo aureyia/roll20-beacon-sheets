@@ -15,6 +15,7 @@ import { getDieByLabel, DieNotFound } from '@/system/rolls/get-die-by-label';
 import { type OutcomeActor } from '@/system/rolls/machines/calculate-outcome';
 import { initValues } from '@/external/sync';
 import { DispatchError, DispatchLive } from '@/system/rolls/dispatch';
+import { assert } from '@/utility/assert';
 
 export class ActionRoll extends Context.Tag('ActionRoll')<
   ActionRoll,
@@ -44,7 +45,7 @@ export const ActionRollLive = Layer.effect(
     return {
       roll: (actor, modifier, momentum, rollName) =>
         Effect.gen(function* () {
-          // assert(actor)
+          assert(initValues.character.id !== undefined);
 
           const rolledDice = yield* formatter.roll(actionDice);
           const totalActionScore = yield* actionScore.calculate(
@@ -62,6 +63,11 @@ export const ActionRollLive = Layer.effect(
             },
           );
 
+          assert(
+            challengeDie1.value > 0 &&
+              challengeDie2.value > 0 &&
+              actionDie.value > 0,
+          );
           actor.start();
           actor.send({
             type: 'params',

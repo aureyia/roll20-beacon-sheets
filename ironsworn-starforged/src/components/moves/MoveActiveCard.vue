@@ -7,9 +7,9 @@ import { marked } from 'marked';
 import { getMoveData } from '@/utility/moves/getMoveData';
 import { MoveActions } from '@/components/moves';
 import { momentumStore } from '@/system/momentum/store';
-import { roll as actionRoll } from '@/system/rolls/action-roll';
-import { roll as progressRoll } from '@/system/rolls/progress-roll-handler';
-import { roll as oracleRoll } from '@/system/rolls/oracle-roll-handler';
+import { roll as actionRoll } from '@/system/rolls/handlers/action-roll';
+import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll';
+import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll';
 import { machine } from '@/system/rolls/machines/calculate-outcome';
 import { createActor } from 'xstate';
 
@@ -35,6 +35,8 @@ const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
 
 const testRoll = async (moveData: any) => {
   await Effect.runPromise(actionRoll(actor, 2, momentum.value, moveData.Name));
+  await Effect.runPromise(progressRoll(actor, 5, moveData.Name));
+  await Effect.runPromise(oracleRoll(actor, 2, moveData.Name));
 };
 
 const burnMomentum = (choice: boolean) => {

@@ -2,8 +2,9 @@ import {
   RollFormatterLive,
   RollFormatter,
   InvalidDie,
+  InvalidDispatch,
 } from '@/system/rolls/formatter';
-import { DispatchError, DispatchLive } from './dispatch';
+import { DispatchError, DispatchLive } from '../dispatch';
 import { Effect, Context, Layer } from 'effect';
 import { oracleDie } from '@/system/rolls/dice';
 import { DieNotFound, getDieByLabel } from '@/system/rolls/get-die-by-label';
@@ -15,7 +16,7 @@ class OracleRoll extends Context.Tag('OracleRoll')<
   {
     readonly roll: () => Effect.Effect<
       OracleRollResult,
-      DispatchError | DieNotFound | InvalidDie
+      DispatchError | DieNotFound | InvalidDie | InvalidDispatch
     >;
   }
 >() {}

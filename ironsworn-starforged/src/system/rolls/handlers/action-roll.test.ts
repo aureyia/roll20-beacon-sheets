@@ -1,12 +1,12 @@
 import { Effect, Layer } from 'effect';
 import { createActor } from 'xstate';
-import { machine } from './machines/calculate-outcome';
-import { Dispatch, DispatchError } from './dispatch';
+import { machine, type OutcomeActor } from '../machines/calculate-outcome';
+import { Dispatch, DispatchError } from '../dispatch';
 // import { rollResults } from './mocks/example-roll';
 import { describe, test, vi, expect } from 'vitest';
-import { ActionScoreLive } from './action-score';
+import { ActionScoreLive } from '../action-score';
 import { ActionRollLive, ActionRoll } from './action-roll';
-import { RollFormatterLive } from './formatter';
+import { RollFormatterLive } from '../formatter';
 import * as exports from '@/utility/sendRollToChat';
 
 
@@ -54,17 +54,19 @@ describe('ActionRoll', () => {
   test('nom', () => {
     const sendRollToChat = vi
       .spyOn(exports, 'sendRollToChat')
-      .mockImplementation(async () => {
-        console.log('sendRollToChat: I got called WTF');
-      });
+      .mockImplementation(async () => {});
 
     const actor = createActor(machine);
 
     actor.subscribe((snapshot) => {
       const eligibleMatched =
+        // @ts-ignore
         snapshot.matches('Eligible for Opportunity') ||
+        // @ts-ignore
         snapshot.matches('Hitting: Eligible for Strong Hit') ||
+        // @ts-ignore
         snapshot.matches('Missing: Eligible for Strong Hit') ||
+        // @ts-ignore
         snapshot.matches('Eligible for Weak Hit');
       if (eligibleMatched) {
         actor.send({ type: 'burnChoice', value: true });
