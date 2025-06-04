@@ -2,7 +2,9 @@ import { Schema } from 'effect';
 
 export type DispatchResultsSchema = Schema.Schema.Type<typeof DispatchResultsSchema>
 export type DispatchResults = DispatchResultsSchema['results']
+export type DieKey = Schema.Schema.Type<typeof DieKey>
 
+export const DieKey = Schema.TemplateLiteral('dice-', Schema.Number)
 export const DieExpression = Schema.TemplateLiteral(
   Schema.Number,
   'd',
@@ -13,9 +15,9 @@ export const DispatchResultsSchema = Schema.Struct({
   requestId: Schema.String,
   messageId: Schema.String,
   results: Schema.Record({
-    key: Schema.TemplateLiteral('dice-', Schema.Number),
+    key: DieKey,
     value: Schema.Struct({
-      rollName: Schema.TemplateLiteral('dice-', Schema.Number),
+      rollName: DieKey,
       expression: DieExpression,
       results: Schema.Struct({
         result: Schema.Number,

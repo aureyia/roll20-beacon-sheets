@@ -1,0 +1,204 @@
+<script setup lang="ts">
+import { postRef } from '@/simulation/dispatch.mock'
+import { metaStore } from '@/external/store';
+import { characterStore } from '@/system/character/store';
+import { resourcesStore } from '@/system/resources/store';
+import { impactsStore } from '@/system/impacts/store';
+import { momentumStore } from '@/system/momentum/store';
+import { assetsStore } from '@/system/assets/store';
+import { statsStore } from '@/system/stats/store';
+import { tasksStore } from '@/system/tasks/store';
+import { settingsStore } from '@/system/settings/store';
+import Card from '@/components/ui/card/Card.vue';
+
+const stores = {
+  meta: metaStore,
+  character: characterStore,
+  resources: resourcesStore,
+  impacts: impactsStore,
+  momentum: momentumStore,
+  assets: assetsStore,
+  stats: statsStore,
+  tasks: tasksStore,
+  settings: settingsStore,
+}
+
+</script>
+
+<template>
+  <div class="mt-50 mx-auto flex gap-10">
+    <div>
+    </div>
+    <div>
+      <h2 class="text-xl mb-2">Roll Display</h2>
+      <div class="w-[250px]" v-html="postRef.content" />
+    </div>
+    <div class="w-[800px]">
+      <h2 class="text-xl">Stores</h2>
+      <div class="flex flex-wrap gap-2">
+        <Card class="w-[200px]" v-for="store, key in stores">
+          <CardHeader>
+            <CardTitle class="uppercase text-[18px]">{{ key }}</CardTitle>
+          </CardHeader>
+          <CardContent class="text-sm">{{ store.getSnapshot().context }}</CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="sass">
+
+// TODO: Finish Styling for Roll Templates
+rolltemplate.starforged
+  display: block
+  max-width: 100%
+  border-radius: 0.5rem
+  background: #3c3c3c
+  color: #ffffff
+  padding: 0.5em
+  font-size: 1rem
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5)
+  // font-family: 'Montserrat', sans-serif
+  
+  .action-score__warning
+    background-color: #783030
+    width: 100%
+    text-align: center
+    border-radius: 0.6em
+    padding: 0.2em
+    margin-bottom: 0.2rem
+
+  .compact-action-score__warning
+    background-color: #783030
+    width: 100%
+    text-align: center
+    border-radius: 0.6em
+    padding: 0.2em
+    margin-bottom: 0.3rem
+    font-size: 0.9rem
+  
+  .action-score__col
+    flex-direction: column
+
+  .action-score__value
+    font-size: 24px
+    background-color: neutral
+    padding: 0.3em
+    border-radius: 0.1em
+
+  .compact-action-score__title
+    align-self: center
+
+  .compact-action-score__value
+    padding: 0.3rem
+    background-color: #545454
+    border-radius: 0.3rem
+    text-align: center
+    width: 1.7rem
+
+  .header
+    background-color: #545454
+    color: white
+    padding: 0.4em 1em
+    font-style: italic
+    border-radius: 0.7em
+
+  .compact-header
+    background-color: #545454
+    border-radius: 0.5rem
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5)
+    padding: 0.2rem 0.3rem
+    font-size: 0.9rem
+    font-style: italic
+  
+  .roll-outcome,
+  .stat__body
+    color: white
+    padding: 0.4em 1em
+    margin: 0.2em 0
+    border-radius: 1em
+
+  .compact-stat__body
+    padding: 0.5rem
+  
+  .compact-challenge-dice
+    margin-top: 0.2rem
+
+  .compact-challenge-dice__row,
+  .compact-action-score__row
+    display: flex
+    justify-content: space-between
+
+  .compact-roll-outcome__row
+    display: flex
+
+  .compact-challenge-dice__sub-col-1
+    margin-right: 0.2rem
+
+  .compact-challenge-dice__col-1
+    align-self: center 
+
+  .compact-challenge-dice__sub-col-1,
+  .compact-challenge-dice__sub-col-2
+    padding: 0.3rem
+    background: #545454
+    border-radius: 0.3rem
+    width: 1.7rem
+    text-align: center 
+
+  .compact-row__gap
+    width: 1.4rem
+
+  .action-score__row,
+  .challenge-dice__row
+    display: flex
+    justify-content: space-between
+    margin-bottom: 0.3em
+
+  .roll-outcome__row
+    display: flex
+    justify-content: space-between
+
+  .action-score__title,
+  .challenge-dice__col-1,
+  .roll-outcome__col-1
+    align-content: center
+    font-size: 1em
+
+  .stat__footer
+    background-color: #545454
+    border-radius: 1em
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5)
+
+  .compact-stat__footer
+    background-color: #545454
+    border-radius: 0.5rem 
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5)
+    line-height: normal 
+
+  .compact-roll-outcome__box
+    width: 0.7rem
+    height: auto
+    border-radius: 0.3rem 0rem 0rem 0.3rem
+
+  .compact-roll-outcome__col-1
+    margin-right: 0.5rem
+  
+  .compact-roll-outcome__col-2
+    align-self: center
+
+  .compact-roll-outcome__miss
+    background: #ff4d4d
+  .compact-roll-outcome__complication
+    background: #d22e53
+  .compact-roll-outcome__weak-hit
+    background: #83dbff 
+  .compact-roll-outcome__strong-hit
+    background: #63a9ca
+  .compact-roll-outcome__opportunity
+    background: #40819f
+
+  .compact-roll-outcome
+    height: 100%
+</style>

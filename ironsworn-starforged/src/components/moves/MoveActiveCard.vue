@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Effect } from 'effect';
+import { Effect, Layer } from 'effect';
 import { CardHeader, Card, CardContent, CardFooter } from '../ui/card';
 import { Button } from '../ui/button';
 import { inject, computed, provide, ref, onMounted, onUnmounted } from 'vue';
@@ -12,6 +12,16 @@ import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll';
 import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll';
 import { machine } from '@/system/rolls/machines/calculate-outcome';
 import { createActor } from 'xstate';
+import { RollFormatterLive } from '@/system/rolls/formatter';
+import { DispatchLive } from '@/system/rolls/dispatch';
+import { ActionRollLive } from '@/system/rolls/handlers/action-roll';
+import { ActionScoreLive } from '@/system/rolls/action-score';
+
+const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
+const MainLive = ActionRollLive.pipe(
+  Layer.provide(FormatAndRollLive),
+  Layer.provide(ActionScoreLive),
+);
 
 const { activeMove }: any = inject('move');
 const actor = createActor(machine);
@@ -34,9 +44,13 @@ onMounted(() => {
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
 
 const testRoll = async (moveData: any) => {
-  await Effect.runPromise(actionRoll(actor, 2, momentum.value, moveData.Name));
-  await Effect.runPromise(progressRoll(actor, 5, moveData.Name));
-  await Effect.runPromise(oracleRoll(actor, 2, moveData.Name));
+  await Effect.runPromise(
+    actionRoll(actor, 2, momentum.value, moveData.Name).pipe(
+      Effect.provide(MainLive),
+    ),
+  );
+  // await Effect.runPromise(progressRoll(actor, 5, moveData.Name));
+  // await Effect.runPromise(oracleRoll(actor, 2, moveData.Name));
 };
 
 const burnMomentum = (choice: boolean) => {

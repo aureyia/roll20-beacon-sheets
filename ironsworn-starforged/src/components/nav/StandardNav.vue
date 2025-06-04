@@ -14,6 +14,7 @@ const navList = {
   moves: '/moves',
   assets: '/assets',
   connections: '/connections',
+  simulation: '/simulation',
 };
 </script>
 

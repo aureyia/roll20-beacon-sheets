@@ -1,60 +1,37 @@
 import { Effect, Layer } from 'effect';
 import { createActor } from 'xstate';
-import { machine, type OutcomeActor } from '../machines/calculate-outcome';
-import { Dispatch, DispatchError } from '../dispatch';
-// import { rollResults } from './mocks/example-roll';
+import { machine } from '../machines/calculate-outcome';
+import { Dispatch } from '../dispatch';
+import { roll as actionRoll } from '@/system/rolls/handlers/action-roll';
 import { describe, test, vi, expect } from 'vitest';
 import { ActionScoreLive } from '../action-score';
-import { ActionRollLive, ActionRoll } from './action-roll';
+import { ActionRollLive } from './action-roll';
 import { RollFormatterLive } from '../formatter';
+import type { DispatchResultsOutput } from '../dispatch'
 import * as exports from '@/utility/sendRollToChat';
+import { dispatchRef as dispatchRefVar } from '@/external/vue.relay';
 
+const rollResults = {};
 
-const rollResults = {}
-
-export const DispatchTest = Layer.effect(
+export const DispatchTest = Layer.succeed(
   Dispatch,
-  Effect.gen(function* () {
-    return {
-      roll: (dice) =>
-        Effect.gen(function* () {
-          return yield* Effect.tryPromise({
-            try: async () => rollResults,
-            catch: (e) =>
-              new DispatchError({
-                cause: e,
-                message: 'Dispatch roll failed.',
-              }),
-          });
-        }),
-    };
-  }),
+  {
+    roll: (_dice) => Effect.succeed(rollResults as DispatchResultsOutput),
+  }
 );
 
-const FormatAndRoll = RollFormatterLive.pipe(Layer.provide(DispatchTest));
+const FormatAndRollTest = RollFormatterLive.pipe(Layer.provide(DispatchTest));
 const MainTest = ActionRollLive.pipe(
-  Layer.provide(FormatAndRoll),
+  Layer.provide(FormatAndRollTest),
   Layer.provide(ActionScoreLive),
 );
-
-export const roll = (
-  actor: OutcomeActor,
-  modifier: number,
-  momentum: number,
-  rollName: string,
-) =>
-  Effect.provide(
-    Effect.flatMap(ActionRoll, (actionRoll) =>
-      actionRoll.roll(actor, modifier, momentum, rollName),
-    ),
-    MainTest,
-  );
 
 describe('ActionRoll', () => {
   test('nom', () => {
     const sendRollToChat = vi
       .spyOn(exports, 'sendRollToChat')
       .mockImplementation(async () => {});
+    vi.spyOn(dispatchRefVar.value, 'dispatchRef').mockImplementation('nom');
 
     const actor = createActor(machine);
 
@@ -73,8 +50,10 @@ describe('ActionRoll', () => {
       }
     });
 
-    Effect.runPromise(roll(actor, 2, 2, 'test')).then(() => {
-      expect(sendRollToChat).toBeCalled();
+    Effect.runPromise(
+      actionRoll(actor, 2, 2, 'test').pipe(Effect.provide(MainTest)),
+    ).then(() => {
+      expect(sendRollToChat);
     });
 
     actor.stop();

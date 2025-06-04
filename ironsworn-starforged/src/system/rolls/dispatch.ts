@@ -1,9 +1,11 @@
-import { Effect, Context, Layer, Data, Schema, ParseResult } from 'effect';
+import { Effect, Context, Layer, Data, Schema } from 'effect';
 import { dispatchRef } from '@/external/vue.relay';
 import { DispatchResultsSchema, type DispatchResults } from './dispatch.schema';
-import { assert } from '@/utility/assert'
+import { assert } from '@/utility/assert';
+import { ParseError } from 'effect/ParseResult';
 
 type AvailableDice = '1d6' | '1d10' | '1d100';
+export type DispatchResultsOutput = { results: DispatchResults}
 
 export type FormattedRoll = {
   rolls: {
@@ -23,7 +25,7 @@ export class Dispatch extends Context.Tag('Dispatch')<
   {
     readonly roll: (
       dice: FormattedRoll['rolls'],
-    ) => Effect.Effect<DispatchResults, DispatchError>;
+    ) => Effect.Effect<DispatchResultsOutput, DispatchError | ParseError >;
   }
 >() {}
 
@@ -33,7 +35,7 @@ export const DispatchLive = Layer.effect(
     return {
       roll: (dice) =>
         Effect.gen(function* () {
-          assert(Object.keys(dice).length > 0)
+          assert(Object.keys(dice).length > 0);
 
           const dispatchResult = yield* Effect.tryPromise({
             try: () =>
@@ -47,13 +49,15 @@ export const DispatchLive = Layer.effect(
               }),
           });
 
-          const { rawResults, ...results } = Schema.decodeUnknownSync(
+          const { rawResults, ...results } = yield* Schema.decodeUnknown(
             DispatchResultsSchema,
           )(dispatchResult);
 
-          assert(Object.keys(results.results).length > 0)
+          assert(Object.keys(results.results).length > 0);
           return results;
         }),
     };
   }),
 );
+
+

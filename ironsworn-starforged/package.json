@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "sim": "vite --mode simulation",
     "sandbox-server": "vite --port 7620 --mode staging",
     "sandbox": "run-s build-scss sandbox-server",
     "build": "run-s build-scss build-only",

@@ -8,3 +8,4 @@ export { default as SummaryView } from './SummaryView.vue';
 export { default as VowsView } from './VowsView.vue';
 export { default as MovesOverView } from './moves/MovesOverView.vue';
 export { default as MovesDetailView } from './moves/MovesDetailView.vue';
+export { default as SimView } from './SimView.vue';

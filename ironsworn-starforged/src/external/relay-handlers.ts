@@ -8,6 +8,7 @@ export const onInit = ({
   settings,
   compendiumDropData,
 }: InitArgs) => {
+  console.log('character', character)
   initValues.id = character.id;
   initValues.character = character;
   initValues.settings = settings;

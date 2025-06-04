@@ -16,6 +16,8 @@ import { type OutcomeActor } from '@/system/rolls/machines/calculate-outcome';
 import { initValues } from '@/external/sync';
 import { DispatchError, DispatchLive } from '@/system/rolls/dispatch';
 import { assert } from '@/utility/assert';
+import type { ParseError } from 'effect/ParseResult';
+import { Console } from 'effect';
 
 export class ActionRoll extends Context.Tag('ActionRoll')<
   ActionRoll,
@@ -32,6 +34,7 @@ export class ActionRoll extends Context.Tag('ActionRoll')<
       | DieNotFound
       | DispatchError
       | InvalidDispatch
+      | ParseError
     >;
   }
 >() {}
@@ -92,21 +95,21 @@ export const ActionRollLive = Layer.effect(
   }),
 );
 
-const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
-const MainLive = ActionRollLive.pipe(
-  Layer.provide(FormatAndRollLive),
-  Layer.provide(ActionScoreLive),
-);
-
 export const roll = (
   actor: OutcomeActor,
   modifier: number,
   momentum: number,
   rollName: string,
 ) =>
-  Effect.provide(
-    Effect.flatMap(ActionRoll, (actionRoll) =>
-      actionRoll.roll(actor, modifier, momentum, rollName),
-    ),
-    MainLive,
-  );
+  Effect.flatMap(ActionRoll, (actionRoll) =>
+    actionRoll.roll(actor, modifier, momentum, rollName),
+  ).pipe(
+    Effect.catchTags({
+      ActionScoreError: (_ActionScoreError) => Console.log('ActionScore Error'),
+      InvalidDie: (_InvalidDie) => Console.log('InvalidDie Error'),
+      DieNotFound: (_DieNotFound) => Console.log('DieNotFound Error'),
+      DispatchError: (_DispatchError) => Console.log('Dispatch Error'),
+      InvalidDispatch: (_InvalidDispatch) => Console.log('InvalidDispatch Error'),
+      ParseError: (_ParseError) => Console.log('Parse Error')
+    })
+  )

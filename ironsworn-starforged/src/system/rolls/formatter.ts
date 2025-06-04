@@ -3,6 +3,8 @@ import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import type { RolledDie, Die } from '@/system/rolls/dice';
 import { Dispatch, DispatchError } from './dispatch';
 import { assert } from '@/utility/assert';
+import type { ParseError } from 'effect/ParseResult';
+import type { DieKey } from './dispatch.schema';
 
 type AvailableDice = '1d6' | '1d10' | '1d100';
 type FormattedRoll = {
@@ -28,7 +30,7 @@ export class RollFormatter extends Context.Tag('RollFormatter')<
       dice: Die[],
     ) => Effect.Effect<
       RolledDie[],
-      DispatchError | InvalidDie | InvalidDispatch
+      DispatchError | InvalidDie | InvalidDispatch | ParseError
     >;
   }
 >() {}
@@ -60,9 +62,7 @@ export const RollFormatterLive = Layer.effect(
             times: 3,
           });
 
-          console.log(output)
-          assert(output.results !== undefined)
-
+          assert(output.results['dice-0'].results !== undefined)
           return dice.map((die, index) => ({
             sides: die.sides,
             label: die.label,
@@ -73,7 +73,7 @@ export const RollFormatterLive = Layer.effect(
   }),
 );
 
-const formatDieKey = (index: number) => `dice-${index}`;
+const formatDieKey = (index: number): DieKey => `dice-${index}`;
 const formatDie = (dieCount: number, sides: number) => `${dieCount}d${sides}`;
 const formatDiceComponents = (
   components: DiceComponent[],

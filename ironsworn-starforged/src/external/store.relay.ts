@@ -1,4 +1,3 @@
-import { effect, type App } from 'vue';
 import { Stream, Queue, Effect } from 'effect';
 import { sync } from '@/external/sync';
 
@@ -12,41 +11,29 @@ import { statsStore } from '@/system/stats/store';
 import { tasksStore } from '@/system/tasks/store';
 import { settingsStore } from '@/system/settings/store';
 
-export const storeRelay = () => {
-  const dummyFn = () => {};
+export const storeRelay = Effect.gen(function* () {
+  const queue = yield* Queue.bounded<string>(20);
 
-  const program = Effect.gen(function* () {
-    const queue = yield* Queue.bounded<string>(20);
+  const update = () =>
+    Effect.gen(function* () {
+      yield* Queue.offer(queue, 'update');
+    });
 
-    const update = () =>
-      Effect.gen(function* () {
-        yield* Queue.offer(queue, 'update');
-      });
+  metaStore.on('updated', () => Effect.runPromise(update()));
+  characterStore.on('updated', () => Effect.runPromise(update()));
+  resourcesStore.on('updated', () => Effect.runPromise(update()));
+  impactsStore.on('updated', () => Effect.runPromise(update()));
+  momentumStore.on('updated', () => Effect.runPromise(update()));
+  assetsStore.on('updated', () => Effect.runPromise(update()));
+  statsStore.on('updated', () => Effect.runPromise(update()));
+  tasksStore.on('updated', () => Effect.runPromise(update()));
+  settingsStore.on('updated', () => Effect.runPromise(update()));
 
-    metaStore.on('updated', () => Effect.runPromise(update()));
-    characterStore.on('updated', () => Effect.runPromise(update()));
-    resourcesStore.on('updated', () => Effect.runPromise(update()));
-    impactsStore.on('updated', () => Effect.runPromise(update()));
-    momentumStore.on('updated', () => Effect.runPromise(update()));
-    assetsStore.on('updated', () => Effect.runPromise(update()));
-    statsStore.on('updated', () => Effect.runPromise(update()));
-    tasksStore.on('updated', () => Effect.runPromise(update()));
-    settingsStore.on('updated', () => Effect.runPromise(update()));
+  const stream = Stream.fromQueue(queue).pipe(Stream.debounce('800 millis'));
 
-    const stream = Stream.fromQueue(queue).pipe(Stream.debounce('800 millis'));
+  yield* Stream.runForEach(stream, () =>
+    Effect.sync(() => sync.send({ type: 'update' })),
+  );
 
-    yield* Stream.runForEach(stream, () =>
-      Effect.sync(() => sync.send({ type: 'update' })),
-    );
-
-    console.log('Store Relay: Initialised');
-  });
-
-  Effect.runFork(program);
-
-  return {
-    install(app: App) {
-      app.provide('bus', dummyFn);
-    },
-  };
-};
+  console.log('Store Relay: Initialised');
+});

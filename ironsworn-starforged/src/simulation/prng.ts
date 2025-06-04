@@ -1,12 +1,5 @@
 import { Context, Effect, Layer } from 'effect';
 import { createHash } from 'node:crypto';
-import { Dispatch, DispatchError } from '../dispatch';
-
-export const DispatchFuzz = Dispatch.of({
-  roll: (dice) => Effect.succeed(fuzzedResults()),
-});
-
-const fuzzedResults = () => {};
 
 export class Fuzzer extends Context.Tag('Fuzzer')<
   Fuzzer,
@@ -16,7 +9,7 @@ export class Fuzzer extends Context.Tag('Fuzzer')<
   }
 >() {}
 
-const FuzzerLive = Layer.effect(
+export const FuzzerLive = Layer.effect(
   Fuzzer,
   Effect.gen(function* () {
     const LCG_CONSTANT = 48271 as const;
@@ -36,24 +29,3 @@ const FuzzerLive = Layer.effect(
     }
   })
 );
-
-export class PRNG {
-  private LCG_CONSTANT = 48271 as const;
-  private LCG_MOD = 2147483647 as const;
-  private seed: string;
-
-  constructor(seed: string) {
-    this.seed = seed;
-  }
-
-  private generateRandomNumber = () => {
-    const hash = createHash('sha256').update(this.seed).digest('hex');
-    return (
-      Number(
-        (BigInt('0x' + hash) * BigInt(this.LCG_CONSTANT)) %
-          BigInt(this.LCG_MOD),
-      ) >>> 0
-    );
-  };
-}
-

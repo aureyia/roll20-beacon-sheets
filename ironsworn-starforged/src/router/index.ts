@@ -12,6 +12,7 @@ import {
   VowsView as CharacterStandardVowsView,
   MovesOverView as CharacterStandardMovesOverView,
   MovesDetailView as CharacterStandardMovesDetailView,
+  SimView as CharacterStandardSimView,
 } from '@/views/character/standard';
 
 import {
@@ -43,6 +44,7 @@ const characterStandardViews: any = {
   moves: CharacterStandardMovesView,
   progress: CharacterStandardProgressView,
   vows: CharacterStandardVowsView,
+  simulation: CharacterStandardSimView,
 };
 
 const characterEdgeViews: any = {
@@ -63,9 +65,10 @@ const characterViewList = [
   'progress',
   'summary',
   'vows',
+  'simulation',
 ];
 
-const charactercStandardRoutes = () =>
+const characterStandardRoutes = () =>
   characterViewList.map((view) => ({
     path: `/${view}`,
     name: `characterStandard${view.charAt(0).toUpperCase() + view.slice(1)}`,
@@ -115,7 +118,7 @@ const router = createRouter({
             },
           ],
         },
-        ...charactercStandardRoutes(),
+        ...characterStandardRoutes(),
       ],
     },
     {
