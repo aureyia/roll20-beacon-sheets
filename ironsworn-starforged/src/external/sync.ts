@@ -153,7 +153,6 @@ export const syncPlugin = (dispatch: Dispatch) => {
 
     if (snapshot.value === 'hydrating') {
       console.log('Sync: Hydrating');
-      console.log('initValues', initValues);
       const characterId = initValues.character.id;
       const savedChar = dispatch.characters[characterId];
 

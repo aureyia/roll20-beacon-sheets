@@ -1,4 +1,8 @@
-export const rollResults = {
+import { numberBetween } from './prng';
+import { Effect } from 'effect';
+import { createId } from '@paralleldrive/cuid2';
+
+export const rollResults = (seed: string) => ({
   type: 'rollResults',
   requestId: '3e0d9317-29ac-43b8-a42b-61740f296249',
   messageId: '56d2712f-4f76-4f3e-b1b1-31545e770808',
@@ -7,14 +11,14 @@ export const rollResults = {
       rollName: 'dice-0',
       expression: '1d6',
       results: {
-        result: 5,
-        dice: [5],
+        result: Effect.runSync(numberBetween(seed, 'dice-0', 1, 6)),
+        dice: [Effect.runSync(numberBetween(seed, 'dice-0', 1, 6))],
         expression: '1d6',
         rolls: [
           {
             sides: 6,
             dice: 1,
-            results: [5],
+            results: [Effect.runSync(numberBetween(seed, 'dice-0', 1, 6))],
           },
         ],
       },
@@ -23,14 +27,14 @@ export const rollResults = {
       rollName: 'dice-1',
       expression: '1d10',
       results: {
-        result: 9,
-        dice: [9],
+        result: Effect.runSync(numberBetween(seed, 'dice-1', 1, 10)),
+        dice: [Effect.runSync(numberBetween(seed, 'dice-1', 1, 10))],
         expression: '1d10',
         rolls: [
           {
             sides: 10,
             dice: 1,
-            results: [9],
+            results: [Effect.runSync(numberBetween(seed, 'dice-1', 1, 10))],
           },
         ],
       },
@@ -39,14 +43,14 @@ export const rollResults = {
       rollName: 'dice-2',
       expression: '1d10',
       results: {
-        result: 10,
-        dice: [10],
+        result: Effect.runSync(numberBetween(seed, 'dice-2', 1, 10)),
+        dice: [Effect.runSync(numberBetween(seed, 'dice-2', 1, 10))],
         expression: '1d10',
         rolls: [
           {
             sides: 10,
             dice: 1,
-            results: [10],
+            results: [Effect.runSync(numberBetween(seed, 'dice-2', 1, 10))],
           },
         ],
       },
@@ -135,4 +139,4 @@ export const rollResults = {
       expression: '1d10',
     },
   ],
-};
+});

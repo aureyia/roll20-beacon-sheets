@@ -14,7 +14,10 @@ export class ActionScore extends Context.Tag('ActionScore')<
       modifier: number,
       momentum: number,
       presetActionScore: number | null,
-    ) => Effect.Effect<number, ActionScoreError>;
+    ) => Effect.Effect<
+      { totalActionScore: number; dieNegated: boolean },
+      ActionScoreError
+    >;
   }
 >() {}
 
@@ -25,10 +28,14 @@ export const ActionScoreLive = Layer.effect(
       calculate: (
         dice: DiceComponent[],
         modifier: number,
+        momentum: number,
         presetActionScore: number | null = null,
       ) => {
         if (presetActionScore !== null) {
-          return Effect.succeed(presetActionScore);
+          return Effect.succeed({
+            totalActionScore: presetActionScore,
+            dieNegated: false,
+          });
         }
 
         const actionDieResult = dice.find((die) => die.label === 'Action Die');
@@ -47,10 +54,14 @@ export const ActionScoreLive = Layer.effect(
           );
         }
 
+        const isDieNegated = actionDieResult.value === -momentum;
+        const finalisedActionScore =
+          (isDieNegated ? 0 : actionDieResult.value) + modifier;
         const actionScoreMaximum = 10;
-        return Effect.succeed(
-          Math.min(actionDieResult.value + modifier, actionScoreMaximum),
-        );
+        return Effect.succeed({
+          totalActionScore: Math.min(finalisedActionScore, actionScoreMaximum),
+          dieNegated: isDieNegated,
+        });
       },
     };
   }),

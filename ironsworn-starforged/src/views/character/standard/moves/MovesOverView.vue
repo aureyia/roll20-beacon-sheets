@@ -7,8 +7,6 @@ import { ref } from 'vue';
 
 const moves = starforged['Move Categories'];
 
-console.log(starforged['Move Categories']);
-
 const showTriggers = ref(false);
 </script>
 

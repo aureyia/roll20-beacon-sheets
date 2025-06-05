@@ -1,24 +1,23 @@
-import { Context, Effect, Layer } from 'effect';
-import { createHash } from 'node:crypto';
+import { Context, Effect, Layer, Hash } from 'effect';
+import { sha256 } from '@noble/hashes/sha2.js'
+import { utf8ToBytes, bytesToHex } from '@noble/hashes/utils';
 
-export class Fuzzer extends Context.Tag('Fuzzer')<
-  Fuzzer,
+export class PRNG extends Context.Tag('PRNG')<
+  PRNG,
   {
-    readonly next: () => number;
-    readonly generateRandomNumber: (seed: string) => number;
+    readonly generateRandomNumber: (seed: string, salt: string) => number;
   }
 >() {}
 
-export const FuzzerLive = Layer.effect(
-  Fuzzer,
+export const PRNGLive = Layer.effect(
+  PRNG,
   Effect.gen(function* () {
     const LCG_CONSTANT = 48271 as const;
     const LCG_MOD = 2147483647 as const;
 
     return {
-      next: () => 1,
-      generateRandomNumber: (seed) => {
-        const hash = createHash('sha256').update(seed).digest('hex');
+      generateRandomNumber: (seed, salt) => {
+        const hash = bytesToHex(sha256(utf8ToBytes(seed + salt)))
         return (
           Number(
             (BigInt('0x' + hash) * BigInt(LCG_CONSTANT)) % BigInt(LCG_MOD),
@@ -28,3 +27,14 @@ export const FuzzerLive = Layer.effect(
     };
   }),
 );
+
+export const numberBetween = (
+  seed: string,
+  salt: string,
+  min: number,
+  max: number,
+) =>
+  Effect.gen(function* () {
+    const rng = yield* PRNG;
+    return (rng.generateRandomNumber(seed, salt) % (max - min + 1)) + min;
+  }).pipe(Effect.provide(PRNGLive))

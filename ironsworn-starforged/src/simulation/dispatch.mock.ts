@@ -1,10 +1,14 @@
 import type { Dispatch } from '@roll20-official/beacon-sdk';
 import { rollResults } from './roll-results';
 import { ref } from 'vue';
+import { createAtom } from '@xstate/store';
+import { createId } from '@paralleldrive/cuid2';
+import { seed } from './generate-rolls';
 
 export const postRef = ref();
+// export const seed = createId()
 
-const character = {
+const character = createAtom({
   id: '-ORfR02B4KDjtJ6bwU_p',
   name: 'Iirkupi Obroh',
   avatar: '',
@@ -55,20 +59,23 @@ const character = {
     height: 70,
     layer: 'objects',
   },
-};
+})
 
 export const simRelay = async (relayConfig: any) => {
-  relayConfig.handlers.onInit({ character, settings: {} });
+  relayConfig.handlers.onInit({ character: character.get(), settings: {} });
   return {
     update: (...args: any[]) => console.log('devRelay update', args),
-    updateCharacter: (...args: any[]) =>
-      console.log('devRelay updateCharacter', args),
+    updateCharacter: (...args: any[]) => {
+      character.set(args[0].character)
+    },
     characters: {
-      '-ORfR02B4KDjtJ6bwU_p': character,
+      get ['-ORfR02B4KDjtJ6bwU_p']() {
+        return character.get()
+      },
     },
     updateTokensByCharacter: () => '',
     updateSharedSettings: async (update: any) => await {},
-    roll: async (roll: any) => await rollResults,
+    roll: async (roll: any) => await rollResults(seed.get()),
     post: async (args: any) => (postRef.value = args),
   } as any as Dispatch;
 };
