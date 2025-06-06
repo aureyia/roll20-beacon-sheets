@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { cn } from '@/utility/shadcn';
+import type { RadioGroupItemProps } from 'reka-ui';
+import type { HTMLAttributes } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
 import { Circle } from 'lucide-vue-next';
-import {
-  RadioGroupIndicator,
-  RadioGroupItem,
-  type RadioGroupItemProps,
-  useForwardProps,
-} from 'radix-vue';
-import { computed, type HTMLAttributes } from 'vue';
+import { RadioGroupIndicator, RadioGroupItem, useForwardProps } from 'reka-ui';
+import { cn } from '@/utility';
 
 const props = defineProps<
   RadioGroupItemProps & { class?: HTMLAttributes['class'] }
 >();
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
-
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class');
 
 const forwardedProps = useForwardProps(delegatedProps);
 </script>
@@ -27,7 +20,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     v-bind="forwardedProps"
     :class="
       cn(
-        'aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+        'peer aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
         props.class,
       )
     "

@@ -46,7 +46,7 @@ const getAssetById = (asset: IAsset) => {
     </div>
     <div class="assets-container flex flex-wrap justify-between">
       <AssetCard
-        v-for="asset in assetStore.assets"
+        v-for="asset in assetsStore.get().context.list"
         :abilities="asset.abilities"
         :storedAsset="asset"
         :dataforgedAsset="Effect.runSync(getAssetById(asset))"

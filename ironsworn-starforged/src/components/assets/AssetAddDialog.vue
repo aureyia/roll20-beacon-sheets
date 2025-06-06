@@ -52,8 +52,6 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit((values) => {
   const allAssets = Effect.runSync(getAllAssets());
-  // TODO: fix type here using Effect
-  // @ts-ignore
   const selectedAsset = allAssets[values.category].find(
     (asset: IAsset) => asset.Name === values.asset,
   );

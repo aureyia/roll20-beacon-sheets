@@ -1,5 +1,5 @@
 import { Context, Effect, Layer, Hash } from 'effect';
-import { sha256 } from '@noble/hashes/sha2.js'
+import { sha256 } from '@noble/hashes/sha2.js';
 import { utf8ToBytes, bytesToHex } from '@noble/hashes/utils';
 
 export class PRNG extends Context.Tag('PRNG')<
@@ -17,7 +17,7 @@ export const PRNGLive = Layer.effect(
 
     return {
       generateRandomNumber: (seed, salt) => {
-        const hash = bytesToHex(sha256(utf8ToBytes(seed + salt)))
+        const hash = bytesToHex(sha256(utf8ToBytes(seed + salt)));
         return (
           Number(
             (BigInt('0x' + hash) * BigInt(LCG_CONSTANT)) % BigInt(LCG_MOD),
@@ -37,4 +37,4 @@ export const numberBetween = (
   Effect.gen(function* () {
     const rng = yield* PRNG;
     return (rng.generateRandomNumber(seed, salt) % (max - min + 1)) + min;
-  }).pipe(Effect.provide(PRNGLive))
+  }).pipe(Effect.provide(PRNGLive));

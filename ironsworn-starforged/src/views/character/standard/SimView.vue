@@ -10,17 +10,21 @@ import { statsStore } from '@/system/stats/store';
 import { tasksStore } from '@/system/tasks/store';
 import { settingsStore } from '@/system/settings/store';
 import Card from '@/components/ui/card/Card.vue';
+import { rollSpeed } from '@/main';
+
+import { cn } from '@/utility';
+import { ref } from 'vue';
 
 const stores = {
-  meta: metaStore,
   character: characterStore,
   resources: resourcesStore,
-  impacts: impactsStore,
-  momentum: momentumStore,
-  assets: assetsStore,
   stats: statsStore,
+  impacts: impactsStore,
+  assets: assetsStore,
   tasks: tasksStore,
   settings: settingsStore,
+  momentum: momentumStore,
+  meta: metaStore,
 };
 </script>
 
@@ -31,17 +35,204 @@ const stores = {
       <h2 class="mb-2 text-xl">Roll Display</h2>
       <div class="w-[250px]" v-html="postRef.content" />
     </div>
-    <div class="w-[800px]">
+    <div class="w-[830px]">
       <h2 class="text-xl">Stores</h2>
       <div class="flex flex-wrap gap-2">
-        <Card class="w-[200px]" v-for="(store, key) in stores">
-          <CardHeader>
+        <Card
+          class="w-[270px] p-0 drop-shadow-sm"
+          v-for="(store, key) in stores"
+        >
+          <CardHeader class="px-auto mt-0 pb-1 pt-2">
             <CardTitle class="text-[18px] uppercase">{{ key }}</CardTitle>
           </CardHeader>
-          <CardContent class="text-sm">{{
-            store.getSnapshot().context
-          }}</CardContent>
+          <CardContent class="mt-0 p-4 text-sm">
+            <div v-if="key === 'meta'">
+              <div
+                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Name</strong>
+                <p>{{ store.getSnapshot().context.name }}</p>
+              </div>
+            </div>
+            <div v-else-if="key === 'momentum'">
+              <div
+                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Value</strong>
+                <p>{{ store.getSnapshot().context.momentum }}</p>
+              </div>
+            </div>
+            <div v-else-if="key === 'character'" class="flex">
+              <div
+                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Callsign</strong>
+                <p>{{ store.getSnapshot().context.callsign }}</p>
+              </div>
+              <div
+                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Pronouns</strong>
+                <p>{{ store.getSnapshot().context.pronouns }}</p>
+              </div>
+            </div>
+            <div
+              v-else-if="key === 'resources'"
+              class="flex flex-wrap justify-center gap-4"
+            >
+              <div
+                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Health</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.health }}
+                </div>
+              </div>
+              <div
+                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Spirit</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.spirit }}
+                </div>
+              </div>
+              <div
+                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Supply</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.supply }}
+                </div>
+              </div>
+              <div
+                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>XP</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.xp }}
+                </div>
+              </div>
+              <div
+                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Sp XP</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.spentXp }}
+                </div>
+              </div>
+            </div>
+            <div
+              v-else-if="key === 'impacts'"
+              class="flex flex-wrap justify-center gap-4"
+            >
+              <div
+                class="w-full rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Misfortunes</strong>
+                <p>{{ store.getSnapshot().context.misfortunes.length }}</p>
+              </div>
+              <div
+                class="w-full rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Lasting Effects</strong>
+                <p>{{ store.getSnapshot().context.lastingEffects.length }}</p>
+              </div>
+              <div
+                class="w-[46%] rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Burdens</strong>
+                <p>{{ store.getSnapshot().context.burdens.length }}</p>
+              </div>
+              <div
+                class="w-[46%] rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Vehicle</strong>
+                <p>{{ store.getSnapshot().context.currentVehicle.length }}</p>
+              </div>
+              <div
+                class="w-[100%] rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Other</strong>
+                <p>{{ store.getSnapshot().context.other.length }}</p>
+              </div>
+            </div>
+            <div
+              v-else-if="key === 'stats'"
+              class="flex flex-wrap justify-center gap-4"
+            >
+              <div
+                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Edge</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.edge }}
+                </div>
+              </div>
+              <div
+                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Heart</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.heart }}
+                </div>
+              </div>
+              <div
+                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Iron</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.iron }}
+                </div>
+              </div>
+              <div
+                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Shadow</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.shadow }}
+                </div>
+              </div>
+              <div
+                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-sm"
+              >
+                <strong>Wits</strong>
+                <div class="text-center">
+                  {{ store.getSnapshot().context.wits }}
+                </div>
+              </div>
+            </div>
+            <div v-else-if="key === 'settings'" class="flex">
+              <div
+                class="m-auto w-24 rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Mode</strong>
+                <p>{{ store.getSnapshot().context.mode }}</p>
+              </div>
+              <div
+                class="m-auto w-24 rounded bg-muted-secondary p-2 text-center drop-shadow-sm"
+              >
+                <strong>Dark Mode</strong>
+                <p>{{ store.getSnapshot().context.darkMode }}</p>
+              </div>
+            </div>
+            <div v-else>{{ store.getSnapshot().context }}</div>
+          </CardContent>
         </Card>
+      </div>
+    </div>
+    <div class="w-[400px]">
+      <h2 class="text-xl">Simulation Settings</h2>
+      <div class="mt-5">
+        <Slider
+          v-model="rollSpeed"
+          :min="50"
+          :max="5000"
+          :step="50"
+          :class="cn('w-3/5', $attrs.class ?? '')"
+          class="mb-2"
+        />
+        <span class="mt-1 text-sm">Roll Speed: </span>
+        <span class="text-sm">{{ rollSpeed[0] }} milliseconds</span>
       </div>
     </div>
   </div>

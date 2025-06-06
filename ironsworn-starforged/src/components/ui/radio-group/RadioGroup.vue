@@ -1,23 +1,20 @@
 <script setup lang="ts">
-import { cn } from '@/utility/shadcn';
+import type { HTMLAttributes } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
 import {
   RadioGroupRoot,
   type RadioGroupRootEmits,
   type RadioGroupRootProps,
   useForwardPropsEmits,
-} from 'radix-vue';
-import { computed, type HTMLAttributes } from 'vue';
+} from 'reka-ui';
+import { cn } from '@/utility';
 
 const props = defineProps<
   RadioGroupRootProps & { class?: HTMLAttributes['class'] }
 >();
 const emits = defineEmits<RadioGroupRootEmits>();
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
-
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>

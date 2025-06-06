@@ -16,7 +16,7 @@ const model = defineModel<boolean>({ required: true });
     <span class="mr-2 text-lg">{{ label }}</span>
     <Switch
       class="data-[state=checked]:bg-switch-on data-[state=unchecked]:bg-switch-off"
-      v-model:checked="model"
+      v-model:model-value="model"
     />
   </div>
 </template>

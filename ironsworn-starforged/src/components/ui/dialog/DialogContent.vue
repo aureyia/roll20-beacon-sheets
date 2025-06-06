@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue';
+import type { HTMLAttributes } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
+import { X } from 'lucide-vue-next';
 import {
   DialogClose,
   DialogContent,
@@ -8,20 +10,15 @@ import {
   DialogOverlay,
   DialogPortal,
   useForwardPropsEmits,
-} from 'radix-vue';
-import { X } from 'lucide-vue-next';
-import { cn } from '@/utility/shadcn';
+} from 'reka-ui';
+import { cn } from '@/utility';
 
 const props = defineProps<
   DialogContentProps & { class?: HTMLAttributes['class'] }
 >();
 const emits = defineEmits<DialogContentEmits>();
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
-
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>

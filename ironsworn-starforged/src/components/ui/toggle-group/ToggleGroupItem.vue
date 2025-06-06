@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { VariantProps } from 'class-variance-authority';
-import { type HTMLAttributes, computed, inject } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
 import {
   ToggleGroupItem,
   type ToggleGroupItemProps,
   useForwardProps,
-} from 'radix-vue';
+} from 'reka-ui';
+import { type HTMLAttributes, inject } from 'vue';
+import { cn } from '@/utility';
 import { toggleVariants } from '@/components/ui/toggle';
-import { cn } from '@/utility/shadcn';
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>;
 
@@ -21,16 +22,14 @@ const props = defineProps<
 
 const context = inject<ToggleGroupVariants>('toggleGroup');
 
-const delegatedProps = computed(() => {
-  const { class: _, variant, size, ...delegated } = props;
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'variant');
 
 const forwardedProps = useForwardProps(delegatedProps);
 </script>
 
 <template>
   <ToggleGroupItem
+    v-slot="slotProps"
     v-bind="forwardedProps"
     :class="
       cn(
@@ -42,6 +41,6 @@ const forwardedProps = useForwardProps(delegatedProps);
       )
     "
   >
-    <slot />
+    <slot v-bind="slotProps" />
   </ToggleGroupItem>
 </template>

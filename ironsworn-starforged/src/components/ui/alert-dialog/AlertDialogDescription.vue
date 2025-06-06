@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue';
+import type { HTMLAttributes } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
 import {
   AlertDialogDescription,
   type AlertDialogDescriptionProps,
-} from 'radix-vue';
-import { cn } from '@/utility/shadcn';
+} from 'reka-ui';
+import { cn } from '@/utility';
 
 const props = defineProps<
   AlertDialogDescriptionProps & { class?: HTMLAttributes['class'] }
 >();
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
-
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class');
 </script>
 
 <template>

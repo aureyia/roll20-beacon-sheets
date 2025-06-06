@@ -7,7 +7,6 @@ import svgLoader from "vite-svg-loader";
 import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 import Components from 'unplugin-vue-components/vite'
-import RadixVueResolver from 'radix-vue/resolver'
 
 export default defineConfig(({ mode }) => ({
   plugins: [
@@ -15,9 +14,6 @@ export default defineConfig(({ mode }) => ({
     svgLoader(),
     Components({
       dts: true,
-      resolvers: [
-        RadixVueResolver()
-      ]
     })
   ],
   base:

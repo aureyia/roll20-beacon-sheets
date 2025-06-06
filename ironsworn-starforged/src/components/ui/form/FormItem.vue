@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { useId } from 'reka-ui';
 import { type HTMLAttributes, provide } from 'vue';
-import { useId } from 'radix-vue';
+import { cn } from '@/utility';
 import { FORM_ITEM_INJECTION_KEY } from './injectionKeys';
-import { cn } from '@/utility/shadcn';
 
 const props = defineProps<{
   class?: HTMLAttributes['class'];

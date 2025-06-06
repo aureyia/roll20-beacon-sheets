@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue';
+import type { HTMLAttributes } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
 import {
   SelectContent,
   type SelectContentEmits,
@@ -7,9 +8,9 @@ import {
   SelectPortal,
   SelectViewport,
   useForwardPropsEmits,
-} from 'radix-vue';
+} from 'reka-ui';
+import { cn } from '@/utility';
 import { SelectScrollDownButton, SelectScrollUpButton } from '.';
-import { cn } from '@/utility/shadcn';
 
 defineOptions({
   inheritAttrs: false,
@@ -23,11 +24,7 @@ const props = withDefaults(
 );
 const emits = defineEmits<SelectContentEmits>();
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
-
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
@@ -51,7 +48,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
           cn(
             'p-1',
             position === 'popper' &&
-              'h-[--radix-select-trigger-height] w-full min-w-[--radix-select-trigger-width]',
+              'h-[--reka-select-trigger-height] w-full min-w-[--reka-select-trigger-width]',
           )
         "
       >

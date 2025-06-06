@@ -10,12 +10,12 @@ export const postRef = ref();
 
 const character = createAtom({
   id: '-ORfR02B4KDjtJ6bwU_p',
-  name: 'Iirkupi Obroh',
+  name: 'Aureyia',
   avatar: '',
   attributes: {
     character: {
-      callsign: 'klsdjfkl;dsjflk;sdjfkl;',
-      pronouns: 'sd',
+      callsign: 'Swifty',
+      pronouns: 'She/Her',
     },
     assets: {},
     stats: {
@@ -59,18 +59,18 @@ const character = createAtom({
     height: 70,
     layer: 'objects',
   },
-})
+});
 
 export const simRelay = async (relayConfig: any) => {
   relayConfig.handlers.onInit({ character: character.get(), settings: {} });
   return {
     update: (...args: any[]) => console.log('devRelay update', args),
     updateCharacter: (...args: any[]) => {
-      character.set(args[0].character)
+      character.set(args[0].character);
     },
     characters: {
       get ['-ORfR02B4KDjtJ6bwU_p']() {
-        return character.get()
+        return character.get();
       },
     },
     updateTokensByCharacter: () => '',

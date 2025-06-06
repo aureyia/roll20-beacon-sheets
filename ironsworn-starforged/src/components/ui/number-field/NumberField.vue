@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import type { NumberFieldRootEmits, NumberFieldRootProps } from 'radix-vue';
-import { NumberFieldRoot, useForwardPropsEmits } from 'radix-vue';
-import { type HTMLAttributes, computed } from 'vue';
-import { cn } from '@/utility/shadcn';
+import type { NumberFieldRootEmits, NumberFieldRootProps } from 'reka-ui';
+import type { HTMLAttributes } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
+import { NumberFieldRoot, useForwardPropsEmits } from 'reka-ui';
+import { cn } from '@/utility';
 
 const props = defineProps<
   NumberFieldRootProps & { class?: HTMLAttributes['class'] }
 >();
 const emits = defineEmits<NumberFieldRootEmits>();
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
-
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>

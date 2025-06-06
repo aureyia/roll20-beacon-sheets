@@ -51,15 +51,12 @@ export const ActionRollLive = Layer.effect(
           assert(initValues.character.id !== undefined);
 
           const rolledDice = yield* formatter.roll(actionDice);
-          console.log('rolledDice', rolledDice)
           const { totalActionScore, dieNegated } = yield* actionScore.calculate(
             rolledDice,
             modifier,
             momentum,
             null,
           );
-
-          console.log('totalActionScore', totalActionScore)
 
           const { challengeDie1, challengeDie2, actionDie } = yield* Effect.all(
             {

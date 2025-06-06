@@ -21,13 +21,13 @@ const impactsList = [
 const numberOfImpacts = computed(() => impactsList.length);
 
 const burnMomentum = (resetValue: number) => {
-  console.log('burnMomentum', burnMomentum)
+  console.log('burnMomentum', burnMomentum);
   momentumStore.trigger.set({ value: resetValue });
 };
 
 momentumStore.subscribe((snapshot) => {
-  momentumRef.value = snapshot.context.momentum
-})
+  momentumRef.value = snapshot.context.momentum;
+});
 
 defineProps({
   edgeMode: Boolean,

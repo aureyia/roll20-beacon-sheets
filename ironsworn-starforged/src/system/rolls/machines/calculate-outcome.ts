@@ -1,5 +1,6 @@
 import { setup, assertEvent, type ActorRefFrom } from 'xstate';
 import { sendRollToChat } from '@/utility/sendRollToChat';
+import { assert } from '@/utility/assert';
 
 type Outcome =
   | 'opportunity'
@@ -73,7 +74,7 @@ export const machine = setup({
     ) {
       if (
         !context.name ||
-        !context.actionScore ||
+        context.actionScore === undefined ||
         !context.challengeDie1 ||
         !context.challengeDie2 ||
         !context.actionDie.value ||
@@ -87,6 +88,7 @@ export const machine = setup({
         );
       }
       context.previousOutcome = params.outcome;
+      assert(params.outcome !== null);
       await sendRollToChat(context.character.id, {
         type: 'move-compact',
         parameters: {
@@ -114,7 +116,7 @@ export const machine = setup({
     },
     exceedsBoth: function ({ context }) {
       if (
-        !context.actionScore ||
+        context.actionScore === undefined ||
         !context.challengeDie1 ||
         !context.challengeDie2
       ) {
@@ -128,7 +130,7 @@ export const machine = setup({
     },
     momentumExceedsBoth: function ({ context }) {
       if (
-        !context.momentum ||
+        context.momentum === undefined ||
         !context.challengeDie1 ||
         !context.challengeDie2
       ) {
@@ -146,7 +148,7 @@ export const machine = setup({
     },
     exceedsOne: function ({ context }) {
       if (
-        !context.actionScore ||
+        context.actionScore === undefined ||
         !context.challengeDie1 ||
         !context.challengeDie2
       ) {
@@ -160,7 +162,7 @@ export const machine = setup({
     },
     momentumExceedsOne: function ({ context }) {
       if (
-        !context.momentum ||
+        context.momentum === undefined ||
         !context.challengeDie1 ||
         !context.challengeDie2
       ) {

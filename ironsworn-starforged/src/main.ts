@@ -1,6 +1,6 @@
-import { createApp } from 'vue';
+import { createApp, watch } from 'vue';
 import { createI18n } from 'vue-i18n';
-import { Effect } from 'effect';
+import { Effect, Fiber } from 'effect';
 
 import App from './App.vue';
 import router from './router';
@@ -12,12 +12,14 @@ import { sheetRelayPlugin } from './external/vue.relay';
 import { syncPlugin } from './external/sync';
 import { storeRelay } from './external/store.relay';
 import { simRelayPlugin, simRunner } from './simulation/simulator';
+import { ref } from 'vue';
 
 // @ts-ignore
 const env = import.meta.env.MODE || '';
 // Determines if the offline mode dev relay should be used
 const isDevEnvironment = ['development', 'test'].includes(env);
 const isSimEnvironment = env === 'simulation';
+export const rollSpeed = ref([2000]);
 
 (async () => {
   const i18n = createI18n({});
@@ -34,7 +36,9 @@ const isSimEnvironment = env === 'simulation';
   app.use(sheetRelay);
 
   Effect.runFork(storeRelay);
-  if (isSimEnvironment) Effect.runFork(simRunner);
+  if (isSimEnvironment) {
+    Effect.runFork(simRunner(rollSpeed.value[0]));
+  }
 
   app.mount('#app');
 })();

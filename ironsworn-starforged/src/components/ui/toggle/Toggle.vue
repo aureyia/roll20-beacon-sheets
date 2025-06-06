@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue';
+import type { HTMLAttributes } from 'vue';
+import { reactiveOmit } from '@vueuse/core';
 import {
   Toggle,
   type ToggleEmits,
   type ToggleProps,
   useForwardPropsEmits,
-} from 'radix-vue';
+} from 'reka-ui';
+import { cn } from '@/utility';
 import { type ToggleVariants, toggleVariants } from '.';
-import { cn } from '@/utility/shadcn';
 
 const props = withDefaults(
   defineProps<
@@ -26,20 +27,17 @@ const props = withDefaults(
 
 const emits = defineEmits<ToggleEmits>();
 
-const delegatedProps = computed(() => {
-  const { class: _, size, variant, ...delegated } = props;
-
-  return delegated;
-});
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'variant');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
   <Toggle
+    v-slot="slotProps"
     v-bind="forwarded"
     :class="cn(toggleVariants({ variant, size }), props.class)"
   >
-    <slot />
+    <slot v-bind="slotProps" />
   </Toggle>
 </template>

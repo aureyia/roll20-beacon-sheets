@@ -41,7 +41,8 @@ export const simRelayPlugin = () =>
     };
   });
 
-export const simRunner = Effect.gen(function* () {
-  yield* Effect.sleep('5 seconds');
-  yield* Stream.runDrain(rollSteam);
-});
+export const simRunner = (speed: number) =>
+  Effect.gen(function* () {
+    yield* Effect.sleep('1 seconds');
+    yield* Stream.runDrain(rollSteam(speed));
+  });
