@@ -9,11 +9,30 @@ import {
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import type { IMoveTriggerOptionAction } from 'dataforged';
-// import { moveRollV2 } from '@/utility/moves/rollMoveV2';
 import { inject, ref } from 'vue';
-import { Effect } from 'effect';
+import { Effect, Layer } from 'effect';
 import { momentumStore } from '@/system/momentum/store';
 import { statsStore } from '@/system/stats/store';
+import { roll as actionRoll } from '@/system/rolls/handlers/action-roll';
+import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll';
+import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll';
+import { machine } from '@/system/rolls/machines/calculate-outcome';
+import { createActor } from 'xstate';
+import { RollFormatterLive } from '@/system/rolls/formatter';
+import { DispatchLive } from '@/system/rolls/dispatch';
+import { ActionRollLive } from '@/system/rolls/handlers/action-roll';
+import { ActionScoreLive } from '@/system/rolls/action-score';
+
+
+const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
+const MainLive = ActionRollLive.pipe(
+  Layer.provide(FormatAndRollLive),
+  Layer.provide(ActionScoreLive),
+);
+
+const actor = createActor(machine);
+
+const momentum = ref(momentumStore.get().context.momentum);
 
 const props = defineProps({
   move: {
@@ -34,9 +53,18 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
 
   const momentum = momentumStore.get().context.momentum;
   const stats = statsStore.get().context;
+  const formattedModifier = Number(modifier.value)
+  console.log(selectedOption, 'selectedOption')
+  const baseBonus = 1 // TODO: Update this to be dynamic with parser
 
-  const formattedModifier = Number(modifier.value);
-  // const roll = await Effect.runPromise(await moveRollV2(2, formattedModifier));
+  console.log('baseBonus', baseBonus)
+  console.log('formattedModifier', formattedModifier)
+  
+  await Effect.runPromise(
+    actionRoll(actor, formattedModifier + baseBonus, momentum, props.move.Name).pipe(
+      Effect.provide(MainLive),
+    ),
+  );
 };
 </script>
 
