@@ -54,12 +54,15 @@ export const ActionScoreLive = Layer.effect(
           );
         }
 
-        const isDieNegated = actionDieResult.value === -momentum;
-        const finalisedActionScore =
-          (isDieNegated ? 0 : actionDieResult.value) + modifier;
         const actionScoreMaximum = 10;
+        const isDieNegated = actionDieResult.value === -momentum;
+        const finalisedActionScore = Math.min(
+          (isDieNegated ? 0 : actionDieResult.value) + modifier,
+          actionScoreMaximum,
+        );
+
         return Effect.succeed({
-          totalActionScore: Math.min(finalisedActionScore, actionScoreMaximum),
+          totalActionScore: finalisedActionScore,
           dieNegated: isDieNegated,
         });
       },

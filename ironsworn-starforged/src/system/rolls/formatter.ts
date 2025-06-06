@@ -1,7 +1,11 @@
 import { Effect, Context, Layer, Data } from 'effect';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import type { RolledDie, Die } from '@/system/rolls/dice';
-import { Dispatch, DispatchError } from './dispatch';
+import {
+  Dispatch,
+  DispatchError,
+  type DispatchResultsOutput,
+} from './dispatch';
 import { assert } from '@/utility/assert';
 import type { ParseError } from 'effect/ParseResult';
 import type { DieKey } from './dispatch.schema';
@@ -61,6 +65,32 @@ export const RollFormatterLive = Layer.effect(
           const output = yield* Effect.retry(dispatch.roll(formattedDice), {
             times: 3,
           });
+
+          const diceKeys = Object.keys(formattedDice);
+
+          for (const key of diceKeys) {
+            const sides = Number(formattedDice[key].replace('1d', ''));
+            if (
+              output.results[key].results.result < 1 ||
+              output.results[key].results.result > sides
+            )
+              return yield* Effect.fail(
+                new InvalidDie({
+                  message: 'Die result is outside the valid range',
+                }),
+              );
+          }
+
+          const dieValues = Object.keys(output.results).map((key) => {
+            // @ts-ignore
+            return output.results[key].results.result;
+          });
+
+          if (dieValues.some((value: number) => value < 1)) {
+            return yield* Effect.fail(
+              new InvalidDie({ message: 'Die has negative values' }),
+            );
+          }
 
           assert(output.results['dice-0'].results !== undefined);
           return dice.map((die, index) => ({

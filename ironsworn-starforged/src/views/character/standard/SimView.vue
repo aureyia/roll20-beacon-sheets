@@ -11,6 +11,8 @@ import { tasksStore } from '@/system/tasks/store';
 import { settingsStore } from '@/system/settings/store';
 import Card from '@/components/ui/card/Card.vue';
 import { rollSpeed } from '@/main';
+import { intensity } from '@/main';
+import { replaySeed, seed } from '@/simulation/generate-rolls';
 
 import { cn } from '@/utility';
 import { ref } from 'vue';
@@ -32,7 +34,9 @@ const stores = {
   <div class="mt-50 mx-auto flex gap-10">
     <div></div>
     <div>
-      <h2 class="mb-2 text-xl">Roll Display</h2>
+      <h2 class="mt-2 text-xl">Current Seed</h2>
+      <div>{{ seed.get() }}</div>
+      <h2 class="my-2 text-xl">Roll Display</h2>
       <div class="w-[250px]" v-html="postRef.content" />
     </div>
     <div class="w-[830px]">
@@ -222,17 +226,56 @@ const stores = {
     </div>
     <div class="w-[400px]">
       <h2 class="text-xl">Simulation Settings</h2>
-      <div class="mt-5">
-        <Slider
-          v-model="rollSpeed"
-          :min="50"
-          :max="5000"
-          :step="50"
-          :class="cn('w-3/5', $attrs.class ?? '')"
-          class="mb-2"
-        />
-        <span class="mt-1 text-sm">Roll Speed: </span>
-        <span class="text-sm">{{ rollSpeed[0] }} milliseconds</span>
+      <div class="mt-3">
+        <div>
+          <h3>Replay Run</h3>
+          <div class="mt-1 flex">
+            <Input
+              class="mr-2 bg-muted"
+              v-model="replaySeed"
+              placeholder="Seed"
+            />
+            <div dir="rtl">
+              <Button @click="replaySeed = ''">Clear</Button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h3>Roll Delay</h3>
+          <Slider
+            v-model="rollSpeed"
+            :min="50"
+            :max="5000"
+            :step="50"
+            :class="cn('w-3/5', $attrs.class ?? '')"
+            class="mb-2 mt-2"
+          />
+          <span class="text-sm">{{ rollSpeed[0] }} milliseconds</span>
+        </div>
+        <div class="mt-4">
+          <h3>Difficulty</h3>
+          <ToggleGroup
+            type="single"
+            class="w-full justify-between"
+            v-model="intensity"
+          >
+            <ToggleGroupItem
+              value="low"
+              class="mt-1 bg-secondary px-10 hover:bg-muted-secondary data-[state=on]:bg-muted-foreground data-[state=on]:font-bold data-[state=on]:text-black"
+              >Safe</ToggleGroupItem
+            >
+            <ToggleGroupItem
+              value="medium"
+              class="mt-1 bg-secondary px-10 hover:bg-muted-secondary data-[state=on]:bg-muted-foreground data-[state=on]:font-bold data-[state=on]:text-black"
+              >OOB</ToggleGroupItem
+            >
+            <ToggleGroupItem
+              value="high"
+              class="mt-1 bg-secondary px-10 hover:bg-muted-secondary data-[state=on]:bg-muted-foreground data-[state=on]:font-bold data-[state=on]:text-black"
+              >Corrupt</ToggleGroupItem
+            >
+          </ToggleGroup>
+        </div>
       </div>
     </div>
   </div>

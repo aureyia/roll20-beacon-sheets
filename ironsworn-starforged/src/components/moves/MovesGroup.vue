@@ -28,9 +28,9 @@ const { updateActiveMove }: any = inject('move');
         <div class="button-container mr-1 h-7 w-7 items-center leading-3">
           <Button
             @click="updateActiveMove(move.$id)"
-            class="h-6 content-center border-primary bg-muted px-0 py-0 font-bold leading-3 text-primary hover:bg-muted-accent"
+            class="h-7 w-7 content-center border-primary bg-muted p-0 font-bold leading-3 text-primary hover:bg-muted-accent"
           >
-            <Icon icon="tabler:dice-6" class="h-6 w-6" />
+            <Icon icon="tabler:dice-6" :style="{ height: '24px', width: '24px' }" />
           </Button>
         </div>
         <span class="ml-1 font-bold">{{ move.Name }}</span>

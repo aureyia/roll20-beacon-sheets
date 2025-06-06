@@ -162,7 +162,6 @@ export const syncPlugin = (dispatch: Dispatch) => {
       await Effect.runPromise(
         Effect.gen(function* () {
           const hydration = yield* Hydration;
-
           return hydration.hydrateStores(attributes, profile);
         }).pipe(Effect.provide(HydrationLive)),
       );

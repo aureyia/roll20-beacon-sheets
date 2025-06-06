@@ -49,7 +49,7 @@ export const assetsStore = createStore({
         formatAbilities(objectToArray, assetList),
       );
 
-      context.assets = updatedAssets ?? context.assets;
+      context.list = updatedAssets ?? context.list;
     },
     add: (context: any, event: AssetSubmission, enqueue) => {
       const abilities: Ability[] = Effect.runSync(
@@ -69,6 +69,10 @@ export const assetsStore = createStore({
     },
     remove: (context, id: string, enqueue) => {
       context.list = context.list.filter((asset: Asset) => asset._id !== id);
+      enqueue.emit.updated();
+    },
+    set: (context, event: SetEvent, enqueue) => {
+      context[event.label] = event.value;
       enqueue.emit.updated();
     },
     clear: (context, event, enqueue) => {

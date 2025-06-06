@@ -5,8 +5,9 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
+import { isSimEnvironment } from '@/main';
 
-const navList = {
+const baseList = {
   legacies: '/legacies',
   progress: '/progress',
   vows: '/vows',
@@ -14,8 +15,14 @@ const navList = {
   moves: '/moves',
   assets: '/assets',
   connections: '/connections',
-  simulation: '/simulation',
 };
+
+const simList = {
+  ...baseList,
+  simulation: '/simulation',
+}
+
+const navList = isSimEnvironment ? simList : baseList
 </script>
 
 <template>

@@ -13,8 +13,13 @@ import { ActionScoreLive } from '@/system/rolls/action-score';
 import { createId } from '@paralleldrive/cuid2';
 import { numberBetween } from './prng';
 import { ref } from 'vue';
-import { statsStore } from '@/system/stats/store';
+import { statsStore, type Stats } from '@/system/stats/store';
 import { resourcesStore } from '@/system/resources/store';
+import { intensity } from '@/main';
+import { resources, stats, impacts, assets, tasks } from './fuzzers/stores';
+import { impactsStore } from '@/system/impacts/store';
+import { tasksStore } from '@/system/tasks/store';
+import { assetsStore } from '@/system/assets/store';
 
 const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ActionRollLive.pipe(
@@ -36,10 +41,8 @@ actor.subscribe((snapshot) => {
     snapshot.matches('Eligible for Weak Hit');
 
   if (matched) {
-    console.log('matched');
     const choice =
       Effect.runSync(numberBetween(seed.get(), 'choice', 0, 1)) > 0;
-    console.log('choice', choice);
     actor.send({
       type: 'burnChoice',
       value: choice,
@@ -48,58 +51,68 @@ actor.subscribe((snapshot) => {
 });
 
 const moveData = { Name: 'Simulation Rolls' };
-export let seed = createAtom(createId());
+export let seed = createAtom('');
+export const replaySeed = ref('');
+export const createSeed = () =>
+  replaySeed.value !== '' ? replaySeed.value : createId();
+
 const modifier = () =>
-  Effect.runSync(numberBetween(seed.get(), createId(), 0, 4));
-
-const stats = () => ({
-  edge: Effect.runSync(numberBetween(seed.get(), 'edge', 1, 5)),
-  heart: Effect.runSync(numberBetween(seed.get(), 'heart', 1, 5)),
-  iron: Effect.runSync(numberBetween(seed.get(), 'iron', 1, 5)),
-  shadow: Effect.runSync(numberBetween(seed.get(), 'shadow', 1, 5)),
-  wits: Effect.runSync(numberBetween(seed.get(), 'wits', 1, 5)),
-});
-
-const resources = () => ({
-  health: Effect.runSync(numberBetween(seed.get(), 'health', 0, 5)),
-  spirit: Effect.runSync(numberBetween(seed.get(), 'spirit', 0, 5)),
-  supply: Effect.runSync(numberBetween(seed.get(), 'supply', 0, 5)),
-  xp: Effect.runSync(numberBetween(seed.get(), 'xp', 0, 10)),
-});
+  Effect.runSync(numberBetween(seed.get(), 'modifier', 0, 4));
 
 export const rollSteam = (speed: number) => {
   const streamInit = Schedule.spaced(`${speed} millis`);
   return Stream.fromSchedule(streamInit).pipe(
     Stream.tap(() =>
       Effect.sync(() => {
-        seed.set(createId());
+        seed.set(createSeed());
         console.log('seed', seed.get());
       }),
     ),
     Stream.tap(() => {
       return Effect.sync(() => {
-        const momentum = Effect.runSync(
-          numberBetween(seed.get(), 'momentum', -6, 10),
-        );
-        momentumStore.trigger.set({ value: momentum });
-        statsStore.trigger.set({ label: 'edge', value: stats().edge });
-        statsStore.trigger.set({ label: 'heart', value: stats().heart });
-        statsStore.trigger.set({ label: 'iron', value: stats().iron });
-        statsStore.trigger.set({ label: 'shadow', value: stats().shadow });
-        statsStore.trigger.set({ label: 'wits', value: stats().wits });
-        resourcesStore.trigger.set({
-          label: 'health',
-          value: resources().health,
+        impactsStore.trigger.clear();
+        tasksStore.trigger.clear();
+        assetsStore.trigger.clear();
+
+        momentumStore.trigger.set({
+          value: Effect.runSync(numberBetween(seed.get(), 'momentum', -6, 10)),
         });
-        resourcesStore.trigger.set({
-          label: 'spirit',
-          value: resources().spirit,
+
+        ['edge', 'heart', 'iron', 'shadow', 'wits'].forEach((stat: string) => {
+          statsStore.trigger.set({
+            // @ts-ignore
+            label: stat,
+            // @ts-ignore
+            value: stats(seed.get(), intensity.value)[stat],
+          });
         });
-        resourcesStore.trigger.set({
-          label: 'supply',
-          value: resources().supply,
+
+        ['health', 'spirit', 'supply', 'xp'].forEach((resource: string) => {
+          resourcesStore.trigger.set({
+            // @ts-ignore
+            label: resource,
+            // @ts-ignore
+            value: resources(seed.get(), intensity.value)[resource],
+          });
         });
-        resourcesStore.trigger.set({ label: 'xp', value: resources().xp });
+
+        [
+          'misfortunes',
+          'lastingEffects',
+          'burdens',
+          'currentVehicle',
+          'other',
+        ].forEach((name: string) => {
+          impactsStore.trigger.set({
+            // @ts-ignore
+            label: name,
+            // @ts-ignore
+            value: impacts(seed.get(), intensity.value)[name],
+          });
+        });
+
+        // tasksStore.trigger.set();
+        // assetsStore.trigger.set();
       });
     }),
     Stream.runForEach((n) =>

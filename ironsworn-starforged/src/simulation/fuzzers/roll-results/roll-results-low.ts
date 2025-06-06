@@ -1,4 +1,4 @@
-import { numberBetween } from './prng';
+import { numberBetween } from '../../prng';
 import { Effect } from 'effect';
 import { createId } from '@paralleldrive/cuid2';
 

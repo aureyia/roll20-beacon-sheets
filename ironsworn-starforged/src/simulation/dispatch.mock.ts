@@ -1,9 +1,12 @@
 import type { Dispatch } from '@roll20-official/beacon-sdk';
-import { rollResults } from './roll-results';
+import { rollResults as rollResultsLow } from './fuzzers/roll-results/roll-results-low';
+import { rollResults as rollResultsMedium } from './fuzzers/roll-results/roll-results-medium';
+import { rollResults as rollResultsHigh } from './fuzzers/roll-results/roll-results-high';
 import { ref } from 'vue';
 import { createAtom } from '@xstate/store';
 import { createId } from '@paralleldrive/cuid2';
 import { seed } from './generate-rolls';
+import { intensity } from '@/main';
 
 export const postRef = ref();
 // export const seed = createId()
@@ -75,7 +78,15 @@ export const simRelay = async (relayConfig: any) => {
     },
     updateTokensByCharacter: () => '',
     updateSharedSettings: async (update: any) => await {},
-    roll: async (roll: any) => await rollResults(seed.get()),
+    roll: async (roll: any) => {
+      if (intensity.value === 'high') {
+        return await rollResultsHigh(seed.get())
+      } else if (intensity.value === 'medium') {
+        return await rollResultsMedium(seed.get())
+      } else {
+        return await rollResultsLow(seed.get())
+      }
+    },
     post: async (args: any) => (postRef.value = args),
   } as any as Dispatch;
 };

@@ -1,4 +1,4 @@
-import { Effect, Context, Layer, Data, Schema } from 'effect';
+import { Effect, Context, Layer, Data, Schema, Predicate } from 'effect';
 import { dispatchRef } from '@/external/vue.relay';
 import { DispatchResultsSchema, type DispatchResults } from './dispatch.schema';
 import { assert } from '@/utility/assert';
@@ -52,6 +52,12 @@ export const DispatchLive = Layer.effect(
           const { rawResults, ...results } = yield* Schema.decodeUnknown(
             DispatchResultsSchema,
           )(dispatchResult);
+
+          if (Predicate.isUndefined(results.results['dice-0'])) {
+            yield* new DispatchError({
+              message: 'Dispatch returned no results',
+            });
+          }
 
           assert(Object.keys(results.results).length > 0);
           return results;

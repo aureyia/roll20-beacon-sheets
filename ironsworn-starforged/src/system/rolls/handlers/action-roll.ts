@@ -105,12 +105,12 @@ export const roll = (
     actionRoll.roll(actor, modifier, momentum, rollName),
   ).pipe(
     Effect.catchTags({
-      ActionScoreError: (_ActionScoreError) => Console.log('ActionScore Error'),
-      InvalidDie: (_InvalidDie) => Console.log('InvalidDie Error'),
-      DieNotFound: (_DieNotFound) => Console.log('DieNotFound Error'),
-      DispatchError: (_DispatchError) => Console.log('Dispatch Error'),
+      ActionScoreError: (_ActionScoreError) => Console.warn('ActionScore Error'),
+      InvalidDie: (_InvalidDie) => Console.warn('InvalidDie Error'),
+      DieNotFound: (_DieNotFound) => Console.warn('DieNotFound Error'),
+      DispatchError: (_DispatchError) => Console.warn('Dispatch Error'),
       InvalidDispatch: (_InvalidDispatch) =>
-        Console.log('InvalidDispatch Error'),
-      ParseError: (_ParseError) => Console.log('Parse Error'),
+        Console.warn('InvalidDispatch Error'),
+      ParseError: (_ParseError) => Console.warn('Parse Error'),
     }),
   );

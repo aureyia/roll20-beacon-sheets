@@ -126,9 +126,8 @@ type taskHydrate = { tasks: Task[] };
 // });
 
 type SetEvent = {
-  label: keyof Vow | keyof GenericTask;
-  id: string;
-  value: Vow[keyof Vow] | GenericTask[keyof GenericTask];
+  label: 'list'
+  value: [ Vow | GenericTask ];
 };
 
 export const tasksStore = createStore({
@@ -162,17 +161,12 @@ export const tasksStore = createStore({
     },
     remove: () => {},
     set: (context, event: SetEvent, enqueue) => {
-      context.list = context.list.map((task) => {
-        if (task._id === event.id) {
-          // TODO: Fix types
-          // @ts-ignore
-          task[event.label] = event.value;
-        }
-
-        return task;
-      });
+      context[event.label] = event.value;
       enqueue.emit.updated();
     },
+    clear: (context) => {
+      context.list = []
+    }
   },
 });
 
