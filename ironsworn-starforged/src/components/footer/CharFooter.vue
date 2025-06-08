@@ -21,7 +21,6 @@ const impactsList = [
 const numberOfImpacts = computed(() => impactsList.length);
 
 const burnMomentum = (resetValue: number) => {
-  console.log('burnMomentum', burnMomentum);
   momentumStore.trigger.set({ value: resetValue });
 };
 

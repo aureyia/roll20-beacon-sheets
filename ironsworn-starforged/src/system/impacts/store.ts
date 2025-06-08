@@ -62,7 +62,7 @@ export type HydrateEvent = {
 };
 
 type SetEvent = {
-  label: keyof ImpactsGrouped
+  label: keyof ImpactsGrouped;
   value: ImpactsGrouped[keyof ImpactsGrouped][];
 };
 
@@ -113,12 +113,12 @@ export const impactsStore = createStore({
       enqueue.emit.updated();
     },
     clear: (context) => {
-      context.misfortunes = []
-      context.lastingEffects = []
-      context.burdens = []
-      context.currentVehicle = []
-      context.other = []
-    }
+      context.misfortunes = [];
+      context.lastingEffects = [];
+      context.burdens = [];
+      context.currentVehicle = [];
+      context.other = [];
+    },
   },
 });
 

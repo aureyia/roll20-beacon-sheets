@@ -126,8 +126,8 @@ type taskHydrate = { tasks: Task[] };
 // });
 
 type SetEvent = {
-  label: 'list'
-  value: [ Vow | GenericTask ];
+  label: 'list';
+  value: [Vow | GenericTask];
 };
 
 export const tasksStore = createStore({
@@ -165,8 +165,8 @@ export const tasksStore = createStore({
       enqueue.emit.updated();
     },
     clear: (context) => {
-      context.list = []
-    }
+      context.list = [];
+    },
   },
 });
 

@@ -2,8 +2,8 @@
 import { CardContent } from '@/components/ui/card';
 import { marked } from 'marked';
 
-const props = defineProps({
-  move: {
+defineProps({
+  moveData: {
     type: Object,
     required: true,
   },
@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <CardContent>
-    <p v-html="marked.parse(move.Text)" />
+    <div class="move-content text-sm" v-html="marked.parse(moveData.Text)" />
   </CardContent>
 </template>
 

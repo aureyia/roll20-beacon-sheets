@@ -71,7 +71,7 @@ export const ActionRollLive = Layer.effect(
               challengeDie2.value > 0 &&
               actionDie.value > 0,
           );
-          actor.start();
+
           actor.send({
             type: 'params',
             value: {
@@ -105,7 +105,8 @@ export const roll = (
     actionRoll.roll(actor, modifier, momentum, rollName),
   ).pipe(
     Effect.catchTags({
-      ActionScoreError: (_ActionScoreError) => Console.warn('ActionScore Error'),
+      ActionScoreError: (_ActionScoreError) =>
+        Console.warn('ActionScore Error'),
       InvalidDie: (_InvalidDie) => Console.warn('InvalidDie Error'),
       DieNotFound: (_DieNotFound) => Console.warn('DieNotFound Error'),
       DispatchError: (_DispatchError) => Console.warn('Dispatch Error'),

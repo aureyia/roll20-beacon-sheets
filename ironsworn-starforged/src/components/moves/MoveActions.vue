@@ -23,14 +23,11 @@ import { DispatchLive } from '@/system/rolls/dispatch';
 import { ActionRollLive } from '@/system/rolls/handlers/action-roll';
 import { ActionScoreLive } from '@/system/rolls/action-score';
 
-
 const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ActionRollLive.pipe(
   Layer.provide(FormatAndRollLive),
   Layer.provide(ActionScoreLive),
 );
-
-const actor = createActor(machine);
 
 const momentum = ref(momentumStore.get().context.momentum);
 
@@ -41,56 +38,77 @@ const props = defineProps({
   },
 });
 
-const { rollMode }: boolean = inject('roll');
-const { selectedOption }: string = inject('move');
+const { moveMode, actor } = inject('roll');
+const { selectedOption } = inject('move');
 const modifier = ref<number>(0);
+
+const burnMomentum = (choice: boolean) => {
+  actor.send({
+    type: 'burnChoice',
+    value: choice,
+  });
+  moveMode.value = 'content';
+};
 
 const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
   if (options.length > 1 && selectedOption.value === '') {
-    rollMode.value = true;
+    moveMode.value = 'options';
     return;
   }
 
   const momentum = momentumStore.get().context.momentum;
   const stats = statsStore.get().context;
-  const formattedModifier = Number(modifier.value)
-  console.log(selectedOption, 'selectedOption')
-  const baseBonus = 1 // TODO: Update this to be dynamic with parser
+  const formattedModifier = Number(modifier.value);
+  // TODO: Update this to use the parsed version
+  // const baseBonus = stats[selectedOption.value.Using[0].toLowerCase()]
+  const baseBonus = 2;
 
-  console.log('baseBonus', baseBonus)
-  console.log('formattedModifier', formattedModifier)
-  
   await Effect.runPromise(
-    actionRoll(actor, formattedModifier + baseBonus, momentum, props.move.Name).pipe(
-      Effect.provide(MainLive),
-    ),
+    actionRoll(
+      actor,
+      formattedModifier + baseBonus,
+      momentum,
+      props.move.Name,
+    ).pipe(Effect.provide(MainLive)),
   );
+
+  selectedOption.value = '';
+  // moveMode.value = 'content';
 };
 </script>
 
 <template>
-  <div class="flex w-full items-end justify-between p-3">
-    <NumberField
-      v-if="props.move.Trigger.Options && selectedOption"
-      id="modifiers"
-      :default-value="0"
-      :min="0"
-      @update:modelValue="(value) => (modifier = value)"
-      class="items-center"
+  <div class="w-full p-3">
+    <div
+      class="flex items-end justify-between"
+      v-if="moveMode === 'momentumBurn'"
     >
-      <Label for="modifiers">Modifier</Label>
-      <NumberFieldContent class="w-28">
-        <NumberFieldDecrement class="bg-muted" />
-        <NumberFieldInput class="bg-muted" />
-        <NumberFieldIncrement class="bg-muted" />
-      </NumberFieldContent>
-    </NumberField>
-    <Button v-if="props.move.Oracles">Roll Oracle</Button>
-    <Button
-      v-if="props.move.Trigger.Options"
-      @click="startMoveRoll(props.move.Trigger.Options)"
-      >Roll</Button
-    >
+      <Button variant="default" @click="burnMomentum(true)">Yes</Button>
+      <Button variant="destructive" @click="burnMomentum(false)">No</Button>
+    </div>
+    <div class="flex items-end justify-between" d v-else>
+      <NumberField
+        v-if="props.move.Trigger.Options && selectedOption"
+        id="modifiers"
+        :default-value="0"
+        :min="0"
+        @update:modelValue="(value) => (modifier = value)"
+        class="items-center"
+      >
+        <Label for="modifiers">Modifier</Label>
+        <NumberFieldContent class="w-28">
+          <NumberFieldDecrement class="bg-muted" />
+          <NumberFieldInput class="bg-muted" />
+          <NumberFieldIncrement class="bg-muted" />
+        </NumberFieldContent>
+      </NumberField>
+      <Button v-if="props.move.Oracles">Roll Oracle</Button>
+      <Button
+        v-if="props.move.Trigger.Options"
+        @click="startMoveRoll(props.move.Trigger.Options)"
+        >Roll</Button
+      >
+    </div>
   </div>
 </template>
 

@@ -21,9 +21,10 @@ const env = import.meta.env.MODE || '';
 const isDevEnvironment = ['development', 'test'].includes(env);
 export const isSimEnvironment = env === 'simulation';
 export const rollSpeed = ref([2000]);
-export const intensity = ref('low')
+export const intensity = ref('low');
+export const postRef = ref();
 
-async function main () {
+async function main() {
   const i18n = createI18n({});
   const app = createApp(App);
 
@@ -44,4 +45,4 @@ async function main () {
 
   app.mount('#app');
 }
-main()
+main();

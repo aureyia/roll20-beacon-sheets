@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { postRef } from '@/simulation/dispatch.mock';
+import { postRef } from '@/main';
 import { metaStore } from '@/external/store';
 import { characterStore } from '@/system/character/store';
 import { resourcesStore } from '@/system/resources/store';
@@ -15,7 +15,7 @@ import { intensity } from '@/main';
 import { replaySeed, seed } from '@/simulation/generate-rolls';
 
 import { cn } from '@/utility';
-import { ref } from 'vue';
+import { inject } from 'vue';
 
 const stores = {
   character: characterStore,
@@ -37,7 +37,7 @@ const stores = {
       <h2 class="mt-2 text-xl">Current Seed</h2>
       <div>{{ seed.get() }}</div>
       <h2 class="my-2 text-xl">Roll Display</h2>
-      <div class="w-[250px]" v-html="postRef.content" />
+      <div class="w-[250px]" v-if="postRef" v-html="postRef.content" />
     </div>
     <div class="w-[830px]">
       <h2 class="text-xl">Stores</h2>

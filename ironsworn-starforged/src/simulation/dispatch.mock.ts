@@ -6,9 +6,7 @@ import { ref } from 'vue';
 import { createAtom } from '@xstate/store';
 import { createId } from '@paralleldrive/cuid2';
 import { seed } from './generate-rolls';
-import { intensity } from '@/main';
-
-export const postRef = ref();
+import { intensity, postRef } from '@/main';
 // export const seed = createId()
 
 const character = createAtom({
@@ -80,11 +78,11 @@ export const simRelay = async (relayConfig: any) => {
     updateSharedSettings: async (update: any) => await {},
     roll: async (roll: any) => {
       if (intensity.value === 'high') {
-        return await rollResultsHigh(seed.get())
+        return await rollResultsHigh(seed.get());
       } else if (intensity.value === 'medium') {
-        return await rollResultsMedium(seed.get())
+        return await rollResultsMedium(seed.get());
       } else {
-        return await rollResultsLow(seed.get())
+        return await rollResultsLow(seed.get());
       }
     },
     post: async (args: any) => (postRef.value = args),

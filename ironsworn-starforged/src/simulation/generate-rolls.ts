@@ -50,6 +50,8 @@ actor.subscribe((snapshot) => {
   }
 });
 
+actor.start();
+
 const moveData = { Name: 'Simulation Rolls' };
 export let seed = createAtom('');
 export const replaySeed = ref('');

@@ -20,7 +20,7 @@ import {
   tasks as tasksHigh,
 } from './stores-high';
 
-type Intensity = "high" | "medium" | "low"
+type Intensity = 'high' | 'medium' | 'low';
 
 export const resources = (seed: string, intensity: Intensity) => {
   if (intensity === 'high') {

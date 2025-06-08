@@ -20,9 +20,9 @@ const baseList = {
 const simList = {
   ...baseList,
   simulation: '/simulation',
-}
+};
 
-const navList = isSimEnvironment ? simList : baseList
+const navList = isSimEnvironment ? simList : baseList;
 </script>
 
 <template>

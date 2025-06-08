@@ -1,6 +1,6 @@
-import { Effect } from "effect";
-import { numberBetween } from "../../prng";
-import { seed } from "../../generate-rolls";
+import { Effect } from 'effect';
+import { numberBetween } from '../../prng';
+import { seed } from '../../generate-rolls';
 
 export const stats = (seed: string) => ({
   edge: Effect.runSync(numberBetween(seed, 'edge', 1, 5)),
@@ -20,18 +20,18 @@ export const resources = (seed: string) => ({
 const createImpact = (category: string) => ({
   name: 'Name',
   category: category,
-  description: 'description'
-})
+  description: 'description',
+});
 
 const numberOfImpacts = (seed: string, salt: string) =>
   Effect.runSync(numberBetween(seed, salt, 0, 1));
 
 export const impacts = (seed: string) => {
-  const numberOfMisfortunes = numberOfImpacts(seed, 'misfortunes')
-  const numberOfLastingEffects = numberOfImpacts(seed, 'lastingEffects')
-  const numberOfBurdens = numberOfImpacts(seed, 'burdens')
-  const numberOfCurrentVehicle = numberOfImpacts(seed, 'currentVehicle')
-  const numberOfOther = numberOfImpacts(seed, 'other')
+  const numberOfMisfortunes = numberOfImpacts(seed, 'misfortunes');
+  const numberOfLastingEffects = numberOfImpacts(seed, 'lastingEffects');
+  const numberOfBurdens = numberOfImpacts(seed, 'burdens');
+  const numberOfCurrentVehicle = numberOfImpacts(seed, 'currentVehicle');
+  const numberOfOther = numberOfImpacts(seed, 'other');
 
   let impactsObject = {
     misfortunes: [] as any[],
@@ -39,7 +39,7 @@ export const impacts = (seed: string) => {
     burdens: [] as any[],
     currentVehicle: [] as any[],
     other: [] as any[],
-  }
+  };
 
   for (let i = 0; i < numberOfMisfortunes; i++) {
     impactsObject['misfortunes'].push(createImpact('misfortunes'));
