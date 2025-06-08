@@ -1,11 +1,11 @@
 import { Effect } from 'effect';
-import { starforged, type IAssetType } from 'dataforged';
+import { starforged, type IAssetType } from '@/vendor/dataforged';
 import type { AssetCategory } from './types';
 
 export const getAssetType = (
   assetTypeName: AssetCategory,
 ): Effect.Effect<IAssetType, Error> => {
-  const selectedAssetType = starforged['Asset Types'].find(
+  const selectedAssetType = starforged.default['Asset Types'].find(
     (x) => x.Name === assetTypeName,
   );
   if (!selectedAssetType) {

@@ -1,9 +1,9 @@
-import { starforged } from 'dataforged';
+import { starforged } from '@/vendor/dataforged';
 import { Effect } from 'effect';
 
 export const getMoveData = (moveId: string) => {
   const categoryId = moveId.split('/').slice(0, 3).join('/');
-  const dfMoveCategory = starforged['Move Categories'].find(
+  const dfMoveCategory = starforged.default['Move Categories'].find(
     (category) => category.$id === categoryId,
   );
 

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { starforged } from 'dataforged';
+import { starforged } from '@/vendor/dataforged';
 // import { ItemSearch } from '@/components/search';
 import { MovesGroup } from '@/components/moves';
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
 import { ref } from 'vue';
 
-const moves = starforged['Move Categories'];
+const moves = starforged.default['Move Categories'];
 
 const showTriggers = ref(false);
 </script>

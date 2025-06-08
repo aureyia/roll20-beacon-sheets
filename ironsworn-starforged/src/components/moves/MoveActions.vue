@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/number-field';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import type { IMoveTriggerOptionAction } from 'dataforged';
+import type { IMoveTriggerOptionAction } from '@/vendor/dataforged';
 import { inject, ref } from 'vue';
 import { Effect, Layer } from 'effect';
 import { momentumStore } from '@/system/momentum/store';
@@ -16,8 +16,6 @@ import { statsStore } from '@/system/stats/store';
 import { roll as actionRoll } from '@/system/rolls/handlers/action-roll';
 import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll';
 import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll';
-import { machine } from '@/system/rolls/machines/calculate-outcome';
-import { createActor } from 'xstate';
 import { RollFormatterLive } from '@/system/rolls/formatter';
 import { DispatchLive } from '@/system/rolls/dispatch';
 import { ActionRollLive } from '@/system/rolls/handlers/action-roll';

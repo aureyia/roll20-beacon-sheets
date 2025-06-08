@@ -33,11 +33,11 @@ const stores = {
 <template>
   <div class="mt-50 mx-auto flex gap-10">
     <div></div>
-    <div>
+    <div class="w-[270px]">
       <h2 class="mt-2 text-xl">Current Seed</h2>
       <div>{{ seed.get() }}</div>
       <h2 class="my-2 text-xl">Roll Display</h2>
-      <div class="w-[250px]" v-if="postRef" v-html="postRef.content" />
+      <div v-if="postRef" v-html="postRef.content" />
     </div>
     <div class="w-[830px]">
       <h2 class="text-xl">Stores</h2>
@@ -235,9 +235,7 @@ const stores = {
               v-model="replaySeed"
               placeholder="Seed"
             />
-            <div dir="rtl">
-              <Button @click="replaySeed = ''">Clear</Button>
-            </div>
+            <Button @click="replaySeed = ''">Clear</Button>
           </div>
         </div>
         <div class="mt-4">

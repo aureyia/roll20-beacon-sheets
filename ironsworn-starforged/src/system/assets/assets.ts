@@ -1,5 +1,5 @@
 import { Effect, pipe } from 'effect';
-import { starforged, type IAsset, type IAssetType } from 'dataforged';
+import { starforged, type IAsset, type IAssetType } from '@/vendor/dataforged';
 import { getAssetType } from './get-asset-type';
 import type { Ability, AssetCategory } from './types';
 import { createId } from '@paralleldrive/cuid2';
@@ -37,7 +37,7 @@ export const getAssetAbilities = (
   id: string,
   category: AssetCategory,
 ): Effect.Effect<Ability[], Error> => {
-  const selectedCategory = starforged['Asset Types'].find(
+  const selectedCategory = starforged.default['Asset Types'].find(
     (x) => x.Name === category,
   );
 

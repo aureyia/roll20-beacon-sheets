@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { assetsStore } from '@/system/assets/store';
 // @ts-ignore
-import { starforged, type IAsset } from 'dataforged';
+import { starforged, type IAsset } from '@/vendor/dataforged';
 import { Effect } from 'effect';
 import AssetAddDialog from '@/components/assets/AssetAddDialog.vue';
 import AssetCard from '@/components/assets/AssetCard.vue';
@@ -11,7 +11,7 @@ const assetStore = ref(assetsStore.get().context);
 const removeMode = ref(false);
 
 const getAssetById = (asset: IAsset) => {
-  const assets = starforged['Asset Types'].find(
+  const assets = starforged.default['Asset Types'].find(
     (x: IAsset) => x.Name === asset.category,
   ).Assets;
   if (!assets) {

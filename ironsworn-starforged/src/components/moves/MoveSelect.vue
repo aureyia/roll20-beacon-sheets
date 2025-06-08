@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { starforged } from 'dataforged';
+import { starforged } from '@/vendor/dataforged';
 import { Effect } from 'effect';
 import { useRouter } from 'vue-router';
 
@@ -10,7 +10,7 @@ const router = useRouter();
 
 const getAllCategoryMoves = (moveId: string) => {
   const categoryId = moveId.split('/').slice(0, 3).join('/');
-  const dfMoveCategory = starforged['Move Categories'].find(
+  const dfMoveCategory = starforged.default['Move Categories'].find(
     (category) => category.$id === categoryId,
   );
 

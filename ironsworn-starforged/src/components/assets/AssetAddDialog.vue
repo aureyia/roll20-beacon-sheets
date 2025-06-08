@@ -2,7 +2,7 @@
 import * as z from 'zod';
 import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { FormField, FormItem, FormLabel } from '../ui/form';
-import { type IAsset } from 'dataforged';
+import { type IAsset } from '@/vendor/dataforged';
 import {
   Select,
   SelectContent,

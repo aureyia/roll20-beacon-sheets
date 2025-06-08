@@ -1,8 +1,8 @@
-import { starforged, type IAsset, type IMove } from 'dataforged';
+import { starforged, type IAsset, type IMove } from '@/vendor/dataforged';
 
-const assets = starforged['Asset Types'];
-const moves = starforged['Move Categories'];
-const oracles = starforged['Oracle Categories'];
+const assets = starforged.default['Asset Types'];
+const moves = starforged.default['Move Categories'];
+const oracles = starforged.default['Oracle Categories'];
 
 type Ability = {
   enabled: boolean;
