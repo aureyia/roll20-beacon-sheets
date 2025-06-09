@@ -36,6 +36,7 @@ export class RollFormatter extends Context.Tag('RollFormatter')<
   }
 >() {}
 
+// # Dependency Injection 2
 export const RollFormatterLive = Layer.effect(
   RollFormatter,
   Effect.gen(function* () {

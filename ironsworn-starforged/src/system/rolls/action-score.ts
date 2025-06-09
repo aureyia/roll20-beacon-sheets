@@ -6,6 +6,7 @@ export class ActionScoreError extends Data.TaggedError('ActionScoreError')<{
   message?: string;
 }> {}
 
+// # Dependency Injection 4
 export class ActionScore extends Context.Tag('ActionScore')<
   ActionScore,
   {

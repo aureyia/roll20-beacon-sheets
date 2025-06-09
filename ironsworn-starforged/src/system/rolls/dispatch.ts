@@ -20,6 +20,7 @@ export class DispatchError extends Data.TaggedError('DispatchError')<{
   message?: string;
 }> {}
 
+// # Dependency Injection 3
 export class Dispatch extends Context.Tag('Dispatch')<
   Dispatch,
   {

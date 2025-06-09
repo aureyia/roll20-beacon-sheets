@@ -19,6 +19,7 @@ import { assert } from '@/utility/assert';
 import type { ParseError } from 'effect/ParseResult';
 import { Console } from 'effect';
 
+// # Dependency Injection 1
 export class ActionRoll extends Context.Tag('ActionRoll')<
   ActionRoll,
   {
@@ -39,12 +40,13 @@ export class ActionRoll extends Context.Tag('ActionRoll')<
   }
 >() {}
 
+// Layer.Layer<ActionRoll, never, ActionScore | RollFormatter | Dispatch>
 export const ActionRollLive = Layer.effect(
   ActionRoll,
   Effect.gen(function* () {
     const formatter = yield* RollFormatter;
-    const actionScore = yield* ActionScore;
     const dispatch = yield* Dispatch;
+    const actionScore = yield* ActionScore;
 
     return {
       roll: (actor, modifier, momentum, rollName) =>
@@ -107,6 +109,7 @@ export const ActionRollLive = Layer.effect(
   }),
 );
 
+// # Error Handling
 export const roll = (
   actor: OutcomeActor,
   modifier: number,
@@ -117,13 +120,11 @@ export const roll = (
     actionRoll.roll(actor, modifier, momentum, rollName),
   ).pipe(
     Effect.catchTags({
-      ActionScoreError: (_ActionScoreError) =>
-        Console.warn('ActionScore Error'),
-      InvalidDie: (_InvalidDie) => Console.warn('InvalidDie Error'),
-      DieNotFound: (_DieNotFound) => Console.warn('DieNotFound Error'),
-      DispatchError: (_DispatchError) => Console.warn('Dispatch Error'),
-      InvalidDispatch: (_InvalidDispatch) =>
-        Console.warn('InvalidDispatch Error'),
-      ParseError: (_ParseError) => Console.warn('Parse Error'),
+      ActionScoreError: () => Console.warn('ActionScore Error'),
+      InvalidDie: () => Console.warn('InvalidDie Error'),
+      DieNotFound: () => Console.warn('DieNotFound Error'),
+      DispatchError: () => Console.warn('Dispatch Error'),
+      InvalidDispatch: () => Console.warn('InvalidDispatch Error'),
+      ParseError: () => Console.warn('Parse Error'),
     }),
   );

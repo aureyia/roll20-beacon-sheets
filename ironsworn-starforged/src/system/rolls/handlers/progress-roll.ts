@@ -1,4 +1,3 @@
-import { RollOutcome, RollOutcomeLive } from '@/system/rolls/roll-outcome';
 import { RollFormatter, RollFormatterLive } from '@/system/rolls/formatter';
 import { DispatchLive, Dispatch } from '@/system/rolls/dispatch';
 import { Effect, Context, Layer } from 'effect';
@@ -31,7 +30,7 @@ const ProgressRollHandlerLive = Layer.effect(
   ProgressRollHandler,
   Effect.gen(function* () {
     const formatter = yield* RollFormatter;
-    const rollOutcome = yield* RollOutcome;
+    // const rollOutcome = yield* RollOutcome;
 
     return {
       roll: (progress: number) =>
@@ -69,10 +68,9 @@ const ProgressRollHandlerLive = Layer.effect(
   }),
 );
 
-const FormatAndRoll = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ProgressRollHandlerLive.pipe(
-  Layer.provide(FormatAndRoll),
-  Layer.provide(RollOutcomeLive),
+  Layer.provide(RollFormatterLive),
+  Layer.provide(DispatchLive)
 );
 
 export const roll = (score: number) =>
