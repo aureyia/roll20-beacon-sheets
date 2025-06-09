@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { inject, computed, ref } from 'vue';
-import { getMoveData } from '@/utility/moves/getMoveData';
+import { getMoveData } from '@/utility/get-move-data';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Effect } from 'effect';
 import { Label } from '@/components/ui/label';

@@ -12,12 +12,13 @@ export const DieExpression = Schema.TemplateLiteral(
   'd',
   Schema.Number,
 );
+
 export const DispatchResultsSchema = Schema.Struct({
   type: Schema.Literal('rollResults'),
   requestId: Schema.String,
   messageId: Schema.String,
   results: Schema.Record({
-    key: DieKey,
+    key: DieKey.pipe(Schema.minLength(1)),
     value: Schema.Struct({
       rollName: DieKey,
       expression: DieExpression,

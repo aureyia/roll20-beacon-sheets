@@ -52,9 +52,21 @@ export const assetsStore = createStore({
       context.list = updatedAssets ?? context.list;
     },
     add: (context: any, event: AssetSubmission, enqueue) => {
+      console.log(context, event);
       const abilities: Ability[] = Effect.runSync(
         getAssetAbilities(event.dataforgedId, event.category),
       );
+
+      const nom = {
+        _id: createId(),
+        dataforgedId: event.dataforgedId,
+        name: event.name,
+        category: event.category,
+        abilities,
+        meter: event.meter,
+      };
+
+      console.log('nom', nom);
 
       context.list.push({
         _id: createId(),
@@ -66,6 +78,7 @@ export const assetsStore = createStore({
       });
 
       enqueue.emit.updated();
+      console.log('context.list', context.list);
     },
     remove: (context, id: string, enqueue) => {
       context.list = context.list.filter((asset: Asset) => asset._id !== id);
@@ -73,6 +86,24 @@ export const assetsStore = createStore({
     },
     set: (context, event: SetEvent, enqueue) => {
       context[event.label] = event.value;
+      enqueue.emit.updated();
+    },
+    updateAbility: (context, event, enqueue) => {
+      context.list.map((asset: Asset) => {
+        if (asset._id === event.assetId) {
+          const updatedAbilities = asset.abilities.map((ability: Ability) => {
+            if (ability._id === event.abilityId) {
+              ability.enabled = event.value;
+            }
+
+            return ability;
+          });
+
+          asset.abilities = updatedAbilities;
+          return asset;
+        }
+        return asset;
+      });
       enqueue.emit.updated();
     },
     clear: (context, event, enqueue) => {

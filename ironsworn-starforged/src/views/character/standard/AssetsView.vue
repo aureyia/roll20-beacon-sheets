@@ -7,11 +7,11 @@ import { Effect } from 'effect';
 import AssetAddDialog from '@/components/assets/AssetAddDialog.vue';
 import AssetCard from '@/components/assets/AssetCard.vue';
 
-const assetStore = ref(assetsStore.get().context);
+const storeAssetList = () => assetsStore.get().context.list;
 const removeMode = ref(false);
 
-const getAssetById = (asset: IAsset) => {
-  const assets = starforged.default['Asset Types'].find(
+const getAssetById = (asset: any) => {
+  const assets = starforged['Asset Types'].find(
     (x: IAsset) => x.Name === asset.category,
   ).Assets;
   if (!assets) {
@@ -28,8 +28,12 @@ const getAssetById = (asset: IAsset) => {
     return Effect.fail(new Error(`No asset found for: ${asset.dataforgedId}`));
   }
 
+  console.log('selectedAsset', selectedAsset);
+
   return Effect.succeed(selectedAsset);
 };
+
+const assets = ref(storeAssetList());
 </script>
 
 <template>
@@ -46,11 +50,11 @@ const getAssetById = (asset: IAsset) => {
     </div>
     <div class="assets-container flex flex-wrap justify-between">
       <AssetCard
-        v-for="asset in assetsStore.get().context.list"
-        :abilities="asset.abilities"
-        :storedAsset="asset"
+        v-for="(asset, key) in storeAssetList()"
+        v-model:abilities="assets[key].abilities"
+        v-model:storedAsset="assets[key]"
         :dataforgedAsset="Effect.runSync(getAssetById(asset))"
-        :key="asset"
+        :key="asset._id"
       />
     </div>
   </div>

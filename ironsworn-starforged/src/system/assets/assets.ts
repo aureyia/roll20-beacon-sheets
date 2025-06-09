@@ -37,7 +37,7 @@ export const getAssetAbilities = (
   id: string,
   category: AssetCategory,
 ): Effect.Effect<Ability[], Error> => {
-  const selectedCategory = starforged.default['Asset Types'].find(
+  const selectedCategory = starforged['Asset Types'].find(
     (x) => x.Name === category,
   );
 

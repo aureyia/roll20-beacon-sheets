@@ -5,7 +5,7 @@ import type { AssetCategory } from './types';
 export const getAssetType = (
   assetTypeName: AssetCategory,
 ): Effect.Effect<IAssetType, Error> => {
-  const selectedAssetType = starforged.default['Asset Types'].find(
+  const selectedAssetType = starforged['Asset Types'].find(
     (x) => x.Name === assetTypeName,
   );
   if (!selectedAssetType) {

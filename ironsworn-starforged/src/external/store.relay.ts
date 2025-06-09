@@ -1,4 +1,4 @@
-import { Stream, Queue, Effect } from 'effect';
+import { Stream, Queue, Effect, Config, Duration } from 'effect';
 import { sync } from '@/external/sync';
 
 import { metaStore } from './store';
@@ -29,7 +29,11 @@ export const storeRelay = Effect.gen(function* () {
   tasksStore.on('updated', () => Effect.runPromise(update()));
   settingsStore.on('updated', () => Effect.runPromise(update()));
 
-  const stream = Stream.fromQueue(queue).pipe(Stream.debounce('800 millis'));
+  const debouceTime = Number(import.meta.env.VITE_DEBOUNCE) || 800;
+
+  const stream = Stream.fromQueue(queue).pipe(
+    Stream.debounce(Duration.millis(debouceTime)),
+  );
 
   yield* Stream.runForEach(stream, () =>
     Effect.sync(() => sync.send({ type: 'update' })),

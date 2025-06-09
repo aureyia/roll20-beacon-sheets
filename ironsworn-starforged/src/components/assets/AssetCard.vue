@@ -3,22 +3,22 @@ import { CardFooter, Card, CardHeader, CardContent } from '../ui/card';
 import { Checkbox } from '../ui/checkbox';
 import { marked } from 'marked';
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group';
+import { assetsStore } from '@/system/assets/store';
 import type { Ability } from '@/system/assets/types';
 
-const props = defineProps({
+defineProps({
   dataforgedAsset: {
-    type: Object,
-    required: true,
-  },
-  storedAsset: {
     type: Object,
     required: true,
   },
 });
 
-const abilities = props.storedAsset.abilities.filter(
-  (x: Ability) => x !== null,
-);
+const abilities = defineModel('abilities', { required: true });
+const storedAsset = defineModel('storedAsset', { required: true });
+
+const updateAbility = (event: any) => {
+  assetsStore.trigger.updateAbility(event);
+};
 </script>
 
 <template>
@@ -38,7 +38,15 @@ const abilities = props.storedAsset.abilities.filter(
         >
           <Checkbox
             class="mr-2 mt-1"
-            v-model:checked="abilities[index].enabled"
+            v-model="abilities[index].enabled"
+            @update:model-value="
+              (event) =>
+                updateAbility({
+                  assetId: storedAsset._id,
+                  abilityId: abilities[index]._id,
+                  value: event,
+                })
+            "
           />
           <div
             class="ability-text"

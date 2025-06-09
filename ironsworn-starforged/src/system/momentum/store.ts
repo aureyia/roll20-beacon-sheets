@@ -1,5 +1,5 @@
 import { assert } from '@/utility/assert';
-import { isNumberBetween } from '@/utility/isNumberBetween';
+import { isNumberBetween } from '@/utility/is-number-between';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
 

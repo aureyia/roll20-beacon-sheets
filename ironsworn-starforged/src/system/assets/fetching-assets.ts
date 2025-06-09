@@ -5,7 +5,7 @@ import type { AssetCategory } from './types';
 const getCategory = (
   category: AssetCategory,
 ): Effect.Effect<IAssetType, Error> => {
-  const selectedCategory = starforged.default['Asset Types'].find(
+  const selectedCategory = starforged['Asset Types'].find(
     (x) => x.Name === category,
   );
 

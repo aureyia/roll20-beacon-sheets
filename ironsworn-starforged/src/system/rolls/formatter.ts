@@ -1,19 +1,14 @@
-import { Effect, Context, Layer, Data } from 'effect';
+import { Effect, Context, Layer, Data, Schema } from 'effect';
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates';
 import type { RolledDie, Die } from '@/system/rolls/dice';
-import {
-  Dispatch,
-  DispatchError,
-  type DispatchResultsOutput,
-} from './dispatch';
 import { assert } from '@/utility/assert';
-import type { ParseError } from 'effect/ParseResult';
 import type { DieKey } from './dispatch.schema';
+import type { DispatchResultsOutput } from './dispatch';
 
 type AvailableDice = '1d6' | '1d10' | '1d100';
 type FormattedRoll = {
   rolls: {
-    'dice-0'?: AvailableDice;
+    'dice-0': AvailableDice;
     'dice-1'?: AvailableDice;
     'dice-2'?: AvailableDice;
   };
@@ -30,23 +25,23 @@ export class InvalidDispatch extends Data.TaggedError('InvalidDispatch')<{
 export class RollFormatter extends Context.Tag('RollFormatter')<
   RollFormatter,
   {
-    readonly roll: (
+    readonly toDispatch: (
       dice: Die[],
-    ) => Effect.Effect<
-      RolledDie[],
-      DispatchError | InvalidDie | InvalidDispatch | ParseError
-    >;
+    ) => Effect.Effect<FormattedRoll['rolls'], InvalidDie>;
+    readonly fromDispatch: (
+      output: any,
+      formattedDice: FormattedRoll['rolls'],
+      dice: Die[],
+    ) => Effect.Effect<RolledDie[], InvalidDie>;
   }
 >() {}
 
 export const RollFormatterLive = Layer.effect(
   RollFormatter,
   Effect.gen(function* () {
-    const dispatch = yield* Dispatch;
     return {
-      roll: (dice: Die[]) =>
+      toDispatch: (dice: Die[]) =>
         Effect.gen(function* () {
-          let formattedDice: FormattedRoll['rolls'];
           let index = 0;
 
           const { sides, count = 1 } = dice[index] as DiceComponent;
@@ -57,16 +52,22 @@ export const RollFormatterLive = Layer.effect(
             );
           }
 
-          formattedDice = {
+          return {
             [formatDieKey(index)]: formatDie(count, sides),
             ...formatDiceComponents(dice, index + 1),
           };
+        }),
 
-          const output = yield* Effect.retry(dispatch.roll(formattedDice), {
-            times: 3,
-          });
+      fromDispatch: (
+        output: DispatchResultsOutput,
+        formattedDice: FormattedRoll['rolls'],
+        dice: Die[],
+      ) =>
+        Effect.gen(function* () {
+          assert(!!formattedDice);
 
-          const diceKeys = Object.keys(formattedDice);
+          type Nom = keyof FormattedRoll['rolls'];
+          const diceKeys = Object.keys(formattedDice) as Nom[];
 
           for (const key of diceKeys) {
             const sides = Number(formattedDice[key].replace('1d', ''));
@@ -82,7 +83,6 @@ export const RollFormatterLive = Layer.effect(
           }
 
           const dieValues = Object.keys(output.results).map((key) => {
-            // @ts-ignore
             return output.results[key].results.result;
           });
 

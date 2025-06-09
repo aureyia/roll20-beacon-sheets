@@ -1,6 +1,6 @@
 import { createStore } from '@xstate/store';
 import { assert } from '@/utility/assert';
-import { isNumberBetween } from '@/utility/isNumberBetween';
+import { isNumberBetween } from '@/utility/is-number-between';
 import { Effect, Layer, Context } from 'effect';
 import type { SetEvent } from '@/utility/store-types';
 

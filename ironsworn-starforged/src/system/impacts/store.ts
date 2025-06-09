@@ -27,14 +27,15 @@ export type ImpactsGrouped = {
   other: Other[];
 };
 
-const isValidCategory = (category: string) =>
-  [
+const isValidCategory = (category: string) => {
+  return [
     'misfortunes',
     'lastingEffects',
     'burdens',
     'currentVehicle',
     'other',
   ].includes(category);
+};
 
 const filterOutImpact = (context: any, event: AnyImpact) =>
   context[event.category].filter(
@@ -42,15 +43,15 @@ const filterOutImpact = (context: any, event: AnyImpact) =>
   );
 
 function assertAddImpact(data: AddImpact) {
-  assert(!data.category, 'Category is required when adding an impact');
-  assert(!data.name, 'Option is required when adding an impact');
-  assert(!isValidCategory(data.category), `Unknown category: ${data.category}`);
+  assert(!!data.category);
+  assert(!!data.name);
+  assert(isValidCategory(data.category));
 }
 
 function assertRemoveImpact(data: AnyImpact) {
-  assert(!data.category, 'Category is required when adding an impact');
-  assert(!data._id, '_id is required when removing an impact');
-  assert(!isValidCategory(data.category), `Unknown category: ${data.category}`);
+  assert(!!data.category);
+  assert(!!data._id);
+  assert(isValidCategory(data.category));
 }
 
 export type HydrateEvent = {
@@ -93,6 +94,7 @@ export const impactsStore = createStore({
         Effect.runSync(objectToArray(event.other)) ?? context.other;
     },
     add: (context, event: AddImpact, enqueue) => {
+      console.log('event', event);
       assertAddImpact(event);
 
       const impact: AnyImpact = {

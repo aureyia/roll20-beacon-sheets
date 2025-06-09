@@ -1,5 +1,5 @@
 import { setup, assertEvent, type ActorRefFrom } from 'xstate';
-import { sendRollToChat } from '@/utility/sendRollToChat';
+import { sendRollToChat } from '@/utility/send-roll-to-chat';
 import { assert } from '@/utility/assert';
 
 type Outcome =

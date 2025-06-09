@@ -1,6 +1,6 @@
 import { createApp, watch } from 'vue';
 import { createI18n } from 'vue-i18n';
-import { Effect, Fiber, Queue, Stream, Ref, SubscriptionRef } from 'effect';
+import { Effect, ConfigProvider } from 'effect';
 
 import App from './App.vue';
 import router from './router';
@@ -38,9 +38,10 @@ async function main() {
   app.use(sync);
   app.use(sheetRelay);
 
-  Effect.runFork(storeRelay);
+  Effect.runPromise(storeRelay);
+
   if (isSimEnvironment) {
-    Effect.runFork(runner(rollSpeed));
+    Effect.runPromise(runner(rollSpeed));
   }
 
   app.mount('#app');

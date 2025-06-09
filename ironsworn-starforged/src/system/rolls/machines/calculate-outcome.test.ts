@@ -8,7 +8,7 @@ import {
   getOutcomeKey,
   compare,
 } from '@/system/rolls/machines/test-helper/snapshots';
-import * as exports from '@/utility/sendRollToChat';
+import * as exports from '@/utility/send-roll-to-chat';
 
 const outcomes = loadOutcomes();
 const regenerate = process.env.REGENERATE === 'true';
@@ -118,8 +118,8 @@ describe('calculate-outcome-machine', () => {
       saveOutcomes(newOutcomes);
     } else {
       saveTestOutcomes(newOutcomes);
-      const result = compare()
-      expect(result).toEqual('No differences found.')
+      const result = compare();
+      expect(result).toEqual('No differences found.');
     }
   });
 });

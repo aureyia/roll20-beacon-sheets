@@ -4,7 +4,7 @@ import { CardHeader, Card, CardContent, CardFooter } from '../ui/card';
 import { Button } from '../ui/button';
 import { inject, computed } from 'vue';
 import { marked } from 'marked';
-import { getMoveData } from '@/utility/moves/getMoveData';
+import { getMoveData } from '@/utility/get-move-data';
 import { MoveActions } from '@/components/moves';
 import { MomentumBurn } from '@/components/moves';
 import { MoveRollOptions } from '@/components/moves';

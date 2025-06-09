@@ -17,7 +17,6 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { Effect } from 'effect';
 import { FormControl } from '@/components/ui/form';
 import { DialogFooter } from '@/components/ui/dialog';
-import type { an } from 'vitest/dist/chunks/reporters.d.DG9VKi4m.js';
 
 const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const;
 
@@ -50,8 +49,9 @@ const form = useForm({
   validationSchema: formSchema,
 });
 
+const allAssets = Effect.runSync(getAllAssets());
+
 const onSubmit = form.handleSubmit((values) => {
-  const allAssets = Effect.runSync(getAllAssets());
   const selectedAsset = allAssets[values.category].find(
     (asset: IAsset) => asset.Name === values.asset,
   );

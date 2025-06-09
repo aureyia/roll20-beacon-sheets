@@ -13,40 +13,36 @@
 
 <br />
 
-
-
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/cloudy.png)](#whats-this-all-about-anyways)
 
 ## What's this all about, anyways?
 
-*Ironsworn: Starforged* is a tabletop role-playing game that's playable in solo, co-op (GM-less), and guided (GMed) modes.
+_Ironsworn: Starforged_ is a tabletop role-playing game that's playable in solo, co-op (GM-less), and guided (GMed) modes.
 
-> In *Ironsworn: Starforged*, you are a spaceborne hero sworn to undertake perilous quests. You will explore uncharted space, unravel the secrets of a mysterious galaxy, and build bonds with those you meet on your travels. Most importantly, you will swear iron vows and see them fulfilled—no matter the cost.
+> In _Ironsworn: Starforged_, you are a spaceborne hero sworn to undertake perilous quests. You will explore uncharted space, unravel the secrets of a mysterious galaxy, and build bonds with those you meet on your travels. Most importantly, you will swear iron vows and see them fulfilled—no matter the cost.
 
-For more information on *Ironsworn: Starforged* itself, check out [the website](https://getstarforged.com/).
+For more information on _Ironsworn: Starforged_ itself, check out [the website](https://getstarforged.com/).
 
-The Dataforged repo exists to provide the Creative Commons-licensed text and image content of *Ironsworn: Starforged*, so that you--an intrepid developer with excellent taste in indie TTRPGs--don't need to do data entry for the game's 200+ oracle tables, 90 asset cards, 56 moves, and 14 setting truth categories, and 24 example encounters.
+The Dataforged repo exists to provide the Creative Commons-licensed text and image content of _Ironsworn: Starforged_, so that you--an intrepid developer with excellent taste in indie TTRPGs--don't need to do data entry for the game's 200+ oracle tables, 90 asset cards, 56 moves, and 14 setting truth categories, and 24 example encounters.
 
 Use it as source material to build a personal reference wiki, a play aid, a discord bot, or module for your favourite VTT, or something that nobody else has imagined yet. [Be sure to check out some of the projects that use Dataforged below](#projects-that-use-dataforged).
 
-Dataforged may be useful to you even if you aren't developing something for *Ironsworn: Starforged* specifically: the overwhelming majority of its d% oracle tables are system agnostic, so they might be used for any generator or other TTRPG tool with a sci-fi/space opera flavour.
+Dataforged may be useful to you even if you aren't developing something for _Ironsworn: Starforged_ specifically: the overwhelming majority of its d% oracle tables are system agnostic, so they might be used for any generator or other TTRPG tool with a sci-fi/space opera flavour.
 
-Now, go forth and make something cool! 🚀 And be sure to tell us about it on the [*Ironsworn* Discord](https://discordapp.com/invite/6QMvmJb) and the [*Ironsworn* subreddit](https://www.reddit.com/r/Ironsworn/) so we can see what you've done with the data!
-
+Now, go forth and make something cool! 🚀 And be sure to tell us about it on the [_Ironsworn_ Discord](https://discordapp.com/invite/6QMvmJb) and the [_Ironsworn_ subreddit](https://www.reddit.com/r/Ironsworn/) so we can see what you've done with the data!
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/cloudy.png)](#projects-that-use-dataforged)
 
 ## Projects that use Dataforged
 
-* [Stargazer](https://nboughton.uk/apps/stargazer/), the official PWA for playing *Ironsworn: Starforged* solo
-* The official [Roll20 sheet for *Ironsworn: Starforged*](https://github.com/aureyia/roll20-character-sheets)
-* The [*Ironsworn* and *Ironsworn: Starforged* sheet for Foundry VTT](https://github.com/ben/foundry-ironsworn)
-* [TheOracle](https://github.com/XenotropicDev/TheOracle), a general-purpose discord bot for playing *Ironsworn* and *Ironsworn: Starforged*
-* [Starforged-Sectors](https://github.com/Ferretsroq/Starforged-Sectors), a discord bot for generating *Ironsworn: Starforged* sectors
-* [*Ironsworn* and *Ironsworn: Starforged* templates for Obsidian](https://github.com/grimborg/obsidian-ironsworn)
-* [Rolo Ludo](https://code.tupale.co/Offray/RoloLudo),  a set of tools to connect JSON oracles with the [502Lab wiki](https://mutabit.com/repos.fossil/502Lab/uv/wiki/502Lab.html) to facilitate translations
-* ...and maybe yours? Tell us about it in the [*Ironsworn* discord](https://discordapp.com/invite/6QMvmJb)!
-
+- [Stargazer](https://nboughton.uk/apps/stargazer/), the official PWA for playing _Ironsworn: Starforged_ solo
+- The official [Roll20 sheet for _Ironsworn: Starforged_](https://github.com/aureyia/roll20-character-sheets)
+- The [_Ironsworn_ and _Ironsworn: Starforged_ sheet for Foundry VTT](https://github.com/ben/foundry-ironsworn)
+- [TheOracle](https://github.com/XenotropicDev/TheOracle), a general-purpose discord bot for playing _Ironsworn_ and _Ironsworn: Starforged_
+- [Starforged-Sectors](https://github.com/Ferretsroq/Starforged-Sectors), a discord bot for generating _Ironsworn: Starforged_ sectors
+- [_Ironsworn_ and _Ironsworn: Starforged_ templates for Obsidian](https://github.com/grimborg/obsidian-ironsworn)
+- [Rolo Ludo](https://code.tupale.co/Offray/RoloLudo), a set of tools to connect JSON oracles with the [502Lab wiki](https://mutabit.com/repos.fossil/502Lab/uv/wiki/502Lab.html) to facilitate translations
+- ...and maybe yours? Tell us about it in the [_Ironsworn_ discord](https://discordapp.com/invite/6QMvmJb)!
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/cloudy.png)](#usage)
 
@@ -55,13 +51,17 @@ Now, go forth and make something cool! 🚀 And be sure to tell us about it on t
 Consult the [API Documentation for further information](https://rsek.github.io/dataforged).
 
 ### NodeJS
+
 If you're working in Javascript or Typescript, Dataforged is best consumed as a NodeJS package:
+
 ```bash
 npm i dataforged
 ```
+
 ```bash
 yarn add dataforged
 ```
+
 Typescript typings are included; use of VSCode or an IDE to expose the type annotations in your workspace is highly recommended. See also the [API documentation site](https://rsek.github.io/dataforged).
 
 If you just want the data as-is, import the `starforged` object to use the pre-loaded, typed JSON.
@@ -69,38 +69,36 @@ If you just want the data as-is, import the `starforged` object to use the pre-l
 #### ESM
 
 ```javascript
-import { starforged } from '@/vendor/dataforged'
+import { starforged } from '@/vendor/dataforged';
 ```
 
 #### CommonJS
 
 ```javascript
-const { starforged } = require('@/vendor/dataforged')
+const { starforged } = require('@/vendor/dataforged');
 ```
 
 ### Other Languages
-Packages for other languages/package managers are a work in progress. For now, you can use the JSON files in  [`dist/starforged`](dist/starforged). `dataforged.json` contains all game data in a single object; `schema.json` describes its JSON schema.
 
+Packages for other languages/package managers are a work in progress. For now, you can use the JSON files in [`dist/starforged`](dist/starforged). `dataforged.json` contains all game data in a single object; `schema.json` describes its JSON schema.
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/cloudy.png)](#current-content-versionsources)
 
 ## Current Content Version/Sources
 
-* ***Ironsworn: Starforged Reference Guide* - 050622**
-  * moves
-  * oracles
-  * setting truths
-  * encounters
-* ***Ironsworn: Starforged* Assets - 050622**
-  * assets
-
+- **_Ironsworn: Starforged Reference Guide_ - 050622**
+  - moves
+  - oracles
+  - setting truths
+  - encounters
+- **_Ironsworn: Starforged_ Assets - 050622**
+  - assets
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/cloudy.png)](#licensing)
 
 ## Licensing
 
 Items in this package (and its GitHub source) various fall under the CC BY 4.0, CC BY-NC 4.0, or MIT licenses. See [LICENSE.md](LICENSE.md) for details.
-
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/cloudy.png)](#contributors)
 

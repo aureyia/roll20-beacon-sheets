@@ -1,7 +1,7 @@
 import { type Task } from '@/system/tasks/store';
 import { pipe } from 'effect';
 import { assert } from '@/utility/assert';
-import { isNumberBetween } from './isNumberBetween';
+import { isNumberBetween } from './is-number-between';
 
 export type ProgressTicksToFill = (
   position: number,
@@ -14,14 +14,8 @@ export const progressTicksToFill: ProgressTicksToFill = (
   const MAX_TOTAL_PROGRESS = 40 as const;
   const FINAL_TRACK_POSITION = 10 as const;
 
-  assert(
-    isNumberBetween(positionInTrack, 0, FINAL_TRACK_POSITION),
-    `positionInTrack: ${positionInTrack}`,
-  );
-  assert(
-    isNumberBetween(currentProgress, 0, MAX_TOTAL_PROGRESS),
-    `currentProgress: ${currentProgress}`,
-  );
+  assert(isNumberBetween(positionInTrack, 0, FINAL_TRACK_POSITION));
+  assert(isNumberBetween(currentProgress, 0, MAX_TOTAL_PROGRESS));
 
   const MAX_TICKS_PER_BOX = 4 as const;
   const NO_TICKS = 0 as const;
@@ -34,9 +28,6 @@ export const progressTicksToFill: ProgressTicksToFill = (
     (lowestTicks) => Math.max(NO_TICKS, lowestTicks),
   );
 
-  assert(
-    isNumberBetween(result, NO_TICKS, MAX_TICKS_PER_BOX),
-    `result: ${result}`,
-  );
+  assert(isNumberBetween(result, NO_TICKS, MAX_TICKS_PER_BOX));
   return result;
 };

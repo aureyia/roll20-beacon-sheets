@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2';
 import { arrayToObject, objectToArray } from '@/utility/objectify';
-import { type LimitedRange } from '@/utility/limitedRange';
+import { type LimitedRange } from '@/utility/limited-range';
 
 import { Effect, Layer, Context } from 'effect';
 import { createStore } from '@xstate/store';

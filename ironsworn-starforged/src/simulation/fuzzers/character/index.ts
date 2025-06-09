@@ -1,12 +1,6 @@
-import {
-  
-} from './low';
-import {
-  
-} from './medium';
-import {
-  
-} from './high';
+import {} from './low';
+import {} from './medium';
+import {} from './high';
 
 type Intensity = 'high' | 'medium' | 'low';
 

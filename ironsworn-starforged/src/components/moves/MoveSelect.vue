@@ -10,7 +10,7 @@ const router = useRouter();
 
 const getAllCategoryMoves = (moveId: string) => {
   const categoryId = moveId.split('/').slice(0, 3).join('/');
-  const dfMoveCategory = starforged.default['Move Categories'].find(
+  const dfMoveCategory = starforged['Move Categories'].find(
     (category) => category.$id === categoryId,
   );
 

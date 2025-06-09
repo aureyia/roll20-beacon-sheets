@@ -150,7 +150,7 @@ const update = (store: Store, label: any, event: any) => {
       <div class="impacts-header flex items-center justify-center gap-10">
         <Toggle
           class="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground data-[state=on]:bg-destructive"
-          v-model:pressed="toggleImpactRemoval"
+          v-model="toggleImpactRemoval"
           >Remove</Toggle
         >
         <h3 class="text-2xl">Impacts</h3>

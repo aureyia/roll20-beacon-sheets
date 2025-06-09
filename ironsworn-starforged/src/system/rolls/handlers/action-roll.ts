@@ -14,7 +14,7 @@ import { actionDice } from '@/system/rolls/dice';
 import { getDieByLabel, DieNotFound } from '@/system/rolls/get-die-by-label';
 import { type OutcomeActor } from '@/system/rolls/machines/calculate-outcome';
 import { initValues } from '@/external/sync';
-import { DispatchError, DispatchLive } from '@/system/rolls/dispatch';
+import { DispatchError, Dispatch } from '@/system/rolls/dispatch';
 import { assert } from '@/utility/assert';
 import type { ParseError } from 'effect/ParseResult';
 import { Console } from 'effect';
@@ -44,15 +44,27 @@ export const ActionRollLive = Layer.effect(
   Effect.gen(function* () {
     const formatter = yield* RollFormatter;
     const actionScore = yield* ActionScore;
+    const dispatch = yield* Dispatch;
 
     return {
       roll: (actor, modifier, momentum, rollName) =>
         Effect.gen(function* () {
           assert(initValues.character.id !== undefined);
 
-          const rolledDice = yield* formatter.roll(actionDice);
+          const encodedDice = yield* formatter.toDispatch(actionDice);
+
+          const output = yield* Effect.retry(dispatch.roll(encodedDice), {
+            times: 3,
+          });
+
+          const decodedDice = yield* formatter.fromDispatch(
+            output,
+            encodedDice,
+            actionDice,
+          );
+
           const { totalActionScore, dieNegated } = yield* actionScore.calculate(
-            rolledDice,
+            decodedDice,
             modifier,
             momentum,
             null,
@@ -60,9 +72,9 @@ export const ActionRollLive = Layer.effect(
 
           const { challengeDie1, challengeDie2, actionDie } = yield* Effect.all(
             {
-              challengeDie1: getDieByLabel(rolledDice, 'Challenge Die: 1'),
-              challengeDie2: getDieByLabel(rolledDice, 'Challenge Die: 2'),
-              actionDie: getDieByLabel(rolledDice, 'Action Die'),
+              challengeDie1: getDieByLabel(decodedDice, 'Challenge Die: 1'),
+              challengeDie2: getDieByLabel(decodedDice, 'Challenge Die: 2'),
+              actionDie: getDieByLabel(decodedDice, 'Action Die'),
             },
           );
 

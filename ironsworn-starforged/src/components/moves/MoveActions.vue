@@ -21,10 +21,10 @@ import { DispatchLive } from '@/system/rolls/dispatch';
 import { ActionRollLive } from '@/system/rolls/handlers/action-roll';
 import { ActionScoreLive } from '@/system/rolls/action-score';
 
-const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ActionRollLive.pipe(
-  Layer.provide(FormatAndRollLive),
+  Layer.provide(RollFormatterLive),
   Layer.provide(ActionScoreLive),
+  Layer.provide(DispatchLive),
 );
 
 const momentum = ref(momentumStore.get().context.momentum);

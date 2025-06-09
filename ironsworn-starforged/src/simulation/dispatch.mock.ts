@@ -64,13 +64,13 @@ const character = createAtom({
 
 const getCharacter = () => {
   if (intensity.value === 'high') {
-    return character.get()
+    return character.get();
   } else if (intensity.value === 'medium') {
-    return character.get()
+    return character.get();
   } else {
-    return character.get()
+    return character.get();
   }
-}
+};
 
 export const simRelay = async (relayConfig: any) => {
   relayConfig.handlers.onInit({ character: character.get(), settings: {} });

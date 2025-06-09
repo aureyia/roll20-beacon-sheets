@@ -8,7 +8,7 @@ import { ActionScoreLive } from '../action-score';
 import { ActionRollLive } from './action-roll';
 import { RollFormatterLive } from '../formatter';
 import type { DispatchResultsOutput } from '../dispatch';
-import * as exports from '@/utility/sendRollToChat';
+import * as exports from '@/utility/send-roll-to-chat';
 import { dispatchRef as dispatchRefVar } from '@/external/vue.relay';
 
 const rollResults = {};
@@ -17,10 +17,10 @@ export const DispatchTest = Layer.succeed(Dispatch, {
   roll: (_dice) => Effect.succeed(rollResults as DispatchResultsOutput),
 });
 
-const FormatAndRollTest = RollFormatterLive.pipe(Layer.provide(DispatchTest));
 const MainTest = ActionRollLive.pipe(
-  Layer.provide(FormatAndRollTest),
   Layer.provide(ActionScoreLive),
+  Layer.provide(RollFormatterLive),
+  Layer.provide(DispatchTest),
 );
 
 describe('ActionRoll', () => {

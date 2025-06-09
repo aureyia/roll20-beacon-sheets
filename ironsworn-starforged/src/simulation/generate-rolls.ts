@@ -21,9 +21,9 @@ import { impactsStore } from '@/system/impacts/store';
 import { tasksStore } from '@/system/tasks/store';
 import { assetsStore } from '@/system/assets/store';
 
-const FormatAndRollLive = RollFormatterLive.pipe(Layer.provide(DispatchLive));
 const MainLive = ActionRollLive.pipe(
-  Layer.provide(FormatAndRollLive),
+  Layer.provide(RollFormatterLive),
+  Layer.provide(DispatchLive),
   Layer.provide(ActionScoreLive),
 );
 

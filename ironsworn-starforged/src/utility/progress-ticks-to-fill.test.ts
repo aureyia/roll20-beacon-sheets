@@ -1,4 +1,4 @@
-import { progressTicksToFill } from './progressTicksToFill';
+import { progressTicksToFill } from './progress-ticks-to-fill';
 import { test, expect, describe } from 'vitest';
 
 describe('progressTicksToFill', () => {

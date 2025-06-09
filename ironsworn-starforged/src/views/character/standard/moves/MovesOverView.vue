@@ -5,7 +5,7 @@ import { MovesGroup } from '@/components/moves';
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
 import { ref } from 'vue';
 
-const moves = starforged.default['Move Categories'];
+const moves = starforged['Move Categories'];
 
 const showTriggers = ref(false);
 </script>
