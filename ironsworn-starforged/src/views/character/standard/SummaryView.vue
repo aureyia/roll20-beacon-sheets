@@ -56,12 +56,14 @@ const update = (store: Store, label: any, event: any) => {
         <LabelledInput
           class="flex basis-2/4"
           label="Name"
+          data-qa="character-name"
           :modelValue="name"
           @update:modelValue="(event: string) => update('meta', 'name', event)"
         />
         <LabelledInput
           class="flex basis-1/4"
           label="Callsign"
+          data-qa="character-callsign"
           :modelValue="character.callsign"
           @update:modelValue="
             (event: string) => update('character', 'callsign', event)
@@ -70,6 +72,7 @@ const update = (store: Store, label: any, event: any) => {
         <LabelledInput
           class="flex basis-1/4"
           label="Pronouns"
+          data-qa="character-pronouns"
           :modelValue="character.pronouns"
           @update:modelValue="
             (event: string) => update('character', 'pronouns', event)

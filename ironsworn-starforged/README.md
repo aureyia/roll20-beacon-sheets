@@ -98,21 +98,6 @@ npm run type-check
 npm run test:unit
 ```
 
-### Open up and develop local End To End Tests with Cypress
-```sh
-npm run test:e2e:open:local
-```
-
-### Run local End To End Tests with Cypress
-```sh
-npm run test:e2e:local
-```
-
-### Run CDN Hosted End To End Tests with Cypress
-```sh
-npm run test:e2e
-```
-
 ## Deploying your sheet
 
 Details for this coming soon!

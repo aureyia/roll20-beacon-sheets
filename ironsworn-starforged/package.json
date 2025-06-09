@@ -11,9 +11,9 @@
     "preview": "vite preview",
     "test:unit": "vitest --no-watch",
     "test:unit:watch": "vitest",
-    "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
-    "test:e2e:local": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress run --e2e'",
-    "test:e2e:open:local": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
+    "test:e2e": "start-server-and-test preview http://localhost:4173 'playwright'",
+    "test:e2e:local": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'playwright'",
+    "test:e2e:open:local": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'playwright'",
     "build-only": "vite build",
     "build-data": "ts-node ./src/system/parser/parser.ts",
     "build-scss": "sass ./src/system/rolls/rolltemplates/styles/host.scss ./public/host.css --no-source-map --no-charset",
@@ -21,11 +21,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "ci-check": "npm run format && npm run lint && npm run type-check && npm run test:unit && npm run test:e2e:local",
-    "cypress:open:local": "CONFIG_FILE=local CYPRESS_ENV=true cypress open",
-    "cypress:test:local": "CONFIG_FILE=local CYPRESS_ENV=true cypress run --env TAGS=\"@integration\"",
-    "cypress:test:ci": "CONFIG_FILE=local CYPRESS_ENV=true cypress run --env TAGS=\"@integration\"",
-    "cypress:report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
+    "ci-check": "npm run format && npm run lint && npm run type-check && npm run test:unit && npm run test:e2e:local"
   },
   "dependencies": {
     "@effect/platform-browser": "0.63.0",
@@ -76,11 +72,8 @@
     "@vue/eslint-config-typescript": "14.5.0",
     "@vue/test-utils": "2.4.6",
     "@vue/tsconfig": "0.7.0",
-    "allure-commandline": "2.34.0",
-    "allure-cypress": "3.2.2",
     "autoprefixer": "10.4.21",
     "eslint": "9.27.0",
-    "eslint-plugin-cypress": "4.3.0",
     "eslint-plugin-vue": "10.1.0",
     "jsdom": "26.1.0",
     "json-diff": "1.0.6",
@@ -103,13 +96,5 @@
     "vitest-dom": "0.1.1",
     "vue-tsc": "2.2.10",
     "webpack": "5.99.8"
-  },
-  "cypress-cucumber-preprocessor": {
-    "json": {
-      "enabled": true
-    },
-    "e2e": {
-      "stepDefinitions": "support/step_definitions/index.steps.js"
-    }
   }
 }
