@@ -6,7 +6,7 @@ export const stats = (seed: string) => ({
   edge: Effect.runSync(numberBetween(seed, 'edge', 1, 5)),
   heart: Effect.runSync(numberBetween(seed, 'heart', 1, 5)),
   iron: Effect.runSync(numberBetween(seed, 'iron', 1, 5)),
-  shadow: Effect.runSync(numberBetween(seed, 'shadow', 1, 5)),
+  shadow: Effect.runSync(numberBetween(seed, 'shadow-sm', 1, 5)),
   wits: Effect.runSync(numberBetween(seed, 'wits', 1, 5)),
 });
 

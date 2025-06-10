@@ -27314,7 +27314,7 @@
                 "$id": "Starforged/Oracles/Planets/Jovian/Observed_From_Space/1-11",
                 "Floor": 1,
                 "Ceiling": 11,
-                "Result": "Complex ring system"
+                "Result": "Complex ring-3 system"
               },
               {
                 "$id": "Starforged/Oracles/Planets/Jovian/Observed_From_Space/12-22",
@@ -30120,7 +30120,7 @@
                 "$id": "Starforged/Oracles/Planets/Rocky/Observed_From_Space/23-33",
                 "Floor": 23,
                 "Ceiling": 33,
-                "Result": "Dense ring system"
+                "Result": "Dense ring-3 system"
               },
               {
                 "$id": "Starforged/Oracles/Planets/Rocky/Observed_From_Space/34-44",
@@ -30999,7 +30999,7 @@
                 "$id": "Starforged/Oracles/Planets/Shattered/Observed_From_Space/23-33",
                 "Floor": 23,
                 "Ceiling": 33,
-                "Result": "Dense ring system"
+                "Result": "Dense ring-3 system"
               },
               {
                 "$id": "Starforged/Oracles/Planets/Shattered/Observed_From_Space/34-44",
@@ -32743,7 +32743,7 @@
                 "$id": "Starforged/Oracles/Planets/Vital/Observed_From_Space/1-11",
                 "Floor": 1,
                 "Ceiling": 11,
-                "Result": "Complex ring system"
+                "Result": "Complex ring-3 system"
               },
               {
                 "$id": "Starforged/Oracles/Planets/Vital/Observed_From_Space/12-22",

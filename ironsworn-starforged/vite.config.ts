@@ -1,12 +1,11 @@
-import { fileURLToPath, URL } from "node:url";
+import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
-import svgLoader from "vite-svg-loader";
-import tailwind from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
-import Components from 'unplugin-vue-components/vite'
+import svgLoader from 'vite-svg-loader';
+import tailwindcss from '@tailwindcss/vite';
+import Components from 'unplugin-vue-components/vite';
 
 export default defineConfig(({ mode }) => ({
   plugins: [
@@ -14,51 +13,47 @@ export default defineConfig(({ mode }) => ({
     svgLoader(),
     Components({
       dts: true,
-    })
+    }),
+    tailwindcss(),
   ],
   base:
-    mode === "production"
+    mode === 'production'
       ? `https://storage.googleapis.com/beacon-community-sheets/irosworn-starforged/`
-      : "/",
+      : '/',
   build: {
     emptyOutDir: true,
     minify: true,
     cssCodeSplit: false,
     rollupOptions: {
       input: {
-        sheet: "src/main.ts"
+        sheet: 'src/main.ts',
       },
       output: {
-        dir: "dist",
+        dir: 'dist',
         compact: false,
         assetFileNames: (assetInfo: any) => {
-          if (assetInfo.name === "style.css") return "sheet.css";
-          return "assets/[name][extname]";
+          if (assetInfo.name === 'style.css') return 'sheet.css';
+          return 'assets/[name][extname]';
         },
-        entryFileNames: "sheet.js",
-        minifyInternalExports: false
-      }
-    }
+        entryFileNames: 'sheet.js',
+        minifyInternalExports: false,
+      },
+    },
   },
-  assetsInclude: ["**/*.hbs"],
+  assetsInclude: ['**/*.hbs'],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   optimizeDeps: {
     esbuildOptions: {
       define: {
-        global: "globalThis"
-      }
-    }
+        global: 'globalThis',
+      },
+    },
   },
   server: {
-    cors: false
-  },
-  css: {
-    postcss: {
-      plugins: [tailwind(), autoprefixer()],
-    },
+    cors: false,
   },
 }));

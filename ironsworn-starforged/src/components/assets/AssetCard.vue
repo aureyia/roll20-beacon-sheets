@@ -22,9 +22,9 @@ const updateAbility = (event: any) => {
 </script>
 
 <template>
-  <Card class="asset-card rounded-xlg mb-8 w-[43%] border-0 drop-shadow">
+  <Card class="asset-card rounded-xlg mb-8 w-[43%] border-0 drop-shadow-sm">
     <CardHeader
-      class="rounded-t-lg bg-card-input text-xl font-bold drop-shadow"
+      class="rounded-t-lg bg-card-input text-xl font-bold drop-shadow-sm"
       >{{ dataforgedAsset.Name }}</CardHeader
     >
     <CardContent class="asset-body">

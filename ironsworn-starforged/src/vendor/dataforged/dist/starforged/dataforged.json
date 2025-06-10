@@ -8040,7 +8040,7 @@
           "Abilities": [
             {
               "$id": "Starforged/Assets/Path/Scoundrel/Abilities/1",
-              "Text": "When you make a move by lying, bluffing, stealing, or cheating, add +2. On a strong hit with a match, your deception creates an unexpected opportunity; take the value of your shadow as +momentum.",
+              "Text": "When you make a move by lying, bluffing, stealing, or cheating, add +2. On a strong hit with a match, your deception creates an unexpected opportunity; take the value of your shadow-sm as +momentum.",
               "Alter Moves": [
                 {
                   "$id": "Starforged/Assets/Path/Scoundrel/Abilities/1/Alter_Moves/1",
@@ -8063,7 +8063,7 @@
                     "$id": "Starforged/Assets/Path/Scoundrel/Abilities/1/Alter_Moves/1/Outcomes",
                     "Strong Hit": {
                       "With a Match": {
-                        "Text": "Your deception creates an unexpected opportunity; take the value of your shadow as +momentum.",
+                        "Text": "Your deception creates an unexpected opportunity; take the value of your shadow-sm as +momentum.",
                         "$id": "Starforged/Assets/Path/Scoundrel/Abilities/1/Alter_Moves/1/Outcomes/Strong_Hit/With_a_Match"
                       },
                       "$id": "Starforged/Assets/Path/Scoundrel/Abilities/1/Alter_Moves/1/Outcomes/Strong_Hit"
@@ -43590,7 +43590,7 @@
                   "$id": "Starforged/Oracles/Planets/Jovian/Observed_From_Space/1-11",
                   "Floor": 1,
                   "Ceiling": 11,
-                  "Result": "Complex ring system"
+                  "Result": "Complex ring-3 system"
                 },
                 {
                   "$id": "Starforged/Oracles/Planets/Jovian/Observed_From_Space/12-22",
@@ -46400,7 +46400,7 @@
                   "$id": "Starforged/Oracles/Planets/Rocky/Observed_From_Space/23-33",
                   "Floor": 23,
                   "Ceiling": 33,
-                  "Result": "Dense ring system"
+                  "Result": "Dense ring-3 system"
                 },
                 {
                   "$id": "Starforged/Oracles/Planets/Rocky/Observed_From_Space/34-44",
@@ -47281,7 +47281,7 @@
                   "$id": "Starforged/Oracles/Planets/Shattered/Observed_From_Space/23-33",
                   "Floor": 23,
                   "Ceiling": 33,
-                  "Result": "Dense ring system"
+                  "Result": "Dense ring-3 system"
                 },
                 {
                   "$id": "Starforged/Oracles/Planets/Shattered/Observed_From_Space/34-44",
@@ -49027,7 +49027,7 @@
                   "$id": "Starforged/Oracles/Planets/Vital/Observed_From_Space/1-11",
                   "Floor": 1,
                   "Ceiling": 11,
-                  "Result": "Complex ring system"
+                  "Result": "Complex ring-3 system"
                 },
                 {
                   "$id": "Starforged/Oracles/Planets/Vital/Observed_From_Space/12-22",

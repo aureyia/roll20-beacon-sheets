@@ -15,7 +15,7 @@ const props = defineProps({
 
 <template>
   <div class="progress-card">
-    <Card class="mx-14 mt-3 drop-shadow">
+    <Card class="mx-14 mt-3 drop-shadow-sm">
       <CardHeader class="px-6 pb-2 pt-4">
         <div>
           <Transition>
@@ -29,7 +29,7 @@ const props = defineProps({
           </Transition>
           <Input
             v-model="task.description"
-            class="h-10 bg-card-input text-lg drop-shadow-sm"
+            class="h-10 bg-card-input text-lg drop-shadow-xs"
           />
         </div>
         <DifficultyList

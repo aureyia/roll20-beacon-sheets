@@ -1,4 +1,4 @@
-export const STAT_LIST = ['edge', 'heart', 'iron', 'shadow', 'wits'] as const;
+export const STAT_LIST = ['edge', 'heart', 'iron', 'shadow-sm', 'wits'] as const;
 
 export enum Stat {
   Edge = 'Edge',

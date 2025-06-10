@@ -2561,7 +2561,7 @@
             },
             {
               "$id": "Ironsworn/Assets/Path/Shadow-Kin/Abilities/2",
-              "Text": "You are attuned to the realms of shadow: When you perform a ritual, add +1.",
+              "Text": "You are attuned to the realms of shadow-sm: When you perform a ritual, add +1.",
               "Enabled": false
             },
             {
@@ -4350,7 +4350,7 @@
           "Abilities": [
             {
               "$id": "Ironsworn/Assets/Ritual/Shadow-Walk/Abilities/1",
-              "Text": "When you cloak yourself with the gossamer veil of the shadow realms, roll +shadow. On a strong hit, take +1 momentum. Then, reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. On a weak hit, as above, but the shadows try to lead you astray. You must first [Face Danger](Ironsworn/Moves/Adventure/Face_Danger) to find your way.",
+              "Text": "When you cloak yourself with the gossamer veil of the shadow-sm realms, roll +shadow. On a strong hit, take +1 momentum. Then, reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. On a weak hit, as above, but the shadows try to lead you astray. You must first [Face Danger](Ironsworn/Moves/Adventure/Face_Danger) to find your way.",
               "Moves": [
                 {
                   "Source": {
@@ -4374,9 +4374,9 @@
                         "Using": ["Shadow"]
                       }
                     ],
-                    "Text": "When you cloak yourself with the gossamer veil of the shadow realms..."
+                    "Text": "When you cloak yourself with the gossamer veil of the shadow-sm realms..."
                   },
-                  "Text": "When you cloak yourself with the gossamer veil of the shadow realms, roll +shadow. On a strong hit, take +1 momentum. Then, reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. On a weak hit, as above, but the shadows try to lead you astray. You must first [Face Danger](Ironsworn/Moves/Adventure/Face_Danger) to find your way.",
+                  "Text": "When you cloak yourself with the gossamer veil of the shadow-sm realms, roll +shadow. On a strong hit, take +1 momentum. Then, reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. On a weak hit, as above, but the shadows try to lead you astray. You must first [Face Danger](Ironsworn/Moves/Adventure/Face_Danger) to find your way.",
                   "Outcomes": {
                     "$id": "Ironsworn/Moves/Assets/Ritual/Shadow-Walk/Abilities/1/Shadow-Walk/Outcomes",
                     "Strong Hit": {
@@ -4398,7 +4398,7 @@
             },
             {
               "$id": "Ironsworn/Assets/Ritual/Shadow-Walk/Abilities/2",
-              "Text": "As above, and you may also travel along the hidden paths of the shadow realms to [Undertake a Journey](Ironsworn/Moves/Adventure/Undertake_a_Journey) using +shadow (instead of +wits). If you do, [Endure Stress](Ironsworn/Moves/Suffer/Endure_Stress) (1 stress) and mark progress twice on a strong hit.",
+              "Text": "As above, and you may also travel along the hidden paths of the shadow-sm realms to [Undertake a Journey](Ironsworn/Moves/Adventure/Undertake_a_Journey) using +shadow (instead of +wits). If you do, [Endure Stress](Ironsworn/Moves/Suffer/Endure_Stress) (1 stress) and mark progress twice on a strong hit.",
               "Enabled": false
             },
             {
@@ -5075,12 +5075,12 @@
             "Drive out trespassers, or see them pay"
           ],
           "Tactics": [
-            "Strike from shadow",
+            "Strike from shadow-sm",
             "Force their surrender",
             "Turn the forest against them"
           ],
           "Rank": 2,
-          "Description": "Elves are strange beings of the forest, seldom seen beyond the ancient woods of the Deep Wilds. They are fiercely protective of their lands and suspicious of humans. Their scouts patrol the borderlands, riding the fearsome mounts we call gaunts (page 149). Others of their kind watch us from the shadow of the deep woods, spears and bow at the ready. Some say elven mystics can bind the animals and beasts of the forest to aid in the defense of the Wilds.\n\nA few warn that the elves are biding their time, readying the attack which will drive us from these lands.",
+          "Description": "Elves are strange beings of the forest, seldom seen beyond the ancient woods of the Deep Wilds. They are fiercely protective of their lands and suspicious of humans. Their scouts patrol the borderlands, riding the fearsome mounts we call gaunts (page 149). Others of their kind watch us from the shadow-sm of the deep woods, spears and bow at the ready. Some say elven mystics can bind the animals and beasts of the forest to aid in the defense of the Wilds.\n\nA few warn that the elves are biding their time, readying the attack which will drive us from these lands.",
           "Quest Starter": "The leader of an Ironlander community seeks an audience with the elves. For what purpose? Why are you compelled to help?",
           "$id": "Ironsworn/Encounters/Firstborn/Elf",
           "Nature": "Firstborn",
@@ -6246,7 +6246,7 @@
         {
           "Name": "Gloom",
           "Features": ["Creeping, vaporous murk", "Whispers and illusions"],
-          "Drives": ["Envelop all in shadow", "Feed on fear and despair"],
+          "Drives": ["Envelop all in shadow-sm", "Feed on fear and despair"],
           "Tactics": [
             "Lure with trickery",
             "Snuff out lights",

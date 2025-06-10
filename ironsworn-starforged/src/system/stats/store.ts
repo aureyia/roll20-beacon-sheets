@@ -56,7 +56,7 @@ export const statsStore = createStore({
       context['edge'] = event.edge ?? context['edge'];
       context['heart'] = event.heart ?? context['edge'];
       context['iron'] = event.iron ?? context['edge'];
-      context['shadow'] = event.shadow ?? context['edge'];
+      context['shadow-sm'] = event.shadow ?? context['edge'];
       context['wits'] = event.wits ?? context['edge'];
     },
   },
