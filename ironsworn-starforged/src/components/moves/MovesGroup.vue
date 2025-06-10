@@ -28,6 +28,7 @@ const { updateActiveMove }: any = inject('move');
         <div class="button-container mr-1 h-7 w-7 items-center leading-3">
           <Button
             @click="updateActiveMove(move.$id)"
+            :data-qa="move.$id"
             class="h-7 w-7 content-center border-primary bg-muted p-0 font-bold leading-3 text-primary hover:bg-muted-accent"
           >
             <Icon

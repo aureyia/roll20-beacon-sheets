@@ -14,6 +14,10 @@
       "vitest/globals"
     ]
   },
+  "include": [
+    "./playwright/features/steps/**/*",
+    "./playwright/features/pages/**/*"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

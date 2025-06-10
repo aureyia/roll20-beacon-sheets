@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, selectors } from '@playwright/test';
 
-test('has title', async ({ page }) => {
+test('Nom1', async ({ page }) => {
   await page.goto('http://127.0.0.1:5173/summary');
 
   await expect(page.getByTestId('character-name')).toBeVisible();

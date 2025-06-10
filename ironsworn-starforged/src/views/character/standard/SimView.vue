@@ -219,7 +219,17 @@ const stores = {
                 <p>{{ store.getSnapshot().context.darkMode }}</p>
               </div>
             </div>
-            <div v-else>{{ store.getSnapshot().context }}</div>
+            <div v-else-if="key === 'assets'">
+              <div v-for="asset in store.getSnapshot().context.list">
+                <span>{{ asset.name }}</span>
+                <div v-for="ability in asset.abilities">
+                  <Separator orientation="vertical" />
+                  <span>{{ ability.enabled }}</span>
+                </div>
+              </div>
+            </div>
+            <div v-else-if="key === 'tasks'">{{ store.getSnapshot().context }}</div>
+            <div v-else>Store Missing</div>
           </CardContent>
         </Card>
       </div>
