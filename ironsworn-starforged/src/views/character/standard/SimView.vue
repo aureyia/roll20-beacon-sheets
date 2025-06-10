@@ -30,7 +30,7 @@ const stores = {
 </script>
 
 <template>
-  <div class="mt-10 mx-auto flex gap-10">
+  <div class="mx-auto mt-10 flex gap-10">
     <div></div>
     <div class="w-[270px]">
       <h2 class="mt-2 text-xl">Current Seed</h2>
@@ -45,13 +45,13 @@ const stores = {
           class="w-[270px] p-0 drop-shadow-xs"
           v-for="(store, key) in stores"
         >
-          <CardHeader class="px-auto mt-0 pb-1 pt-2">
+          <CardHeader class="px-auto mt-0 pt-2 pb-1">
             <CardTitle class="text-[18px] uppercase">{{ key }}</CardTitle>
           </CardHeader>
           <CardContent class="mt-0 p-4 text-sm">
             <div v-if="key === 'meta'">
               <div
-                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary m-auto rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Name</strong>
                 <p>{{ store.getSnapshot().context.name }}</p>
@@ -59,7 +59,7 @@ const stores = {
             </div>
             <div v-else-if="key === 'momentum'">
               <div
-                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary m-auto rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Value</strong>
                 <p>{{ store.getSnapshot().context.momentum }}</p>
@@ -67,13 +67,13 @@ const stores = {
             </div>
             <div v-else-if="key === 'character'" class="flex">
               <div
-                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary m-auto rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Callsign</strong>
                 <p>{{ store.getSnapshot().context.callsign }}</p>
               </div>
               <div
-                class="m-auto rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary m-auto rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Pronouns</strong>
                 <p>{{ store.getSnapshot().context.pronouns }}</p>
@@ -84,7 +84,7 @@ const stores = {
               class="flex flex-wrap justify-center gap-4"
             >
               <div
-                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-16 rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Health</strong>
                 <div class="text-center">
@@ -92,7 +92,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-16 rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Spirit</strong>
                 <div class="text-center">
@@ -100,7 +100,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-16 rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Supply</strong>
                 <div class="text-center">
@@ -108,7 +108,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-[44%] rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>XP</strong>
                 <div class="text-center">
@@ -116,7 +116,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-[44%] rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Sp XP</strong>
                 <div class="text-center">
@@ -129,31 +129,31 @@ const stores = {
               class="flex flex-wrap justify-center gap-4"
             >
               <div
-                class="w-full rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-full rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Misfortunes</strong>
                 <p>{{ store.getSnapshot().context.misfortunes.length }}</p>
               </div>
               <div
-                class="w-full rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-full rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Lasting Effects</strong>
                 <p>{{ store.getSnapshot().context.lastingEffects.length }}</p>
               </div>
               <div
-                class="w-[46%] rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-[46%] rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Burdens</strong>
                 <p>{{ store.getSnapshot().context.burdens.length }}</p>
               </div>
               <div
-                class="w-[46%] rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-[46%] rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Vehicle</strong>
                 <p>{{ store.getSnapshot().context.currentVehicle.length }}</p>
               </div>
               <div
-                class="w-full rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-full rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Other</strong>
                 <p>{{ store.getSnapshot().context.other.length }}</p>
@@ -164,7 +164,7 @@ const stores = {
               class="flex flex-wrap justify-center gap-4"
             >
               <div
-                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-16 rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Edge</strong>
                 <div class="text-center">
@@ -172,7 +172,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-16 rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Heart</strong>
                 <div class="text-center">
@@ -180,7 +180,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-16 rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-16 rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Iron</strong>
                 <div class="text-center">
@@ -188,7 +188,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-[44%] rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Shadow</strong>
                 <div class="text-center">
@@ -196,7 +196,7 @@ const stores = {
                 </div>
               </div>
               <div
-                class="w-[44%] rounded bg-muted-secondary p-1 text-center drop-shadow-xs"
+                class="bg-muted-secondary w-[44%] rounded p-1 text-center drop-shadow-xs"
               >
                 <strong>Wits</strong>
                 <div class="text-center">
@@ -206,28 +206,32 @@ const stores = {
             </div>
             <div v-else-if="key === 'settings'" class="flex">
               <div
-                class="m-auto w-24 rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary m-auto w-24 rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Mode</strong>
                 <p>{{ store.getSnapshot().context.mode }}</p>
               </div>
               <div
-                class="m-auto w-24 rounded bg-muted-secondary p-2 text-center drop-shadow-xs"
+                class="bg-muted-secondary m-auto w-24 rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Dark Mode</strong>
                 <p>{{ store.getSnapshot().context.darkMode }}</p>
               </div>
             </div>
             <div v-else-if="key === 'assets'">
-              <div v-for="asset in store.getSnapshot().context.list">
+              <div
+                v-for="asset in store.getSnapshot().context.list"
+                class="bg-muted-secondary p-2 rounded drop-shadow-xs mb-2 flex"
+              >
                 <span>{{ asset.name }}</span>
-                <div v-for="ability in asset.abilities">
-                  <Separator orientation="vertical" />
+                <div v-for="ability in asset.abilities" class="flex ml-auto">
                   <span>{{ ability.enabled }}</span>
                 </div>
               </div>
             </div>
-            <div v-else-if="key === 'tasks'">{{ store.getSnapshot().context }}</div>
+            <div v-else-if="key === 'tasks'">
+              {{ store.getSnapshot().context }}
+            </div>
             <div v-else>Store Missing</div>
           </CardContent>
         </Card>
@@ -240,7 +244,7 @@ const stores = {
           <h3>Replay Run</h3>
           <div class="mt-1 flex">
             <Input
-              class="mr-2 bg-muted"
+              class="bg-muted mr-2"
               v-model="replaySeed"
               placeholder="Seed"
             />
@@ -255,7 +259,7 @@ const stores = {
             :max="5000"
             :step="50"
             :class="cn('w-3/5', $attrs.class ?? '')"
-            class="mb-2 mt-2"
+            class="mt-2 mb-2"
           />
           <span class="text-sm">{{ rollSpeed[0] }} milliseconds</span>
         </div>
@@ -268,17 +272,17 @@ const stores = {
           >
             <ToggleGroupItem
               value="low"
-              class="mt-1 bg-secondary px-10 hover:bg-muted-secondary data-[state=on]:bg-muted-foreground data-[state=on]:font-bold data-[state=on]:text-black"
+              class="bg-secondary hover:bg-muted-secondary data-[state=on]:bg-muted-foreground mt-1 px-10 data-[state=on]:font-bold data-[state=on]:text-black"
               >Safe</ToggleGroupItem
             >
             <ToggleGroupItem
               value="medium"
-              class="mt-1 bg-secondary px-10 hover:bg-muted-secondary data-[state=on]:bg-muted-foreground data-[state=on]:font-bold data-[state=on]:text-black"
+              class="bg-secondary hover:bg-muted-secondary data-[state=on]:bg-muted-foreground mt-1 px-10 data-[state=on]:font-bold data-[state=on]:text-black"
               >OOB</ToggleGroupItem
             >
             <ToggleGroupItem
               value="high"
-              class="mt-1 bg-secondary px-10 hover:bg-muted-secondary data-[state=on]:bg-muted-foreground data-[state=on]:font-bold data-[state=on]:text-black"
+              class="bg-secondary hover:bg-muted-secondary data-[state=on]:bg-muted-foreground mt-1 px-10 data-[state=on]:font-bold data-[state=on]:text-black"
               >Corrupt</ToggleGroupItem
             >
           </ToggleGroup>

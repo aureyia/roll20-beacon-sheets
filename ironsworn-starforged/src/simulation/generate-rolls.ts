@@ -80,7 +80,7 @@ export const rollSteam = (speed: number) => {
           value: Effect.runSync(numberBetween(seed.get(), 'momentum', -6, 10)),
         });
 
-        ['edge', 'heart', 'iron', 'shadow-sm', 'wits'].forEach((stat: string) => {
+        ['edge', 'heart', 'iron', 'shadow', 'wits'].forEach((stat: string) => {
           statsStore.trigger.set({
             // @ts-ignore
             label: stat,
@@ -114,7 +114,10 @@ export const rollSteam = (speed: number) => {
         });
 
         // tasksStore.trigger.set();
-        // assetsStore.trigger.set();
+
+        // @ts-ignore
+        const selectedAssets = assets(seed.get(), intensity.value)
+        assetsStore.trigger.set({label: 'list', value: selectedAssets });
       });
     }),
     Stream.runForEach((n) =>

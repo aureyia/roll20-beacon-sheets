@@ -33,7 +33,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'vee-validate';
 import { tasksStore, type TaskCategory } from '@/system/tasks/store';
-import { DIFFICULTIES } from '@/system/tasks/tasks';
+import { DIFFICULTIES } from '@/system/tasks/types';
 import { inject, watch } from 'vue';
 
 const categories: TaskCategory[] =

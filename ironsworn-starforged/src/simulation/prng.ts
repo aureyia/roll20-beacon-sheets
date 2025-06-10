@@ -1,4 +1,4 @@
-import { Context, Effect, Layer, Hash } from 'effect';
+import { Context, Effect, Layer } from 'effect';
 import { sha256 } from '@noble/hashes/sha2.js';
 import { utf8ToBytes, bytesToHex } from '@noble/hashes/utils';
 
@@ -35,6 +35,6 @@ export const numberBetween = (
   max: number,
 ) =>
   Effect.gen(function* () {
-    const rng = yield* PRNG;
-    return (rng.generateRandomNumber(seed, salt) % (max - min + 1)) + min;
+    const prng = yield* PRNG;
+    return (prng.generateRandomNumber(seed, salt) % (max - min + 1)) + min;
   }).pipe(Effect.provide(PRNGLive));

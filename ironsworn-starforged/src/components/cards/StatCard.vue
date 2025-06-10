@@ -20,7 +20,7 @@ defineProps({
   <div class="mode-card min-w-44 text-center">
     <Card
       @click=""
-      class="cursor-pointer bg-muted uppercase shadow-sm drop-shadow-sm hover:bg-muted-accent"
+      class="cursor-pointer bg-muted uppercase shadow drop-shadow-sm hover:bg-muted-accent"
     >
       <CardHeader>
         <CardTitle i18n="">{{ name }}</CardTitle>

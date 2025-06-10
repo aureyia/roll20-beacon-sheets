@@ -2,7 +2,7 @@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { ref } from 'vue';
 import { tasksStore } from '@/system/tasks/store';
-import { DIFFICULTIES } from '@/system/tasks/tasks';
+import { DIFFICULTIES } from '@/system/tasks/types';
 
 defineProps({ id: String });
 defineModel('selectedDifficulty', { type: String });
