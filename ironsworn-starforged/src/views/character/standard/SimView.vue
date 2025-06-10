@@ -15,7 +15,6 @@ import { intensity } from '@/main';
 import { replaySeed, seed } from '@/simulation/generate-rolls';
 
 import { cn } from '@/utility';
-import { inject } from 'vue';
 
 const stores = {
   character: characterStore,

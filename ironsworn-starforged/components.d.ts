@@ -114,6 +114,7 @@ declare module 'vue' {
     SelectSeparator: typeof import('./src/components/ui/select/SelectSeparator.vue')['default']
     SelectTrigger: typeof import('./src/components/ui/select/SelectTrigger.vue')['default']
     SelectValue: typeof import('./src/components/ui/select/SelectValue.vue')['default']
+    Separator: typeof import('./src/components/ui/separator/Separator.vue')['default']
     Slider: typeof import('./src/components/ui/slider/Slider.vue')['default']
     StandardNav: typeof import('./src/components/nav/StandardNav.vue')['default']
     StatCard: typeof import('./src/components/cards/StatCard.vue')['default']
