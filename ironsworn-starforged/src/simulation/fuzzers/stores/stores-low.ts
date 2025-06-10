@@ -114,11 +114,10 @@ const createAsset = (seed: string, salt: number) => {
 
 export const assets = (seed: string) => {
   const numberOfAssets = Effect.runSync(numberBetween(seed, 'assets', 3, 6));
-
   let assets = [] as Asset[];
 
-  for (let i = 0; i < numberOfAssets; i++) {
-    assets.push(createAsset(seed, i));
+  for (let index = 0; index < numberOfAssets; index++) {
+    assets.push(createAsset(seed, index));
   }
 
   return assets;
@@ -134,7 +133,7 @@ const selectRandomObjectValue = (seed: string, salt: string, obj: Object) => {
 
 const createTask = (seed: string, salt: number) => ({
   _id: createId(),
-  description: '/Example/Asset/Id',
+  description: `Task: ${salt + 1}`,
   category: selectRandomObjectValue(seed, `${salt}-category`, TaskCategory),
   progress: Effect.runSync(numberBetween(seed, `${salt}-progress`, 0, 40)),
   difficulty: selectRandomObjectValue(seed, `${salt}-difficulty`, Difficulty),
@@ -146,11 +145,10 @@ const createTask = (seed: string, salt: number) => ({
 
 export const tasks = (seed: string) => {
   const numberOfTasks = Effect.runSync(numberBetween(seed, 'tasks', 1, 6));
-
   let tasks = [] as Task[];
 
-  for (let i = 0; i < numberOfTasks; i++) {
-    tasks.push(createTask(seed, i));
+  for (let index = 0; index < numberOfTasks; index++) {
+    tasks.push(createTask(seed, index));
   }
 
   return tasks;

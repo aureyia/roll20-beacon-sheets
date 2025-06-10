@@ -13,13 +13,9 @@ import { ActionScoreLive } from '@/system/rolls/action-score';
 import { createId } from '@paralleldrive/cuid2';
 import { numberBetween } from './prng';
 import { ref } from 'vue';
-import { statsStore, type Stats } from '@/system/stats/store';
-import { resourcesStore } from '@/system/resources/store';
 import { intensity } from '@/main';
-import { resources, stats, impacts, assets, tasks } from './fuzzers/stores';
-import { impactsStore } from '@/system/impacts/store';
-import { tasksStore } from '@/system/tasks/store';
-import { assetsStore } from '@/system/assets/store';
+import { setupStores } from './stores';
+import { saveSnaphot } from './storage/snapshots';
 
 const MainLive = ActionRollLive.pipe(
   Layer.provide(RollFormatterLive),
@@ -70,56 +66,17 @@ export const rollSteam = (speed: number) => {
         console.log('seed', seed.get());
       }),
     ),
-    Stream.tap(() => {
-      return Effect.sync(() => {
-        impactsStore.trigger.clear();
-        tasksStore.trigger.clear();
-        assetsStore.trigger.clear();
-
-        momentumStore.trigger.set({
-          value: Effect.runSync(numberBetween(seed.get(), 'momentum', -6, 10)),
-        });
-
-        ['edge', 'heart', 'iron', 'shadow', 'wits'].forEach((stat: string) => {
-          statsStore.trigger.set({
-            // @ts-ignore
-            label: stat,
-            // @ts-ignore
-            value: stats(seed.get(), intensity.value)[stat],
-          });
-        });
-
-        ['health', 'spirit', 'supply', 'xp'].forEach((resource: string) => {
-          resourcesStore.trigger.set({
-            // @ts-ignore
-            label: resource,
-            // @ts-ignore
-            value: resources(seed.get(), intensity.value)[resource],
-          });
-        });
-
-        [
-          'misfortunes',
-          'lastingEffects',
-          'burdens',
-          'currentVehicle',
-          'other',
-        ].forEach((name: string) => {
-          impactsStore.trigger.set({
-            // @ts-ignore
-            label: name,
-            // @ts-ignore
-            value: impacts(seed.get(), intensity.value)[name],
-          });
-        });
-
-        // tasksStore.trigger.set();
-
-        // @ts-ignore
-        const selectedAssets = assets(seed.get(), intensity.value)
-        assetsStore.trigger.set({label: 'list', value: selectedAssets });
-      });
-    }),
+    Stream.tap(() => setupStores(seed.get(), intensity.value)),
+    Stream.tap(() =>
+      saveSnaphot('rollInputs', {
+        seed: seed.get(),
+        input_data: {
+          modifier: modifier(),
+          momentum: momentumStore.get().context.momentum,
+          moveName: moveData.Name,
+        },
+      }),
+    ),
     Stream.runForEach((n) =>
       actionRoll(
         actor,

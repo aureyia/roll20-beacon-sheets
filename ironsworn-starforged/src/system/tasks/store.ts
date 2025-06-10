@@ -127,12 +127,12 @@ type taskHydrate = { tasks: Task[] };
 
 type SetEvent = {
   label: 'list';
-  value: [Vow | GenericTask];
+  value: Task[];
 };
 
 export const tasksStore = createStore({
   context: {
-    list: [] as GenericTask[] | Vow[],
+    list: [] as Task[],
   },
   emits: {
     updated: () => {},

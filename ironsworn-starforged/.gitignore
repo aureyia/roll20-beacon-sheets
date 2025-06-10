@@ -28,6 +28,9 @@ public/*
 
 # Testing
 temp
+local.db
+*.sql
+src/simulation/storage/meta/*
 
 # Playwright
 /test-results/

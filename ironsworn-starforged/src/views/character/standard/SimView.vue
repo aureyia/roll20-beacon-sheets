@@ -221,16 +221,22 @@ const stores = {
             <div v-else-if="key === 'assets'">
               <div
                 v-for="asset in store.getSnapshot().context.list"
-                class="bg-muted-secondary p-2 rounded drop-shadow-xs mb-2 flex"
+                class="bg-muted-secondary mb-2 flex rounded p-2 drop-shadow-xs"
               >
                 <span>{{ asset.name }}</span>
-                <div v-for="ability in asset.abilities" class="flex ml-auto">
+                <div v-for="ability in asset.abilities" class="ml-auto flex">
                   <span>{{ ability.enabled }}</span>
                 </div>
               </div>
             </div>
             <div v-else-if="key === 'tasks'">
-              {{ store.getSnapshot().context }}
+              <div
+                v-for="task in store.getSnapshot().context.list"
+                class="bg-muted-secondary mb-2 flex rounded p-2 drop-shadow-xs"
+              >
+                <span>{{ task.description }}</span>
+                <span class="ml-auto">{{ task.difficulty }}</span>
+              </div>
             </div>
             <div v-else>Store Missing</div>
           </CardContent>
