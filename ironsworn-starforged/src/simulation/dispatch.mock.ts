@@ -7,7 +7,6 @@ import { createAtom } from '@xstate/store';
 import { createId } from '@paralleldrive/cuid2';
 import { seed } from './generate-rolls';
 import { intensity, postRef } from '@/main';
-// export const seed = createId()
 
 const character = createAtom({
   id: '-ORfR02B4KDjtJ6bwU_p',

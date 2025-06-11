@@ -22,6 +22,8 @@ export class ActionScore extends Context.Tag('ActionScore')<
   }
 >() {}
 
+// TODO: Rewrite using pattern matching given the different inputs
+// dice + mod + momentum / preset score / preset + momentum
 export const ActionScoreLive = Layer.effect(
   ActionScore,
   Effect.gen(function* () {
@@ -62,6 +64,8 @@ export const ActionScoreLive = Layer.effect(
           actionScoreMaximum,
         );
 
+        // TODO: Fix assert
+        // assert(finalisedActionScore <= 10 && finalisedActionScore >= 0)
         return Effect.succeed({
           totalActionScore: finalisedActionScore,
           dieNegated: isDieNegated,

@@ -1,12 +1,10 @@
 import {
   ActionScore,
-  ActionScoreLive,
   ActionScoreError,
 } from '@/system/rolls/action-score';
 import {
   RollFormatter,
   InvalidDie,
-  RollFormatterLive,
   InvalidDispatch,
 } from '@/system/rolls/formatter';
 import { Effect, Context, Layer, Either, Predicate } from 'effect';
@@ -43,6 +41,7 @@ export class ActionRoll extends Context.Tag('ActionRoll')<
 // Layer.Layer<ActionRoll, never, ActionScore | RollFormatter | Dispatch>
 export const ActionRollLive = Layer.effect(
   ActionRoll,
+  //@ts-ignore for now
   Effect.gen(function* () {
     const formatter = yield* RollFormatter;
     const dispatch = yield* Dispatch;

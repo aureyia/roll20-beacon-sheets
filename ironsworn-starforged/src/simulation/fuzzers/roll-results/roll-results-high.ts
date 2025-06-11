@@ -16,21 +16,22 @@ const fuzzList = [
   ,
   async () => null,
   {},
+  ['/', null, undefined]
 ];
 
 const singleRoll = (seed: string) => ({
   rollName: 'dice-0',
   expression: '1d6',
   results: {
-    result: fuzzList[Effect.runSync(numberBetween(seed, 'dice-0', 0, 10))],
-    dice: [fuzzList[Effect.runSync(numberBetween(seed, 'dice-0', 0, 10))]],
+    result: fuzzList[Effect.runSync(numberBetween(seed, 'dice-0', 0, 13))],
+    dice: [fuzzList[Effect.runSync(numberBetween(seed, 'dice-0', 0, 13))]],
     expression: '1d6',
     rolls: [
       {
         sides: 6,
         dice: 1,
         results: [
-          fuzzList[Effect.runSync(numberBetween(seed, 'dice-0', 0, 10))],
+          fuzzList[Effect.runSync(numberBetween(seed, 'dice-0', 0, 13))],
         ],
       },
     ],

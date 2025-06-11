@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "sim": "vite --mode simulation",
+    "sim:run": "vite --mode simulation",
+    "sim:db:generate": "drizzle-kit generate",
+    "sim:db:migrate": "drizzle-kit migrate",
+    "sim:db:studio": "drizzle-kit studio",
     "sandbox-server": "vite --port 7620 --mode staging",
     "sandbox": "run-s build-scss sandbox-server",
     "build": "run-s build-scss build-only",

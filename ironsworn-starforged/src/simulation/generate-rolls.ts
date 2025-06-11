@@ -66,6 +66,13 @@ export const rollSteam = (speed: number) => {
         console.log('seed', seed.get());
       }),
     ),
+    Stream.tap(() =>
+      saveSnaphot('run', {
+        id: seed.get(),
+        intensity: intensity.value,
+        status: 'TBD',
+      }),
+    ),
     Stream.tap(() => setupStores(seed.get(), intensity.value)),
     Stream.tap(() =>
       saveSnaphot('rollInputs', {

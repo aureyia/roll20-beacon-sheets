@@ -270,7 +270,7 @@ const stores = {
           <span class="text-sm">{{ rollSpeed[0] }} milliseconds</span>
         </div>
         <div class="mt-4">
-          <h3>Difficulty</h3>
+          <h3>Volatility</h3>
           <ToggleGroup
             type="single"
             class="w-full justify-between"

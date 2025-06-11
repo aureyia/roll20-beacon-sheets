@@ -39,10 +39,12 @@ export class RollFormatter extends Context.Tag('RollFormatter')<
 // # Dependency Injection 2
 export const RollFormatterLive = Layer.effect(
   RollFormatter,
+  // @ts-ignore TODO: Ignoring for now
   Effect.gen(function* () {
     return {
       toDispatch: (dice: Die[]) =>
         Effect.gen(function* () {
+          assert(dice.length > 0)
           let index = 0;
 
           const { sides, count = 1 } = dice[index] as DiceComponent;
@@ -53,10 +55,13 @@ export const RollFormatterLive = Layer.effect(
             );
           }
 
-          return {
+          const formattedDice = {
             [formatDieKey(index)]: formatDie(count, sides),
             ...formatDiceComponents(dice, index + 1),
           };
+
+          assert(formattedDice['dice-0'] !== undefined)
+          return formattedDice
         }),
 
       fromDispatch: (

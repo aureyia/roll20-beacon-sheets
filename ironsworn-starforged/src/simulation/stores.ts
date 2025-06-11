@@ -58,7 +58,7 @@ export const setupStores = (seed: string, intensity: string) =>
 
     // Impacts
 
-    const impacts = [
+    const impactList = [
       'misfortunes',
       'lastingEffects',
       'burdens',
@@ -66,24 +66,18 @@ export const setupStores = (seed: string, intensity: string) =>
       'other',
     ];
 
-    const selectedImpacts = impacts.map((category) => {
+    const selectedImpacts = impactList.map((category) => {
       return {
         label: category,
         // @ts-ignore
         value: impacts(seed, intensity)[category],
       };
     });
-
+ 
     selectedImpacts.forEach((entry) => {
       // @ts-ignore
       impactsStore.trigger.set(entry);
     });
-
-    // Tasks
-
-    // @ts-ignore
-    const selectedTasks = tasks(seed, intensity);
-    tasksStore.trigger.set({ label: 'list', value: selectedTasks });
 
     // Assets
 
@@ -91,7 +85,13 @@ export const setupStores = (seed: string, intensity: string) =>
     const selectedAssets = assets(seed, intensity);
     assetsStore.trigger.set({ label: 'list', value: selectedAssets });
 
-    saveSnaphot('stores', {
+     // Tasks
+
+    // @ts-ignore
+    const selectedTasks = tasks(seed, intensity);
+    tasksStore.trigger.set({ label: 'list', value: selectedTasks });
+
+    Effect.runPromise(saveSnaphot('stores', {
       run_id: seed,
       momentum: selectedMomentum,
       stats: selectedStats,
@@ -99,5 +99,5 @@ export const setupStores = (seed: string, intensity: string) =>
       impacts: selectedImpacts,
       tasks: selectedTasks,
       assets: selectedAssets,
-    });
+    }));
   });
