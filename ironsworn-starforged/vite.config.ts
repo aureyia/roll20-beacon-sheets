@@ -55,5 +55,8 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     cors: false,
+    watch: {
+      ignored: ['**/local.db*'],
+    },
   },
 }));

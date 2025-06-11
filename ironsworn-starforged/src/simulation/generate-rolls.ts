@@ -76,12 +76,10 @@ export const rollSteam = (speed: number) => {
     Stream.tap(() => setupStores(seed.get(), intensity.value)),
     Stream.tap(() =>
       saveSnaphot('rollInputs', {
-        seed: seed.get(),
-        input_data: {
-          modifier: modifier(),
-          momentum: momentumStore.get().context.momentum,
-          moveName: moveData.Name,
-        },
+        run_id: seed.get(),
+        modifier: modifier(),
+        momentum: momentumStore.get().context.momentum,
+        move_name: moveData.Name,
       }),
     ),
     Stream.runForEach((n) =>
