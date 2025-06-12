@@ -54,11 +54,6 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
   // const baseBonus = stats[selectedOption.value.Using[0].toLowerCase()]
   const baseBonus = 2;
 
-
-  
-
-
-  // # Dependency Injection 1
   const MainLive = ActionRollLive.pipe(
     Layer.provide(RollFormatterLive),
     Layer.provide(ActionScoreLive),
@@ -73,9 +68,6 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
       props.move.Name,
     ).pipe(Effect.provide(MainLive)),
   );
-
-
-
 
   selectedOption.value = '';
   // moveMode.value = 'content';

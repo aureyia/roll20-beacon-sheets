@@ -10,17 +10,6 @@ export type Character = {
   pronouns: string;
 };
 
-const asserttoreValues = (values: any) => {
-  assert(
-    typeof values.callsign === 'string',
-    `invalid callsign type: ${values.callsign}`,
-  );
-  assert(
-    typeof values.pronouns === 'string',
-    `invalid pronouns type: ${values.pronouns}`,
-  );
-};
-
 export const characterStore = createStore({
   context: {
     callsign: '',
@@ -31,10 +20,13 @@ export const characterStore = createStore({
   },
   on: {
     hydrate: (context, event: Character) => {
+      assert(typeof event.callsign === 'string');
+      assert(typeof event.pronouns === 'string');
       context['callsign'] = event.callsign ?? context['callsign'];
       context['pronouns'] = event.pronouns ?? context['callsign'];
     },
     set: (context, event: CharacterSetEvent, enqueue) => {
+      assert(typeof event.value === 'string');
       context[event.label] = event.value;
       enqueue.emit.updated();
     },
@@ -55,6 +47,9 @@ export const DehydrateCharacterLive = Layer.effect(
       dehydrate: () =>
         Effect.gen(function* () {
           const context = characterStore.get().context;
+          assert(typeof context.callsign === 'string');
+          assert(typeof context.pronouns === 'string');
+          
           return {
             callsign: context.callsign,
             pronouns: context.pronouns,

@@ -29,10 +29,10 @@ export const storeRelay = Effect.gen(function* () {
   tasksStore.on('updated', () => Effect.runPromise(update()));
   settingsStore.on('updated', () => Effect.runPromise(update()));
 
-  const debouceTime = Number(import.meta.env.VITE_DEBOUNCE) || 800;
+  const debounceDuration = Number(import.meta.env.VITE_DEBOUNCE) || 800;
 
   const stream = Stream.fromQueue(queue).pipe(
-    Stream.debounce(Duration.millis(debouceTime)),
+    Stream.debounce(Duration.millis(debounceDuration)),
   );
 
   yield* Stream.runForEach(stream, () =>

@@ -2,12 +2,23 @@ import { objectToArray, arrayToObject } from '@/utility/objectify';
 import { createId } from '@paralleldrive/cuid2';
 import { Context, Effect, Layer } from 'effect';
 import type { Ability, AssetCategory, Asset } from '@/system/assets/types';
-import { getAssetAbilities } from '@/system/assets/assets';
+import { getAssetAbilities, AssetError } from '@/system/assets/utils';
 import { createStore } from '@xstate/store';
+import type { SetEvent } from '@/utility/store-types';
 
 export type AssetsHydrate = {
   assets: Asset[];
 };
+
+export type AssetStore = {
+  list: Asset[];
+}
+
+export type UpdateAbility = {
+  assetId: string;
+  abilityId: string;
+  value: boolean;
+}
 
 export type AssetSubmission = {
   dataforgedId: string;
@@ -21,7 +32,7 @@ const formatAbilities = (
   assets: AssetsHydrate | any,
 ) => {
   if (!assets) {
-    return Effect.fail(new Error('No assets were provided'));
+    return Effect.fail(new AssetError({ message: 'No assets were provided' }));
   }
 
   const mappedAssets = assets.map((asset: any) => {
@@ -57,17 +68,6 @@ export const assetsStore = createStore({
         getAssetAbilities(event.dataforgedId, event.category),
       );
 
-      const nom = {
-        _id: createId(),
-        dataforgedId: event.dataforgedId,
-        name: event.name,
-        category: event.category,
-        abilities,
-        meter: event.meter,
-      };
-
-      console.log('nom', nom);
-
       context.list.push({
         _id: createId(),
         dataforgedId: event.dataforgedId,
@@ -78,17 +78,16 @@ export const assetsStore = createStore({
       });
 
       enqueue.emit.updated();
-      console.log('context.list', context.list);
     },
     remove: (context, id: string, enqueue) => {
       context.list = context.list.filter((asset: Asset) => asset._id !== id);
       enqueue.emit.updated();
     },
-    set: (context, event: SetEvent, enqueue) => {
+    set: (context, event: SetEvent<AssetStore>, enqueue) => {
       context[event.label] = event.value;
       enqueue.emit.updated();
     },
-    updateAbility: (context, event, enqueue) => {
+    updateAbility: (context, event: UpdateAbility, enqueue) => {
       context.list.map((asset: Asset) => {
         if (asset._id === event.assetId) {
           const updatedAbilities = asset.abilities.map((ability: Ability) => {
@@ -116,7 +115,7 @@ export const assetsStore = createStore({
 export class DehydrateAssets extends Context.Tag('DehydrateAssets')<
   DehydrateAssets,
   {
-    readonly dehydrate: () => Effect.Effect<Record<string, any>, Error>;
+    readonly dehydrate: () => Effect.Effect<Record<string, any>, AssetError>;
   }
 >() {}
 

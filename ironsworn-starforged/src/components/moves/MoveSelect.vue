@@ -2,11 +2,9 @@
 import { inject } from 'vue';
 import { starforged } from '@/vendor/dataforged';
 import { Effect } from 'effect';
-import { useRouter } from 'vue-router';
 
 // @ts-ignore
 const { activeMove, updateActiveMove, clearActiveMove } = inject('move');
-const router = useRouter();
 
 const getAllCategoryMoves = (moveId: string) => {
   const categoryId = moveId.split('/').slice(0, 3).join('/');

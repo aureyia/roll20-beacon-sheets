@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from '../ui/select';
 import { assetsStore, type AssetSubmission } from '@/system/assets/store';
-import { getAllAssetsForCategory } from '@/system/assets/fetching-assets';
+import { getAllAssetsForCategory } from '@/system/assets/utils';
 import type { AssetCategory } from '@/system/assets/types';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';

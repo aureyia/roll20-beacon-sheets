@@ -17,7 +17,6 @@ import { assert } from '@/utility/assert';
 import type { ParseError } from 'effect/ParseResult';
 import { Console } from 'effect';
 
-// # Dependency Injection 2
 export class ActionRoll extends Context.Tag('ActionRoll')<
   ActionRoll,
   {
@@ -38,10 +37,8 @@ export class ActionRoll extends Context.Tag('ActionRoll')<
   }
 >() {}
 
-// Layer.Layer<ActionRoll, never, ActionScore | RollFormatter | Dispatch>
 export const ActionRollLive = Layer.effect(
   ActionRoll,
-  //@ts-ignore for now
   Effect.gen(function* () {
     const formatter = yield* RollFormatter;
     const dispatch = yield* Dispatch;
@@ -108,7 +105,6 @@ export const ActionRollLive = Layer.effect(
   }),
 );
 
-// # Error Handling 3
 export const roll = (
   actor: OutcomeActor,
   modifier: number,

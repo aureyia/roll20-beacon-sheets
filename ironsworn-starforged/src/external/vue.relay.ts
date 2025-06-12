@@ -37,6 +37,7 @@ export const sheetRelayPlugin = (mode: boolean) =>
       if (mode) {
         return devRelay();
       }
+      // @ts-ignore
       return initRelay(relayConfig);
     });
 

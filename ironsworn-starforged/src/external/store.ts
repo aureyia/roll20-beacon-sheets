@@ -63,11 +63,8 @@ export const metaStore = createStore({
       context.campaignId = event.id;
     },
     set: (context, event: MetaSetEvent, enqueue) => {
-      assert(
-        event.label !== 'name',
-        `Only 'name should be updated in the meta class`,
-      );
-      assert(event.value !== 'string', `'value' should only ever be a string`);
+      assert(event.label !== 'name');
+      assert(event.value !== 'string');
       if (event.label === 'name' && typeof event.value === 'string') {
         context['name'] = event.value ?? context['name'];
         enqueue.emit.updated();
