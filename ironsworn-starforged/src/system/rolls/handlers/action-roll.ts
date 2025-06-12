@@ -7,7 +7,7 @@ import {
   InvalidDie,
   InvalidDispatch,
 } from '@/system/rolls/formatter';
-import { Effect, Context, Layer, Either, Predicate } from 'effect';
+import { Effect, Context, Layer } from 'effect';
 import { actionDice } from '@/system/rolls/dice';
 import { getDieByLabel, DieNotFound } from '@/system/rolls/get-die-by-label';
 import { type OutcomeActor } from '@/system/rolls/machines/calculate-outcome';
@@ -17,7 +17,7 @@ import { assert } from '@/utility/assert';
 import type { ParseError } from 'effect/ParseResult';
 import { Console } from 'effect';
 
-// # Dependency Injection 1
+// # Dependency Injection 2
 export class ActionRoll extends Context.Tag('ActionRoll')<
   ActionRoll,
   {
@@ -108,7 +108,7 @@ export const ActionRollLive = Layer.effect(
   }),
 );
 
-// # Error Handling
+// # Error Handling 3
 export const roll = (
   actor: OutcomeActor,
   modifier: number,

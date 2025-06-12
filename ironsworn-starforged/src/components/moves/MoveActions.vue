@@ -21,14 +21,6 @@ import { DispatchLive } from '@/system/rolls/dispatch';
 import { ActionRollLive } from '@/system/rolls/handlers/action-roll';
 import { ActionScoreLive } from '@/system/rolls/action-score';
 
-const MainLive = ActionRollLive.pipe(
-  Layer.provide(RollFormatterLive),
-  Layer.provide(ActionScoreLive),
-  Layer.provide(DispatchLive),
-);
-
-const momentum = ref(momentumStore.get().context.momentum);
-
 const props = defineProps({
   move: {
     type: Object,
@@ -49,6 +41,7 @@ const burnMomentum = (choice: boolean) => {
 };
 
 const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
+
   if (options.length > 1 && selectedOption.value === '') {
     moveMode.value = 'options';
     return;
@@ -61,6 +54,17 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
   // const baseBonus = stats[selectedOption.value.Using[0].toLowerCase()]
   const baseBonus = 2;
 
+
+  
+
+
+  // # Dependency Injection 1
+  const MainLive = ActionRollLive.pipe(
+    Layer.provide(RollFormatterLive),
+    Layer.provide(ActionScoreLive),
+    Layer.provide(DispatchLive),
+  );
+
   await Effect.runPromise(
     actionRoll(
       actor,
@@ -69,6 +73,9 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
       props.move.Name,
     ).pipe(Effect.provide(MainLive)),
   );
+
+
+
 
   selectedOption.value = '';
   // moveMode.value = 'content';

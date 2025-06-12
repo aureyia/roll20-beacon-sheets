@@ -1,4 +1,12 @@
-import { Effect, Context, Layer, Data, Schema, Predicate } from 'effect';
+import {
+  Effect,
+  Context,
+  Layer,
+  Data,
+  Schema,
+  Predicate,
+  Either,
+} from 'effect';
 import { dispatchRef } from '@/external/vue.relay';
 import { DispatchResultsSchema, type DispatchResults } from './dispatch.schema';
 import { assert } from '@/utility/assert';
@@ -20,7 +28,7 @@ export class DispatchError extends Data.TaggedError('DispatchError')<{
   message?: string;
 }> {}
 
-// # Dependency Injection 3
+// # Dependency Injection 4
 export class Dispatch extends Context.Tag('Dispatch')<
   Dispatch,
   {
@@ -32,11 +40,15 @@ export class Dispatch extends Context.Tag('Dispatch')<
 
 export const DispatchLive = Layer.effect(
   Dispatch,
+  //@ts-ignore
   Effect.gen(function* () {
     return {
       roll: (dice) =>
         Effect.gen(function* () {
+          // Design By Contract 1
           assert(Object.keys(dice).length > 0);
+
+          // # Error Handling 1
 
           const dispatchResult = yield* Effect.tryPromise({
             try: () =>
@@ -50,6 +62,32 @@ export const DispatchLive = Layer.effect(
               }),
           });
 
+          // # Error Handling 2
+
+          const dispatchResult2 = yield* Effect.either(Effect.tryPromise({
+            try: () =>
+              dispatchRef.value.roll({
+                rolls: dice,
+              }),
+            catch: (e) =>
+              new DispatchError({
+                cause: e,
+                message: 'Dispatch roll failed.',
+              }),
+          }));
+
+          if (Either.isLeft(dispatchResult2)) {
+
+            console.log('I handled it')
+          
+          } else {
+           
+            const success = dispatchResult2.right
+          
+          }
+
+          // Schema and Decoding
+
           const { rawResults, ...results } = yield* Schema.decodeUnknown(
             DispatchResultsSchema,
           )(dispatchResult);
@@ -60,6 +98,7 @@ export const DispatchLive = Layer.effect(
             });
           }
 
+          // Design By Contract 2
           assert(Object.keys(results.results).length > 0);
           return results;
         }),

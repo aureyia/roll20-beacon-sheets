@@ -10,7 +10,6 @@ import {
 } from '@/system/rolls/machines/test-helper/snapshots';
 import * as exports from '@/utility/send-roll-to-chat';
 
-const outcomes = loadOutcomes();
 const regenerate = process.env.REGENERATE === 'true';
 
 describe('calculate-outcome-machine', () => {
@@ -29,7 +28,6 @@ describe('calculate-outcome-machine', () => {
               const burn = Number(l5) === 0;
               const name = `${challengeDie1}-${challengeDie2}-${momentum}-${actionScore}-${burn}`;
 
-              // test(name, async () => {
               const sendRollToChat = vi
                 .spyOn(exports, 'sendRollToChat')
                 .mockImplementation(async () => {});
@@ -105,6 +103,7 @@ describe('calculate-outcome-machine', () => {
                 },
               };
 
+              // @ts-ignore
               newOutcomes[key] = sendRollToChatParams;
 
               actor.stop();

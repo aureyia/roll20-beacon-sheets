@@ -145,12 +145,13 @@ const createTask = (seed: string, salt: number) => ({
 });
 
 export const tasks = (seed: string) => {
-  const numberOfTasks = Effect.runSync(numberBetween(seed, 'tasks', 1, 6));
+  const numberOfTasks = Effect.runSync(numberBetween(seed, 'tasks', 2, 6));
   let tasks = [] as Task[];
 
   for (let index = 0; index < numberOfTasks; index++) {
     tasks.push(createTask(seed, index));
   }
 
+  console.log('tasks', tasks)
   return tasks;
 };

@@ -36,10 +36,9 @@ export class RollFormatter extends Context.Tag('RollFormatter')<
   }
 >() {}
 
-// # Dependency Injection 2
+// # Dependency Injection 3
 export const RollFormatterLive = Layer.effect(
   RollFormatter,
-  // @ts-ignore TODO: Ignoring for now
   Effect.gen(function* () {
     return {
       toDispatch: (dice: Die[]) =>
