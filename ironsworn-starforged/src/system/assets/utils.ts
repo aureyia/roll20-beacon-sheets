@@ -47,14 +47,10 @@ export const getAssetAbilities = (id: string, category: AssetCategory) => {
     return Effect.fail(new AssetError({ message: 'No category found' }));
   }
 
-  const selectedAsset = selectedCategory.Assets.find(
-    (x) => x.$id === id,
-  )
+  const selectedAsset = selectedCategory.Assets.find((x) => x.$id === id);
 
   if (!selectedAsset) {
-    return Effect.fail(
-      new AssetError({ message: 'No asset found for id' }),
-    );
+    return Effect.fail(new AssetError({ message: 'No asset found for id' }));
   }
 
   if (!selectedAsset.Abilities) {

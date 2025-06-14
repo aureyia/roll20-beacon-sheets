@@ -12,5 +12,10 @@
     "types": ["node", "vitest/globals"],
     "target": "ES2022",
     "ignoreDeprecations": "5.0",
+    "plugins": [
+      {
+        "name": "@effect/language-service"
+      }
+    ]
   }
 }

@@ -42,7 +42,7 @@ const assets = ref(storeAssetList());
       <AssetAddDialog />
       <div>
         <Toggle
-          class="h-8 w-24 border-2 border-primary font-bold data-[state=on]:bg-destructive"
+          class="border-primary data-[state=on]:bg-destructive h-8 w-24 border-2 font-bold"
           v-model:pressed="removeMode"
           >Remove
         </Toggle>

@@ -4,7 +4,7 @@ import { Context, Effect, Layer } from 'effect';
 import type { Ability, AssetCategory, Asset } from '@/system/assets/types';
 import { getAssetAbilities, AssetError } from '@/system/assets/utils';
 import { createStore } from '@xstate/store';
-import type { SetEvent } from '@/utility/store-types';
+import type { SetEvent } from '@/utility/store.types';
 
 export type AssetsHydrate = {
   assets: Asset[];
@@ -12,13 +12,13 @@ export type AssetsHydrate = {
 
 export type AssetStore = {
   list: Asset[];
-}
+};
 
 export type UpdateAbility = {
   assetId: string;
   abilityId: string;
   value: boolean;
-}
+};
 
 export type AssetSubmission = {
   dataforgedId: string;

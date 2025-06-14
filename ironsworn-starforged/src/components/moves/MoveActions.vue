@@ -41,7 +41,6 @@ const burnMomentum = (choice: boolean) => {
 };
 
 const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
-
   if (options.length > 1 && selectedOption.value === '') {
     moveMode.value = 'options';
     return;

@@ -70,7 +70,7 @@ const onSubmit = form.handleSubmit((values) => {
       <DialogTrigger as-child>
         <Button
           variant="outline"
-          class="h-8 w-24 border-2 border-primary font-bold"
+          class="border-primary h-8 w-24 border-2 font-bold"
           @click="form.values.category = categories[0]"
           >Add</Button
         >

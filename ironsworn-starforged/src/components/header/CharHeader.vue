@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <div
-    class="header width-full fixed left-0 right-0 top-0 z-10 flex flex-row justify-center bg-banner py-2 text-center"
+    class="header width-full bg-banner fixed top-0 right-0 left-0 z-10 flex flex-row justify-center py-2 text-center"
   >
     <div
       class="button-container ml-4 flex basis-1/4 justify-start"

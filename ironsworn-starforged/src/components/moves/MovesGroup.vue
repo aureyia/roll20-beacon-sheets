@@ -22,14 +22,14 @@ const { updateActiveMove }: any = inject('move');
     <div>{{ group.Name }}</div>
     <Card
       v-for="move in group.Moves"
-      class="mx-1 my-1 bg-card-input/[0.4] p-0 text-sm"
+      class="bg-card-input/[0.4] mx-1 my-1 p-0 text-sm"
     >
       <div class="h7 my-1 flex items-center">
         <div class="button-container mr-1 h-7 w-7 items-center leading-3">
           <Button
             @click="updateActiveMove(move.$id)"
             :data-qa="move.$id"
-            class="h-7 w-7 content-center border-primary bg-muted p-0 font-bold leading-3 text-primary hover:bg-muted-accent"
+            class="border-primary bg-muted text-primary hover:bg-muted-accent h-7 w-7 content-center p-0 leading-3 font-bold"
           >
             <Icon
               icon="tabler:dice-6"

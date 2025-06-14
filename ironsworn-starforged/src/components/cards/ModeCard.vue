@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { settingsStore, type Settings } from '@/system/settings/store';
+import { settingsStore, type Settings } from '@/system/settings.store';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

@@ -1,6 +1,6 @@
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
-import type { SetEvent } from '@/utility/store-types';
+import type { SetEvent } from '@/utility/store.types';
 
 type SettingsSetEvent = SetEvent<Settings>;
 

@@ -1,11 +1,11 @@
 import { Effect } from 'effect';
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from 'drizzle-orm/libsql';
 import { runTable, rollInputsTable, storesTable } from './schema';
 import { createId } from '@paralleldrive/cuid2';
 
 export const db = drizzle({
   connection: {
-    url: "http://127.0.0.1:8080",
+    url: 'http://127.0.0.1:8080',
   },
 });
 
@@ -30,4 +30,4 @@ export const saveSnaphot = (table: string, options: any) =>
         assets: JSON.stringify(options.assets),
       });
     }
-  })
+  });

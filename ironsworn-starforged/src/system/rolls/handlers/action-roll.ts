@@ -1,7 +1,4 @@
-import {
-  ActionScore,
-  ActionScoreError,
-} from '@/system/rolls/action-score';
+import { ActionScore, ActionScoreError } from '@/system/rolls/action-score';
 import {
   RollFormatter,
   InvalidDie,

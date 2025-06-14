@@ -1,7 +1,7 @@
 import { Effect, Layer, Context } from 'effect';
 import { assert } from '@/utility/assert';
 import { createStore } from '@xstate/store';
-import type { SetEvent } from '@/utility/store-types';
+import type { SetEvent } from '@/utility/store.types';
 
 type StatsSetEvent = SetEvent<Stats>;
 

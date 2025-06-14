@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { settingsStore } from '@/system/settings/store';
+import { settingsStore } from '@/system/settings.store';
 const router = useRouter();
 
 const mode = settingsStore.select((context) => context.mode);

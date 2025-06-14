@@ -16,7 +16,7 @@ const fuzzList = [
   ,
   async () => null,
   {},
-  ['/', null, undefined]
+  ['/', null, undefined],
 ];
 
 const singleRoll = (seed: string) => ({

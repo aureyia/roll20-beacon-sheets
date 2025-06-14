@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { Effect } from 'effect';
-import { CardHeader, Card, CardContent, CardFooter } from '../ui/card';
-import { Button } from '../ui/button';
+import { CardHeader, Card, CardFooter } from '../ui/card';
 import { inject, computed } from 'vue';
-import { marked } from 'marked';
-import { getMoveData } from '@/utility/get-move-data';
+import { getMoveData } from '@/system/moves/get-move-data';
 import { MoveActions } from '@/components/moves';
 import { MomentumBurn } from '@/components/moves';
 import { MoveRollOptions } from '@/components/moves';
 import { MoveCopy } from '@/components/moves';
 
 const { activeMove }: any = inject('move');
-const { actor }: any = inject('roll');
 
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
 
@@ -29,7 +26,7 @@ defineProps({
     <MoveRollOptions v-if="moveMode === 'options'" />
     <MomentumBurn v-else-if="moveMode === 'momentumBurn'" />
     <MoveCopy v-else :move-data="moveData" />
-    <CardFooter class="rounded-b-lg bg-muted-secondary p-0 empty:hidden">
+    <CardFooter class="bg-muted-secondary rounded-b-lg p-0 empty:hidden">
       <MoveActions :move="moveData" />
     </CardFooter>
   </Card>

@@ -2,24 +2,10 @@
 import { inject } from 'vue';
 import { starforged } from '@/vendor/dataforged';
 import { Effect } from 'effect';
+import { allMovesInCategory } from '@/system/moves/utils';
 
 // @ts-ignore
 const { activeMove, updateActiveMove, clearActiveMove } = inject('move');
-
-const getAllCategoryMoves = (moveId: string) => {
-  const categoryId = moveId.split('/').slice(0, 3).join('/');
-  const dfMoveCategory = starforged['Move Categories'].find(
-    (category) => category.$id === categoryId,
-  );
-
-  if (!dfMoveCategory) {
-    return Effect.fail(
-      new Error(`No Move Category was found for: ${categoryId}`),
-    );
-  }
-
-  return Effect.succeed(dfMoveCategory.Moves);
-};
 </script>
 
 <template>
@@ -29,7 +15,9 @@ const getAllCategoryMoves = (moveId: string) => {
     <div class="move-list">
       <Button
         class="mb-2 w-full"
-        v-for="move in Effect.runSync(getAllCategoryMoves(activeMove))"
+        v-for="move in Effect.runSync(
+          allMovesInCategory(activeMove, starforged['Move Categories']),
+        )"
         @click="updateActiveMove(move.$id)"
         >{{ move.Display.Title }}</Button
       >

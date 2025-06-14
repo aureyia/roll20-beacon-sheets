@@ -3,13 +3,13 @@ import { impactsStore } from '@/system/impacts/store';
 import { tasksStore } from '@/system/tasks/store';
 import { assetsStore } from '@/system/assets/store';
 import { resources, stats, impacts, assets, tasks } from './fuzzers/stores';
-import { statsStore, type Stats } from '@/system/stats/store';
-import { resourcesStore } from '@/system/resources/store';
+import { statsStore } from '@/system/stats/store';
 import { numberBetween } from './prng';
 import { momentumStore } from '@/system/momentum/store';
 import { saveSnaphot } from './storage/snapshots';
+import type { Intensity } from '@/simulation/types';
 
-export const setupStores = (seed: string, intensity: string) =>
+export const setupStores = (seed: string, intensity: Intensity) =>
   Effect.sync(() => {
     // Clear Stores
 
@@ -73,7 +73,7 @@ export const setupStores = (seed: string, intensity: string) =>
         value: impacts(seed, intensity)[category],
       };
     });
- 
+
     selectedImpacts.forEach((entry) => {
       // @ts-ignore
       impactsStore.trigger.set(entry);
@@ -81,23 +81,23 @@ export const setupStores = (seed: string, intensity: string) =>
 
     // Assets
 
-    // @ts-ignore
     const selectedAssets = assets(seed, intensity);
     assetsStore.trigger.set({ label: 'list', value: selectedAssets });
 
-     // Tasks
+    // Tasks
 
-    // @ts-ignore
     const selectedTasks = tasks(seed, intensity);
     tasksStore.trigger.set({ label: 'list', value: selectedTasks });
 
-    Effect.runPromise(saveSnaphot('stores', {
-      run_id: seed,
-      momentum: selectedMomentum,
-      stats: selectedStats,
-      resources: selectedResources,
-      impacts: selectedImpacts,
-      tasks: selectedTasks,
-      assets: selectedAssets,
-    }));
+    Effect.runPromise(
+      saveSnaphot('stores', {
+        run_id: seed,
+        momentum: selectedMomentum,
+        stats: selectedStats,
+        resources: selectedResources,
+        impacts: selectedImpacts,
+        tasks: selectedTasks,
+        assets: selectedAssets,
+      }),
+    );
   });

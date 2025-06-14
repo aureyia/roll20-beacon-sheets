@@ -16,20 +16,20 @@ const props = defineProps({
 <template>
   <div class="progress-card">
     <Card class="mx-14 mt-3 drop-shadow-sm">
-      <CardHeader class="px-6 pb-2 pt-4">
+      <CardHeader class="px-6 pt-4 pb-2">
         <div>
           <Transition>
             <Button
               v-if="removeMode"
               variant="destructive"
-              class="mb-2 h-8 w-24 border-2 border-primary font-bold text-primary"
+              class="border-primary text-primary mb-2 h-8 w-24 border-2 font-bold"
               @click="taskStore.removeTask(task._id as string)"
               >Delete</Button
             >
           </Transition>
           <Input
             v-model="task.description"
-            class="h-10 bg-card-input text-lg drop-shadow-xs"
+            class="bg-card-input h-10 text-lg drop-shadow-xs"
           />
         </div>
         <DifficultyList

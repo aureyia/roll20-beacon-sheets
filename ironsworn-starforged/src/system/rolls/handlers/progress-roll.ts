@@ -70,7 +70,7 @@ const ProgressRollHandlerLive = Layer.effect(
 
 const MainLive = ProgressRollHandlerLive.pipe(
   Layer.provide(RollFormatterLive),
-  Layer.provide(DispatchLive)
+  Layer.provide(DispatchLive),
 );
 
 export const roll = (score: number) =>

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { postRef } from '@/main';
 import { metaStore } from '@/external/store';
-import { characterStore } from '@/system/character/store';
+import { characterStore } from '@/system/character.store';
 import { resourcesStore } from '@/system/resources/store';
 import { impactsStore } from '@/system/impacts/store';
 import { momentumStore } from '@/system/momentum/store';
 import { assetsStore } from '@/system/assets/store';
 import { statsStore } from '@/system/stats/store';
 import { tasksStore } from '@/system/tasks/store';
-import { settingsStore } from '@/system/settings/store';
+import { settingsStore } from '@/system/settings.store';
 import Card from '@/components/ui/card/Card.vue';
 import { rollSpeed } from '@/main';
 import { intensity } from '@/main';

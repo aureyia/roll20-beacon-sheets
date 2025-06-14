@@ -2,14 +2,14 @@ import { Stream, Queue, Effect, Config, Duration } from 'effect';
 import { sync } from '@/external/sync';
 
 import { metaStore } from './store';
-import { characterStore } from '@/system/character/store';
+import { characterStore } from '@/system/character.store';
 import { resourcesStore } from '@/system/resources/store';
 import { impactsStore } from '@/system/impacts/store';
 import { momentumStore } from '@/system/momentum/store';
 import { assetsStore } from '@/system/assets/store';
 import { statsStore } from '@/system/stats/store';
 import { tasksStore } from '@/system/tasks/store';
-import { settingsStore } from '@/system/settings/store';
+import { settingsStore } from '@/system/settings.store';
 
 export const storeRelay = Effect.gen(function* () {
   const queue = yield* Queue.bounded<string>(20);

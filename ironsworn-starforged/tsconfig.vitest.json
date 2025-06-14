@@ -5,6 +5,11 @@
     "lib": [],
     "types": ["node", "jsdom", "vitest/importMeta"],
     "allowJs": true,
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "plugins": [
+      {
+        "name": "@effect/language-service"
+      }
+    ]
   }
 }

@@ -14,6 +14,8 @@ type FormattedRoll = {
   };
 };
 
+const DieSchema = Schema.Struct({});
+
 export class InvalidDie extends Data.TaggedError('InvalidDie')<{
   message: string;
 }> {}
@@ -36,17 +38,17 @@ export class RollFormatter extends Context.Tag('RollFormatter')<
   }
 >() {}
 
-// # Dependency Injection 3
 export const RollFormatterLive = Layer.effect(
   RollFormatter,
   Effect.gen(function* () {
     return {
       toDispatch: (dice: Die[]) =>
         Effect.gen(function* () {
-          assert(dice.length > 0)
+          assert(dice.length > 0);
+          const count = 1 as const;
           let index = 0;
 
-          const { sides, count = 1 } = dice[index] as DiceComponent;
+          const { sides } = dice[index];
 
           if (sides === undefined) {
             return yield* Effect.fail(
@@ -59,8 +61,8 @@ export const RollFormatterLive = Layer.effect(
             ...formatDiceComponents(dice, index + 1),
           };
 
-          assert(formattedDice['dice-0'] !== undefined)
-          return formattedDice
+          assert(formattedDice['dice-0'] !== undefined);
+          return formattedDice;
         }),
 
       fromDispatch: (
@@ -75,6 +77,7 @@ export const RollFormatterLive = Layer.effect(
           const diceKeys = Object.keys(formattedDice) as Nom[];
 
           for (const key of diceKeys) {
+            // @ts-ignore
             const sides = Number(formattedDice[key].replace('1d', ''));
             if (
               output.results[key].results.result < 1 ||
@@ -87,7 +90,7 @@ export const RollFormatterLive = Layer.effect(
               );
           }
 
-          const dieValues = Object.keys(output.results).map((key) => {
+          const dieValues = Object.keys(output.results).map((key: any) => {
             return output.results[key].results.result;
           });
 
@@ -110,10 +113,7 @@ export const RollFormatterLive = Layer.effect(
 
 const formatDieKey = (index: number): DieKey => `dice-${index}`;
 const formatDie = (dieCount: number, sides: number) => `${dieCount}d${sides}`;
-const formatDiceComponents = (
-  components: DiceComponent[],
-  index = 0,
-): FormattedRoll['rolls'] => {
+const formatDiceComponents = (components: DiceComponent[], index = 0) => {
   if (components.length === index) {
     return {};
   }

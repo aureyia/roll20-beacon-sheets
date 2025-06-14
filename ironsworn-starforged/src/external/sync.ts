@@ -14,13 +14,13 @@ import { metaStore } from './store';
 import { Dehydration, DehydrationLive } from './services/dehydration';
 import { Hydration, HydrationLive } from './services/hydration';
 import { DehydrateMetaLive } from '@/external/store';
-import { DehydrateCharacterLive } from '@/system/character/store';
+import { DehydrateCharacterLive } from '@/system/character.store';
 import { DehydrateAssetsLive } from '@/system/assets/store';
 import { DehydrateStatsLive } from '@/system/stats/store';
 import { DehydrateResourcesLive } from '@/system/resources/store';
 import { DehydrateMomentumLive } from '@/system/momentum/store';
 import { DehydrateImpactsLive } from '@/system/impacts/store';
-import { DehydrateSettingsLive } from '@/system/settings/store';
+import { DehydrateSettingsLive } from '@/system/settings.store';
 import { DehydrateTasksLive } from '@/system/tasks/store';
 
 export const beaconPulse = ref(0);

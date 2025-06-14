@@ -24,7 +24,7 @@ const updateAbility = (event: any) => {
 <template>
   <Card class="asset-card rounded-xlg mb-8 w-[43%] border-0 drop-shadow-sm">
     <CardHeader
-      class="rounded-t-lg bg-card-input text-xl font-bold drop-shadow-sm"
+      class="bg-card-input rounded-t-lg text-xl font-bold drop-shadow-sm"
       >{{ dataforgedAsset.Name }}</CardHeader
     >
     <CardContent class="asset-body">
@@ -37,7 +37,7 @@ const updateAbility = (event: any) => {
           v-for="(ability, index) in dataforgedAsset.Abilities"
         >
           <Checkbox
-            class="mr-2 mt-1"
+            class="mt-1 mr-2"
             v-model="abilities[index].enabled"
             @update:model-value="
               (event) =>

@@ -11,7 +11,9 @@ export type SelectRun = typeof runTable.$inferSelect;
 
 export const rollInputsTable = sqliteTable('rollInputs', {
   id: integer('id').primaryKey(),
-  run_id: text('run_id').notNull().references(() => runTable.id),
+  run_id: text('run_id')
+    .notNull()
+    .references(() => runTable.id),
   modifier: integer('modifier').notNull(),
   momentum: integer('momentum').notNull(),
   move_name: text('move_name').notNull(),
@@ -22,7 +24,9 @@ export type SelectRollInputs = typeof rollInputsTable.$inferSelect;
 
 export const storesTable = sqliteTable('stores', {
   id: integer('id').primaryKey(),
-  run_id: text('run_id').notNull().references(() => runTable.id),
+  run_id: text('run_id')
+    .notNull()
+    .references(() => runTable.id),
   momentum: integer('momentum').notNull(),
   stats: text('stats').notNull(),
   resources: text('resources').notNull(),

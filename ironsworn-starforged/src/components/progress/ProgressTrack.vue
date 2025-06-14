@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ProgressBox } from '@/components/progress';
 import { tasksStore, type Task } from '@/system/tasks/store';
-import { progressTicksToFill } from '@/utility/progress-ticks-to-fill';
+import { progressTicksToFill } from '@/system/tasks/progress-ticks-to-fill';
 
 const BOXES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
 const taskStore = tasksStore.get().context.list;
@@ -15,13 +15,13 @@ defineProps({ task: { type: Object, default: {} } });
       <Button
         @click="taskStore.markProgress(task._id as string)"
         variant="outline"
-        class="h-8 w-20 border-2 border-primary bg-muted font-bold"
+        class="border-primary bg-muted h-8 w-20 border-2 font-bold"
         >Mark</Button
       >
       <Button
         @click="taskStore.clearProgress(task._id as string)"
         variant="outline"
-        class="h-8 w-20 border-2 border-primary bg-muted font-bold"
+        class="border-primary bg-muted h-8 w-20 border-2 font-bold"
         >Clear</Button
       >
     </div>
@@ -37,7 +37,7 @@ defineProps({ task: { type: Object, default: {} } });
       <Button
         @click="taskStore.roll(task._id as string)"
         variant="outline"
-        class="h-8 w-24 border-2 border-primary bg-muted font-bold"
+        class="border-primary bg-muted h-8 w-24 border-2 font-bold"
         >Fulfill</Button
       >
     </div>

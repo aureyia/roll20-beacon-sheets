@@ -8,7 +8,7 @@ export type MomentumHydrate = {
 };
 
 const assertMomentum = (momentum: number) => {
-  assert(isNumberBetween(momentum, -6, 10), `values.momentum: ${momentum}`);
+  assert(isNumberBetween(momentum, -6, 10));
 };
 
 export const momentumStore = createStore({

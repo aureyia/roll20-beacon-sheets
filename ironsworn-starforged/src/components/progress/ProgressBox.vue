@@ -42,7 +42,7 @@ watch(
     <Select
       v-model="selectedValue"
       @update:model-value="progressUpdate(props.id as string, $event)"
-      class="absolute left-0 top-0 h-14 w-14"
+      class="absolute top-0 left-0 h-14 w-14"
     >
       <SelectTrigger class="h-14 w-14">
         <SelectValue />
@@ -56,7 +56,7 @@ watch(
       </SelectContent>
     </Select>
     <span
-      class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center rounded border-2 border-primary bg-muted"
+      class="border-primary bg-muted pointer-events-none absolute top-0 left-0 flex h-full w-full items-center justify-center rounded border-2"
       :value="selectedValue"
     ></span>
   </div>

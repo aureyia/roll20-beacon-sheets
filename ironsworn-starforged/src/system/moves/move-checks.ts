@@ -95,10 +95,7 @@ type ValidRollOption = {
   Using: string[];
 };
 
-const getValue = (
-  option: ValidRollOption,
-  values: number[],
-): Effect.Effect<number, Error> => {
+const getValue = (option: ValidRollOption, values: number[]) => {
   const isMethodAny = option.Method === 'Any';
   const isMethodHighest = option.Method === 'Highest';
   const isMethodLowest = option.Method === 'Lowest';

@@ -1,7 +1,7 @@
 import { assert } from '@/utility/assert';
 import { createStore } from '@xstate/store';
 import { Effect, Layer, Context } from 'effect';
-import type { SetEvent } from '@/utility/store-types';
+import type { SetEvent } from '@/utility/store.types';
 
 type CharacterSetEvent = SetEvent<Character>;
 
@@ -49,7 +49,7 @@ export const DehydrateCharacterLive = Layer.effect(
           const context = characterStore.get().context;
           assert(typeof context.callsign === 'string');
           assert(typeof context.pronouns === 'string');
-          
+
           return {
             callsign: context.callsign,
             pronouns: context.pronouns,

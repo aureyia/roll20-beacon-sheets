@@ -1,7 +1,7 @@
 import { type Task } from '@/system/tasks/store';
 import { pipe } from 'effect';
 import { assert } from '@/utility/assert';
-import { isNumberBetween } from './is-number-between';
+import { isNumberBetween } from '../../utility/is-number-between';
 
 export type ProgressTicksToFill = (
   position: number,

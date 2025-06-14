@@ -152,6 +152,6 @@ export const tasks = (seed: string) => {
     tasks.push(createTask(seed, index));
   }
 
-  console.log('tasks', tasks)
+  console.log('tasks', tasks);
   return tasks;
 };

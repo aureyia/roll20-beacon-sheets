@@ -5,7 +5,7 @@ import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
 import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue';
 import { ImpactCategory } from '@/components/impacts';
 import { statsStore, type Stats } from '@/system/stats/store';
-import { characterStore } from '@/system/character/store';
+import { characterStore } from '@/system/character.store';
 import { metaStore } from '@/external/store';
 import { resourcesStore } from '@/system/resources/store';
 import { Toggle } from '@/components/ui/toggle/index';

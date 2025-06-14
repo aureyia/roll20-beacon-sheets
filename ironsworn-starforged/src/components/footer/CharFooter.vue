@@ -36,7 +36,7 @@ defineProps({
 
 <template>
   <div
-    class="footer width-full fixed bottom-0 left-0 right-0 flex justify-center bg-banner py-2 text-center"
+    class="footer width-full bg-banner fixed right-0 bottom-0 left-0 flex justify-center py-2 text-center"
   >
     <DarkModeSwitch />
     <div
@@ -69,7 +69,7 @@ defineProps({
         >
       </ToggleGroup>
       <Button
-        class="h-8 w-24 border-2 border-primary bg-muted font-bold text-primary hover:bg-muted-accent"
+        class="border-primary bg-muted text-primary hover:bg-muted-accent h-8 w-24 border-2 font-bold"
         @click="burnMomentum(momentumReset(numberOfImpacts))"
         >Burn</Button
       >
