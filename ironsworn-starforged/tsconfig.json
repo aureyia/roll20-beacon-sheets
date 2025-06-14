@@ -6,6 +6,8 @@
     "alwaysStrict": true,
     "strictNullChecks": true,
     "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "erasableSyntaxOnly": true,
     "paths": {
       "@/*": ["./src/*"],
       "dataforged": ["node_modules/dataforged/dist/types/index.d.ts"]

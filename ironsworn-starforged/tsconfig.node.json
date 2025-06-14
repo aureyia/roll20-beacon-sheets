@@ -6,6 +6,8 @@
     "strict": true,
     "alwaysStrict": true,
     "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "erasableSyntaxOnly": true,
     "paths": {
       "@/*": ["./src/*"]
     },

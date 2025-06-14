@@ -2,7 +2,7 @@
 import { Effect } from 'effect';
 import { CardHeader, Card, CardFooter } from '../ui/card';
 import { inject, computed } from 'vue';
-import { getMoveData } from '@/system/moves/get-move-data';
+import { getMoveData } from '@/system/moves/utils';
 import { MoveActions } from '@/components/moves';
 import { MomentumBurn } from '@/components/moves';
 import { MoveRollOptions } from '@/components/moves';

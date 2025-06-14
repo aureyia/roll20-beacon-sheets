@@ -67,14 +67,14 @@ export const impacts = (seed: string) => {
   return impactsObject;
 };
 
-enum AssetCategory {
-  command_vehicle = 'Command Vehicle',
-  module = 'Module',
-  support_vehicle = 'Support Vehicle',
-  path = 'Path',
-  companion = 'Companion',
-  deed = 'Deed',
-}
+const AssetCategory = {
+  command_vehicle: 'Command Vehicle',
+  module: 'Module',
+  support_vehicle: 'Support Vehicle',
+  path: 'Path',
+  companion: 'Companion',
+  deed: 'Deed',
+} as const
 
 type Ability = {
   _id: string;
@@ -86,7 +86,7 @@ type Asset = {
   _id: string;
   dataforgedId: string;
   name: string;
-  category: AssetCategory;
+  category: typeof AssetCategory;
   abilities: Ability[];
   meter: number | null;
 };

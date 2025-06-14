@@ -1,1 +1,5 @@
-export type Intensity = 'high' | 'medium' | 'low';
+export const Intensity = {
+  High: 'high',
+  Medium: 'medium',
+  Low: 'low',
+} as const;

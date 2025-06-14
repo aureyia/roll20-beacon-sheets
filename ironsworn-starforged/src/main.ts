@@ -14,6 +14,7 @@ import { storeRelay } from './external/store.relay';
 import { simRelayPlugin, simRunner } from './simulation/simulator';
 import { ref, type Ref as VueRef } from 'vue';
 import { runner } from './simulation/runner';
+import { Intensity } from './simulation/types';
 
 // @ts-ignore
 const env = import.meta.env.MODE || '';
@@ -21,7 +22,9 @@ const env = import.meta.env.MODE || '';
 const isDevEnvironment = ['development', 'test'].includes(env);
 export const isSimEnvironment = env === 'simulation';
 export const rollSpeed = ref([2000]);
-export const intensity = ref('low');
+export let intensity = ref(Intensity.Low) as VueRef<
+  (typeof Intensity)[keyof typeof Intensity]
+>;
 export const postRef = ref();
 
 async function main() {

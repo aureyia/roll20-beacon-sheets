@@ -6,6 +6,8 @@
     "types": ["node", "jsdom", "vitest/importMeta"],
     "allowJs": true,
     "ignoreDeprecations": "5.0",
+    "skipLibCheck": true,
+    "erasableSyntaxOnly": true,
     "plugins": [
       {
         "name": "@effect/language-service"
