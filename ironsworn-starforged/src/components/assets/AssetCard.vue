@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { CardFooter, Card, CardHeader, CardContent } from '../ui/card';
-import { Checkbox } from '../ui/checkbox';
-import { marked } from 'marked';
-import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group';
-import { assetsStore } from '@/system/assets/store';
-import type { Ability } from '@/system/assets/types';
+import { CardFooter, Card, CardHeader, CardContent } from '../ui/card'
+import { Checkbox } from '../ui/checkbox'
+import { marked } from 'marked'
+import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
+import { assetsStore } from '@/system/assets/store'
+import type { Ability } from '@/system/assets/types'
 
 defineProps({
-  dataforgedAsset: {
-    type: Object,
-    required: true,
-  },
-});
+    dataforgedAsset: {
+        type: Object,
+        required: true,
+    },
+})
 
-const abilities = defineModel('abilities', { required: true });
-const storedAsset = defineModel('storedAsset', { required: true });
+const abilities = defineModel('abilities', { required: true })
+const storedAsset = defineModel('storedAsset', { required: true })
 
 const updateAbility = (event: any) => {
-  assetsStore.trigger.updateAbility(event);
-};
+    assetsStore.trigger.updateAbility(event)
+}
 </script>
 
 <template>

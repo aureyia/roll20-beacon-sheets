@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { Effect } from 'effect';
-import { CardHeader, Card, CardFooter } from '../ui/card';
-import { inject, computed } from 'vue';
-import { getMoveData } from '@/system/moves/utils';
-import { MoveActions } from '@/components/moves';
-import { MomentumBurn } from '@/components/moves';
-import { MoveRollOptions } from '@/components/moves';
-import { MoveCopy } from '@/components/moves';
+import { Effect } from 'effect'
+import { CardHeader, Card, CardFooter } from '../ui/card'
+import { inject, computed } from 'vue'
+import { getMoveData } from '@/system/moves/utils'
+import { MoveActions } from '@/components/moves'
+import { MomentumBurn } from '@/components/moves'
+import { MoveRollOptions } from '@/components/moves'
+import { MoveCopy } from '@/components/moves'
 
-const { activeMove }: any = inject('move');
+const { activeMove }: any = inject('move')
 
-const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
+const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)))
 
 defineProps({
-  moveMode: {
-    type: String,
-    required: true,
-  },
-});
+    moveMode: {
+        type: String,
+        required: true,
+    },
+})
 </script>
 
 <template>

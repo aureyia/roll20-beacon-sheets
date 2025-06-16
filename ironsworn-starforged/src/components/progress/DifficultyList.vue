@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { ref } from 'vue';
-import { tasksStore } from '@/system/tasks/store';
-import { DIFFICULTIES } from '@/system/tasks/types';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { ref } from 'vue'
+import { tasksStore } from '@/system/tasks/store'
+import { DIFFICULTIES } from '@/system/tasks/types'
 
-defineProps({ id: String });
-defineModel('selectedDifficulty', { type: String });
+defineProps({ id: String })
+defineModel('selectedDifficulty', { type: String })
 </script>
 
 <template>

@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { inject, computed, ref } from 'vue';
-import { getMoveData } from '@/system/moves/utils';
-import { RadioGroup } from '@/components/ui/radio-group';
-import { Effect } from 'effect';
-import { Label } from '@/components/ui/label';
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card'
+import { inject, computed, ref } from 'vue'
+import { getMoveData } from '@/system/moves/utils'
+import { RadioGroup } from '@/components/ui/radio-group'
+import { Effect } from 'effect'
+import { Label } from '@/components/ui/label'
 
-const { activeMove, selectedOption }: any = inject('move');
-const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)));
+const { activeMove, selectedOption }: any = inject('move')
+const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)))
 </script>
 
 <template>

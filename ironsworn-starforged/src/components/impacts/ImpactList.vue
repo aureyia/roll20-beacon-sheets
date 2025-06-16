@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { impactsStore, type ImpactsGrouped } from '@/system/impacts/store';
+import { impactsStore, type ImpactsGrouped } from '@/system/impacts/store'
 import {
-  DialogTrigger,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import type { AnyImpact } from '@/system/impacts/types';
+    DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogFooter,
+    DialogClose,
+} from '../ui/dialog'
+import { Button } from '../ui/button'
+import type { AnyImpact } from '@/system/impacts/types'
 
-const impacts = impactsStore;
+const impacts = impactsStore
 const getImpactsByCategory = (category: keyof ImpactsGrouped) =>
-  impactsStore.get().context[category];
+    impactsStore.get().context[category]
 
 defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-});
+    label: {
+        type: String,
+        required: true,
+    },
+})
 
 const removeImpact = (impact: AnyImpact) => {
-  impacts.trigger.remove(impact);
-};
+    impacts.trigger.remove(impact)
+}
 </script>
 
 <template>

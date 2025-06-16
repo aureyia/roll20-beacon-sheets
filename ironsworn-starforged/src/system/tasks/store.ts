@@ -1,34 +1,33 @@
-import { createId } from '@paralleldrive/cuid2';
-import { arrayToObject, objectToArray } from '@/utility/objectify';
-import { type LimitedRange } from '@/utility/limited-range';
+import { arrayToObject, objectToArray } from '@/utility/objectify'
+import type { LimitedRange } from '@/utility/limited-range'
 
-import { Effect, Layer, Context } from 'effect';
-import { createStore } from '@xstate/store';
+import { Effect, Layer, Context } from 'effect'
+import { createStore } from '@xstate/store'
 
-export type ProgressRange = LimitedRange<0, 40>;
+export type ProgressRange = LimitedRange<0, 40>
 export type Task = {
-  _id: string;
-  description: string;
-  category: TaskCategory;
-  progress: number;
-  difficulty: Difficulty;
-  status: TaskStatus;
-  countdown?: Countdown;
-};
+    _id: string
+    description: string
+    category: TaskCategory
+    progress: number
+    difficulty: Difficulty
+    status: TaskStatus
+    countdown?: Countdown
+}
 
-export type Vow = Omit<Task, 'countdown'>;
-export type GenericTask = Omit<Task, 'countdown'>;
+export type Vow = Omit<Task, 'countdown'>
+export type GenericTask = Omit<Task, 'countdown'>
 export type Difficulty =
-  | 'troublesome'
-  | 'dangerous'
-  | 'formidable'
-  | 'extreme'
-  | 'epic';
-export type TaskCategory = 'vow' | 'generic' | 'challenge';
-export type TaskStatus = 'active' | 'completed' | 'failed' | 'abandoned';
-export type Countdown = 0 | 1 | 2 | 3 | 4;
+    | 'troublesome'
+    | 'dangerous'
+    | 'formidable'
+    | 'extreme'
+    | 'epic'
+export type TaskCategory = 'vow' | 'generic' | 'challenge'
+export type TaskStatus = 'active' | 'completed' | 'failed' | 'abandoned'
+export type Countdown = 0 | 1 | 2 | 3 | 4
 
-type taskHydrate = { tasks: Task[] };
+type taskHydrate = { tasks: Task[] }
 // export const useTaskStore = defineStore('task', () => {
 //   const tasks: Ref<Array<Task>> = ref([]);
 
@@ -126,66 +125,71 @@ type taskHydrate = { tasks: Task[] };
 // });
 
 type SetEvent = {
-  label: 'list';
-  value: Task[];
-};
+    label: 'list'
+    value: Task[]
+}
 
 export const tasksStore = createStore({
-  context: {
-    list: [] as Task[],
-  },
-  emits: {
-    updated: () => {},
-  },
-  on: {
-    hydrate: (
-      context,
-      event: { type: 'hydrate'; tasks: Record<string, any> },
-    ) => {
-      context.list = Effect.runSync(objectToArray(event.tasks)) ?? context.list;
+    context: {
+        list: [] as Task[],
     },
-    add: (context, event, enqueue) => {
-      //     description: string,
-      //     category: TaskCategory,
-      //     difficulty: Difficulty,
-      //   ) => {
-      //     tasks.value.push({
-      //       _id: createId(),
-      //       description,
-      //       category,
-      //       progress: 0,
-      //       difficulty,
-      //       status: 'active',
-      //     });
-      enqueue.emit.updated();
+    emits: {
+        updated: () => {},
     },
-    remove: () => {},
-    set: (context, event: SetEvent, enqueue) => {
-      context[event.label] = event.value;
-      enqueue.emit.updated();
+    on: {
+        hydrate: (
+            context,
+            event: { type: 'hydrate'; tasks: Record<string, any> }
+        ) => {
+            context.list =
+                Effect.runSync(objectToArray(event.tasks)) ?? context.list
+        },
+        add: (context, event, enqueue) => {
+            //     description: string,
+            //     category: TaskCategory,
+            //     difficulty: Difficulty,
+            //   ) => {
+            //     tasks.value.push({
+            //       _id: createId(),
+            //       description,
+            //       category,
+            //       progress: 0,
+            //       difficulty,
+            //       status: 'active',
+            //     });
+            enqueue.emit.updated()
+        },
+        remove: () => {},
+        set: (context, event: SetEvent, enqueue) => {
+            context[event.label] = event.value
+            enqueue.emit.updated()
+        },
+        clear: context => {
+            context.list = []
+        },
     },
-    clear: (context) => {
-      context.list = [];
-    },
-  },
-});
+})
 
 export class DehydrateTasks extends Context.Tag('DehydrateTasks')<
-  DehydrateTasks,
-  {
-    readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>;
-  }
+    DehydrateTasks,
+    {
+        readonly dehydrate: () => Effect.Effect<
+            Record<string, any>,
+            never,
+            never
+        >
+    }
 >() {}
 
 export const DehydrateTasksLive = Layer.effect(
-  DehydrateTasks,
-  Effect.gen(function* () {
-    return {
-      dehydrate: () =>
-        Effect.gen(function* () {
-          const context = tasksStore.get().context.list;
-          return yield* arrayToObject(context);
-        }),
-    };
-  }),
-);
+    DehydrateTasks,
+    Effect.gen(function* () {
+        return {
+            dehydrate: () =>
+                Effect.gen(function* () {
+                    const context = tasksStore.get().context.list
+                    return yield* arrayToObject(context)
+                }),
+        }
+    })
+)

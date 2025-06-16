@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
+import type { HTMLAttributes } from 'vue'
+import { reactiveOmit } from '@vueuse/core'
 import {
-  DropdownMenuSubContent,
-  type DropdownMenuSubContentEmits,
-  type DropdownMenuSubContentProps,
-  useForwardPropsEmits,
-} from 'reka-ui';
-import { cn } from '@/utility';
+    DropdownMenuSubContent,
+    type DropdownMenuSubContentEmits,
+    type DropdownMenuSubContentProps,
+    useForwardPropsEmits,
+} from 'reka-ui'
+import { cn } from '@/utility'
 
 const props = defineProps<
-  DropdownMenuSubContentProps & { class?: HTMLAttributes['class'] }
->();
-const emits = defineEmits<DropdownMenuSubContentEmits>();
+    DropdownMenuSubContentProps & { class?: HTMLAttributes['class'] }
+>()
+const emits = defineEmits<DropdownMenuSubContentEmits>()
 
-const delegatedProps = reactiveOmit(props, 'class');
+const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>

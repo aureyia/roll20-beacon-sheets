@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import type { VariantProps } from 'class-variance-authority';
-import type { toggleVariants } from '@/components/ui/toggle';
-import { reactiveOmit } from '@vueuse/core';
+import type { VariantProps } from 'class-variance-authority'
+import type { toggleVariants } from '@/components/ui/toggle'
+import { reactiveOmit } from '@vueuse/core'
 import {
-  ToggleGroupRoot,
-  type ToggleGroupRootEmits,
-  type ToggleGroupRootProps,
-  useForwardPropsEmits,
-} from 'reka-ui';
-import { type HTMLAttributes, provide } from 'vue';
-import { cn } from '@/utility';
+    ToggleGroupRoot,
+    type ToggleGroupRootEmits,
+    type ToggleGroupRootProps,
+    useForwardPropsEmits,
+} from 'reka-ui'
+import { type HTMLAttributes, provide } from 'vue'
+import { cn } from '@/utility'
 
-type ToggleGroupVariants = VariantProps<typeof toggleVariants>;
+type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
 const props = defineProps<
-  ToggleGroupRootProps & {
-    class?: HTMLAttributes['class'];
-    variant?: ToggleGroupVariants['variant'];
-    size?: ToggleGroupVariants['size'];
-  }
->();
-const emits = defineEmits<ToggleGroupRootEmits>();
+    ToggleGroupRootProps & {
+        class?: HTMLAttributes['class']
+        variant?: ToggleGroupVariants['variant']
+        size?: ToggleGroupVariants['size']
+    }
+>()
+const emits = defineEmits<ToggleGroupRootEmits>()
 
 provide('toggleGroup', {
-  variant: props.variant,
-  size: props.size,
-});
+    variant: props.variant,
+    size: props.size,
+})
 
-const delegatedProps = reactiveOmit(props, 'class');
+const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>

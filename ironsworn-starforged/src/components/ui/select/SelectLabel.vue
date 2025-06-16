@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
-import { SelectLabel, type SelectLabelProps } from 'reka-ui';
-import { cn } from '@/utility';
+import type { HTMLAttributes } from 'vue'
+import { SelectLabel, type SelectLabelProps } from 'reka-ui'
+import { cn } from '@/utility'
 
 const props = defineProps<
-  SelectLabelProps & { class?: HTMLAttributes['class'] }
->();
+    SelectLabelProps & { class?: HTMLAttributes['class'] }
+>()
 </script>
 
 <template>

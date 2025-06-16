@@ -1,46 +1,46 @@
 <script setup lang="ts">
 import {
-  MoveActiveCard,
-  MoveAssetControl,
-  MoveSelect,
-} from '@/components/moves';
-import { inject, computed, ref, provide, onMounted, onUnmounted } from 'vue';
-import { machine } from '@/system/rolls/machines/calculate-outcome';
-import { createActor } from 'xstate';
+    MoveActiveCard,
+    MoveAssetControl,
+    MoveSelect,
+} from '@/components/moves'
+import { inject, computed, ref, provide, onMounted, onUnmounted } from 'vue'
+import { machine } from '@/system/rolls/machines/calculate-outcome'
+import { createActor } from 'xstate'
 
-const { activeMove }: any = inject('move');
+const { activeMove }: any = inject('move')
 
-const actor = createActor(machine);
-const moveMode = ref('content');
+const actor = createActor(machine)
+const moveMode = ref('content')
 
 provide('roll', {
-  moveMode,
-  actor,
-});
+    moveMode,
+    actor,
+})
 
 onMounted(() => {
-  actor.subscribe((snapshot) => {
-    const matched =
-      snapshot.matches('Eligible for Opportunity') ||
-      snapshot.matches('Hitting: Eligible for Strong Hit') ||
-      snapshot.matches('Missing: Eligible for Strong Hit') ||
-      snapshot.matches('Eligible for Weak Hit');
+    actor.subscribe(snapshot => {
+        const matched =
+            snapshot.matches('Eligible for Opportunity') ||
+            snapshot.matches('Hitting: Eligible for Strong Hit') ||
+            snapshot.matches('Missing: Eligible for Strong Hit') ||
+            snapshot.matches('Eligible for Weak Hit')
 
-    moveMode.value = matched ? 'momentumBurn' : 'content';
-  });
+        moveMode.value = matched ? 'momentumBurn' : 'content'
+    })
 
-  actor.start();
-  console.log('Rolling: Actor Started');
-});
+    actor.start()
+    console.log('Rolling: Actor Started')
+})
 
 onUnmounted(() => {
-  actor.stop();
-  console.log('Rolling: Actor Stopped');
-});
+    actor.stop()
+    console.log('Rolling: Actor Stopped')
+})
 
 const categoryClass = computed(() =>
-  activeMove.value.split('/')[2].toLowerCase().replaceAll('_', '-'),
-);
+    activeMove.value.split('/')[2].toLowerCase().replaceAll('_', '-')
+)
 </script>
 
 <template>

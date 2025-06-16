@@ -1,40 +1,40 @@
 <script setup lang="ts">
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ref, watch } from 'vue';
-import { tasksStore } from '@/system/tasks/store';
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import { ref, watch } from 'vue'
+import { tasksStore } from '@/system/tasks/store'
 
-const INPUTS = ['0', '1', '2', '3', '4'] as const;
-const props = defineProps({ id: String, ticks: String });
-const selectedValue = ref(props.ticks);
-const taskStore = tasksStore.get().context.list;
+const INPUTS = ['0', '1', '2', '3', '4'] as const
+const props = defineProps({ id: String, ticks: String })
+const selectedValue = ref(props.ticks)
+const taskStore = tasksStore.get().context.list
 
-const differenceOf = (a: string) => (b: string) => parseInt(b) - parseInt(a);
+const differenceOf = (a: string) => (b: string) => parseInt(b) - parseInt(a)
 const progressUpdate = (id: string, value: string) => {
-  parseInt(props.ticks as string) !== parseInt(value)
-    ? taskStore.manualProgressUpdate(
-        id,
-        differenceOf(props.ticks as string)(value),
-      )
-    : null;
+    parseInt(props.ticks as string) !== parseInt(value)
+        ? taskStore.manualProgressUpdate(
+              id,
+              differenceOf(props.ticks as string)(value)
+          )
+        : null
 
-  selectedValue.value !== props.ticks
-    ? (selectedValue.value = props.ticks)
-    : selectedValue.value;
-};
+    selectedValue.value !== props.ticks
+        ? (selectedValue.value = props.ticks)
+        : selectedValue.value
+}
 
 watch(
-  () => props.ticks,
-  (newValue) => {
-    selectedValue.value = newValue;
-  },
-);
+    () => props.ticks,
+    newValue => {
+        selectedValue.value = newValue
+    }
+)
 </script>
 
 <template>

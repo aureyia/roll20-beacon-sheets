@@ -1,34 +1,34 @@
 <script setup lang="ts">
 import {
-  NumberField,
-  NumberFieldContent,
-  NumberFieldDecrement,
-  NumberFieldIncrement,
-  NumberFieldInput,
-} from '@/components/ui/number-field';
+    NumberField,
+    NumberFieldContent,
+    NumberFieldDecrement,
+    NumberFieldIncrement,
+    NumberFieldInput,
+} from '@/components/ui/number-field'
 
 defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    default: 'text',
-  },
-  min: {
-    type: Number,
-    default: 0,
-  },
-  max: {
-    type: Number,
-  },
-  inputModifier: {
-    type: String,
-  },
-});
+    label: {
+        type: String,
+        required: true,
+    },
+    type: {
+        type: String,
+        default: 'text',
+    },
+    min: {
+        type: Number,
+        default: 0,
+    },
+    max: {
+        type: Number,
+    },
+    inputModifier: {
+        type: String,
+    },
+})
 // TODO: Maybe add the subscriber here?
-const model = defineModel<number>({ required: true });
+const model = defineModel<number>({ required: true })
 </script>
 
 <template>

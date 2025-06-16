@@ -1,78 +1,73 @@
 <script setup lang="ts">
-import * as z from 'zod';
-import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
-import { FormField, FormItem, FormLabel } from '../ui/form';
-import { type IAsset } from '@/vendor/dataforged';
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
-import { assetsStore, type AssetSubmission } from '@/system/assets/store';
-import { getAllAssetsForCategory } from '@/system/assets/utils';
-import type { AssetCategory } from '@/system/assets/types';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { Effect } from 'effect';
-import { FormControl } from '@/components/ui/form';
-import { DialogFooter } from '@/components/ui/dialog';
+import * as z from 'zod'
+import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
+import { FormField, FormItem, FormLabel } from '../ui/form'
+import { type IAsset } from '@/vendor/dataforged'
+import { Select, SelectContent, SelectTrigger, SelectValue } from '../ui/select'
+import { assetsStore, type AssetSubmission } from '@/system/assets/store'
+import { getAllAssetsForCategory } from '@/system/assets/utils'
+import type { AssetCategory } from '@/system/assets/types'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { Effect } from 'effect'
+import { FormControl } from '@/components/ui/form'
+import { DialogFooter } from '@/components/ui/dialog'
 
-const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const;
+const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const
 
 const formSchema = toTypedSchema(
-  z
-    .object({
-      category: z.string().min(2),
-      asset: z.string(),
-    })
-    .required(),
-);
+    z
+        .object({
+            category: z.string().min(2),
+            asset: z.string(),
+        })
+        .required()
+)
 
 type SupportedAssets = {
-  Path: IAsset[];
-  Companion: IAsset[];
-  Deed: IAsset[];
-  [key: string]: IAsset[];
-};
+    Path: IAsset[]
+    Companion: IAsset[]
+    Deed: IAsset[]
+    [key: string]: IAsset[]
+}
 
 const getAllAssets = () =>
-  Effect.gen(function* () {
-    return {
-      Path: yield* getAllAssetsForCategory('Path'),
-      Companion: yield* getAllAssetsForCategory('Companion'),
-      Deed: yield* getAllAssetsForCategory('Deed'),
-    };
-  });
+    Effect.gen(function* () {
+        return {
+            Path: yield* getAllAssetsForCategory('Path'),
+            Companion: yield* getAllAssetsForCategory('Companion'),
+            Deed: yield* getAllAssetsForCategory('Deed'),
+        }
+    })
 
 const form = useForm({
-  validationSchema: formSchema,
-});
+    validationSchema: formSchema,
+})
 
-const allAssets = Effect.runSync(getAllAssets());
+const allAssets = Effect.runSync(getAllAssets())
 
-const onSubmit = form.handleSubmit((values) => {
-  const selectedAsset = allAssets[values.category].find(
-    (asset: IAsset) => asset.Name === values.asset,
-  );
+const onSubmit = form.handleSubmit(values => {
+    const selectedAsset = allAssets[values.category].find(
+        (asset: IAsset) => asset.Name === values.asset
+    )
 
-  if (!selectedAsset) {
-    return;
-  }
+    if (!selectedAsset) {
+        return
+    }
 
-  const submission: AssetSubmission = {
-    dataforgedId: selectedAsset.$id,
-    name: values.asset,
-    category: values.category as AssetSubmission['category'],
-    meter: null,
-  };
+    const submission: AssetSubmission = {
+        dataforgedId: selectedAsset.$id,
+        name: values.asset,
+        category: values.category as AssetSubmission['category'],
+        meter: null,
+    }
 
-  assetsStore.trigger.add(submission);
-});
+    assetsStore.trigger.add(submission)
+})
 
 const clearState = () => {
-  assetsStore.trigger.clear();
-};
+    assetsStore.trigger.clear()
+}
 </script>
 
 <template>

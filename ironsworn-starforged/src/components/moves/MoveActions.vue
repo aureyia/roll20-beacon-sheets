@@ -1,76 +1,76 @@
 <script setup lang="ts">
 import {
-  NumberField,
-  NumberFieldContent,
-  NumberFieldDecrement,
-  NumberFieldIncrement,
-  NumberFieldInput,
-} from '@/components/ui/number-field';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import type { IMoveTriggerOptionAction } from '@/vendor/dataforged';
-import { inject, ref } from 'vue';
-import { Effect, Layer } from 'effect';
-import { momentumStore } from '@/system/momentum/store';
-import { statsStore } from '@/system/stats.store';
-import { roll as actionRoll } from '@/system/rolls/handlers/action-roll';
-import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll';
-import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll';
-import { RollFormatterLive } from '@/system/rolls/formatter';
-import { DispatchLive } from '@/system/rolls/dispatch';
-import { ActionRollLive } from '@/system/rolls/handlers/action-roll';
-import { ActionScoreLive } from '@/system/rolls/action-score';
+    NumberField,
+    NumberFieldContent,
+    NumberFieldDecrement,
+    NumberFieldIncrement,
+    NumberFieldInput,
+} from '@/components/ui/number-field'
+import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+import type { IMoveTriggerOptionAction } from '@/vendor/dataforged'
+import { inject, ref } from 'vue'
+import { Effect, Layer } from 'effect'
+import { momentumStore } from '@/system/momentum/store'
+import { statsStore } from '@/system/stats.store'
+import { roll as actionRoll } from '@/system/rolls/handlers/action-roll'
+import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll'
+import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll'
+import { RollFormatterLive } from '@/system/rolls/formatter'
+import { DispatchLive } from '@/system/rolls/dispatch'
+import { ActionRollLive } from '@/system/rolls/handlers/action-roll'
+import { ActionScoreLive } from '@/system/rolls/action-score'
 
 const props = defineProps({
-  move: {
-    type: Object,
-    required: true,
-  },
-});
+    move: {
+        type: Object,
+        required: true,
+    },
+})
 
-const { moveMode, actor } = inject('roll');
-const { selectedOption } = inject('move');
-const modifier = ref<number>(0);
+const { moveMode, actor } = inject('roll')
+const { selectedOption } = inject('move')
+const modifier = ref<number>(0)
 
 const burnMomentum = (choice: boolean) => {
-  actor.send({
-    type: 'burnChoice',
-    value: choice,
-  });
-  moveMode.value = 'content';
-};
+    actor.send({
+        type: 'burnChoice',
+        value: choice,
+    })
+    moveMode.value = 'content'
+}
 
 const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
-  if (options.length > 1 && selectedOption.value === '') {
-    moveMode.value = 'options';
-    return;
-  }
+    if (options.length > 1 && selectedOption.value === '') {
+        moveMode.value = 'options'
+        return
+    }
 
-  const momentum = momentumStore.get().context.momentum;
-  const stats = statsStore.get().context;
-  const formattedModifier = Number(modifier.value);
-  // TODO: Update this to use the parsed version
-  // const baseBonus = stats[selectedOption.value.Using[0].toLowerCase()]
-  const baseBonus = 2;
+    const momentum = momentumStore.get().context.momentum
+    const stats = statsStore.get().context
+    const formattedModifier = Number(modifier.value)
+    // TODO: Update this to use the parsed version
+    // const baseBonus = stats[selectedOption.value.Using[0].toLowerCase()]
+    const baseBonus = 2
 
-  const MainLive = ActionRollLive.pipe(
-    Layer.provide(RollFormatterLive),
-    Layer.provide(ActionScoreLive),
-    Layer.provide(DispatchLive),
-  );
+    const MainLive = ActionRollLive.pipe(
+        Layer.provide(RollFormatterLive),
+        Layer.provide(ActionScoreLive),
+        Layer.provide(DispatchLive)
+    )
 
-  await Effect.runPromise(
-    actionRoll(
-      actor,
-      formattedModifier + baseBonus,
-      momentum,
-      props.move.Name,
-    ).pipe(Effect.provide(MainLive)),
-  );
+    await Effect.runPromise(
+        actionRoll(
+            actor,
+            formattedModifier + baseBonus,
+            momentum,
+            props.move.Name
+        ).pipe(Effect.provide(MainLive))
+    )
 
-  selectedOption.value = '';
-  // moveMode.value = 'content';
-};
+    selectedOption.value = ''
+    // moveMode.value = 'content';
+}
 </script>
 
 <template>

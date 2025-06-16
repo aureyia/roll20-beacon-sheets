@@ -1,67 +1,67 @@
 <script setup lang="ts">
-import * as z from 'zod';
-import { toTypedSchema } from '@vee-validate/zod';
+import * as z from 'zod'
+import { toTypedSchema } from '@vee-validate/zod'
 import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Form,
-} from '@/components/ui/form';
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    Form,
+} from '@/components/ui/form'
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogClose,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogClose,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useForm } from 'vee-validate';
-import { tasksStore, type TaskCategory } from '@/system/tasks/store';
-import { DIFFICULTIES } from '@/system/tasks/types';
-import { inject, watch } from 'vue';
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { useForm } from 'vee-validate'
+import { tasksStore, type TaskCategory } from '@/system/tasks/store'
+import { DIFFICULTIES } from '@/system/tasks/types'
+import { inject, watch } from 'vue'
 
 const categories: TaskCategory[] =
-  (inject('categories') as TaskCategory[]) ?? [];
+    (inject('categories') as TaskCategory[]) ?? []
 
 if (categories.length === 0) {
-  throw new Error('Categories must have at least one element');
+    throw new Error('Categories must have at least one element')
 }
 
 const formSchema = toTypedSchema(
-  z.object({
-    description: z.string().min(1).max(50),
-    category: z.string().default(categories[0]),
-    difficulty: z.enum(DIFFICULTIES),
-  }),
-);
+    z.object({
+        description: z.string().min(1).max(50),
+        category: z.string().default(categories[0]),
+        difficulty: z.enum(DIFFICULTIES),
+    })
+)
 const form = useForm({
-  validationSchema: formSchema,
-});
-const taskStore = tasksStore.get().context.list;
+    validationSchema: formSchema,
+})
+const taskStore = tasksStore.get().context.list
 
-const onSubmit = form.handleSubmit((values) => {
-  taskStore.addTask(
-    values.description,
-    values.category as TaskCategory,
-    values.difficulty,
-  );
-});
+const onSubmit = form.handleSubmit(values => {
+    taskStore.addTask(
+        values.description,
+        values.category as TaskCategory,
+        values.difficulty
+    )
+})
 </script>
 
 <template>

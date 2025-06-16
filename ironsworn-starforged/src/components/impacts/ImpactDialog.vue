@@ -1,61 +1,61 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
+import { ref } from 'vue'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import * as z from 'zod'
+import { Button } from '@/components/ui/button'
 import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Form,
-} from '@/components/ui/form';
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    Form,
+} from '@/components/ui/form'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
 import {
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  Dialog,
-  DialogFooter,
-} from '@/components/ui/dialog';
-import { IMPACTS, type AnyImpact } from '@/system/impacts/types';
-import { impactsStore, type AddImpact } from '@/system/impacts/store';
+    DialogClose,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    Dialog,
+    DialogFooter,
+} from '@/components/ui/dialog'
+import { IMPACTS, type AnyImpact } from '@/system/impacts/types'
+import { impactsStore, type AddImpact } from '@/system/impacts/store'
 
 const fullImpactList = {
-  ...IMPACTS,
-  other: '',
-};
+    ...IMPACTS,
+    other: '',
+}
 
 const formSchema = toTypedSchema(
-  z.object({
-    name: z.string().min(2).max(50),
-    category: z.string().min(1).max(50),
-    description: z.string().optional(),
-  }),
-);
+    z.object({
+        name: z.string().min(2).max(50),
+        category: z.string().min(1).max(50),
+        description: z.string().optional(),
+    })
+)
 
 const form = useForm({
-  validationSchema: formSchema,
-});
+    validationSchema: formSchema,
+})
 
-const onSubmit = form.handleSubmit((values) => {
-  impactsStore.trigger.add({ ...values } as AddImpact);
-});
+const onSubmit = form.handleSubmit(values => {
+    impactsStore.trigger.add({ ...values } as AddImpact)
+})
 </script>
 
 <template>

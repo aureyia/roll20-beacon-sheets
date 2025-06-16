@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @config '../../../tailwind.config.js';
 
@@ -11,151 +11,151 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentcolor);
+    }
 }
 
 @layer base {
-  :root {
-    /* 50 - neutral */
-    --background: 0 0% 98%;
-    /* 950 - neutral */
-    --foreground: 0 0% 3.9%;
+    :root {
+        /* 50 - neutral */
+        --background: 0 0% 98%;
+        /* 950 - neutral */
+        --foreground: 0 0% 3.9%;
 
-    /* 100 - neutral */
-    --muted: 0 0% 96.1%;
-    /* 500 - neutral */
-    --muted-foreground: 0 0% 45.1%;
-    /* 400 - neutral */
-    --muted-accent: 0 0% 64%;
-    /* 300 - neutral */
-    --muted-secondary: 0 0% 90%;
+        /* 100 - neutral */
+        --muted: 0 0% 96.1%;
+        /* 500 - neutral */
+        --muted-foreground: 0 0% 45.1%;
+        /* 400 - neutral */
+        --muted-accent: 0 0% 64%;
+        /* 300 - neutral */
+        --muted-secondary: 0 0% 90%;
 
-    /* 50 - neutral */
-    --popover: 0 0% 98%;
-    /* 950 - neutral */
-    --popover-foreground: 0 0% 3.9%;
+        /* 50 - neutral */
+        --popover: 0 0% 98%;
+        /* 950 - neutral */
+        --popover-foreground: 0 0% 3.9%;
 
-    /* 50 - neutral */
-    --card: 0 0% 96.1%;
-    /* 300 - neutral */
-    --card-input: 0 0% 83%;
-    /* 950 - neutral */
-    --card-foreground: 0 0% 3.9%;
-    /* 200 - neutral */
-    --card-button: 0, 0, 90%;
+        /* 50 - neutral */
+        --card: 0 0% 96.1%;
+        /* 300 - neutral */
+        --card-input: 0 0% 83%;
+        /* 950 - neutral */
+        --card-foreground: 0 0% 3.9%;
+        /* 200 - neutral */
+        --card-button: 0, 0, 90%;
 
-    /* 300 - neutral */
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --banner: 0 0% 89.8%;
+        /* 300 - neutral */
+        --border: 0 0% 89.8%;
+        --input: 0 0% 89.8%;
+        --banner: 0 0% 89.8%;
 
-    /* 300 - neutral */
-    --switch-off: 0 0% 83%;
-    /* 500 - neutral */
-    --switch-on: 0 0% 45.1%;
+        /* 300 - neutral */
+        --switch-off: 0 0% 83%;
+        /* 500 - neutral */
+        --switch-on: 0 0% 45.1%;
 
-    /* 900 - neutral */
-    --primary: 0 0% 9%;
-    /* 100 - neutral */
-    --primary-foreground: 0 0% 98%;
-    /* 400 - neutral */
-    --primary-accent: 0 0% 63.9%;
+        /* 900 - neutral */
+        --primary: 0 0% 9%;
+        /* 100 - neutral */
+        --primary-foreground: 0 0% 98%;
+        /* 400 - neutral */
+        --primary-accent: 0 0% 63.9%;
 
-    /* 100 - neutral */
-    --secondary: 0 0% 96.1%;
-    /* 900 - neutral */
-    --secondary-foreground: 0 0% 9%;
+        /* 100 - neutral */
+        --secondary: 0 0% 96.1%;
+        /* 900 - neutral */
+        --secondary-foreground: 0 0% 9%;
 
-    /* 100 - neutral */
-    --accent: 0 0% 96.1%;
-    /* 900 - neutral */
-    --accent-foreground: 0 0% 9%;
+        /* 100 - neutral */
+        --accent: 0 0% 96.1%;
+        /* 900 - neutral */
+        --accent-foreground: 0 0% 9%;
 
-    /* 600 - red */
-    --destructive: 0 84.2% 60.2%;
-    /* 100 - neutral */
-    --destructive-foreground: 0 0% 98%;
+        /* 600 - red */
+        --destructive: 0 84.2% 60.2%;
+        /* 100 - neutral */
+        --destructive-foreground: 0 0% 98%;
 
-    /* 950 - neutral */
-    --ring: 0 0% 3.9%;
+        /* 950 - neutral */
+        --ring: 0 0% 3.9%;
 
-    --radius: 0.5rem;
-  }
+        --radius: 0.5rem;
+    }
 
-  .dark {
-    /* 900 - neutral */
-    --background: 0 0% 9%;
-    /* 100 - neutral */
-    --foreground: 0 0% 98%;
+    .dark {
+        /* 900 - neutral */
+        --background: 0 0% 9%;
+        /* 100 - neutral */
+        --foreground: 0 0% 98%;
 
-    /* 800 - neutral */
-    --muted: 0 0% 14.9%;
-    /* 400 - neutral */
-    --muted-foreground: 0 0% 63.9%;
-    /* 900 - neutral */
-    --muted-accent: 0 0% 9%;
-    /* 700 - neutral */
-    --muted-secondary: 0 0 25%;
+        /* 800 - neutral */
+        --muted: 0 0% 14.9%;
+        /* 400 - neutral */
+        --muted-foreground: 0 0% 63.9%;
+        /* 900 - neutral */
+        --muted-accent: 0 0% 9%;
+        /* 700 - neutral */
+        --muted-secondary: 0 0 25%;
 
-    /* 950 - neutral */
-    --popover: 0 0% 3.9%;
-    /* 100 - neutral */
-    --popover-foreground: 0 0% 98%;
+        /* 950 - neutral */
+        --popover: 0 0% 3.9%;
+        /* 100 - neutral */
+        --popover-foreground: 0 0% 98%;
 
-    /* 800 - neutral */
-    --card: 0 0% 14.9%;
-    /* 700 - neutral */
-    --card-input: 0 0 25%;
-    /* 100 - neutral */
-    --card-foreground: 0 0% 98%;
-    /* 700 - neutral */
-    --card-button: 0 0 25%;
+        /* 800 - neutral */
+        --card: 0 0% 14.9%;
+        /* 700 - neutral */
+        --card-input: 0 0 25%;
+        /* 100 - neutral */
+        --card-foreground: 0 0% 98%;
+        /* 700 - neutral */
+        --card-button: 0 0 25%;
 
-    /* 800 - neutral */
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --banner: 0 0% 14.9%;
+        /* 800 - neutral */
+        --border: 0 0% 14.9%;
+        --input: 0 0% 14.9%;
+        --banner: 0 0% 14.9%;
 
-    /* 700 - neutral */
-    --switch-off: 0 0 25%;
-    /* 400 - neutral */
-    --switch-on: 0 0% 63.9%;
+        /* 700 - neutral */
+        --switch-off: 0 0 25%;
+        /* 400 - neutral */
+        --switch-on: 0 0% 63.9%;
 
-    /* 100 - neutral */
-    --primary: 0 0% 98%;
-    /* 900 - neutral */
-    --primary-foreground: 0 0% 9%;
+        /* 100 - neutral */
+        --primary: 0 0% 98%;
+        /* 900 - neutral */
+        --primary-foreground: 0 0% 9%;
 
-    /* 800 - neutral */
-    --secondary: 0 0% 14.9%;
-    /* 100 - neutral */
-    --secondary-foreground: 0 0% 98%;
+        /* 800 - neutral */
+        --secondary: 0 0% 14.9%;
+        /* 100 - neutral */
+        --secondary-foreground: 0 0% 98%;
 
-    /* 800 - neutral */
-    --accent: 0 0% 14.9%;
-    /* 100 - neutral */
-    --accent-foreground: 0 0% 98%;
+        /* 800 - neutral */
+        --accent: 0 0% 14.9%;
+        /* 100 - neutral */
+        --accent-foreground: 0 0% 98%;
 
-    /* 700 - red */
-    --destructive: 0 62.8% 30.6%;
-    /* 100 - neutral */
-    --destructive-foreground: 0 0% 98%;
+        /* 700 - red */
+        --destructive: 0 62.8% 30.6%;
+        /* 100 - neutral */
+        --destructive-foreground: 0 0% 98%;
 
-    /* 900 - neutral */
-    --ring: 0 0% 83.1%;
-  }
+        /* 900 - neutral */
+        --ring: 0 0% 83.1%;
+    }
 }
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }

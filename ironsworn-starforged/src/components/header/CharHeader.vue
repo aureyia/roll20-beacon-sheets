@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import StandardNav from '../nav/StandardNav.vue';
-import { Button } from '@/components/ui/button';
+import StandardNav from '../nav/StandardNav.vue'
+import { Button } from '@/components/ui/button'
 
 defineProps({
-  edgeMode: Boolean,
-  default: () => false,
-});
+    edgeMode: Boolean,
+    default: () => false,
+})
 </script>
 
 <template>

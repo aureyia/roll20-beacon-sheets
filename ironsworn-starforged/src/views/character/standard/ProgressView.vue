@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { ProgressCard } from '@/components/progress';
-import { ProgressDialog } from '@/components/progress';
-import { Toggle } from '@/components/ui/toggle';
-import { tasksStore } from '@/system/tasks/store';
-import { ref, provide } from 'vue';
+import { ProgressCard } from '@/components/progress'
+import { ProgressDialog } from '@/components/progress'
+import { Toggle } from '@/components/ui/toggle'
+import { tasksStore } from '@/system/tasks/store'
+import { ref, provide } from 'vue'
 
-const tasks = ref(tasksStore.get().context.list);
-const removeMode = ref(false);
-const TASK_CATEGORIES = ['generic', 'challenge'] as const;
+const tasks = ref(tasksStore.get().context.list)
+const removeMode = ref(false)
+const TASK_CATEGORIES = ['generic', 'challenge'] as const
 
-tasksStore.subscribe((snapshot) => {
-  tasks.value = snapshot.context.list;
-});
+tasksStore.subscribe(snapshot => {
+    tasks.value = snapshot.context.list
+})
 
-provide('categories', TASK_CATEGORIES);
+provide('categories', TASK_CATEGORIES)
 </script>
 
 <template>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { CardContent } from '@/components/ui/card';
-import { marked } from 'marked';
+import { CardContent } from '@/components/ui/card'
+import { marked } from 'marked'
 
 defineProps({
-  moveData: {
-    type: Object,
-    required: true,
-  },
-});
+    moveData: {
+        type: Object,
+        required: true,
+    },
+})
 </script>
 
 <template>

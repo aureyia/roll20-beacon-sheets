@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { inject } from 'vue';
-import { starforged } from '@/vendor/dataforged';
-import { Effect } from 'effect';
-import { allMovesInCategory } from '@/system/moves/utils';
+import { inject } from 'vue'
+import { starforged } from '@/vendor/dataforged'
+import { Effect } from 'effect'
+import { allMovesInCategory } from '@/system/moves/utils'
 
 // @ts-ignore
-const { activeMove, updateActiveMove, clearActiveMove } = inject('move');
+const { activeMove, updateActiveMove, clearActiveMove } = inject('move')
 </script>
 
 <template>

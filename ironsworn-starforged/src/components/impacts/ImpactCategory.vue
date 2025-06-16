@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ImpactList } from '@/components/impacts';
+import { ImpactList } from '@/components/impacts'
 
 defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-});
+    label: {
+        type: String,
+        required: true,
+    },
+})
 </script>
 
 <template>

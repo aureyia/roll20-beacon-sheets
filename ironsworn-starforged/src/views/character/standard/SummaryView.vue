@@ -1,51 +1,51 @@
 <script setup lang="ts">
-import StatCard from '@/components/cards/StatCard.vue';
-import LabelledInput from '@/components/inputs/LabelledInput.vue';
-import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
-import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue';
-import { ImpactCategory } from '@/components/impacts';
-import { statsStore, STATS, type Stats } from '@/system/stats.store';
-import { characterStore } from '@/system/character.store';
-import { metaStore } from '@/external/store';
-import { resourcesStore } from '@/system/resources.store';
-import { Toggle } from '@/components/ui/toggle/index';
-import { ref } from 'vue';
-import { IMPACTS } from '@/system/impacts/types';
+import StatCard from '@/components/cards/StatCard.vue'
+import LabelledInput from '@/components/inputs/LabelledInput.vue'
+import LabelledSwitch from '@/components/switches/LabelledSwitch.vue'
+import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue'
+import { ImpactCategory } from '@/components/impacts'
+import { statsStore, STATS, type Stats } from '@/system/stats.store'
+import { characterStore } from '@/system/character.store'
+import { metaStore } from '@/external/store'
+import { resourcesStore } from '@/system/resources.store'
+import { Toggle } from '@/components/ui/toggle/index'
+import { ref } from 'vue'
+import { IMPACTS } from '@/system/impacts/types'
 
-import { ImpactDialog } from '@/components/impacts';
+import { ImpactDialog } from '@/components/impacts'
 
 const stores = {
-  meta: metaStore,
-  character: characterStore,
-  resources: resourcesStore,
-  stats: statsStore,
-};
+    meta: metaStore,
+    character: characterStore,
+    resources: resourcesStore,
+    stats: statsStore,
+}
 
-const toggleStatsEdit = ref(false);
-const toggleImpactRemoval = ref(false);
+const toggleStatsEdit = ref(false)
+const toggleImpactRemoval = ref(false)
 
-const character = ref(stores.character.get().context);
-const name = ref(stores.meta.get().context.name);
-const stats = ref(stores.stats.get().context);
-const resources = ref(stores.resources.get().context);
+const character = ref(stores.character.get().context)
+const name = ref(stores.meta.get().context.name)
+const stats = ref(stores.stats.get().context)
+const resources = ref(stores.resources.get().context)
 
-characterStore.subscribe((snapshot) => {
-  character.value = snapshot.context;
-});
+characterStore.subscribe(snapshot => {
+    character.value = snapshot.context
+})
 
-resourcesStore.subscribe((snapshot) => {
-  resources.value = snapshot.context;
-});
+resourcesStore.subscribe(snapshot => {
+    resources.value = snapshot.context
+})
 
-statsStore.subscribe((snapshot) => {
-  stats.value = snapshot.context;
-});
+statsStore.subscribe(snapshot => {
+    stats.value = snapshot.context
+})
 
-type Store = keyof typeof stores;
+type Store = keyof typeof stores
 
 const update = (store: Store, label: any, event: any) => {
-  stores[store].trigger.set({ label, value: event });
-};
+    stores[store].trigger.set({ label, value: event })
+}
 </script>
 
 <template>

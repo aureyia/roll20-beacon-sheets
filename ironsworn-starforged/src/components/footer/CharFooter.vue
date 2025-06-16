@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { impactsStore } from '@/system/impacts/store';
-import { momentumMax, momentumReset } from '@/system/momentum/utils';
-import { computed, ref } from 'vue';
-import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue';
-import { momentumStore } from '@/system/momentum/store';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { impactsStore } from '@/system/impacts/store'
+import { momentumMax, momentumReset } from '@/system/momentum/utils'
+import { computed, ref } from 'vue'
+import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue'
+import { momentumStore } from '@/system/momentum/store'
 
-const impacts = impactsStore.get();
-const momentum = momentumStore.get().context.momentum;
-const momentumRef = ref(momentum);
+const impacts = impactsStore.get()
+const momentum = momentumStore.get().context.momentum
+const momentumRef = ref(momentum)
 
 const impactsList = [
-  ...impacts.context.misfortunes,
-  ...impacts.context.lastingEffects,
-  ...impacts.context.burdens,
-  ...impacts.context.currentVehicle,
-  ...impacts.context.other,
-];
+    ...impacts.context.misfortunes,
+    ...impacts.context.lastingEffects,
+    ...impacts.context.burdens,
+    ...impacts.context.currentVehicle,
+    ...impacts.context.other,
+]
 
-const numberOfImpacts = computed(() => impactsList.length);
+const numberOfImpacts = computed(() => impactsList.length)
 
 const burnMomentum = (resetValue: number) => {
-  momentumStore.trigger.set({ value: resetValue });
-};
+    momentumStore.trigger.set({ value: resetValue })
+}
 
-momentumStore.subscribe((snapshot) => {
-  momentumRef.value = snapshot.context.momentum;
-});
+momentumStore.subscribe(snapshot => {
+    momentumRef.value = snapshot.context.momentum
+})
 
 defineProps({
-  edgeMode: Boolean,
-  default: () => false,
-});
+    edgeMode: Boolean,
+    default: () => false,
+})
 </script>
 
 <template>

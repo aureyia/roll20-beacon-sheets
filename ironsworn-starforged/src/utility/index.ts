@@ -1,1 +1,1 @@
-export { default as cn } from './shadcn';
+export { default as cn } from './shadcn'

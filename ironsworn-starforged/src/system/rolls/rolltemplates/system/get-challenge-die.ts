@@ -1,4 +1,4 @@
-import type { DiceComponent } from '../rolltemplates';
+import type { DiceComponent } from '../rolltemplates'
 
 /**
  * Finds the value of the Challenge Die in a given array of dice components.
@@ -7,4 +7,4 @@ import type { DiceComponent } from '../rolltemplates';
  * @returns {number | undefined} The value of the Challenge Die, or undefined if not found.
  */
 export const getChallengeDie = (dice: DiceComponent[], position: number) =>
-  dice.find((die) => die.label === `Challenge Die: ${position}`)?.value;
+    dice.find(die => die.label === `Challenge Die: ${position}`)?.value
