@@ -3,15 +3,15 @@ import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { ChevronDown } from 'lucide-vue-next'
 import {
-    NavigationMenuTrigger,
-    type NavigationMenuTriggerProps,
-    useForwardProps,
+  NavigationMenuTrigger,
+  type NavigationMenuTriggerProps,
+  useForwardProps,
 } from 'reka-ui'
 import { cn } from '@/utility'
 import { navigationMenuTriggerStyle } from '.'
 
 const props = defineProps<
-    NavigationMenuTriggerProps & { class?: HTMLAttributes['class'] }
+  NavigationMenuTriggerProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

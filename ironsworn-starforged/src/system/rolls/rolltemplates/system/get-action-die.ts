@@ -6,4 +6,4 @@ import type { DiceComponent } from '../rolltemplates'
  * @returns {number | undefined} The value of the Action Die, or undefined if not found.
  */
 export const getActionDie = (dice: DiceComponent[]) =>
-    dice.find(die => die.label === 'Action Die')?.value
+  dice.find(die => die.label === 'Action Die')?.value

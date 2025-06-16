@@ -4,14 +4,14 @@ import { inject } from 'vue'
 import { Icon } from '@iconify/vue'
 
 defineProps({
-    group: {
-        type: Object,
-        required: true,
-    },
-    showTriggers: {
-        type: Boolean,
-        default: false,
-    },
+  group: {
+    type: Object,
+    required: true,
+  },
+  showTriggers: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const { updateActiveMove }: any = inject('move')

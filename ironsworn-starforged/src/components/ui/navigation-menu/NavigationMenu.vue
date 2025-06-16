@@ -2,16 +2,16 @@
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import {
-    NavigationMenuRoot,
-    type NavigationMenuRootEmits,
-    type NavigationMenuRootProps,
-    useForwardPropsEmits,
+  NavigationMenuRoot,
+  type NavigationMenuRootEmits,
+  type NavigationMenuRootProps,
+  useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '@/utility'
 import NavigationMenuViewport from './NavigationMenuViewport.vue'
 
 const props = defineProps<
-    NavigationMenuRootProps & { class?: HTMLAttributes['class'] }
+  NavigationMenuRootProps & { class?: HTMLAttributes['class'] }
 >()
 
 const emits = defineEmits<NavigationMenuRootEmits>()

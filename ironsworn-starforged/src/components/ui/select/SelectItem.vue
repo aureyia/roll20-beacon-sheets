@@ -3,16 +3,16 @@ import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { Check } from 'lucide-vue-next'
 import {
-    SelectItem,
-    SelectItemIndicator,
-    type SelectItemProps,
-    SelectItemText,
-    useForwardProps,
+  SelectItem,
+  SelectItemIndicator,
+  type SelectItemProps,
+  SelectItemText,
+  useForwardProps,
 } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    SelectItemProps & { class?: HTMLAttributes['class'] }
+  SelectItemProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

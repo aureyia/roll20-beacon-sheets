@@ -5,7 +5,7 @@ import { SelectGroup, type SelectGroupProps } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    SelectGroupProps & { class?: HTMLAttributes['class'] }
+  SelectGroupProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

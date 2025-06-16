@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import {
-    NavigationMenu,
-    NavigationMenuList,
-    NavigationMenuItem,
-    NavigationMenuLink,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
 } from '@/components/ui/navigation-menu'
 import { isSimEnvironment } from '@/main'
 
 const baseList = {
-    legacies: '/legacies',
-    progress: '/progress',
-    vows: '/vows',
-    summary: '/summary',
-    moves: '/moves',
-    assets: '/assets',
-    connections: '/connections',
+  legacies: '/legacies',
+  progress: '/progress',
+  vows: '/vows',
+  summary: '/summary',
+  moves: '/moves',
+  assets: '/assets',
+  connections: '/connections',
 }
 
 const simList = {
-    ...baseList,
-    simulation: '/simulation',
+  ...baseList,
+  simulation: '/simulation',
 }
 
 const navList = isSimEnvironment ? simList : baseList

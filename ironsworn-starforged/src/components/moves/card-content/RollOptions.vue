@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card'
 import { inject, computed, ref } from 'vue'
 import { getMoveData } from '@/system/moves/utils'

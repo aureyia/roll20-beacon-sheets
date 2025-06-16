@@ -4,29 +4,29 @@ import { beaconPulse, initValues } from '@/external/sync'
 // onInit is called when the Relay is first loaded.
 // It is used to set up the initial values of the sheet.
 export const onInit = ({
-    character,
-    settings,
-    compendiumDropData,
+  character,
+  settings,
+  compendiumDropData,
 }: InitArgs) => {
-    initValues.id = character.id
-    initValues.character = character
-    initValues.settings = settings
-    initValues.compendiumDrop = compendiumDropData ? compendiumDropData : null
-    console.log('onInit -> Strarforged Sheet Relay')
+  initValues.id = character.id
+  initValues.character = character
+  initValues.settings = settings
+  initValues.compendiumDrop = compendiumDropData ? compendiumDropData : null
+  console.log('onInit -> Strarforged Sheet Relay')
 }
 
 // onChange is called when the character data is updated.
 // This is where you will update the sheet with the new data.
 export const onChange = async ({
-    character,
+  character,
 }: {
-    character: Record<string, any>
+  character: Record<string, any>
 }) => {
-    // This is a way to trigger a re-render of the sheet,
-    // see relay.ts for more information.
-    const old = beaconPulse.value
-    beaconPulse.value = old + 1
-    console.log('onChange -> Strarforged Sheet Relay', character)
+  // This is a way to trigger a re-render of the sheet,
+  // see relay.ts for more information.
+  const old = beaconPulse.value
+  beaconPulse.value = old + 1
+  console.log('onChange -> Strarforged Sheet Relay', character)
 }
 
 export const onSettingsChange = () => {}

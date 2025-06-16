@@ -2,25 +2,25 @@
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import {
-    SelectContent,
-    type SelectContentEmits,
-    type SelectContentProps,
-    SelectPortal,
-    SelectViewport,
-    useForwardPropsEmits,
+  SelectContent,
+  type SelectContentEmits,
+  type SelectContentProps,
+  SelectPortal,
+  SelectViewport,
+  useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '@/utility'
 import { SelectScrollDownButton, SelectScrollUpButton } from '.'
 
 defineOptions({
-    inheritAttrs: false,
+  inheritAttrs: false,
 })
 
 const props = withDefaults(
-    defineProps<SelectContentProps & { class?: HTMLAttributes['class'] }>(),
-    {
-        position: 'popper',
-    }
+  defineProps<SelectContentProps & { class?: HTMLAttributes['class'] }>(),
+  {
+    position: 'popper',
+  }
 )
 const emits = defineEmits<SelectContentEmits>()
 

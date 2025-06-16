@@ -9,19 +9,19 @@ import type { DiceComponent } from '../rolltemplates'
  * @returns {{score: number, dieNegated: boolean}} An object with the final score, whether the die was negated, and the modifier used.
  */
 export const calculateActionScore = (
-    dice: DiceComponent[],
-    statValue: number,
-    modifier: number,
-    momentum: number
+  dice: DiceComponent[],
+  statValue: number,
+  modifier: number,
+  momentum: number
 ): { score: number; dieNegated: boolean } => {
-    const actionDie = dice.find(die => die.label === 'Action Die')
-    const dieValue = actionDie?.value ?? 0
-    const isDieNegated = dieValue === -momentum
+  const actionDie = dice.find(die => die.label === 'Action Die')
+  const dieValue = actionDie?.value ?? 0
+  const isDieNegated = dieValue === -momentum
 
-    const score = isDieNegated
-        ? statValue + modifier
-        : dieValue + statValue + modifier
-    const finalScore = Math.min(score, 10)
+  const score = isDieNegated
+    ? statValue + modifier
+    : dieValue + statValue + modifier
+  const finalScore = Math.min(score, 10)
 
-    return { score: finalScore, dieNegated: isDieNegated }
+  return { score: finalScore, dieNegated: isDieNegated }
 }

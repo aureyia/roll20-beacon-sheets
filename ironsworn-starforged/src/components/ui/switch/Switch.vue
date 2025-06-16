@@ -2,16 +2,16 @@
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import {
-    SwitchRoot,
-    type SwitchRootEmits,
-    type SwitchRootProps,
-    SwitchThumb,
-    useForwardPropsEmits,
+  SwitchRoot,
+  type SwitchRootEmits,
+  type SwitchRootProps,
+  SwitchThumb,
+  useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    SwitchRootProps & { class?: HTMLAttributes['class'] }
+  SwitchRootProps & { class?: HTMLAttributes['class'] }
 >()
 
 const emits = defineEmits<SwitchRootEmits>()

@@ -13,10 +13,10 @@ const { activeMove }: any = inject('move')
 const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)))
 
 defineProps({
-    moveMode: {
-        type: String,
-        required: true,
-    },
+  moveMode: {
+    type: String,
+    required: true,
+  },
 })
 </script>
 

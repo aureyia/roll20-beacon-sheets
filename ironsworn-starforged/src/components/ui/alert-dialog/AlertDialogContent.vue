@@ -2,17 +2,17 @@
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import {
-    AlertDialogContent,
-    type AlertDialogContentEmits,
-    type AlertDialogContentProps,
-    AlertDialogOverlay,
-    AlertDialogPortal,
-    useForwardPropsEmits,
+  AlertDialogContent,
+  type AlertDialogContentEmits,
+  type AlertDialogContentProps,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    AlertDialogContentProps & { class?: HTMLAttributes['class'] }
+  AlertDialogContentProps & { class?: HTMLAttributes['class'] }
 >()
 const emits = defineEmits<AlertDialogContentEmits>()
 

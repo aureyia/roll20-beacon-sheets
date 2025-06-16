@@ -5,7 +5,7 @@ import { AlertDialogTitle, type AlertDialogTitleProps } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    AlertDialogTitleProps & { class?: HTMLAttributes['class'] }
+  AlertDialogTitleProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

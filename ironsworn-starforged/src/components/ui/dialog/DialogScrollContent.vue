@@ -3,18 +3,18 @@ import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { X } from 'lucide-vue-next'
 import {
-    DialogClose,
-    DialogContent,
-    type DialogContentEmits,
-    type DialogContentProps,
-    DialogOverlay,
-    DialogPortal,
-    useForwardPropsEmits,
+  DialogClose,
+  DialogContent,
+  type DialogContentEmits,
+  type DialogContentProps,
+  DialogOverlay,
+  DialogPortal,
+  useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    DialogContentProps & { class?: HTMLAttributes['class'] }
+  DialogContentProps & { class?: HTMLAttributes['class'] }
 >()
 const emits = defineEmits<DialogContentEmits>()
 

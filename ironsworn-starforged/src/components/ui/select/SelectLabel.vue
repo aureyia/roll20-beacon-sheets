@@ -4,7 +4,7 @@ import { SelectLabel, type SelectLabelProps } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    SelectLabelProps & { class?: HTMLAttributes['class'] }
+  SelectLabelProps & { class?: HTMLAttributes['class'] }
 >()
 </script>
 

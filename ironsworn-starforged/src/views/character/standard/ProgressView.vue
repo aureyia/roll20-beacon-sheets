@@ -10,7 +10,7 @@ const removeMode = ref(false)
 const TASK_CATEGORIES = ['generic', 'challenge'] as const
 
 tasksStore.subscribe(snapshot => {
-    tasks.value = snapshot.context.list
+  tasks.value = snapshot.context.list
 })
 
 provide('categories', TASK_CATEGORIES)

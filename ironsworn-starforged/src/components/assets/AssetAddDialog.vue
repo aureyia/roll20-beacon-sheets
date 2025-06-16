@@ -16,57 +16,57 @@ import { DialogFooter } from '@/components/ui/dialog'
 const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const
 
 const formSchema = toTypedSchema(
-    z
-        .object({
-            category: z.string().min(2),
-            asset: z.string(),
-        })
-        .required()
+  z
+    .object({
+      category: z.string().min(2),
+      asset: z.string(),
+    })
+    .required()
 )
 
 type SupportedAssets = {
-    Path: IAsset[]
-    Companion: IAsset[]
-    Deed: IAsset[]
-    [key: string]: IAsset[]
+  Path: IAsset[]
+  Companion: IAsset[]
+  Deed: IAsset[]
+  [key: string]: IAsset[]
 }
 
 const getAllAssets = () =>
-    Effect.gen(function* () {
-        return {
-            Path: yield* getAllAssetsForCategory('Path'),
-            Companion: yield* getAllAssetsForCategory('Companion'),
-            Deed: yield* getAllAssetsForCategory('Deed'),
-        }
-    })
+  Effect.gen(function* () {
+    return {
+      Path: yield* getAllAssetsForCategory('Path'),
+      Companion: yield* getAllAssetsForCategory('Companion'),
+      Deed: yield* getAllAssetsForCategory('Deed'),
+    }
+  })
 
 const form = useForm({
-    validationSchema: formSchema,
+  validationSchema: formSchema,
 })
 
 const allAssets = Effect.runSync(getAllAssets())
 
 const onSubmit = form.handleSubmit(values => {
-    const selectedAsset = allAssets[values.category].find(
-        (asset: IAsset) => asset.Name === values.asset
-    )
+  const selectedAsset = allAssets[values.category].find(
+    (asset: IAsset) => asset.Name === values.asset
+  )
 
-    if (!selectedAsset) {
-        return
-    }
+  if (!selectedAsset) {
+    return
+  }
 
-    const submission: AssetSubmission = {
-        dataforgedId: selectedAsset.$id,
-        name: values.asset,
-        category: values.category as AssetSubmission['category'],
-        meter: null,
-    }
+  const submission: AssetSubmission = {
+    dataforgedId: selectedAsset.$id,
+    name: values.asset,
+    category: values.category as AssetSubmission['category'],
+    meter: null,
+  }
 
-    assetsStore.trigger.add(submission)
+  assetsStore.trigger.add(submission)
 })
 
 const clearState = () => {
-    assetsStore.trigger.clear()
+  assetsStore.trigger.clear()
 }
 </script>
 

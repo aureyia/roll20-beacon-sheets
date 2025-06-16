@@ -7,17 +7,17 @@ import { assetsStore } from '@/system/assets/store'
 import type { Ability } from '@/system/assets/types'
 
 defineProps({
-    dataforgedAsset: {
-        type: Object,
-        required: true,
-    },
+  dataforgedAsset: {
+    type: Object,
+    required: true,
+  },
 })
 
 const abilities = defineModel('abilities', { required: true })
 const storedAsset = defineModel('storedAsset', { required: true })
 
 const updateAbility = (event: any) => {
-    assetsStore.trigger.updateAbility(event)
+  assetsStore.trigger.updateAbility(event)
 }
 </script>
 

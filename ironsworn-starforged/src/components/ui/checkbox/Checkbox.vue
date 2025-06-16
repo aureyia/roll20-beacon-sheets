@@ -7,7 +7,7 @@ import { CheckboxIndicator, CheckboxRoot, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    CheckboxRootProps & { class?: HTMLAttributes['class'] }
+  CheckboxRootProps & { class?: HTMLAttributes['class'] }
 >()
 const emits = defineEmits<CheckboxRootEmits>()
 

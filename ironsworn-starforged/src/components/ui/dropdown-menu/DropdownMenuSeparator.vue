@@ -5,9 +5,9 @@ import { DropdownMenuSeparator, type DropdownMenuSeparatorProps } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    DropdownMenuSeparatorProps & {
-        class?: HTMLAttributes['class']
-    }
+  DropdownMenuSeparatorProps & {
+    class?: HTMLAttributes['class']
+  }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

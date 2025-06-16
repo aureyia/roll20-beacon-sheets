@@ -2,15 +2,15 @@
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import {
-    NavigationMenuContent,
-    type NavigationMenuContentEmits,
-    type NavigationMenuContentProps,
-    useForwardPropsEmits,
+  NavigationMenuContent,
+  type NavigationMenuContentEmits,
+  type NavigationMenuContentProps,
+  useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    NavigationMenuContentProps & { class?: HTMLAttributes['class'] }
+  NavigationMenuContentProps & { class?: HTMLAttributes['class'] }
 >()
 
 const emits = defineEmits<NavigationMenuContentEmits>()

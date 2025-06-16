@@ -17,15 +17,15 @@ import { replaySeed, seed } from '@/simulation/generate-rolls'
 import { cn } from '@/utility'
 
 const stores = {
-    character: characterStore,
-    resources: resourcesStore,
-    stats: statsStore,
-    impacts: impactsStore,
-    assets: assetsStore,
-    tasks: tasksStore,
-    settings: settingsStore,
-    momentum: momentumStore,
-    meta: metaStore,
+  character: characterStore,
+  resources: resourcesStore,
+  stats: statsStore,
+  impacts: impactsStore,
+  assets: assetsStore,
+  tasks: tasksStore,
+  settings: settingsStore,
+  momentum: momentumStore,
+  meta: metaStore,
 }
 </script>
 

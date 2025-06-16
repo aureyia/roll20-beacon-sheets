@@ -2,14 +2,14 @@
 import { Input } from '@/components/ui/input'
 
 defineProps({
-    label: {
-        type: String,
-        required: true,
-    },
-    type: {
-        type: String,
-        default: 'text',
-    },
+  label: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    default: 'text',
+  },
 })
 
 const model = defineModel<string | number>({ required: true })

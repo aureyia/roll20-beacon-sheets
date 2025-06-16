@@ -7,7 +7,7 @@ import { NumberFieldDecrement, useForwardProps } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    NumberFieldDecrementProps & { class?: HTMLAttributes['class'] }
+  NumberFieldDecrementProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

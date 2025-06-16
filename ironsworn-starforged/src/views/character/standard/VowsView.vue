@@ -9,7 +9,7 @@ const tasks = ref(tasksStore.get().context.list)
 const removeMode = ref(false)
 
 tasksStore.subscribe(snapshot => {
-    tasks.value = snapshot.context.list
+  tasks.value = snapshot.context.list
 })
 
 const TASK_CATEGORIES = ['vow'] as const

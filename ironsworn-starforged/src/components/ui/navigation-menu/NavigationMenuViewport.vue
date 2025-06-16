@@ -2,14 +2,14 @@
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import {
-    NavigationMenuViewport,
-    type NavigationMenuViewportProps,
-    useForwardProps,
+  NavigationMenuViewport,
+  type NavigationMenuViewportProps,
+  useForwardProps,
 } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    NavigationMenuViewportProps & { class?: HTMLAttributes['class'] }
+  NavigationMenuViewportProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

@@ -5,7 +5,7 @@ import { cn } from '@/utility'
 import { FORM_ITEM_INJECTION_KEY } from './injectionKeys'
 
 const props = defineProps<{
-    class?: HTMLAttributes['class']
+  class?: HTMLAttributes['class']
 }>()
 
 const id = useId()

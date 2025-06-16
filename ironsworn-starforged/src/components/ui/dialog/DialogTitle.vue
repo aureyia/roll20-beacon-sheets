@@ -5,7 +5,7 @@ import { DialogTitle, type DialogTitleProps, useForwardProps } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    DialogTitleProps & { class?: HTMLAttributes['class'] }
+  DialogTitleProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

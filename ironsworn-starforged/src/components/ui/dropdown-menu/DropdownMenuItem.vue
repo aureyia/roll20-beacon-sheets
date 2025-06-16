@@ -2,14 +2,14 @@
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import {
-    DropdownMenuItem,
-    type DropdownMenuItemProps,
-    useForwardProps,
+  DropdownMenuItem,
+  type DropdownMenuItemProps,
+  useForwardProps,
 } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    DropdownMenuItemProps & { class?: HTMLAttributes['class']; inset?: boolean }
+  DropdownMenuItemProps & { class?: HTMLAttributes['class']; inset?: boolean }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

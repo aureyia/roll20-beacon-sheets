@@ -11,38 +11,38 @@ import { settingsStore as settings } from '@/system/settings.store'
 import { tasksStore as tasks } from '@/system/tasks/store'
 
 export class Hydration extends Context.Tag('Dehydration')<
-    Hydration,
-    {
-        readonly hydrateStores: (context: any, meta: any) => void
-    }
+  Hydration,
+  {
+    readonly hydrateStores: (context: any, meta: any) => void
+  }
 >() {}
 
 export const HydrationLive = Layer.effect(
-    Hydration,
-    Effect.gen(function* () {
-        const stores = {
-            meta,
-            character,
-            assets,
-            stats,
-            resources,
-            momentum,
-            impacts,
-            settings,
-            tasks,
-        }
+  Hydration,
+  Effect.gen(function* () {
+    const stores = {
+      meta,
+      character,
+      assets,
+      stats,
+      resources,
+      momentum,
+      impacts,
+      settings,
+      tasks,
+    }
 
-        return {
-            hydrateStores: (context, metaData) => {
-                const storeKeys = Object.keys(stores) as (keyof typeof stores)[]
-                storeKeys.forEach(key => {
-                    if (key === 'meta') {
-                        stores[key].send({ type: 'hydrate', ...metaData })
-                    } else {
-                        stores[key].send({ type: 'hydrate', ...context[key] })
-                    }
-                })
-            },
-        }
-    })
+    return {
+      hydrateStores: (context, metaData) => {
+        const storeKeys = Object.keys(stores) as (keyof typeof stores)[]
+        storeKeys.forEach(key => {
+          if (key === 'meta') {
+            stores[key].send({ type: 'hydrate', ...metaData })
+          } else {
+            stores[key].send({ type: 'hydrate', ...context[key] })
+          }
+        })
+      },
+    }
+  })
 )

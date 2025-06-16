@@ -5,7 +5,7 @@ import { SelectSeparator, type SelectSeparatorProps } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    SelectSeparatorProps & { class?: HTMLAttributes['class'] }
+  SelectSeparatorProps & { class?: HTMLAttributes['class'] }
 >()
 
 const delegatedProps = reactiveOmit(props, 'class')

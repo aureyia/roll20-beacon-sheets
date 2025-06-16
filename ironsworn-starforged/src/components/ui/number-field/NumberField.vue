@@ -6,7 +6,7 @@ import { NumberFieldRoot, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '@/utility'
 
 const props = defineProps<
-    NumberFieldRootProps & { class?: HTMLAttributes['class'] }
+  NumberFieldRootProps & { class?: HTMLAttributes['class'] }
 >()
 const emits = defineEmits<NumberFieldRootEmits>()
 
