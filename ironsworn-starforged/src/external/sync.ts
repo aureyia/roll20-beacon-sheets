@@ -16,8 +16,8 @@ import { Hydration, HydrationLive } from './services/hydration';
 import { DehydrateMetaLive } from '@/external/store';
 import { DehydrateCharacterLive } from '@/system/character.store';
 import { DehydrateAssetsLive } from '@/system/assets/store';
-import { DehydrateStatsLive } from '@/system/stats/store';
-import { DehydrateResourcesLive } from '@/system/resources/store';
+import { DehydrateStatsLive } from '@/system/stats.store';
+import { DehydrateResourcesLive } from '@/system/resources.store';
 import { DehydrateMomentumLive } from '@/system/momentum/store';
 import { DehydrateImpactsLive } from '@/system/impacts/store';
 import { DehydrateSettingsLive } from '@/system/settings.store';
@@ -40,8 +40,6 @@ export const initValues: InitValues = reactive({
   settings: {} as Settings,
   compendiumDrop: null,
 });
-
-const sheetId = ref(createId());
 
 const DehydrationServicesLive = Layer.mergeAll(
   DehydrateMetaLive,

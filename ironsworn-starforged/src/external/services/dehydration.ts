@@ -3,8 +3,8 @@ import { Effect, Context, Layer } from 'effect';
 import { DehydrateMeta } from '@/external/store';
 import { DehydrateCharacter } from '@/system/character.store';
 import { DehydrateAssets } from '@/system/assets/store';
-import { DehydrateStats } from '@/system/stats/store';
-import { DehydrateResources } from '@/system/resources/store';
+import { DehydrateStats } from '@/system/stats.store';
+import { DehydrateResources } from '@/system/resources.store';
 import { DehydrateMomentum } from '@/system/momentum/store';
 import { DehydrateImpacts } from '@/system/impacts/store';
 import { DehydrateSettings } from '@/system/settings.store';
@@ -57,7 +57,6 @@ export const DehydrationLive = Layer.effect(
               dehydratedChar.character.gmNotes = gmNotes;
               dehydratedChar.character.avatar = avatar;
             } else {
-              const dehy = yield* stores[key].dehydrate();
               dehydratedChar.character.attributes[key] =
                 yield* stores[key].dehydrate();
             }

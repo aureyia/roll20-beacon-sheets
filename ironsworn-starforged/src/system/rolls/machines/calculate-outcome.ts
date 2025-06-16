@@ -1,6 +1,7 @@
 import { setup, assertEvent, type ActorRefFrom } from 'xstate';
 import { sendRollToChat } from '@/utility/send-roll-to-chat';
 import { assert } from '@/utility/assert';
+import { Effect } from 'effect';
 
 type Outcome =
   | 'opportunity'
@@ -89,7 +90,7 @@ export const machine = setup({
       }
       context.previousOutcome = params.outcome;
       assert(params.outcome !== null);
-      await sendRollToChat(context.character.id, {
+      Effect.runPromise(sendRollToChat(context.character.id, {
         type: 'move-compact',
         parameters: {
           characterName: context.character.name,
@@ -106,7 +107,7 @@ export const machine = setup({
           score: context.actionScore,
           burnedMomentum: context.burnedMomentum,
         },
-      });
+      }));
       context.burnedMomentum = false;
     },
   },

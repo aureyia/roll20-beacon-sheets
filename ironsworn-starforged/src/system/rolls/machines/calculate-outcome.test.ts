@@ -9,6 +9,7 @@ import {
   compare,
 } from '@/system/rolls/machines/test-helper/snapshots';
 import * as exports from '@/utility/send-roll-to-chat';
+import { Effect } from 'effect';
 
 const regenerate = process.env.REGENERATE === 'true';
 
@@ -30,7 +31,8 @@ describe('calculate-outcome-machine', () => {
 
               const sendRollToChat = vi
                 .spyOn(exports, 'sendRollToChat')
-                .mockImplementation(async () => {});
+                // @ts-ignore
+                .mockImplementation(Effect.gen(function*() {}));
               const actor = createActor(machine);
 
               let outcome: string | undefined = undefined;
@@ -39,9 +41,13 @@ describe('calculate-outcome-machine', () => {
               actor.subscribe((snapshot) => {
                 outcome = snapshot.context.previousOutcome;
                 const eligibleMatched =
+                  // @ts-ignore
                   snapshot.matches('Eligible for Opportunity') ||
+                  // @ts-ignore
                   snapshot.matches('Hitting: Eligible for Strong Hit') ||
+                  // @ts-ignore
                   snapshot.matches('Missing: Eligible for Strong Hit') ||
+                  // @ts-ignore
                   snapshot.matches('Eligible for Weak Hit');
                 if (eligibleMatched) {
                   burnOutcome = burn;

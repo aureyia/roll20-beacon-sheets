@@ -12,7 +12,7 @@ import type { IMoveTriggerOptionAction } from '@/vendor/dataforged';
 import { inject, ref } from 'vue';
 import { Effect, Layer } from 'effect';
 import { momentumStore } from '@/system/momentum/store';
-import { statsStore } from '@/system/stats/store';
+import { statsStore } from '@/system/stats.store';
 import { roll as actionRoll } from '@/system/rolls/handlers/action-roll';
 import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll';
 import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll';

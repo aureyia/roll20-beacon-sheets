@@ -4,14 +4,13 @@ import LabelledInput from '@/components/inputs/LabelledInput.vue';
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue';
 import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue';
 import { ImpactCategory } from '@/components/impacts';
-import { statsStore, type Stats } from '@/system/stats/store';
+import { statsStore, STATS, type Stats } from '@/system/stats.store';
 import { characterStore } from '@/system/character.store';
 import { metaStore } from '@/external/store';
-import { resourcesStore } from '@/system/resources/store';
+import { resourcesStore } from '@/system/resources.store';
 import { Toggle } from '@/components/ui/toggle/index';
 import { ref } from 'vue';
 import { IMPACTS } from '@/system/impacts/types';
-import { STAT_LIST } from '@/system/stats/stats';
 
 import { ImpactDialog } from '@/components/impacts';
 
@@ -132,7 +131,7 @@ const update = (store: Store, label: any, event: any) => {
     <div class="stats mt-10 flex justify-center gap-5" v-if="toggleStatsEdit">
       <LabelledNumberField
         class="text-center"
-        v-for="stat in STAT_LIST"
+        v-for="stat in Object.values(STATS)"
         :key="stat"
         :label="stat"
         :modelValue="stats[stat]"
@@ -142,7 +141,7 @@ const update = (store: Store, label: any, event: any) => {
     </div>
     <div class="stats mt-10 flex justify-center gap-5" v-else>
       <StatCard
-        v-for="stat in STAT_LIST"
+        v-for="stat in Object.values(STATS)"
         :key="stat"
         :name="stat"
         :stat="stats[stat as keyof Stats]"

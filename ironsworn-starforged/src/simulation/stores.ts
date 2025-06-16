@@ -3,7 +3,7 @@ import { impactsStore } from '@/system/impacts/store';
 import { tasksStore } from '@/system/tasks/store';
 import { assetsStore } from '@/system/assets/store';
 import { resources, stats, impacts, assets, tasks } from './fuzzers/stores';
-import { statsStore } from '@/system/stats/store';
+import { statsStore } from '@/system/stats.store';
 import { numberBetween } from './prng';
 import { momentumStore } from '@/system/momentum/store';
 import { saveSnaphot } from './storage/snapshots';

@@ -48,6 +48,7 @@ export const metaStore = createStore({
   },
   on: {
     hydrate: (context, event: MetaHydration) => {
+      console.log(event)
       context.id = event.id ?? context.id;
       context.name = event.name ?? context.name;
       context.avatar = event.avatar ?? context.avatar;
@@ -63,8 +64,8 @@ export const metaStore = createStore({
       context.campaignId = event.id;
     },
     set: (context, event: MetaSetEvent, enqueue) => {
-      assert(event.label !== 'name');
-      assert(event.value !== 'string');
+      assert(event.label === 'name');
+      assert(typeof event.value === 'string');
       if (event.label === 'name' && typeof event.value === 'string') {
         context['name'] = event.value ?? context['name'];
         enqueue.emit.updated();

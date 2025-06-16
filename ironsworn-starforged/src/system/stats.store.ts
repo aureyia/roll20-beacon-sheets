@@ -3,6 +3,14 @@ import { assert } from '@/utility/assert';
 import { createStore } from '@xstate/store';
 import type { SetEvent } from '@/utility/store.types';
 
+export const STATS = {
+  Edge: 'edge',
+  Heart: 'heart',
+  Iron: 'iron',
+  Shadow: 'shadow',
+  Wits: 'wits',
+} as const
+
 type StatsSetEvent = SetEvent<Stats>;
 
 export type Stats = {
@@ -13,27 +21,12 @@ export type Stats = {
   wits: number;
 };
 
-const asserttoreValues = (values: any) => {
-  assert(
-    typeof values.edge === 'number',
-    `values.edge type: ${typeof values.edge}`,
-  );
-  assert(
-    typeof values.heart === 'number',
-    `values.heart type: ${typeof values.heart}`,
-  );
-  assert(
-    typeof values.iron === 'number',
-    `values.edge type: ${typeof values.iron}`,
-  );
-  assert(
-    typeof values.shadow === 'number',
-    `values.edge type: ${typeof values.shadow}`,
-  );
-  assert(
-    typeof values.wits === 'number',
-    `values.edge type: ${typeof values.wits}`,
-  );
+const asserttoreValues = (values: Stats) => {
+  assert(typeof values.edge === 'number');
+  assert(typeof values.heart === 'number');
+  assert(typeof values.iron === 'number');
+  assert(typeof values.shadow === 'number');
+  assert(typeof values.wits === 'number');
 };
 
 export const statsStore = createStore({

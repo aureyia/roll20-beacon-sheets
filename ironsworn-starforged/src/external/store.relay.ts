@@ -1,13 +1,13 @@
-import { Stream, Queue, Effect, Config, Duration } from 'effect';
+import { Stream, Queue, Effect, Config, Duration, Console } from 'effect';
 import { sync } from '@/external/sync';
 
 import { metaStore } from './store';
 import { characterStore } from '@/system/character.store';
-import { resourcesStore } from '@/system/resources/store';
+import { resourcesStore } from '@/system/resources.store';
 import { impactsStore } from '@/system/impacts/store';
 import { momentumStore } from '@/system/momentum/store';
 import { assetsStore } from '@/system/assets/store';
-import { statsStore } from '@/system/stats/store';
+import { statsStore } from '@/system/stats.store';
 import { tasksStore } from '@/system/tasks/store';
 import { settingsStore } from '@/system/settings.store';
 
@@ -29,9 +29,11 @@ export const storeRelay = Effect.gen(function* () {
   tasksStore.on('updated', () => Effect.runPromise(update()));
   settingsStore.on('updated', () => Effect.runPromise(update()));
 
+  // @ts-ignore
   const debounceDuration = Number(import.meta.env.VITE_DEBOUNCE) || 800;
 
   const stream = Stream.fromQueue(queue).pipe(
+    Stream.tap(()=> Console.log('Testing')),
     Stream.debounce(Duration.millis(debounceDuration)),
   );
 

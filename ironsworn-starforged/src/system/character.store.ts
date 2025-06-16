@@ -20,6 +20,7 @@ export const characterStore = createStore({
   },
   on: {
     hydrate: (context, event: Character) => {
+      console.log('char', event)
       assert(typeof event.callsign === 'string');
       assert(typeof event.pronouns === 'string');
       context['callsign'] = event.callsign ?? context['callsign'];

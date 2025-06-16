@@ -15,13 +15,6 @@ export const runner = (rollSpeed: VueRef) =>
     const initialFiber = yield* startFiber(rollSpeed.value[0]);
     yield* Ref.set(fiberRef, initialFiber);
 
-    // Find a way to watch for changes without needing to
-    const watcher = (changes: Stream.Stream<number>) =>
-      Effect.gen(function* () {
-        const results = yield* Stream.runCollect(changes);
-        return results;
-      });
-
     watch(rollSpeed, (newSpeed) => {
       Effect.runPromise(Queue.offer(queue, newSpeed[0]));
     });
