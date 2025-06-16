@@ -18,14 +18,16 @@ export const ObjectTransformLive = Layer.effect(
   ObjectTransform,
   Effect.gen(function* () {
     return {
+      // biome-ignore lint: Intentional any
       objectToArray: (object: Record<string, any>) =>
         Effect.sync(() => {
           if (!object) return []
 
+          // biome-ignore lint: Intentional any
           const newArray: any[] = []
           const objectIds = Object.keys(object) as (keyof typeof object)[]
 
-          objectIds.forEach(key => {
+          for(const key of objectIds) {
             if (object[key]) {
               const position = object[key].arrayPosition
               const item = {
@@ -35,7 +37,7 @@ export const ObjectTransformLive = Layer.effect(
               }
               newArray[position] = item
             }
-          })
+          }
 
           // Remove all undefined values in case of deletes
           return newArray.filter(x => x)

@@ -2952,5 +2952,3 @@ export declare enum Zone {
   Production = 'Production',
   Research = 'Research',
 }
-
-export {}

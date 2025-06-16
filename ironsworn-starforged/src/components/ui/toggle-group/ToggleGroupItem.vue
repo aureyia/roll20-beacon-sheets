@@ -8,7 +8,7 @@ import {
 } from 'reka-ui'
 import { type HTMLAttributes, inject } from 'vue'
 import { cn } from '@/utility'
-import { toggleVariants } from '@/components/ui/toggle'
+import type { toggleVariants } from '@/components/ui/toggle'
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 

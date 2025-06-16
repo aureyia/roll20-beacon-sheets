@@ -54,10 +54,10 @@ export const machine = setup({
         },
   },
   actions: {
-    resetMomentum: function ({ context, event }, params) {
+    resetMomentum: ({ context, event }, params) => {
       context.burnedMomentum = true
     },
-    saveParamsToContext: function ({ context, event }, params) {
+    saveParamsToContext: ({ context, event }, params) => {
       assertEvent(event, 'params')
       context.actionDie.value = event.value.actionDie.value
       context.actionDie.negated = event.value.actionDie.negated
@@ -69,10 +69,10 @@ export const machine = setup({
       context.character.name = event.value.character.name
       context.character.id = event.value.character.id
     },
-    sendOutcomeToChat: async function (
+    sendOutcomeToChat: async (
       { context },
       params: { outcome: Outcome }
-    ) {
+    ) => {
       if (
         !context.name ||
         context.actionScore === undefined ||
@@ -112,10 +112,8 @@ export const machine = setup({
     },
   },
   guards: {
-    challengeDiceMatch: function ({ context }) {
-      return context.challengeDie1 === context.challengeDie2
-    },
-    exceedsBoth: function ({ context }) {
+    challengeDiceMatch: ({ context }) => context.challengeDie1 === context.challengeDie2,
+    exceedsBoth: ({ context }) => {
       if (
         context.actionScore === undefined ||
         !context.challengeDie1 ||
@@ -129,7 +127,7 @@ export const machine = setup({
         context.actionScore > context.challengeDie2
       )
     },
-    momentumExceedsBoth: function ({ context }) {
+    momentumExceedsBoth: ({ context }) => {
       if (
         context.momentum === undefined ||
         !context.challengeDie1 ||
@@ -143,11 +141,11 @@ export const machine = setup({
         context.momentum > context.challengeDie2
       )
     },
-    choseToBurn: function ({ event }) {
+    choseToBurn: ({ event }) => {
       assertEvent(event, 'burnChoice')
       return event.value
     },
-    exceedsOne: function ({ context }) {
+    exceedsOne: ({ context }) => {
       if (
         context.actionScore === undefined ||
         !context.challengeDie1 ||
@@ -161,7 +159,7 @@ export const machine = setup({
         context.actionScore > context.challengeDie2
       )
     },
-    momentumExceedsOne: function ({ context }) {
+    momentumExceedsOne: ({ context }) => {
       if (
         context.momentum === undefined ||
         !context.challengeDie1 ||

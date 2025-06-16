@@ -35,8 +35,8 @@ const normaliseAssetTypeText = (assetType: string) => {
   return typeParts[typeParts.length - 1].toLowerCase()
 }
 
-let flattenedAssets: IAsset[] = []
-let assetMoves: IMove[] = []
+const flattenedAssets: IAsset[] = []
+const assetMoves: IMove[] = []
 
 assets.forEach(assetType => {
   assetType.Assets.forEach((asset: IAsset) => {
@@ -45,7 +45,7 @@ assets.forEach(assetType => {
 })
 
 const transformedAssets = flattenedAssets.map(asset => {
-  let formattedAsset: Asset = {
+  const formattedAsset: Asset = {
     id: '',
     name: '',
     type: '',

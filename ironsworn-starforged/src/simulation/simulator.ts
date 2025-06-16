@@ -7,7 +7,7 @@ import {
   onTranslationsRequest,
   onDragOver,
 } from '@/external/relay-handlers'
-import { type App } from 'vue'
+import type { App } from 'vue'
 import { dispatchRef } from '@/external/vue.relay'
 import { simRelay } from './dispatch.mock'
 import { rollSteam } from './generate-rolls'

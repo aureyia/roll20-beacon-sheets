@@ -42,7 +42,7 @@ const resultObjects = (seed: string) => {
   const numberOfRolls = Effect.runSync(
     numberBetween(seed, 'numberOfRolls', 0, 10)
   )
-  let rollObject = {} as any
+  const rollObject = {} as any
   for (let i = 0; i < numberOfRolls; i++) {
     rollObject[`dice-${i}`] = singleRoll(seed)
   }

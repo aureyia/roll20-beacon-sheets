@@ -40,7 +40,7 @@ export const impacts = (seed: string) => {
   const numberOfCurrentVehicle = numberOfImpacts(seed, 'currentVehicle')
   const numberOfOther = numberOfImpacts(seed, 'other')
 
-  let impactsObject = {
+  const impactsObject = {
     misfortunes: [] as any[],
     lastingEffects: [] as any[],
     burdens: [] as any[],
@@ -114,7 +114,7 @@ const createAsset = (seed: string, salt: number) => {
 
 export const assets = (seed: string) => {
   const numberOfAssets = Effect.runSync(numberBetween(seed, 'assets', 3, 6))
-  let assets = [] as Asset[]
+  const assets = [] as Asset[]
 
   for (let index = 0; index < numberOfAssets; index++) {
     assets.push(createAsset(seed, index))
@@ -145,7 +145,7 @@ const createTask = (seed: string, salt: number) => ({
 
 export const tasks = (seed: string) => {
   const numberOfTasks = Effect.runSync(numberBetween(seed, 'tasks', 2, 6))
-  let tasks = [] as Task[]
+  const tasks = [] as Task[]
 
   for (let index = 0; index < numberOfTasks; index++) {
     tasks.push(createTask(seed, index))

@@ -9,7 +9,7 @@ import { momentumStore } from '@/system/momentum/store'
 import { saveSnaphot } from './storage/snapshots'
 import type { Intensity } from '@/simulation/types'
 
-export const setupStores = (seed: string, intensity: Intensity) =>
+export const setupStores = (seed: string, intensity: typeof Intensity) =>
   Effect.sync(() => {
     // Clear Stores
 
@@ -35,10 +35,11 @@ export const setupStores = (seed: string, intensity: Intensity) =>
       }
     })
 
-    selectedStats.forEach(entry => {
+
+    for(const entry of selectedStats) {
       // @ts-ignore
       statsStore.trigger.set(entry)
-    })
+    }
 
     // Resources
 
@@ -51,10 +52,10 @@ export const setupStores = (seed: string, intensity: Intensity) =>
       }
     })
 
-    selectedResources.forEach(entry => {
+    for(const entry of selectedResources) {
       // @ts-ignore
       statsStore.trigger.set(entry)
-    })
+    }
 
     // Impacts
 
@@ -74,19 +75,21 @@ export const setupStores = (seed: string, intensity: Intensity) =>
       }
     })
 
-    selectedImpacts.forEach(entry => {
+    for(const entry of selectedImpacts) {
       // @ts-ignore
       impactsStore.trigger.set(entry)
-    })
+    }
 
     // Assets
 
     const selectedAssets = assets(seed, intensity)
+    // @ts-ignore
     assetsStore.trigger.set({ label: 'list', value: selectedAssets })
 
     // Tasks
 
     const selectedTasks = tasks(seed, intensity)
+    // @ts-ignore
     tasksStore.trigger.set({ label: 'list', value: selectedTasks })
 
     Effect.runPromise(

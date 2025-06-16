@@ -1,4 +1,4 @@
-import { type LimitedRange } from '@/utility/limited-range'
+import type { LimitedRange } from '@/utility/limited-range'
 
 export const DIFFICULTIES = [
   'troublesome',

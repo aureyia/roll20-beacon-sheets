@@ -18,11 +18,11 @@ describe('progressTicksToFill', () => {
     { box: 2, ticks: 8, expected: 0 },
   ] as const
 
-  data.forEach(({ box, ticks, expected }) => {
+  for(const { box, ticks, expected } of data) {
     test(`Box ${box} - progress ${ticks}`, () => {
       expect(progressTicksToFill(box, ticks)).toEqual(expected)
     })
-  })
+  }
 
   test('throw if first input is string', () => {
     // @ts-expect-error

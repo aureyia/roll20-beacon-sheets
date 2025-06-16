@@ -1,7 +1,8 @@
-import { Effect, Context, Data, Layer, Array } from 'effect'
+import { Effect, Context, Data, Layer } from 'effect'
 
 class ArrayTransformError extends Data.TaggedError('ArrayTransformError')<{
-  cause: Object
+  // biome-ignore lint: Intentional any
+  cause: any
   message: string
 }> {}
 
@@ -11,6 +12,7 @@ export class ArrayTransform extends Context.Tag('ArrayTransform')<
     readonly arrayToObject: (
       array: []
     ) =>
+      // biome-ignore lint: Intentional any
       | Effect.Effect<Record<string, any>>
       | Effect.Effect<never, ArrayTransformError>
   }
@@ -30,6 +32,7 @@ export const ArrayTransformLive = Layer.effect(
             })
           )
         }
+        // biome-ignore lint: Intentional any
         const newObject: Record<string, any> = {}
         array.forEach((item, index) => {
           //@ts-ignore

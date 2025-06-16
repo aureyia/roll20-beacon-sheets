@@ -2,12 +2,12 @@ import { setup, createActor, assertEvent } from 'xstate'
 import { Effect, Layer } from 'effect'
 import type { ActorRefFrom } from 'xstate'
 import { createId } from '@paralleldrive/cuid2'
-import {
-  type Character,
-  type CompendiumDragDropData,
-  type Dispatch,
-  type Settings,
-  type UpdateArgs,
+import type {
+  Character,
+  CompendiumDragDropData,
+  Dispatch,
+  Settings,
+  UpdateArgs,
 } from '@roll20-official/beacon-sdk'
 import { type App, reactive, ref, watch, nextTick } from 'vue'
 import { metaStore } from './store'
@@ -80,7 +80,7 @@ export const machine = setup({
       | { type: 'hydrated' },
   },
   actions: {
-    saveDispatchToContext: function ({ context, event }) {
+    saveDispatchToContext: ({ context, event }) => {
       assertEvent(event, 'initialised')
       context.dispatch = event.dispatch
     },

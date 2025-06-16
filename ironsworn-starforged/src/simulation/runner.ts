@@ -6,7 +6,9 @@ export const runner = (rollSpeed: VueRef) =>
   Effect.gen(function* () {
     const queue = yield* Queue.bounded<number>(20)
     const fiberRef = yield* SubscriptionRef.make<Fiber.RuntimeFiber<
+      // biome-ignore lint: Intentional any
       any,
+      // biome-ignore lint: Intentional any
       any
     > | null>(null)
 

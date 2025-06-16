@@ -48,7 +48,7 @@ actor.subscribe(snapshot => {
 actor.start()
 
 const moveData = { Name: 'Simulation Rolls' }
-export let seed = createAtom('')
+export const seed = createAtom('')
 export const replaySeed = ref('')
 export const createSeed = () =>
   replaySeed.value !== '' ? replaySeed.value : createId()

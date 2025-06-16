@@ -46,7 +46,7 @@ export const RollFormatterLive = Layer.effect(
         Effect.gen(function* () {
           assert(dice.length > 0)
           const count = 1 as const
-          let index = 0
+          const index = 0
 
           const { sides } = dice[index]
 

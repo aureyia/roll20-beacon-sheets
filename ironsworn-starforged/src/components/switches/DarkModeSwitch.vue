@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-let mode = useColorMode()
+const mode = useColorMode()
 </script>
 
 <template>

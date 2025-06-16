@@ -47,13 +47,13 @@ handlebars.registerHelper('not', v => !v)
 handlebars.registerHelper('or', (a, b) => a || b)
 handlebars.registerHelper('and', (a, b) => a && b)
 
-handlebars.registerHelper('assign', function (varName, value, options) {
+handlebars.registerHelper('assign', (varName, value, options) => {
   options.data.root[varName] = value
 })
 
 handlebars.registerHelper(
   'assignActionScore',
-  function (varName, value, options) {
+  (varName, value, options) => {
     options.data.root[varName] = value.score
   }
 )
