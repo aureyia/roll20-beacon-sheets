@@ -32,7 +32,7 @@ import {
 } from '@/views/guide'
 
 import { MainView as LocationsMainView } from '@/views/locations'
-import { MainView as OrcalesMainView } from '@/views/orcales'
+import { MainView as OraclesMainView } from '@/views/oracles'
 import { MainView as SharedMainView } from '@/views/ship'
 import { MainView as ShipMainView } from '@/views/ship'
 
@@ -145,9 +145,9 @@ const router = createRouter({
       component: LocationsMainView,
     },
     {
-      path: '/orcales',
-      name: 'orcales',
-      component: OrcalesMainView,
+      path: '/oracles',
+      name: 'oracles',
+      component: OraclesMainView,
     },
     {
       path: '/ship',

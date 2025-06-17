@@ -6,7 +6,7 @@ import { resources, stats, impacts, assets, tasks } from './fuzzers/stores'
 import { statsStore } from '@/system/stats.store'
 import { numberBetween } from './prng'
 import { momentumStore } from '@/system/momentum/store'
-import { saveSnaphot } from './storage/snapshots'
+import { saveSnapshot } from './storage/snapshots'
 import type { Intensity } from '@/simulation/types'
 
 export const setupStores = (seed: string, intensity: typeof Intensity) =>
@@ -93,7 +93,7 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
     tasksStore.trigger.set({ label: 'list', value: selectedTasks })
 
     Effect.runPromise(
-      saveSnaphot('stores', {
+      saveSnapshot('stores', {
         run_id: seed,
         momentum: selectedMomentum,
         stats: selectedStats,

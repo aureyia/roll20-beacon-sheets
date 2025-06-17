@@ -1,6 +1,5 @@
 import { createStore } from '@xstate/store'
 import { Effect, Layer, Context } from 'effect'
-import type { SetEvent } from '@/utility/store.types'
 
 type SettingsSetEvent = SetEvent<Settings>
 
@@ -11,7 +10,7 @@ type SheetMode =
   | 'guide'
   | 'locations'
   | 'mode-select'
-  | 'orcales'
+  | 'oracles'
   | 'shared'
   | 'ship'
 

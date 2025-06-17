@@ -37,7 +37,7 @@ const isValidCategory = (category: string) => {
   ].includes(category)
 }
 
-const filterOutImpact = (context: any, event: AnyImpact) =>
+const filterOutImpact = (context: ImpactsGrouped, event: AnyImpact) =>
   context[event.category].filter(
     (entry: AnyImpact) => entry.name !== event.name
   )
@@ -55,16 +55,16 @@ function assertRemoveImpact(data: AnyImpact) {
 }
 
 export type HydrateEvent = {
-  misfortunes: {}
-  lastingEffects: {}
-  burdens: {}
-  currentVehicle: {}
-  other: {}
-}
-
-type SetEvent = {
-  label: keyof ImpactsGrouped
-  value: ImpactsGrouped[keyof ImpactsGrouped][]
+  // biome-ignore lint: Intentional any
+  misfortunes: Record<string, any>
+  // biome-ignore lint: Intentional any
+  lastingEffects: Record<string, any>
+  // biome-ignore lint: Intentional any
+  burdens: Record<string, any>
+  // biome-ignore lint: Intentional any
+  currentVehicle: Record<string, any>
+  // biome-ignore lint: Intentional any
+  other: Record<string, any>
 }
 
 export const impactsStore = createStore({
@@ -102,6 +102,7 @@ export const impactsStore = createStore({
         _id: createId(),
       }
 
+      // biome-ignore lint: Intentional any
       context[event.category].push(impact as any)
       enqueue.emit.updated()
     },
@@ -110,9 +111,26 @@ export const impactsStore = createStore({
       filterOutImpact(context, event)
       enqueue.emit.updated()
     },
-    set: (context, event: SetEvent, enqueue) => {
-      context[event.label] = event.value
-      enqueue.emit.updated()
+    set: (context: ImpactsGrouped, event: SetEvent<ImpactsGrouped>, enqueue) => {
+      switch (event.label) {
+        case 'misfortunes':
+          context.misfortunes = event.value
+          break;
+        case 'burdens':
+          context.burdens = event.value
+          break
+        case 'currentVehicle':
+          context.currentVehicle = event.value
+          break
+        case 'lastingEffects':
+          context.lastingEffects = event.value
+          break
+        case 'other':
+          context.other = event.value
+          break
+        default:
+          throw new Error('Unsupported impact')
+      } enqueue.emit.updated()
     },
     clear: context => {
       context.misfortunes = []
@@ -127,6 +145,7 @@ export const impactsStore = createStore({
 export class DehydrateImpacts extends Context.Tag('DehydrateImpacts')<
   DehydrateImpacts,
   {
+    // biome-ignore lint: Intentional any
     readonly dehydrate: () => Effect.Effect<Record<string, any>, Error, never>
   }
 >() {}

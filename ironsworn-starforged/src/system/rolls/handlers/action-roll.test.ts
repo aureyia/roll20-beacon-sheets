@@ -13,7 +13,7 @@ import { dispatchRef as dispatchRefVar } from '@/external/vue.relay'
 
 const rollResults = {}
 
-export const DispatchTest = Layer.succeed(Dispatch, {
+const DispatchTest = Layer.succeed(Dispatch, {
   roll: _dice => Effect.succeed(rollResults as DispatchResultsOutput),
 })
 
@@ -28,7 +28,6 @@ describe('ActionRoll', () => {
     const sendRollToChat = vi
       .spyOn(exports, 'sendRollToChat')
       .mockImplementation(async () => {})
-    vi.spyOn(dispatchRefVar.value, 'dispatchRef').mockImplementation('nom')
 
     const actor = createActor(machine)
 

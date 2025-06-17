@@ -4,7 +4,6 @@ import { Context, Effect, Layer } from 'effect'
 import type { Ability, AssetCategory, Asset } from '@/system/assets/types'
 import { getAssetAbilities, AssetError } from '@/system/assets/utils'
 import { createStore } from '@xstate/store'
-import type { SetEvent } from '@/utility/store.types'
 
 export type AssetsHydrate = {
   assets: Asset[]
@@ -115,6 +114,7 @@ export const assetsStore = createStore({
 export class DehydrateAssets extends Context.Tag('DehydrateAssets')<
   DehydrateAssets,
   {
+    // biome-ignore lint: Intentional any
     readonly dehydrate: () => Effect.Effect<Record<string, any>, AssetError>
   }
 >() {}

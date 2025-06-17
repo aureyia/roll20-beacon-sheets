@@ -1,7 +1,6 @@
 import { Effect, Layer, Context } from 'effect'
 import { assert } from '@/utility/assert'
 import { createStore } from '@xstate/store'
-import type { SetEvent } from '@/utility/store.types'
 
 export const STATS = {
   Edge: 'edge',
@@ -21,7 +20,7 @@ export type Stats = {
   wits: number
 }
 
-const asserttoreValues = (values: Stats) => {
+const assertStoreValues = (values: Stats) => {
   assert(typeof values.edge === 'number')
   assert(typeof values.heart === 'number')
   assert(typeof values.iron === 'number')

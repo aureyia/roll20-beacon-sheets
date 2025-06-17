@@ -1,7 +1,6 @@
 import type { Token } from '@roll20-official/beacon-sdk'
 import { createStore } from '@xstate/store'
 import { Effect, Layer, Context } from 'effect'
-import type { SetEvent } from '@/utility/store.types'
 import { assert } from '@/utility/assert'
 
 /**
@@ -17,6 +16,7 @@ type Meta = {
   avatar: string
   bio: string
   gmNotes: string
+  // biome-ignore lint: Intentional any
   token: Record<string, any>
   campaignId: number | undefined
   permissions: Permissions
@@ -67,7 +67,7 @@ export const metaStore = createStore({
       assert(event.label === 'name')
       assert(typeof event.value === 'string')
       if (event.label === 'name' && typeof event.value === 'string') {
-        context['name'] = event.value ?? context['name']
+        context.name = event.value ?? context.name
         enqueue.emit.updated()
       }
     },
@@ -100,14 +100,14 @@ export const DehydrateMetaLive = Layer.effect(
       dehydrate: () =>
         Effect.gen(function* () {
           const context = metaStore.get().context
-          return {
+          return yield* Effect.succeed({
             id: context.id,
             name: context.name,
             avatar: context.avatar,
             bio: context.bio,
             gmNotes: context.gmNotes,
             token: context.token,
-          }
+          })
         }),
     }
   })

@@ -1,7 +1,6 @@
 import { Effect } from 'effect'
 import { drizzle } from 'drizzle-orm/libsql'
 import { runTable, rollInputsTable, storesTable } from './schema'
-import { createId } from '@paralleldrive/cuid2'
 
 export const db = drizzle({
   connection: {
@@ -9,7 +8,7 @@ export const db = drizzle({
   },
 })
 
-export const saveSnaphot = (table: string, options: any) =>
+export const saveSnapshot = (table: string, options: any) =>
   Effect.promise(async () => {
     if (table === 'run') {
       await db.insert(runTable).values(options)

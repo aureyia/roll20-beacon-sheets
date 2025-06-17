@@ -1,7 +1,6 @@
 import { assert } from '@/utility/assert'
 import { createStore } from '@xstate/store'
 import { Effect, Layer, Context } from 'effect'
-import type { SetEvent } from '@/utility/store.types'
 
 type CharacterSetEvent = SetEvent<Character>
 

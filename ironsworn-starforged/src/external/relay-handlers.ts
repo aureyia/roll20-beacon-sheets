@@ -12,7 +12,7 @@ export const onInit = ({
   initValues.character = character
   initValues.settings = settings
   initValues.compendiumDrop = compendiumDropData ? compendiumDropData : null
-  console.log('onInit -> Strarforged Sheet Relay')
+  console.log('onInit -> Starforged Sheet Relay')
 }
 
 // onChange is called when the character data is updated.
@@ -20,13 +20,14 @@ export const onInit = ({
 export const onChange = async ({
   character,
 }: {
+  // biome-ignore lint: Intentional any
   character: Record<string, any>
 }) => {
   // This is a way to trigger a re-render of the sheet,
   // see relay.ts for more information.
   const old = beaconPulse.value
   beaconPulse.value = old + 1
-  console.log('onChange -> Strarforged Sheet Relay', character)
+  console.log('onChange -> Starforged Sheet Relay', character)
 }
 
 export const onSettingsChange = () => {}

@@ -55,6 +55,7 @@ const DehydrationServicesLive = Layer.mergeAll(
 
 const MainLive = DehydrationLive.pipe(Layer.provide(DehydrationServicesLive))
 
+// biome-ignore lint: Intentional any
 const update = (dispatch: Dispatch, data: any) =>
   Effect.gen(function* () {
     const dehydration = yield* Dehydration
@@ -69,6 +70,7 @@ export type SyncActor = ActorRefFrom<typeof machine>
 export const machine = setup({
   types: {
     context: {} as {
+      // biome-ignore lint: Intentional any
       character: any
       dispatch?: Dispatch
       updateId: string

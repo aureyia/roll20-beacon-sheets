@@ -24,10 +24,13 @@ export const relayConfig = {
 
 const devRelay = async () =>
   ({
+    // biome-ignore lint: Intentional any
     update: (...args: any[]) => console.log('devRelay update', args),
+    // biome-ignore lint: Intentional any
     updateCharacter: (...args: any[]) =>
       console.log('devRelay updateCharacter', args),
     characters: {},
+    // biome-ignore lint: Intentional any
   }) as any as Dispatch
 
 export const sheetRelayPlugin = (mode: boolean) =>

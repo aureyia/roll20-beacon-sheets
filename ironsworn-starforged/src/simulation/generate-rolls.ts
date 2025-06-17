@@ -15,7 +15,7 @@ import { numberBetween } from './prng'
 import { ref } from 'vue'
 import { intensity } from '@/main'
 import { setupStores } from './stores'
-import { saveSnaphot } from './storage/snapshots'
+import { saveSnapshot } from './storage/snapshots'
 
 const MainLive = ActionRollLive.pipe(
   Layer.provide(RollFormatterLive),
@@ -66,7 +66,7 @@ export const rollSteam = (speed: number) => {
       })
     ),
     Stream.tap(() =>
-      saveSnaphot('run', {
+      saveSnapshot('run', {
         id: seed.get(),
         intensity: intensity.value,
         status: 'TBD',
@@ -74,7 +74,7 @@ export const rollSteam = (speed: number) => {
     ),
     Stream.tap(() => setupStores(seed.get(), intensity.value)),
     Stream.tap(() =>
-      saveSnaphot('rollInputs', {
+      saveSnapshot('rollInputs', {
         run_id: seed.get(),
         modifier: modifier(),
         momentum: momentumStore.get().context.momentum,

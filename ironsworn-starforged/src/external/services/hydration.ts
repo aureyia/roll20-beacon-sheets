@@ -39,6 +39,7 @@ export const HydrationLive = Layer.effect(
           if (key === 'meta') {
             stores[key].send({ type: 'hydrate', ...metaData })
           } else {
+            // @ts-expect-error Union type is too complex
             stores[key].send({ type: 'hydrate', ...context[key] })
           }
         }

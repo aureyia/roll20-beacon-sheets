@@ -20,7 +20,7 @@ export const PRNGLive = Layer.effect(
         const hash = bytesToHex(sha256(utf8ToBytes(seed + salt)))
         return (
           Number(
-            (BigInt('0x' + hash) * BigInt(LCG_CONSTANT)) % BigInt(LCG_MOD)
+            (BigInt(`0x${hash}`) * BigInt(LCG_CONSTANT)) % BigInt(LCG_MOD)
           ) >>> 0
         )
       },
@@ -38,3 +38,4 @@ export const numberBetween = (
     const prng = yield* PRNG
     return (prng.generateRandomNumber(seed, salt) % (max - min + 1)) + min
   }).pipe(Effect.provide(PRNGLive))
+
