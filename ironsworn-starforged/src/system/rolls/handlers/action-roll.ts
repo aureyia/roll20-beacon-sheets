@@ -1,18 +1,20 @@
+import { Console, Context, Effect, Layer } from 'effect'
+import type { ParseError } from 'effect/ParseResult'
+import { initValues } from '@/external/sync'
 import { ActionScore, type ActionScoreError } from '@/system/rolls/action-score'
+import { actionDice } from '@/system/rolls/dice'
+import { Dispatch, type DispatchError } from '@/system/rolls/dispatch'
 import {
-  RollFormatter,
   type InvalidDie,
   type InvalidDispatch,
+  RollFormatter,
 } from '@/system/rolls/formatter'
-import { Effect, Context, Layer } from 'effect'
-import { actionDice } from '@/system/rolls/dice'
-import { getDieByLabel, type DieNotFound } from '@/system/rolls/get-die-by-label'
+import {
+  type DieNotFound,
+  getDieByLabel,
+} from '@/system/rolls/get-die-by-label'
 import type { OutcomeActor } from '@/system/rolls/machines/calculate-outcome'
-import { initValues } from '@/external/sync'
-import { type DispatchError, Dispatch } from '@/system/rolls/dispatch'
 import { assert } from '@/utility/assert'
-import type { ParseError } from 'effect/ParseResult'
-import { Console } from 'effect'
 
 export class ActionRoll extends Context.Tag('ActionRoll')<
   ActionRoll,

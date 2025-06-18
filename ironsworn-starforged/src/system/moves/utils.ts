@@ -1,6 +1,6 @@
 import { Data, Effect } from 'effect'
-import type { IMoveCategory } from '@/vendor/dataforged/dist/types'
 import { starforged } from '@/vendor/dataforged'
+import type { IMoveCategory } from '@/vendor/dataforged/dist/types'
 
 export class MoveError extends Data.TaggedError('MoveError')<{
   message?: string

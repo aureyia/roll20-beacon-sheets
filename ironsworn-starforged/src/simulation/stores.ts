@@ -35,8 +35,7 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
       }
     })
 
-
-    for(const entry of selectedStats) {
+    for (const entry of selectedStats) {
       // @ts-ignore
       statsStore.trigger.set(entry)
     }
@@ -52,7 +51,7 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
       }
     })
 
-    for(const entry of selectedResources) {
+    for (const entry of selectedResources) {
       // @ts-ignore
       statsStore.trigger.set(entry)
     }
@@ -75,7 +74,7 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
       }
     })
 
-    for(const entry of selectedImpacts) {
+    for (const entry of selectedImpacts) {
       // @ts-ignore
       impactsStore.trigger.set(entry)
     }

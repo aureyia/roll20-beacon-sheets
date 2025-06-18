@@ -18,7 +18,7 @@ describe('progressTicksToFill', () => {
     { box: 2, ticks: 8, expected: 0 },
   ] as const
 
-  for(const { box, ticks, expected } of data) {
+  for (const { box, ticks, expected } of data) {
     test(`Box ${box} - progress ${ticks}`, () => {
       expect(progressTicksToFill(box, ticks)).toEqual(expected)
     })

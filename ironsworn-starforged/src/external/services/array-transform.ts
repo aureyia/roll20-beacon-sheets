@@ -11,8 +11,7 @@ export class ArrayTransform extends Context.Tag('ArrayTransform')<
   {
     readonly arrayToObject: (
       array: []
-    ) =>
-      // biome-ignore lint: Intentional any
+    ) => // biome-ignore lint: Intentional any
       | Effect.Effect<Record<string, any>>
       | Effect.Effect<never, ArrayTransformError>
   }

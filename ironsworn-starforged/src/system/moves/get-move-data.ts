@@ -1,5 +1,5 @@
-import { starforged } from '@/vendor/dataforged'
 import { Effect } from 'effect'
+import { starforged } from '@/vendor/dataforged'
 
 export const getMoveData = (moveId: string) => {
   const categoryId = moveId.split('/').slice(0, 3).join('/')

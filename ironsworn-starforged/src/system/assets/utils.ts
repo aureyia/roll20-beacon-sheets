@@ -1,7 +1,7 @@
-import { Data, Effect, pipe } from 'effect'
-import { starforged, type IAsset, type IAssetType } from '@/vendor/dataforged'
-import type { AssetCategory } from './types'
 import { createId } from '@paralleldrive/cuid2'
+import { Data, Effect, pipe } from 'effect'
+import { type IAsset, type IAssetType, starforged } from '@/vendor/dataforged'
+import type { AssetCategory } from './types'
 
 export class AssetError extends Data.TaggedError('AssetError')<{
   message?: string

@@ -38,4 +38,3 @@ export const numberBetween = (
     const prng = yield* PRNG
     return (prng.generateRandomNumber(seed, salt) % (max - min + 1)) + min
   }).pipe(Effect.provide(PRNGLive))
-

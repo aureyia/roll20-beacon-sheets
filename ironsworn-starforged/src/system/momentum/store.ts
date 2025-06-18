@@ -1,7 +1,7 @@
+import { createStore } from '@xstate/store'
+import { Context, Effect, Layer } from 'effect'
 import { assert } from '@/utility/assert'
 import { isNumberBetween } from '@/utility/is-number-between'
-import { createStore } from '@xstate/store'
-import { Effect, Layer, Context } from 'effect'
 
 export type MomentumHydrate = {
   momentum: number
@@ -40,7 +40,9 @@ export const DehydrateMomentumLive = Layer.effect(
     return {
       dehydrate: () =>
         Effect.gen(function* () {
-          return { momentum: momentumStore.get().context.momentum }
+          return yield* Effect.succeed({
+            momentum: momentumStore.get().context.momentum,
+          })
         }),
     }
   })

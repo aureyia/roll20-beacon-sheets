@@ -1,4 +1,4 @@
-import { Effect, Context, Layer } from 'effect'
+import { Effect, Context, Layer, Hash } from 'effect'
 
 import { metaStore as meta } from '@/external/store'
 import { characterStore as character } from '@/system/character.store'
@@ -35,12 +35,17 @@ export const HydrationLive = Layer.effect(
     return {
       hydrateStores: (context, metaData) => {
         const storeKeys = Object.keys(stores) as (keyof typeof stores)[]
-        for(const key of storeKeys) {
+        for (const key of storeKeys) {
           if (key === 'meta') {
             stores[key].send({ type: 'hydrate', ...metaData })
           } else {
-            // @ts-expect-error Union type is too complex
-            stores[key].send({ type: 'hydrate', ...context[key] })
+            const hashedIncomingContext = Hash.hash(context[key])
+            const hashedStoreContext = stores[key].get().context.dehydratedHash
+
+            if (hashedIncomingContext !== hashedStoreContext) {
+              // @ts-ignore
+              stores[key].send({ type: 'hydrate', ...context[key] })
+            }
           }
         }
       },

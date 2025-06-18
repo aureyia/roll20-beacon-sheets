@@ -27,7 +27,7 @@ export const ObjectTransformLive = Layer.effect(
           const newArray: any[] = []
           const objectIds = Object.keys(object) as (keyof typeof object)[]
 
-          for(const key of objectIds) {
+          for (const key of objectIds) {
             if (object[key]) {
               const position = object[key].arrayPosition
               const item = {

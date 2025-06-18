@@ -69,10 +69,7 @@ export const machine = setup({
       context.character.name = event.value.character.name
       context.character.id = event.value.character.id
     },
-    sendOutcomeToChat: async (
-      { context },
-      params: { outcome: Outcome }
-    ) => {
+    sendOutcomeToChat: async ({ context }, params: { outcome: Outcome }) => {
       if (
         !context.name ||
         context.actionScore === undefined ||
@@ -112,7 +109,8 @@ export const machine = setup({
     },
   },
   guards: {
-    challengeDiceMatch: ({ context }) => context.challengeDie1 === context.challengeDie2,
+    challengeDiceMatch: ({ context }) =>
+      context.challengeDie1 === context.challengeDie2,
     exceedsBoth: ({ context }) => {
       if (
         context.actionScore === undefined ||

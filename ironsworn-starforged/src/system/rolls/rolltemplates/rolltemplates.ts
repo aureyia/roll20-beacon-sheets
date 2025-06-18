@@ -51,12 +51,9 @@ handlebars.registerHelper('assign', (varName, value, options) => {
   options.data.root[varName] = value
 })
 
-handlebars.registerHelper(
-  'assignActionScore',
-  (varName, value, options) => {
-    options.data.root[varName] = value.score
-  }
-)
+handlebars.registerHelper('assignActionScore', (varName, value, options) => {
+  options.data.root[varName] = value.score
+})
 
 // System Helper functions
 handlebars.registerHelper('getChallengeDie', system.getChallengeDie)

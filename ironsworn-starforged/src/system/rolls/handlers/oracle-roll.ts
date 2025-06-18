@@ -1,13 +1,16 @@
+import { Context, Effect, Layer } from 'effect'
+import { oracleDie } from '@/system/rolls/dice'
 import {
-  RollFormatterLive,
-  RollFormatter,
   type InvalidDie,
   type InvalidDispatch,
+  RollFormatter,
+  RollFormatterLive,
 } from '@/system/rolls/formatter'
+import {
+  type DieNotFound,
+  getDieByLabel,
+} from '@/system/rolls/get-die-by-label'
 import { type DispatchError, DispatchLive } from '../dispatch'
-import { Effect, Context, Layer } from 'effect'
-import { oracleDie } from '@/system/rolls/dice'
-import { type DieNotFound, getDieByLabel } from '@/system/rolls/get-die-by-label'
 
 type OracleRollResult = { oracleDie: { roll: number } }
 

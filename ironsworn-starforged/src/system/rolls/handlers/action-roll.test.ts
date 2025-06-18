@@ -1,15 +1,14 @@
 import { Effect, Layer } from 'effect'
+import { describe, expect, test, vi } from 'vitest'
 import { createActor } from 'xstate'
-import { machine } from '../machines/calculate-outcome'
-import { Dispatch } from '../dispatch'
 import { roll as actionRoll } from '@/system/rolls/handlers/action-roll'
-import { describe, test, vi, expect } from 'vitest'
-import { ActionScoreLive } from '../action-score'
-import { ActionRollLive } from './action-roll'
-import { RollFormatterLive } from '../formatter'
-import type { DispatchResultsOutput } from '../dispatch'
 import * as exports from '@/utility/send-roll-to-chat'
-import { dispatchRef as dispatchRefVar } from '@/external/vue.relay'
+import { ActionScoreLive } from '../action-score'
+import type { DispatchResultsOutput } from '../dispatch'
+import { Dispatch } from '../dispatch'
+import { RollFormatterLive } from '../formatter'
+import { machine } from '../machines/calculate-outcome'
+import { ActionRollLive } from './action-roll'
 
 const rollResults = {}
 

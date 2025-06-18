@@ -1,7 +1,7 @@
-import { RollFormatter, RollFormatterLive } from '@/system/rolls/formatter'
-import { DispatchLive, Dispatch } from '@/system/rolls/dispatch'
-import { Effect, Context, Layer } from 'effect'
+import { Context, Effect, Layer } from 'effect'
 import { challengeDice } from '@/system/rolls/dice'
+import { Dispatch, DispatchLive } from '@/system/rolls/dispatch'
+import { RollFormatter, RollFormatterLive } from '@/system/rolls/formatter'
 import { getDieByLabel } from '@/system/rolls/get-die-by-label'
 
 type ProgressRollResult = {

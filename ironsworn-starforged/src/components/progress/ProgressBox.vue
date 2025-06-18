@@ -15,7 +15,8 @@ const props = defineProps({ id: String, ticks: String })
 const selectedValue = ref(props.ticks)
 const taskStore = tasksStore.get().context.list
 
-const differenceOf = (a: string) => (b: string) => Number.parseInt(b) - Number.parseInt(a)
+const differenceOf = (a: string) => (b: string) =>
+  Number.parseInt(b) - Number.parseInt(a)
 const progressUpdate = (id: string, value: string) => {
   Number.parseInt(props.ticks as string) !== Number.parseInt(value)
     ? taskStore.manualProgressUpdate(

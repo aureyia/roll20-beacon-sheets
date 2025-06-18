@@ -1,17 +1,16 @@
 import { createId } from '@paralleldrive/cuid2'
-import { arrayToObject, objectToArray } from '@/utility/objectify'
-import { assert } from '@/utility/assert'
+import { createStore } from '@xstate/store'
+import { Context, Effect, Layer } from 'effect'
 import type {
   AnyImpact,
   Burden,
   CurrentVehicle,
-  Impact,
   LastingEffect,
   Misfortune,
   Other,
 } from '@/system/impacts/types'
-import { Effect, Layer, Context } from 'effect'
-import { createStore } from '@xstate/store'
+import { assert } from '@/utility/assert'
+import { arrayToObject, objectToArray } from '@/utility/objectify'
 
 export type AddImpact = {
   name: AnyImpact['name']
@@ -111,11 +110,15 @@ export const impactsStore = createStore({
       filterOutImpact(context, event)
       enqueue.emit.updated()
     },
-    set: (context: ImpactsGrouped, event: SetEvent<ImpactsGrouped>, enqueue) => {
+    set: (
+      context: ImpactsGrouped,
+      event: SetEvent<ImpactsGrouped>,
+      enqueue
+    ) => {
       switch (event.label) {
         case 'misfortunes':
           context.misfortunes = event.value
-          break;
+          break
         case 'burdens':
           context.burdens = event.value
           break
@@ -130,7 +133,8 @@ export const impactsStore = createStore({
           break
         default:
           throw new Error('Unsupported impact')
-      } enqueue.emit.updated()
+      }
+      enqueue.emit.updated()
     },
     clear: context => {
       context.misfortunes = []

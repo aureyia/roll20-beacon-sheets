@@ -1,15 +1,16 @@
-import { objectToArray, arrayToObject } from '@/utility/objectify'
 import { createId } from '@paralleldrive/cuid2'
-import { Context, Effect, Layer } from 'effect'
-import type { Ability, AssetCategory, Asset } from '@/system/assets/types'
-import { getAssetAbilities, AssetError } from '@/system/assets/utils'
 import { createStore } from '@xstate/store'
+import { Context, Effect, Hash, Layer } from 'effect'
+import type { Ability, Asset, AssetCategory } from '@/system/assets/types'
+import { AssetError, getAssetAbilities } from '@/system/assets/utils'
+import { arrayToObject, objectToArray } from '@/utility/objectify'
 
 export type AssetsHydrate = {
   assets: Asset[]
 }
 
 export type AssetStore = {
+  dehydratedHash: number
   list: Asset[]
 }
 
@@ -47,13 +48,14 @@ const formatAbilities = (
 
 export const assetsStore = createStore({
   context: {
+    dehydratedHash: 0,
     list: [] as Asset[],
   },
   emits: {
     updated: () => {},
   },
   on: {
-    hydrate: (context: any, event: Asset[]) => {
+    hydrate: (context: AssetStore, event: Asset[]) => {
       const assetList = Effect.runSync(objectToArray(event))
       const updatedAssets = Effect.runSync(
         formatAbilities(objectToArray, assetList)
@@ -61,7 +63,7 @@ export const assetsStore = createStore({
 
       context.list = updatedAssets ?? context.list
     },
-    add: (context: any, event: AssetSubmission, enqueue) => {
+    add: (context: AssetStore, event: AssetSubmission, enqueue) => {
       console.log(context, event)
       const abilities: Ability[] = Effect.runSync(
         getAssetAbilities(event.dataforgedId, event.category)
@@ -83,7 +85,13 @@ export const assetsStore = createStore({
       enqueue.emit.updated()
     },
     set: (context, event: SetEvent<AssetStore>, enqueue) => {
-      context[event.label] = event.value
+      if (event.label === 'list') {
+        context.list = event.value
+      } else if (event.label === 'dehydratedHash') {
+        context.dehydratedHash = event.value
+      } else {
+        throw new Error('Unsupported Set')
+      }
       enqueue.emit.updated()
     },
     updateAbility: (context, event: UpdateAbility, enqueue) => {
@@ -104,7 +112,7 @@ export const assetsStore = createStore({
       })
       enqueue.emit.updated()
     },
-    clear: (context, event, enqueue) => {
+    clear: (context, _, enqueue) => {
       context.list = []
       enqueue.emit.updated()
     },
@@ -127,7 +135,14 @@ export const DehydrateAssetsLive = Layer.effect(
         Effect.gen(function* () {
           const context = assetsStore.get().context.list as Asset[]
           const updatedAssets = yield* formatAbilities(arrayToObject, context)
-          return yield* arrayToObject(updatedAssets)
+          const dehydratedContext = yield* arrayToObject(updatedAssets)
+
+          assetsStore.trigger.set({
+            label: 'dehydratedHash',
+            value: Hash.hash(dehydratedContext),
+          })
+
+          return dehydratedContext
         }),
     }
   })
