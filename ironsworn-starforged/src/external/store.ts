@@ -1,6 +1,6 @@
 import type { Token } from '@roll20-official/beacon-sdk'
 import { createStore } from '@xstate/store'
-import { Effect, Layer, Context } from 'effect'
+import { Context, Effect, Layer } from 'effect'
 import { assert } from '@/utility/assert'
 
 /**

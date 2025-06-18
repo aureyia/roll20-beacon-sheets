@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2'
 import { createStore } from '@xstate/store'
-import { Context, Effect, Hash, Layer } from 'effect'
+import { Context, Effect, Layer } from 'effect'
 import type { Ability, Asset, AssetCategory } from '@/system/assets/types'
 import { AssetError, getAssetAbilities } from '@/system/assets/utils'
 import { arrayToObject, objectToArray } from '@/utility/objectify'
@@ -10,7 +10,6 @@ export type AssetsHydrate = {
 }
 
 export type AssetStore = {
-    dehydratedHash: number
     list: Asset[]
 }
 
@@ -50,7 +49,6 @@ const formatAbilities = (
 
 export const assetsStore = createStore({
     context: {
-        dehydratedHash: 0,
         list: [] as Asset[],
     },
     emits: {
@@ -89,13 +87,7 @@ export const assetsStore = createStore({
             enqueue.emit.updated()
         },
         set: (context, event: SetEvent<AssetStore>, enqueue) => {
-            if (event.label === 'list') {
-                context.list = event.value
-            } else if (event.label === 'dehydratedHash') {
-                context.dehydratedHash = event.value
-            } else {
-                throw new Error('Unsupported Set')
-            }
+            context.list = event.value
             enqueue.emit.updated()
         },
         updateAbility: (context, event: UpdateAbility, enqueue) => {
@@ -144,15 +136,8 @@ export const DehydrateAssetsLive = Layer.effect(
                         arrayToObject,
                         context
                     )
-                    const dehydratedContext =
-                        yield* arrayToObject(updatedAssets)
 
-                    assetsStore.trigger.set({
-                        label: 'dehydratedHash',
-                        value: Hash.hash(dehydratedContext),
-                    })
-
-                    return dehydratedContext
+                    return yield* arrayToObject(updatedAssets)
                 }),
         }
     })

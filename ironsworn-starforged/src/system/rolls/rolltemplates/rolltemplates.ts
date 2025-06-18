@@ -1,9 +1,7 @@
 import handlebars from 'handlebars'
-
+import * as expressions from './expressions'
 import * as partials from './partials'
 import * as templates from './templates'
-import * as expressions from './expressions'
-import * as system from './system'
 
 // Re-usable handlebars HTML partials.
 handlebars.registerPartial('wrapper', partials.wrapper)
@@ -54,10 +52,6 @@ handlebars.registerHelper('assign', (varName, value, options) => {
 handlebars.registerHelper('assignActionScore', (varName, value, options) => {
     options.data.root[varName] = value.score
 })
-
-// System Helper functions
-handlebars.registerHelper('getChallengeDie', system.getChallengeDie)
-handlebars.registerHelper('getActionDie', system.getActionDie)
 
 const rollTemplates = {
     stat: handlebars.compile(templates.statRollTemplate),

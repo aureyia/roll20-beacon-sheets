@@ -1,5 +1,5 @@
 import { createStore } from '@xstate/store'
-import { Effect, Layer, Context } from 'effect'
+import { Context, Effect, Layer } from 'effect'
 
 type SettingsSetEvent = SetEvent<Settings>
 

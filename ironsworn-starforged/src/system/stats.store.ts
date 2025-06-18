@@ -1,6 +1,6 @@
-import { Effect, Layer, Context } from 'effect'
-import { assert } from '@/utility/assert'
 import { createStore } from '@xstate/store'
+import { Context, Effect, Layer } from 'effect'
+import { assert } from '@/utility/assert'
 
 export const STATS = {
     Edge: 'edge',

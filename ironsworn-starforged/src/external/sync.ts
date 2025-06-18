@@ -1,6 +1,3 @@
-import { setup, createActor, assertEvent } from 'xstate'
-import { Effect, Layer } from 'effect'
-import type { ActorRefFrom } from 'xstate'
 import { createId } from '@paralleldrive/cuid2'
 import type {
     Character,
@@ -9,19 +6,22 @@ import type {
     Settings,
     UpdateArgs,
 } from '@roll20-official/beacon-sdk'
-import { type App, reactive, ref, watch, nextTick } from 'vue'
-import { metaStore } from './store'
+import { Effect, Layer } from 'effect'
+import { type App, reactive, ref } from 'vue'
+import type { ActorRefFrom } from 'xstate'
+import { assertEvent, createActor, setup } from 'xstate'
+import { DehydrateMetaLive } from '@/external/store'
+import { DehydrateAssetsLive } from '@/system/assets/store'
+import { DehydrateCharacterLive } from '@/system/character.store'
+import { DehydrateImpactsLive } from '@/system/impacts/store'
+import { DehydrateMomentumLive } from '@/system/momentum/store'
+import { DehydrateResourcesLive } from '@/system/resources.store'
+import { DehydrateSettingsLive } from '@/system/settings.store'
+import { DehydrateStatsLive } from '@/system/stats.store'
+import { DehydrateTasksLive } from '@/system/tasks/store'
 import { Dehydration, DehydrationLive } from './services/dehydration'
 import { Hydration, HydrationLive } from './services/hydration'
-import { DehydrateMetaLive } from '@/external/store'
-import { DehydrateCharacterLive } from '@/system/character.store'
-import { DehydrateAssetsLive } from '@/system/assets/store'
-import { DehydrateStatsLive } from '@/system/stats.store'
-import { DehydrateResourcesLive } from '@/system/resources.store'
-import { DehydrateMomentumLive } from '@/system/momentum/store'
-import { DehydrateImpactsLive } from '@/system/impacts/store'
-import { DehydrateSettingsLive } from '@/system/settings.store'
-import { DehydrateTasksLive } from '@/system/tasks/store'
+import { metaStore } from './store'
 
 export const beaconPulse = ref(0)
 

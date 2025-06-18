@@ -1,14 +1,14 @@
+import { type Dispatch, initRelay } from '@roll20-official/beacon-sdk'
 import { Effect } from 'effect'
+import { type App, shallowRef } from 'vue'
 import {
-    onInit,
     onChange,
+    onDragOver,
+    onInit,
     onSettingsChange,
     onSharedSettingsChange,
     onTranslationsRequest,
-    onDragOver,
 } from '@/external/relay-handlers'
-import { initRelay, type Dispatch } from '@roll20-official/beacon-sdk'
-import { shallowRef, type App } from 'vue'
 
 export const dispatchRef = shallowRef()
 export const relayConfig = {

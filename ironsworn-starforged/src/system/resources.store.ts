@@ -1,7 +1,7 @@
 import { createStore } from '@xstate/store'
+import { Context, Effect, Layer } from 'effect'
 import { assert } from '@/utility/assert'
 import { isNumberBetween } from '@/utility/is-number-between'
-import { Effect, Layer, Context } from 'effect'
 
 type ResourcesSetEvent = SetEvent<Resources>
 

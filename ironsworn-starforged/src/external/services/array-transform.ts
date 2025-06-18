@@ -1,4 +1,4 @@
-import { Effect, Context, Data, Layer } from 'effect'
+import { Context, Data, Effect, Layer } from 'effect'
 
 class ArrayTransformError extends Data.TaggedError('ArrayTransformError')<{
     // biome-ignore lint: Intentional any
