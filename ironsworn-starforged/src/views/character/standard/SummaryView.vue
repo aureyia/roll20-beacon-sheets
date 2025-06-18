@@ -15,10 +15,10 @@ import { IMPACTS } from '@/system/impacts/types'
 import { ImpactDialog } from '@/components/impacts'
 
 const stores = {
-  meta: metaStore,
-  character: characterStore,
-  resources: resourcesStore,
-  stats: statsStore,
+    meta: metaStore,
+    character: characterStore,
+    resources: resourcesStore,
+    stats: statsStore,
 }
 
 const toggleStatsEdit = ref(false)
@@ -30,21 +30,21 @@ const stats = ref(stores.stats.get().context)
 const resources = ref(stores.resources.get().context)
 
 characterStore.subscribe(snapshot => {
-  character.value = snapshot.context
+    character.value = snapshot.context
 })
 
 resourcesStore.subscribe(snapshot => {
-  resources.value = snapshot.context
+    resources.value = snapshot.context
 })
 
 statsStore.subscribe(snapshot => {
-  stats.value = snapshot.context
+    stats.value = snapshot.context
 })
 
 type Store = keyof typeof stores
 
 const update = (store: Store, label: any, event: any) => {
-  stores[store].trigger.set({ label, value: event })
+    stores[store].trigger.set({ label, value: event })
 }
 </script>
 

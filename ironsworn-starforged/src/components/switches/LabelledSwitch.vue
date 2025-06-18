@@ -2,10 +2,10 @@
 import { Switch } from '@/components/ui/switch'
 
 defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
+    label: {
+        type: String,
+        required: true,
+    },
 })
 
 const model = defineModel<boolean>({ required: true })

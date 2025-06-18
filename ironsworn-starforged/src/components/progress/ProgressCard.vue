@@ -8,8 +8,8 @@ import { tasksStore } from '@/system/tasks/store'
 const taskStore = tasksStore.get().context.list
 
 const props = defineProps({
-  removeMode: Boolean,
-  task: { type: Object, default: {} },
+    removeMode: Boolean,
+    task: { type: Object, default: {} },
 })
 </script>
 

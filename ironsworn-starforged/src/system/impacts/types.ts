@@ -1,41 +1,41 @@
 export const IMPACTS = {
-  misfortunes: ['wounded', 'shaken', 'unprepared'],
-  lastingEffects: ['permanently harmed', 'traumatized'],
-  burdens: ['doomed', 'tormented', 'indebted'],
-  currentVehicle: ['battered', 'cursed'],
+    misfortunes: ['wounded', 'shaken', 'unprepared'],
+    lastingEffects: ['permanently harmed', 'traumatized'],
+    burdens: ['doomed', 'tormented', 'indebted'],
+    currentVehicle: ['battered', 'cursed'],
 }
 
 export type Impact = {
-  _id: string
-  category:
-    | 'misfortunes'
-    | 'lastingEffects'
-    | 'burdens'
-    | 'currentVehicle'
-    | 'other'
-  description?: string
+    _id: string
+    category:
+        | 'misfortunes'
+        | 'lastingEffects'
+        | 'burdens'
+        | 'currentVehicle'
+        | 'other'
+    description?: string
 }
 
 export type Misfortune = Impact & {
-  name: 'wounded' | 'shaken' | 'unprepared'
+    name: 'wounded' | 'shaken' | 'unprepared'
 }
 export type LastingEffect = Impact & {
-  name: 'permanently harmed' | 'traumatized'
+    name: 'permanently harmed' | 'traumatized'
 }
 export type Burden = Impact & {
-  name: 'doomed' | 'tormented' | 'indebted'
+    name: 'doomed' | 'tormented' | 'indebted'
 }
 export type CurrentVehicle = Impact & {
-  name: 'battered' | 'cursed'
+    name: 'battered' | 'cursed'
 }
 
 export type Other = Impact & {
-  name: string
+    name: string
 }
 
 export type AnyImpact =
-  | Misfortune
-  | LastingEffect
-  | Burden
-  | CurrentVehicle
-  | Other
+    | Misfortune
+    | LastingEffect
+    | Burden
+    | CurrentVehicle
+    | Other

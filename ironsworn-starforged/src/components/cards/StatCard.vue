@@ -2,17 +2,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  stat: {
-    type: Number,
-    required: true,
-  },
-  numberStyle: {
-    type: String,
-  },
+    name: {
+        type: String,
+        required: true,
+    },
+    stat: {
+        type: Number,
+        required: true,
+    },
+    numberStyle: {
+        type: String,
+    },
 })
 </script>
 

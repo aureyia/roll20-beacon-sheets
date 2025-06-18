@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select'
 import { ref, watch } from 'vue'
 import { tasksStore } from '@/system/tasks/store'
@@ -16,25 +16,25 @@ const selectedValue = ref(props.ticks)
 const taskStore = tasksStore.get().context.list
 
 const differenceOf = (a: string) => (b: string) =>
-  Number.parseInt(b) - Number.parseInt(a)
+    Number.parseInt(b) - Number.parseInt(a)
 const progressUpdate = (id: string, value: string) => {
-  Number.parseInt(props.ticks as string) !== Number.parseInt(value)
-    ? taskStore.manualProgressUpdate(
-        id,
-        differenceOf(props.ticks as string)(value)
-      )
-    : null
+    Number.parseInt(props.ticks as string) !== Number.parseInt(value)
+        ? taskStore.manualProgressUpdate(
+              id,
+              differenceOf(props.ticks as string)(value)
+          )
+        : null
 
-  selectedValue.value !== props.ticks
-    ? (selectedValue.value = props.ticks)
-    : selectedValue.value
+    selectedValue.value !== props.ticks
+        ? (selectedValue.value = props.ticks)
+        : selectedValue.value
 }
 
 watch(
-  () => props.ticks,
-  newValue => {
-    selectedValue.value = newValue
-  }
+    () => props.ticks,
+    newValue => {
+        selectedValue.value = newValue
+    }
 )
 </script>
 

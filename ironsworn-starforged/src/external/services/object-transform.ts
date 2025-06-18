@@ -1,47 +1,49 @@
 import { Effect, Context, Data, Layer } from 'effect'
 
 class ObjectTransformError extends Data.TaggedError('ObjectTransformError')<{
-  cause: []
-  message: string
+    cause: []
+    message: string
 }> {}
 
 export class ObjectTransform extends Context.Tag('ArrayTransform')<
-  ObjectTransform,
-  {
-    readonly objectToArray: (
-      array: []
-    ) => Effect.Effect<any[] | ObjectTransformError>
-  }
+    ObjectTransform,
+    {
+        readonly objectToArray: (
+            array: []
+        ) => Effect.Effect<any[] | ObjectTransformError>
+    }
 >() {}
 
 export const ObjectTransformLive = Layer.effect(
-  ObjectTransform,
-  Effect.gen(function* () {
-    return {
-      // biome-ignore lint: Intentional any
-      objectToArray: (object: Record<string, any>) =>
-        Effect.sync(() => {
-          if (!object) return []
+    ObjectTransform,
+    Effect.gen(function* () {
+        return {
+            // biome-ignore lint: Intentional any
+            objectToArray: (object: Record<string, any>) =>
+                Effect.sync(() => {
+                    if (!object) return []
 
-          // biome-ignore lint: Intentional any
-          const newArray: any[] = []
-          const objectIds = Object.keys(object) as (keyof typeof object)[]
+                    // biome-ignore lint: Intentional any
+                    const newArray: any[] = []
+                    const objectIds = Object.keys(
+                        object
+                    ) as (keyof typeof object)[]
 
-          for (const key of objectIds) {
-            if (object[key]) {
-              const position = object[key].arrayPosition
-              const item = {
-                _id: key,
-                ...object[key],
-                arrayPosition: undefined,
-              }
-              newArray[position] = item
-            }
-          }
+                    for (const key of objectIds) {
+                        if (object[key]) {
+                            const position = object[key].arrayPosition
+                            const item = {
+                                _id: key,
+                                ...object[key],
+                                arrayPosition: undefined,
+                            }
+                            newArray[position] = item
+                        }
+                    }
 
-          // Remove all undefined values in case of deletes
-          return newArray.filter(x => x)
-        }),
-    }
-  })
+                    // Remove all undefined values in case of deletes
+                    return newArray.filter(x => x)
+                }),
+        }
+    })
 )

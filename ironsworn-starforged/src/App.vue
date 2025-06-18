@@ -6,7 +6,7 @@ const router = useRouter()
 const mode = settingsStore.select(context => context.mode)
 
 mode.subscribe(value => {
-  router.push({ name: value ?? 'mode-select' })
+    router.push({ name: value ?? 'mode-select' })
 })
 </script>
 

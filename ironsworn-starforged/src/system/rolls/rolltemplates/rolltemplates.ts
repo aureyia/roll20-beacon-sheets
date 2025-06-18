@@ -12,21 +12,21 @@ handlebars.registerPartial('rollComponents', partials.rollComponents)
 // Starforged handlebars HTML partials
 handlebars.registerPartial('characterRollHeader', partials.characterRollHeader)
 handlebars.registerPartial(
-  'compactCharacterRollHeader',
-  partials.compactCharacterRollHeader
+    'compactCharacterRollHeader',
+    partials.compactCharacterRollHeader
 )
 handlebars.registerPartial('actionScore', partials.actionScore)
 handlebars.registerPartial('compactActionScore', partials.compactActionScore)
 handlebars.registerPartial('rollOutcome', partials.rollOutcome)
 handlebars.registerPartial('compactRollOutcome', partials.compactRollOutcome)
 handlebars.registerPartial(
-  'compactMomentumBurned',
-  partials.compactMomentumBurned
+    'compactMomentumBurned',
+    partials.compactMomentumBurned
 )
 handlebars.registerPartial('challengeDice', partials.challengeDice)
 handlebars.registerPartial(
-  'compactChallengeDice',
-  partials.compactChallengeDice
+    'compactChallengeDice',
+    partials.compactChallengeDice
 )
 handlebars.registerPartial('successBg', partials.successBg)
 handlebars.registerPartial('failBg', partials.failBg)
@@ -48,11 +48,11 @@ handlebars.registerHelper('or', (a, b) => a || b)
 handlebars.registerHelper('and', (a, b) => a && b)
 
 handlebars.registerHelper('assign', (varName, value, options) => {
-  options.data.root[varName] = value
+    options.data.root[varName] = value
 })
 
 handlebars.registerHelper('assignActionScore', (varName, value, options) => {
-  options.data.root[varName] = value.score
+    options.data.root[varName] = value.score
 })
 
 // System Helper functions
@@ -60,68 +60,68 @@ handlebars.registerHelper('getChallengeDie', system.getChallengeDie)
 handlebars.registerHelper('getActionDie', system.getActionDie)
 
 const rollTemplates = {
-  stat: handlebars.compile(templates.statRollTemplate),
-  'stat-compact': handlebars.compile(templates.compactStatRollTemplate),
-  task: handlebars.compile(templates.taskRollTemplate),
-  move: handlebars.compile(templates.statRollTemplate),
-  'move-compact': handlebars.compile(templates.compactStatRollTemplate),
+    stat: handlebars.compile(templates.statRollTemplate),
+    'stat-compact': handlebars.compile(templates.compactStatRollTemplate),
+    task: handlebars.compile(templates.taskRollTemplate),
+    move: handlebars.compile(templates.statRollTemplate),
+    'move-compact': handlebars.compile(templates.compactStatRollTemplate),
 }
 
 // This corresponds to the data returned by Beacon when you ask it to roll dice for you.
 // You may want to re-use this to simplify crafting your own templates.
 export type DiceComponent = {
-  /** The number of sides the die has */
-  sides?: number
-  /** The number of dice with the amount of sides */
-  count?: number
-  /** A string-based formula to roll, used instead of sides and count */
-  rollFormula?: string
-  /** The label to show where this came from, primarily used for static bonuses */
-  label?: string
-  /** The numerical value that is the number rolled on the dice, or the value of the bonus */
-  value?: number
-  /** Indicates whether or not to always show this component in the breakdown, even if it's 0 */
-  alwaysShowInBreakdown?: boolean
-  /** If a challenge die will indicate if the roll has been exceeded by the action score */
-  exceeded?: boolean
+    /** The number of sides the die has */
+    sides?: number
+    /** The number of dice with the amount of sides */
+    count?: number
+    /** A string-based formula to roll, used instead of sides and count */
+    rollFormula?: string
+    /** The label to show where this came from, primarily used for static bonuses */
+    label?: string
+    /** The numerical value that is the number rolled on the dice, or the value of the bonus */
+    value?: number
+    /** Indicates whether or not to always show this component in the breakdown, even if it's 0 */
+    alwaysShowInBreakdown?: boolean
+    /** If a challenge die will indicate if the roll has been exceeded by the action score */
+    exceeded?: boolean
 }
 
 // Generic params used by our 2 templates. These can be changed for your own templates.
 type CommonParameters = {
-  characterName?: string
-  title: string
+    characterName?: string
+    title: string
 }
 
 export type RollStat = {
-  type: 'stat' | 'stat-compact' | 'move' | 'move-compact'
-  parameters: CommonParameters & {
-    dice: {
-      challengeDie1: number
-      challengeDie2: number
-      actionDie: {
-        value: number
-        negated: boolean
-      }
+    type: 'stat' | 'stat-compact' | 'move' | 'move-compact'
+    parameters: CommonParameters & {
+        dice: {
+            challengeDie1: number
+            challengeDie2: number
+            actionDie: {
+                value: number
+                negated: boolean
+            }
+        }
+        outcome: string
+        score: number
+        burnedMomentum: boolean
     }
-    outcome: string
-    score: number
-    burnedMomentum: boolean
-  }
 }
 
 export type RollTask = {
-  type: 'task'
-  parameters: CommonParameters & {
-    dice: DiceComponent[]
-    progress: number
-  }
+    type: 'task'
+    parameters: CommonParameters & {
+        dice: DiceComponent[]
+        progress: number
+    }
 }
 
 export type AnyRollTemplate = RollStat | RollTask
 
 // Returns the final HTML for a given template using all the required data.
 export const createRollTemplate = ({ type, parameters }: AnyRollTemplate) => {
-  const template = rollTemplates[type]
-  const rollTemplate = template(parameters)
-  return rollTemplate
+    const template = rollTemplates[type]
+    const rollTemplate = template(parameters)
+    return rollTemplate
 }

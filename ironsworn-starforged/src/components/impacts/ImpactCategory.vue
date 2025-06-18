@@ -2,10 +2,10 @@
 import { ImpactList } from '@/components/impacts'
 
 defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
+    label: {
+        type: String,
+        required: true,
+    },
 })
 </script>
 

@@ -3,11 +3,11 @@ import { Effect, Layer } from 'effect'
 import type { ActorRefFrom } from 'xstate'
 import { createId } from '@paralleldrive/cuid2'
 import type {
-  Character,
-  CompendiumDragDropData,
-  Dispatch,
-  Settings,
-  UpdateArgs,
+    Character,
+    CompendiumDragDropData,
+    Dispatch,
+    Settings,
+    UpdateArgs,
 } from '@roll20-official/beacon-sdk'
 import { type App, reactive, ref, watch, nextTick } from 'vue'
 import { metaStore } from './store'
@@ -26,161 +26,161 @@ import { DehydrateTasksLive } from '@/system/tasks/store'
 export const beaconPulse = ref(0)
 
 export type InitValues = {
-  id: string
-  character: Character
-  settings: Settings
-  compendiumDrop: CompendiumDragDropData | null
+    id: string
+    character: Character
+    settings: Settings
+    compendiumDrop: CompendiumDragDropData | null
 }
 
 export const initValues: InitValues = reactive({
-  id: '',
-  character: {
-    attributes: {},
-  } as Character,
-  settings: {} as Settings,
-  compendiumDrop: null,
+    id: '',
+    character: {
+        attributes: {},
+    } as Character,
+    settings: {} as Settings,
+    compendiumDrop: null,
 })
 
 const DehydrationServicesLive = Layer.mergeAll(
-  DehydrateMetaLive,
-  DehydrateCharacterLive,
-  DehydrateAssetsLive,
-  DehydrateStatsLive,
-  DehydrateResourcesLive,
-  DehydrateMomentumLive,
-  DehydrateImpactsLive,
-  DehydrateSettingsLive,
-  DehydrateTasksLive
+    DehydrateMetaLive,
+    DehydrateCharacterLive,
+    DehydrateAssetsLive,
+    DehydrateStatsLive,
+    DehydrateResourcesLive,
+    DehydrateMomentumLive,
+    DehydrateImpactsLive,
+    DehydrateSettingsLive,
+    DehydrateTasksLive
 )
 
 const MainLive = DehydrationLive.pipe(Layer.provide(DehydrationServicesLive))
 
 // biome-ignore lint: Intentional any
 const update = (dispatch: Dispatch, data: any) =>
-  Effect.gen(function* () {
-    const dehydration = yield* Dehydration
+    Effect.gen(function* () {
+        const dehydration = yield* Dehydration
 
-    const character = yield* dehydration.dehydrateStores()
-    character.character.attributes.updateId = createId()
+        const character = yield* dehydration.dehydrateStores()
+        character.character.attributes.updateId = createId()
 
-    dispatch.updateCharacter(character as UpdateArgs)
-  }).pipe(Effect.provide(MainLive))
+        dispatch.updateCharacter(character as UpdateArgs)
+    }).pipe(Effect.provide(MainLive))
 
 export type SyncActor = ActorRefFrom<typeof machine>
 export const machine = setup({
-  types: {
-    context: {} as {
-      // biome-ignore lint: Intentional any
-      character: any
-      dispatch?: Dispatch
-      updateId: string
+    types: {
+        context: {} as {
+            // biome-ignore lint: Intentional any
+            character: any
+            dispatch?: Dispatch
+            updateId: string
+        },
+        events: {} as
+            | { type: 'initialised'; dispatch: Dispatch }
+            | { type: 'update' }
+            | { type: 'synced' }
+            | { type: 'hydrated' },
     },
-    events: {} as
-      | { type: 'initialised'; dispatch: Dispatch }
-      | { type: 'update' }
-      | { type: 'synced' }
-      | { type: 'hydrated' },
-  },
-  actions: {
-    saveDispatchToContext: ({ context, event }) => {
-      assertEvent(event, 'initialised')
-      context.dispatch = event.dispatch
+    actions: {
+        saveDispatchToContext: ({ context, event }) => {
+            assertEvent(event, 'initialised')
+            context.dispatch = event.dispatch
+        },
     },
-  },
 }).createMachine({
-  context: {
-    character: {
-      id: '',
-      character: {
-        attributes: {},
-      } as Character,
-      settings: {} as Settings,
-      compendiumDrop: null,
-    },
-    updateId: '',
-  },
-  id: 'Syncing',
-  initial: 'initialising',
-  states: {
-    initialising: {
-      on: {
-        initialised: {
-          target: 'hydrating',
-          actions: {
-            type: 'saveDispatchToContext',
-          },
+    context: {
+        character: {
+            id: '',
+            character: {
+                attributes: {},
+            } as Character,
+            settings: {} as Settings,
+            compendiumDrop: null,
         },
-      },
+        updateId: '',
     },
-    hydrating: {
-      on: {
-        update: {
-          target: 'syncing',
+    id: 'Syncing',
+    initial: 'initialising',
+    states: {
+        initialising: {
+            on: {
+                initialised: {
+                    target: 'hydrating',
+                    actions: {
+                        type: 'saveDispatchToContext',
+                    },
+                },
+            },
         },
-      },
-    },
-    syncing: {
-      on: {
-        synced: {
-          target: 'hydrating',
+        hydrating: {
+            on: {
+                update: {
+                    target: 'syncing',
+                },
+            },
         },
-      },
+        syncing: {
+            on: {
+                synced: {
+                    target: 'hydrating',
+                },
+            },
+        },
     },
-  },
 })
 
 export const sync = createActor(machine)
 export const syncPlugin = (dispatch: Dispatch) => {
-  sync.subscribe(async snapshot => {
-    if (snapshot.value === 'initialising') {
-      console.log('Sync: Initialising')
-      metaStore.send({
-        type: 'setCampaignId',
-        id: initValues.settings.campaignId,
-      })
+    sync.subscribe(async snapshot => {
+        if (snapshot.value === 'initialising') {
+            console.log('Sync: Initialising')
+            metaStore.send({
+                type: 'setCampaignId',
+                id: initValues.settings.campaignId,
+            })
 
-      metaStore.send({
-        type: 'setPermissions',
-        isOwner: initValues.settings.owned,
-        isGM: initValues.settings.gm,
-      })
+            metaStore.send({
+                type: 'setPermissions',
+                isOwner: initValues.settings.owned,
+                isGM: initValues.settings.gm,
+            })
 
-      sync.send({
-        type: 'initialised',
-        dispatch: dispatch,
-      })
+            sync.send({
+                type: 'initialised',
+                dispatch: dispatch,
+            })
+        }
+
+        if (snapshot.value === 'hydrating') {
+            console.log('Sync: Hydrating')
+            const characterId = initValues.character.id
+            const savedChar = dispatch.characters[characterId]
+
+            const { attributes } = savedChar
+            const { ...profile } = savedChar
+
+            await Effect.runPromise(
+                Effect.gen(function* () {
+                    const hydration = yield* Hydration
+                    return hydration.hydrateStores(attributes, profile)
+                }).pipe(Effect.provide(HydrationLive))
+            )
+        }
+
+        if (snapshot.value === 'syncing') {
+            console.log('Sync: Syncing')
+            await Effect.runPromise(update(dispatch, 'nom'))
+            sync.send({
+                type: 'synced',
+            })
+        }
+    })
+
+    sync.start()
+
+    return {
+        install(app: App) {
+            app.provide('sync', sync)
+        },
     }
-
-    if (snapshot.value === 'hydrating') {
-      console.log('Sync: Hydrating')
-      const characterId = initValues.character.id
-      const savedChar = dispatch.characters[characterId]
-
-      const { attributes } = savedChar
-      const { ...profile } = savedChar
-
-      await Effect.runPromise(
-        Effect.gen(function* () {
-          const hydration = yield* Hydration
-          return hydration.hydrateStores(attributes, profile)
-        }).pipe(Effect.provide(HydrationLive))
-      )
-    }
-
-    if (snapshot.value === 'syncing') {
-      console.log('Sync: Syncing')
-      await Effect.runPromise(update(dispatch, 'nom'))
-      sync.send({
-        type: 'synced',
-      })
-    }
-  })
-
-  sync.start()
-
-  return {
-    install(app: App) {
-      app.provide('sync', sync)
-    },
-  }
 }

@@ -24,6 +24,7 @@
     "build-scss": "sass ./src/system/rolls/rolltemplates/styles/host.scss ./public/host.css --no-source-map --no-charset",
     "watch-scss": "sass --watch ./src/system/rolltemplates/styles/host.scss ./public/host.css --no-source-map --no-charset",
     "format": "biome format --write ./src",
+    "lint": "biome lint --write ./src",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "ci-check": "npm run format && npm run lint && npm run type-check && npm run test:unit && npm run test:e2e:local"
   },

@@ -2,13 +2,13 @@
 import { settingsStore } from '@/system/settings.store'
 
 const modeList = [
-  'character-standard',
-  'character-edge',
-  'guide',
-  'locations',
-  'oracles',
-  'shared',
-  'ship',
+    'character-standard',
+    'character-edge',
+    'guide',
+    'locations',
+    'oracles',
+    'shared',
+    'ship',
 ]
 </script>
 

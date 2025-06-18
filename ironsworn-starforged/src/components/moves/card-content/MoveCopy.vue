@@ -3,10 +3,10 @@ import { CardContent } from '@/components/ui/card'
 import { marked } from 'marked'
 
 defineProps({
-  moveData: {
-    type: Object,
-    required: true,
-  },
+    moveData: {
+        type: Object,
+        required: true,
+    },
 })
 </script>
 

@@ -27,36 +27,36 @@ const isDevEnvironment = ['development', 'test'].includes(env)
 export const isSimEnvironment = env === 'simulation'
 export const rollSpeed = ref([2000])
 export const intensity = ref(Intensity.Low) as VueRef<
-  ObjectValues<typeof Intensity>
+    ObjectValues<typeof Intensity>
 >
 export const postRef = ref()
 
 const main = Effect.promise(async () => {
-  const i18n = createI18n({})
-  const app = createApp(App)
+    const i18n = createI18n({})
+    const app = createApp(App)
 
-  const { sheetRelay, dispatch } = await Effect.runPromise(
-    isSimEnvironment ? simRelayPlugin() : sheetRelayPlugin(isDevEnvironment)
-  )
+    const { sheetRelay, dispatch } = await Effect.runPromise(
+        isSimEnvironment ? simRelayPlugin() : sheetRelayPlugin(isDevEnvironment)
+    )
 
-  const sync = syncPlugin(dispatch)
+    const sync = syncPlugin(dispatch)
 
-  app.use(router)
-  app.use(i18n)
-  app.use(sync)
-  app.use(sheetRelay)
+    app.use(router)
+    app.use(i18n)
+    app.use(sync)
+    app.use(sheetRelay)
 
-  Effect.runPromise(storeRelay)
+    Effect.runPromise(storeRelay)
 
-  if (isSimEnvironment) {
-    Effect.runPromise(runner(rollSpeed))
-  }
+    if (isSimEnvironment) {
+        Effect.runPromise(runner(rollSpeed))
+    }
 
-  app.mount('#app')
+    app.mount('#app')
 })
 
 const DevToolsLive = DevTools.layerWebSocket().pipe(
-  Layer.provide(BrowserSocket.layerWebSocketConstructor)
+    Layer.provide(BrowserSocket.layerWebSocketConstructor)
 )
 
 // BrowserRuntime.runMain(main)

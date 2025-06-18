@@ -11,24 +11,28 @@ const storeAssetList = () => assetsStore.get().context.list
 const removeMode = ref(false)
 
 const getAssetById = (asset: any) => {
-  const assets = starforged['Asset Types'].find(
-    (x: IAsset) => x.Name === asset.category
-  ).Assets
-  if (!assets) {
-    return Effect.fail(
-      new Error(`No assets found for category: ${asset.category}`)
+    const assets = starforged['Asset Types'].find(
+        (x: IAsset) => x.Name === asset.category
+    ).Assets
+    if (!assets) {
+        return Effect.fail(
+            new Error(`No assets found for category: ${asset.category}`)
+        )
+    }
+
+    const selectedAsset = assets.find(
+        (x: IAsset) => x.$id === asset.dataforgedId
     )
-  }
 
-  const selectedAsset = assets.find((x: IAsset) => x.$id === asset.dataforgedId)
+    if (!selectedAsset) {
+        return Effect.fail(
+            new Error(`No asset found for: ${asset.dataforgedId}`)
+        )
+    }
 
-  if (!selectedAsset) {
-    return Effect.fail(new Error(`No asset found for: ${asset.dataforgedId}`))
-  }
+    console.log('selectedAsset', selectedAsset)
 
-  console.log('selectedAsset', selectedAsset)
-
-  return Effect.succeed(selectedAsset)
+    return Effect.succeed(selectedAsset)
 }
 
 const assets = ref(storeAssetList())

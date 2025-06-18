@@ -11,26 +11,26 @@ const momentum = momentumStore.get().context.momentum
 const momentumRef = ref(momentum)
 
 const impactsList = [
-  ...impacts.context.misfortunes,
-  ...impacts.context.lastingEffects,
-  ...impacts.context.burdens,
-  ...impacts.context.currentVehicle,
-  ...impacts.context.other,
+    ...impacts.context.misfortunes,
+    ...impacts.context.lastingEffects,
+    ...impacts.context.burdens,
+    ...impacts.context.currentVehicle,
+    ...impacts.context.other,
 ]
 
 const numberOfImpacts = computed(() => impactsList.length)
 
 const burnMomentum = (resetValue: number) => {
-  momentumStore.trigger.set({ value: resetValue })
+    momentumStore.trigger.set({ value: resetValue })
 }
 
 momentumStore.subscribe(snapshot => {
-  momentumRef.value = snapshot.context.momentum
+    momentumRef.value = snapshot.context.momentum
 })
 
 defineProps({
-  edgeMode: Boolean,
-  default: () => false,
+    edgeMode: Boolean,
+    default: () => false,
 })
 </script>
 
