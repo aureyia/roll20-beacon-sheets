@@ -150,8 +150,8 @@ export const impactsStore = createStore({
 export class DehydrateImpacts extends Context.Tag('DehydrateImpacts')<
     DehydrateImpacts,
     {
-        // biome-ignore lint: Intentional any
         readonly dehydrate: () => Effect.Effect<
+            // biome-ignore lint: Intentional any
             Record<string, any>,
             Error,
             never

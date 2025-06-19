@@ -1,6 +1,6 @@
 import { Context, Effect, Layer } from 'effect'
-import type { Oracle } from './types'
 import type { IOracle } from '@/vendor/dataforged/dist/types'
+import type { Oracle } from './types'
 
 export class Oracles extends Context.Tag('Oracles')<
     Oracles,
@@ -15,6 +15,7 @@ export const OraclesLive = Layer.effect(
         return {
             parse: oracles =>
                 Effect.gen(function* () {
+                    
                     return yield* Effect.succeed(oracles)
                 }),
         }
