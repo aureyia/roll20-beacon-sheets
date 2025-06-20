@@ -8,7 +8,7 @@ import {
     onSettingsChange,
     onSharedSettingsChange,
     onTranslationsRequest,
-} from '@/external/relay-handlers'
+} from '@/external/relay_handlers'
 
 export const ref_dispatch = shallowRef()
 export const config_relay = {

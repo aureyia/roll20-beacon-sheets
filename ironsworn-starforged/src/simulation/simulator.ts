@@ -7,7 +7,7 @@ import {
     onSettingsChange,
     onSharedSettingsChange,
     onTranslationsRequest,
-} from '@/external/relay-handlers'
+} from '@/external/relay_handlers'
 import { ref_dispatch } from '@/external/vue.relay'
 import { relay_sim } from './dispatch.mock'
 import { roll_stream } from './generate_rolls'

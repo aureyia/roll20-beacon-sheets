@@ -5,7 +5,8 @@ import { Effect, Layer } from 'effect'
 import { createApp, ref, type Ref as VueRef } from 'vue'
 import { createI18n } from 'vue-i18n'
 
-import App from './App.vue'
+// @ts-ignore | Can't find module
+import App from '@/App.vue'
 
 import { relay_store } from './external/store.relay'
 import { plugin_sync } from './external/sync'

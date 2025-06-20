@@ -1,4 +1,4 @@
-import { INTENSITY } from '@/simulation/types'
+import type { Intensity } from '@/simulation/types'
 import {
     assets as assetsHigh,
     impacts as impactsHigh,
@@ -21,8 +21,7 @@ import {
     tasks as tasksMedium,
 } from './stores-medium'
 
-type IntensityValues = typeof INTENSITY[keyof typeof INTENSITY]
-export const resources = (seed: string, intensity: IntensityValues) => {
+export const resources = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
         return resourcesHigh(seed)
     }
@@ -32,7 +31,7 @@ export const resources = (seed: string, intensity: IntensityValues) => {
     return resourcesLow(seed)
 }
 
-export const stats = (seed: string, intensity: IntensityValues) => {
+export const stats = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
         return statsHigh(seed)
     }
@@ -42,7 +41,7 @@ export const stats = (seed: string, intensity: IntensityValues) => {
     return statsLow(seed)
 }
 
-export const impacts = (seed: string, intensity: IntensityValues) => {
+export const impacts = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
         return impactsHigh(seed)
     }
@@ -52,7 +51,7 @@ export const impacts = (seed: string, intensity: IntensityValues) => {
     return impactsLow(seed)
 }
 
-export const tasks = (seed: string, intensity: IntensityValues) => {
+export const tasks = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
         return tasksHigh(seed)
     }
@@ -62,7 +61,7 @@ export const tasks = (seed: string, intensity: IntensityValues) => {
     return tasksLow(seed)
 }
 
-export const assets = (seed: string, intensity: IntensityValues) => {
+export const assets = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
         return assetsHigh(seed)
     }
