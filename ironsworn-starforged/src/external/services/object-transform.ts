@@ -8,9 +8,7 @@ class ObjectTransformError extends Data.TaggedError('ObjectTransformError')<{
 export class ObjectTransform extends Context.Tag('ArrayTransform')<
     ObjectTransform,
     {
-        readonly objectToArray: (
-            array: []
-        ) => Effect.Effect<any[] | ObjectTransformError>
+        readonly object_to_array: (array: []) => Effect.Effect<any[] | ObjectTransformError>
     }
 >() {}
 
@@ -19,15 +17,13 @@ export const ObjectTransformLive = Layer.effect(
     Effect.gen(function* () {
         return {
             // biome-ignore lint: Intentional any
-            objectToArray: (object: Record<string, any>) =>
+            object_to_array: (object: Record<string, any>) =>
                 Effect.sync(() => {
                     if (!object) return []
 
                     // biome-ignore lint: Intentional any
                     const newArray: any[] = []
-                    const objectIds = Object.keys(
-                        object
-                    ) as (keyof typeof object)[]
+                    const objectIds = Object.keys(object) as (keyof typeof object)[]
 
                     for (const key of objectIds) {
                         if (object[key]) {

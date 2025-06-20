@@ -8,13 +8,13 @@ import {
     CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { settingsStore, type Settings } from '@/system/settings.store'
+import { store_settings, type Settings } from '@/system/settings.store'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 const selectMode = (mode: Settings['mode']) => {
-    settingsStore.trigger.set({ label: 'mode', value: mode })
+    store_settings.trigger.set({ label: 'mode', value: mode })
     router.push({ name: mode })
 }
 

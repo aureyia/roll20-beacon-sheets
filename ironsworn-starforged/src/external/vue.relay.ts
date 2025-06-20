@@ -10,8 +10,8 @@ import {
     onTranslationsRequest,
 } from '@/external/relay-handlers'
 
-export const dispatchRef = shallowRef()
-export const relayConfig = {
+export const ref_dispatch = shallowRef()
+export const config_relay = {
     handlers: {
         onInit,
         onChange,
@@ -22,39 +22,38 @@ export const relayConfig = {
     },
 }
 
-const devRelay = async () =>
+const relay_dev = async () =>
     ({
         // biome-ignore lint: Intentional any
-        update: (...args: any[]) => console.log('devRelay update', args),
+        update: (...args: any[]) => console.log('relay_dev update', args),
         // biome-ignore lint: Intentional any
-        updateCharacter: (...args: any[]) =>
-            console.log('devRelay updateCharacter', args),
+        updateCharacter: (...args: any[]) => console.log('relay_dev updateCharacter', args),
         characters: {},
         // biome-ignore lint: Intentional any
     }) as any as Dispatch
 
-export const sheetRelayPlugin = (mode: boolean) =>
+export const plugin_sheet_relay = (mode: boolean) =>
     Effect.gen(function* () {
-        console.log('relayConfig', relayConfig)
+        console.log('config_relay', config_relay)
         const dispatch = yield* Effect.promise(async () => {
             if (mode) {
-                return devRelay()
+                return relay_dev()
             }
             // @ts-ignore
-            return initRelay(relayConfig)
+            return initRelay(config_relay)
         })
 
-        dispatchRef.value = dispatch
-        console.log('dispatchRef.value', dispatchRef.value)
+        ref_dispatch.value = dispatch
+        console.log('ref_dispatch.value', ref_dispatch.value)
 
-        const sheetRelay = {
+        const relay_sheet = {
             install(app: App) {
                 app.provide('dispatch', dispatch)
             },
         }
 
         return {
-            sheetRelay,
+            relay_sheet,
             dispatch,
         }
     })

@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import { computed, inject, onMounted, onUnmounted, provide, ref } from 'vue'
+import { createActor } from 'xstate'
 import {
     MoveActiveCard,
     MoveAssetControl,
     MoveSelect,
 } from '@/components/moves'
-import { inject, computed, ref, provide, onMounted, onUnmounted } from 'vue'
-import { machine } from '@/system/rolls/machines/calculate-outcome'
-import { createActor } from 'xstate'
+import { machine } from '@/system/rolls/machines/calculate_outcome'
 
-const { activeMove }: any = inject('move')
+const { active_move }: any = inject('move')
 
 const actor = createActor(machine)
 const moveMode = ref('content')
@@ -39,7 +39,7 @@ onUnmounted(() => {
 })
 
 const categoryClass = computed(() =>
-    activeMove.value.split('/')[2].toLowerCase().replaceAll('_', '-')
+    active_move.value.split('/')[2].toLowerCase().replaceAll('_', '-')
 )
 </script>
 

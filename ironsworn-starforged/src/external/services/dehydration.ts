@@ -17,11 +17,11 @@ type DehydratedCharacter = {
 export class Dehydration extends Context.Tag('Dehydration')<
     Dehydration,
     {
-        dehydrateStores: () => Effect.Effect<DehydratedCharacter, Error>
+        dehydrate_stores: () => Effect.Effect<DehydratedCharacter, Error>
     }
 >() {}
 
-export const DehydrationLive = Layer.effect(
+export const live_dehydration = Layer.effect(
     Dehydration,
     Effect.gen(function* () {
         const stores = {
@@ -37,14 +37,12 @@ export const DehydrationLive = Layer.effect(
         }
 
         return {
-            dehydrateStores: () =>
+            dehydrate_stores: () =>
                 Effect.gen(function* () {
                     const dehydratedChar = {
                         character: { attributes: {} },
                     } as DehydratedCharacter
-                    const storeKeys = Object.keys(
-                        stores
-                    ) as (keyof typeof stores)[]
+                    const storeKeys = Object.keys(stores) as (keyof typeof stores)[]
 
                     for (const key of storeKeys) {
                         if (key === 'meta') {

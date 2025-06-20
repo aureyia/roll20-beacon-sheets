@@ -34,7 +34,7 @@ import {
     DialogFooter,
 } from '@/components/ui/dialog'
 import { IMPACTS, type AnyImpact } from '@/system/impacts/types'
-import { impactsStore, type AddImpact } from '@/system/impacts/store'
+import { store_impacts, type AddImpact } from '@/system/impacts/store'
 
 const fullImpactList = {
     ...IMPACTS,
@@ -54,7 +54,7 @@ const form = useForm({
 })
 
 const onSubmit = form.handleSubmit(values => {
-    impactsStore.trigger.add({ ...values } as AddImpact)
+    store_impacts.trigger.add({ ...values } as AddImpact)
 })
 </script>
 

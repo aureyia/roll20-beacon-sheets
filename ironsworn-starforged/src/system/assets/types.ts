@@ -12,13 +12,13 @@ export type AssetsHydrate = {
 
 export type Ability = {
     _id: string
-    dataforgedId: string
+    dataforged_id: string
     enabled: boolean
 }
 
 export type Asset = {
     _id: string
-    dataforgedId: string
+    dataforged_id: string
     name: string
     category: AssetCategory
     abilities: Ability[]

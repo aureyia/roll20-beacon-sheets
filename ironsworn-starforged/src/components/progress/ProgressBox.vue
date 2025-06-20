@@ -8,12 +8,12 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { ref, watch } from 'vue'
-import { tasksStore } from '@/system/tasks/store'
+import { store_tasks } from '@/system/tasks/store'
 
 const INPUTS = ['0', '1', '2', '3', '4'] as const
 const props = defineProps({ id: String, ticks: String })
 const selectedValue = ref(props.ticks)
-const taskStore = tasksStore.get().context.list
+const taskStore = store_tasks.get().context.list
 
 const differenceOf = (a: string) => (b: string) =>
     Number.parseInt(b) - Number.parseInt(a)

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Effect } from 'effect'
+import { inject, computed, ref } from 'vue'
 import {
     Card,
     CardContent,
@@ -6,14 +8,12 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import { inject, computed, ref } from 'vue'
-import { getMoveData } from '@/system/moves/utils'
-import { RadioGroup } from '@/components/ui/radio-group'
-import { Effect } from 'effect'
 import { Label } from '@/components/ui/label'
+import { RadioGroup } from '@/components/ui/radio-group'
+import { get_move_data } from '@/system/moves/utils'
 
-const { activeMove, selectedOption }: any = inject('move')
-const moveData = computed(() => Effect.runSync(getMoveData(activeMove.value)))
+const { active_move, selectedOption }: any = inject('move')
+const moveData = computed(() => Effect.runSync(get_move_data(active_move.value)))
 </script>
 
 <template>

@@ -1,12 +1,4 @@
-import type { LimitedRange } from '@/utility/limited-range'
-
-export const DIFFICULTIES = [
-    'troublesome',
-    'dangerous',
-    'formidable',
-    'extreme',
-    'epic',
-] as const
+export const DIFFICULTIES = ['troublesome', 'dangerous', 'formidable', 'extreme', 'epic'] as const
 
 export type ProgressRange = LimitedRange<0, 40>
 export type Task = {

@@ -1,7 +1,7 @@
 import { createStore } from '@xstate/store'
 import { Context, Effect, Layer } from 'effect'
 import { assert } from '@/utility/assert'
-import { isNumberBetween } from '@/utility/is-number-between'
+import { is_number_between } from '@/utility/is_number_between'
 
 type ResourcesSetEvent = SetEvent<Resources>
 
@@ -36,18 +36,17 @@ const RESOURCE_LIMIT = {
     spentXp: false,
 } as const
 
-const isResourceWithMaximum = (resource: keyof Resources) =>
-    RESOURCE_LIMIT[resource]
+const isResourceWithMaximum = (resource: keyof Resources) => RESOURCE_LIMIT[resource]
 
 const assertStoreValues = (values: any) => {
-    assert(isNumberBetween(values.health, 0, 5))
-    assert(isNumberBetween(values.spirit, 0, 5))
-    assert(isNumberBetween(values.supply, 0, 5))
+    assert(is_number_between(values.health, 0, 5))
+    assert(is_number_between(values.spirit, 0, 5))
+    assert(is_number_between(values.supply, 0, 5))
     assert(values.xp >= 0)
     assert(values.spentXp >= 0)
 }
 
-export const resourcesStore = createStore({
+export const store_resources = createStore({
     context: {
         health: 5,
         spirit: 5,
@@ -90,21 +89,17 @@ export const resourcesStore = createStore({
 export class DehydrateResources extends Context.Tag('DehydrateResources')<
     DehydrateResources,
     {
-        readonly dehydrate: () => Effect.Effect<
-            Record<string, any>,
-            never,
-            never
-        >
+        readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>
     }
 >() {}
 
-export const DehydrateResourcesLive = Layer.effect(
+export const live_dehydrate_resources = Layer.effect(
     DehydrateResources,
     Effect.gen(function* () {
         return {
             dehydrate: () =>
                 Effect.gen(function* () {
-                    const context = resourcesStore.get().context
+                    const context = store_resources.get().context
                     return yield* Effect.succeed({
                         health: context.health,
                         spirit: context.spirit,

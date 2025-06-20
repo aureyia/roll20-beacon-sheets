@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import * as z from 'zod'
+import { Effect } from 'effect'
+import { DialogFooter } from '@/components/ui/dialog'
+import { FormControl } from '@/components/ui/form'
+import { type AssetSubmission, store_assets } from '@/system/assets/store'
+import type { AssetCategory } from '@/system/assets/types'
+import { getAllAssetsForCategory } from '@/system/assets/utils'
+import type { IAsset } from '@/vendor/dataforged'
 import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
 import { FormField, FormItem, FormLabel } from '../ui/form'
-import type { IAsset } from '@/vendor/dataforged'
 import { Select, SelectContent, SelectTrigger, SelectValue } from '../ui/select'
-import { assetsStore, type AssetSubmission } from '@/system/assets/store'
-import { getAllAssetsForCategory } from '@/system/assets/utils'
-import type { AssetCategory } from '@/system/assets/types'
-import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
-import { Effect } from 'effect'
-import { FormControl } from '@/components/ui/form'
-import { DialogFooter } from '@/components/ui/dialog'
 
 const CATEGORIES: AssetCategory[] = ['Path', 'Companion', 'Deed'] as const
 
@@ -56,17 +53,17 @@ const onSubmit = form.handleSubmit(values => {
     }
 
     const submission: AssetSubmission = {
-        dataforgedId: selectedAsset.$id,
+        dataforged_id: selectedAsset.$id,
         name: values.asset,
         category: values.category as AssetSubmission['category'],
         meter: null,
     }
 
-    assetsStore.trigger.add(submission)
+    store_assets.trigger.add(submission)
 })
 
 const clearState = () => {
-    assetsStore.trigger.clear()
+    store_assets.trigger.clear()
 }
 </script>
 

@@ -9,7 +9,7 @@ export type Character = {
     pronouns: string
 }
 
-export const characterStore = createStore({
+export const store_character = createStore({
     context: {
         callsign: '',
         pronouns: '',
@@ -37,21 +37,17 @@ export const characterStore = createStore({
 export class DehydrateCharacter extends Context.Tag('DehydrateCharacter')<
     DehydrateCharacter,
     {
-        readonly dehydrate: () => Effect.Effect<
-            Record<string, any>,
-            never,
-            never
-        >
+        readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>
     }
 >() {}
 
-export const DehydrateCharacterLive = Layer.effect(
+export const live_dehydrate_character = Layer.effect(
     DehydrateCharacter,
     Effect.gen(function* () {
         return {
             dehydrate: () =>
                 Effect.gen(function* () {
-                    const context = characterStore.get().context
+                    const context = store_character.get().context
                     assert(typeof context.callsign === 'string')
                     assert(typeof context.pronouns === 'string')
 

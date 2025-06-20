@@ -1,18 +1,13 @@
 export const IMPACTS = {
     misfortunes: ['wounded', 'shaken', 'unprepared'],
-    lastingEffects: ['permanently harmed', 'traumatized'],
+    lasting_effects: ['permanently harmed', 'traumatized'],
     burdens: ['doomed', 'tormented', 'indebted'],
-    currentVehicle: ['battered', 'cursed'],
-}
+    current_vehicle: ['battered', 'cursed'],
+} as const
 
 export type Impact = {
     _id: string
-    category:
-        | 'misfortunes'
-        | 'lastingEffects'
-        | 'burdens'
-        | 'currentVehicle'
-        | 'other'
+    category: 'misfortunes' | 'lasting_effects' | 'burdens' | 'current_vehicle' | 'other'
     description?: string
 }
 
@@ -33,9 +28,4 @@ export type Other = Impact & {
     name: string
 }
 
-export type AnyImpact =
-    | Misfortune
-    | LastingEffect
-    | Burden
-    | CurrentVehicle
-    | Other
+export type AnyImpact = Misfortune | LastingEffect | Burden | CurrentVehicle | Other

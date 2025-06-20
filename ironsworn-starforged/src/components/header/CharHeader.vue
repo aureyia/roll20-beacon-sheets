@@ -3,7 +3,7 @@ import StandardNav from '../nav/StandardNav.vue'
 import { Button } from '@/components/ui/button'
 
 defineProps({
-    edgeMode: Boolean,
+    mode_edge: Boolean,
     default: () => false,
 })
 </script>
@@ -14,14 +14,14 @@ defineProps({
   >
     <div
       class="button-container ml-4 flex basis-1/4 justify-start"
-      v-if="edgeMode"
+      v-if="mode_edge"
     >
       <Button class="mr-2 w-20 p-2">Vows</Button>
     </div>
     <StandardNav class="ml-2 uppercase" />
     <div
       class="button-container mr-4 flex basis-1/4 justify-end"
-      v-if="edgeMode"
+      v-if="mode_edge"
     >
       <Button class="w-20 p-2">Assets</Button>
     </div>

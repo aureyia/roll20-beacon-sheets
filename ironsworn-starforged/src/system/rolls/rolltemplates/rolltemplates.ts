@@ -5,60 +5,51 @@ import * as templates from './templates'
 
 // Re-usable handlebars HTML partials.
 handlebars.registerPartial('wrapper', partials.wrapper)
-handlebars.registerPartial('rollComponents', partials.rollComponents)
+handlebars.registerPartial('rollComponents', partials.roll_components)
 
 // Starforged handlebars HTML partials
-handlebars.registerPartial('characterRollHeader', partials.characterRollHeader)
-handlebars.registerPartial(
-    'compactCharacterRollHeader',
-    partials.compactCharacterRollHeader
-)
-handlebars.registerPartial('actionScore', partials.actionScore)
-handlebars.registerPartial('compactActionScore', partials.compactActionScore)
-handlebars.registerPartial('rollOutcome', partials.rollOutcome)
-handlebars.registerPartial('compactRollOutcome', partials.compactRollOutcome)
-handlebars.registerPartial(
-    'compactMomentumBurned',
-    partials.compactMomentumBurned
-)
-handlebars.registerPartial('challengeDice', partials.challengeDice)
-handlebars.registerPartial(
-    'compactChallengeDice',
-    partials.compactChallengeDice
-)
-handlebars.registerPartial('successBg', partials.successBg)
-handlebars.registerPartial('failBg', partials.failBg)
-handlebars.registerPartial('challengeDieBg', partials.challengeDieBg)
-handlebars.registerPartial('actionScoreBg', partials.actionScoreBg)
-handlebars.registerPartial('actionDieBg', partials.actionDieBg)
+handlebars.registerPartial('characterRollHeader', partials.character_roll_header)
+handlebars.registerPartial('compactCharacterRollHeader', partials.compact_character_roll_header)
+handlebars.registerPartial('actionScore', partials.action_score)
+handlebars.registerPartial('compactActionScore', partials.compact_action_score)
+handlebars.registerPartial('rollOutcome', partials.roll_outcome)
+handlebars.registerPartial('compactRollOutcome', partials.compact_roll_outcome)
+handlebars.registerPartial('compactMomentumBurned', partials.compact_momentum_burned)
+handlebars.registerPartial('challengeDice', partials.challenge_dice)
+handlebars.registerPartial('compactChallengeDice', partials.compact_challenge_dice)
+handlebars.registerPartial('successBg', partials.success_bg)
+handlebars.registerPartial('failBg', partials.fail_bg)
+handlebars.registerPartial('challengeDieBg', partials.challenge_die_bg)
+handlebars.registerPartial('actionScoreBg', partials.action_score_bg)
+handlebars.registerPartial('actionDieBg', partials.action_die_bg)
 
 // Common Helper functions for math/transformations
-handlebars.registerHelper('sumComponents', expressions.sumComponents)
-handlebars.registerHelper('getDice', expressions.getDice)
-handlebars.registerHelper('isGreater', expressions.isGreater)
-handlebars.registerHelper('isGreaterOrEqual', expressions.isGreaterOrEqual)
-handlebars.registerHelper('isEqual', expressions.isEqual)
-handlebars.registerHelper('isMatching', expressions.isMatching)
-handlebars.registerHelper('isArray', expressions.isArray)
+handlebars.registerHelper('sumComponents', expressions.sum_components)
+handlebars.registerHelper('getDice', expressions.get_dice)
+handlebars.registerHelper('isGreater', expressions.is_greater)
+handlebars.registerHelper('isGreaterOrEqual', expressions.is_greater_or_equal)
+handlebars.registerHelper('isEqual', expressions.is_equal)
+handlebars.registerHelper('isMatching', expressions.is_matching)
+handlebars.registerHelper('isArray', expressions.is_array)
 handlebars.registerHelper('capitalize', expressions.capitalize)
 handlebars.registerHelper('not', v => !v)
 handlebars.registerHelper('or', (a, b) => a || b)
 handlebars.registerHelper('and', (a, b) => a && b)
 
-handlebars.registerHelper('assign', (varName, value, options) => {
-    options.data.root[varName] = value
+handlebars.registerHelper('assign', (name, value, options) => {
+    options.data.root[name] = value
 })
 
-handlebars.registerHelper('assignActionScore', (varName, value, options) => {
-    options.data.root[varName] = value.score
+handlebars.registerHelper('assignActionScore', (name, value, options) => {
+    options.data.root[name] = value.score
 })
 
-const rollTemplates = {
-    stat: handlebars.compile(templates.statRollTemplate),
-    'stat-compact': handlebars.compile(templates.compactStatRollTemplate),
-    task: handlebars.compile(templates.taskRollTemplate),
-    move: handlebars.compile(templates.statRollTemplate),
-    'move-compact': handlebars.compile(templates.compactStatRollTemplate),
+const templates_roll = {
+    stat: handlebars.compile(templates.stat_roll_template),
+    stat_compact: handlebars.compile(templates.compact_stat_roll_template),
+    task: handlebars.compile(templates.task_roll_template),
+    move: handlebars.compile(templates.stat_roll_template),
+    move_compact: handlebars.compile(templates.compact_stat_roll_template),
 }
 
 // This corresponds to the data returned by Beacon when you ask it to roll dice for you.
@@ -82,24 +73,24 @@ export type DiceComponent = {
 
 // Generic params used by our 2 templates. These can be changed for your own templates.
 type CommonParameters = {
-    characterName?: string
+    character_name?: string
     title: string
 }
 
 export type RollStat = {
-    type: 'stat' | 'stat-compact' | 'move' | 'move-compact'
+    type: 'stat' | 'stat_compact' | 'move' | 'move_compact'
     parameters: CommonParameters & {
         dice: {
-            challengeDie1: number
-            challengeDie2: number
-            actionDie: {
+            challenge_die1: number
+            challenge_die2: number
+            action_die: {
                 value: number
                 negated: boolean
             }
         }
         outcome: string
         score: number
-        burnedMomentum: boolean
+        momentum_burned: boolean
     }
 }
 
@@ -112,10 +103,5 @@ export type RollTask = {
 }
 
 export type AnyRollTemplate = RollStat | RollTask
-
-// Returns the final HTML for a given template using all the required data.
-export const createRollTemplate = ({ type, parameters }: AnyRollTemplate) => {
-    const template = rollTemplates[type]
-    const rollTemplate = template(parameters)
-    return rollTemplate
-}
+export const roll_template_create = ({ type, parameters }: AnyRollTemplate) =>
+    templates_roll[type](parameters)

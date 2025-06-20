@@ -1,6 +1,6 @@
 import { Effect } from 'effect'
-import { PRNGLive, PRNG } from './prng'
-import { describe, test, vi, expect } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
+import { live_prng, PRNG } from './prng'
 
 describe('PRNG', () => {
     test('same number is returned for set seed and salt: 1', () => {
@@ -8,8 +8,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('1', '1')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('1', '1')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(354840034)
 
@@ -17,8 +17,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('1', '1')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('1', '1')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(354840034)
 
@@ -26,8 +26,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('1', '1')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('1', '1')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(354840034)
     })
@@ -37,8 +37,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('2', '2')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('2', '2')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(1290403781)
 
@@ -46,8 +46,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('2', '2')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('2', '2')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(1290403781)
 
@@ -55,8 +55,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('2', '2')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('2', '2')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(1290403781)
     })
@@ -66,8 +66,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('3', '3')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('3', '3')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(1602988142)
 
@@ -75,8 +75,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('3', '3')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('3', '3')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(1602988142)
 
@@ -84,8 +84,8 @@ describe('PRNG', () => {
             Effect.runSync(
                 Effect.gen(function* () {
                     const rng = yield* PRNG
-                    return rng.generateRandomNumber('3', '3')
-                }).pipe(Effect.provide(PRNGLive))
+                    return rng.generate_random_number('3', '3')
+                }).pipe(Effect.provide(live_prng))
             )
         ).toBe(1602988142)
     })

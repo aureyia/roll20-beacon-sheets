@@ -7,9 +7,9 @@ import { createI18n } from 'vue-i18n'
 
 import App from './App.vue'
 
-import { storeRelay } from './external/store.relay'
-import { syncPlugin } from './external/sync'
-import { sheetRelayPlugin } from './external/vue.relay'
+import { relay_store } from './external/store.relay'
+import { plugin_sync } from './external/sync'
+import { plugin_sheet_relay } from './external/vue.relay'
 
 import router from './router'
 
@@ -17,48 +17,46 @@ import './sheet/css/index.css'
 import './sheet/scss/index.scss'
 
 import { runner } from './simulation/runner'
-import { simRelayPlugin } from './simulation/simulator'
+import { plugin_relay_sim } from './simulation/simulator'
 import { Intensity } from './simulation/types'
 
 // @ts-ignore
 const env = import.meta.env.MODE || ''
 // Determines if the offline mode dev relay should be used
-const isDevEnvironment = ['development', 'test'].includes(env)
-export const isSimEnvironment = env === 'simulation'
-export const rollSpeed = ref([2000])
-export const intensity = ref(Intensity.Low) as VueRef<
-    ObjectValues<typeof Intensity>
->
+const is_dev_environment = ['development', 'test'].includes(env)
+export const is_sim_environment = env === 'simulation'
+export const roll_speed_ms = ref([2000])
+export const ref_intensity = ref(Intensity.Low) as VueRef<ObjectValues<typeof Intensity>>
 export const postRef = ref()
 
 const main = Effect.promise(async () => {
     const i18n = createI18n({})
     const app = createApp(App)
 
-    const { sheetRelay, dispatch } = await Effect.runPromise(
-        isSimEnvironment ? simRelayPlugin() : sheetRelayPlugin(isDevEnvironment)
+    const { relay_sheet, dispatch } = await Effect.runPromise(
+        is_sim_environment ? plugin_relay_sim() : plugin_sheet_relay(is_dev_environment)
     )
 
-    const sync = syncPlugin(dispatch)
+    const sync = plugin_sync(dispatch)
 
     app.use(router)
     app.use(i18n)
     app.use(sync)
-    app.use(sheetRelay)
+    app.use(relay_sheet)
 
-    Effect.runPromise(storeRelay)
+    Effect.runPromise(relay_store)
 
-    if (isSimEnvironment) {
-        Effect.runPromise(runner(rollSpeed))
+    if (is_sim_environment) {
+        Effect.runPromise(runner(roll_speed_ms))
     }
 
     app.mount('#app')
 })
 
-const DevToolsLive = DevTools.layerWebSocket().pipe(
+const live_dev_tools = DevTools.layerWebSocket().pipe(
     Layer.provide(BrowserSocket.layerWebSocketConstructor)
 )
 
 // BrowserRuntime.runMain(main)
 
-main.pipe(Effect.provide(DevToolsLive), BrowserRuntime.runMain)
+main.pipe(Effect.provide(live_dev_tools), BrowserRuntime.runMain)

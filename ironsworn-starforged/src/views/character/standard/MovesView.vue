@@ -4,23 +4,23 @@ import MovesOverView from '@/views/character/standard/moves/MovesOverView.vue'
 import MovesDetailView from '@/views/character/standard/moves/MovesDetailView.vue'
 
 const viewMode = ref(false)
-const activeMove = ref('')
+const active_move = ref('')
 const selectedOption = ref('')
 
-const updateActiveMove = (moveId: string) => {
+const update_active_move = (moveId: string) => {
     viewMode.value = true
-    activeMove.value = moveId
+    active_move.value = moveId
 }
-const clearActiveMove = () => {
+const clear_active_move = () => {
     viewMode.value = false
-    activeMove.value = ''
+    active_move.value = ''
 }
 
 provide('move', {
-    activeMove,
+    active_move,
     selectedOption,
-    updateActiveMove,
-    clearActiveMove,
+    update_active_move,
+    clear_active_move,
 })
 </script>
 

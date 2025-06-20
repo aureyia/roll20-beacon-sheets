@@ -1,8 +1,6 @@
-import { arrayToObject, objectToArray } from '@/utility/objectify'
-import type { LimitedRange } from '@/utility/limited-range'
-
-import { Effect, Layer, Context } from 'effect'
 import { createStore } from '@xstate/store'
+import { Context, Effect, Layer } from 'effect'
+import { array_to_object, object_to_array } from '@/utility/objectify'
 
 export type ProgressRange = LimitedRange<0, 40>
 export type Task = {
@@ -17,12 +15,7 @@ export type Task = {
 
 export type Vow = Omit<Task, 'countdown'>
 export type GenericTask = Omit<Task, 'countdown'>
-export type Difficulty =
-    | 'troublesome'
-    | 'dangerous'
-    | 'formidable'
-    | 'extreme'
-    | 'epic'
+export type Difficulty = 'troublesome' | 'dangerous' | 'formidable' | 'extreme' | 'epic'
 export type TaskCategory = 'vow' | 'generic' | 'challenge'
 export type TaskStatus = 'active' | 'completed' | 'failed' | 'abandoned'
 export type Countdown = 0 | 1 | 2 | 3 | 4
@@ -101,13 +94,13 @@ type taskHydrate = { tasks: Task[] }
 
 //   const dehydrate = () => {
 //     return Effect.succeed({
-//       tasks: Effect.runSync(arrayToObject(tasks.value)),
+//       tasks: Effect.runSync(array_to_object(tasks.value)),
 //     });
 //   };
 
 //   const hydrate = (hydrateStore: taskHydrate) => {
 //     tasks.value =
-//       Effect.runSync(objectToArray(hydrateStore.tasks)) ?? tasks.value;
+//       Effect.runSync(object_to_array(hydrateStore.tasks)) ?? tasks.value;
 //   };
 
 //   return {
@@ -129,7 +122,7 @@ type SetEvent = {
     value: Task[]
 }
 
-export const tasksStore = createStore({
+export const store_tasks = createStore({
     context: {
         list: [] as Task[],
     },
@@ -137,12 +130,8 @@ export const tasksStore = createStore({
         updated: () => {},
     },
     on: {
-        hydrate: (
-            context,
-            event: { type: 'hydrate'; tasks: Record<string, any> }
-        ) => {
-            context.list =
-                Effect.runSync(objectToArray(event.tasks)) ?? context.list
+        hydrate: (context, event: { type: 'hydrate'; tasks: Record<string, any> }) => {
+            context.list = Effect.runSync(object_to_array(event.tasks)) ?? context.list
         },
         add: (context, event, enqueue) => {
             //     description: string,
@@ -173,22 +162,18 @@ export const tasksStore = createStore({
 export class DehydrateTasks extends Context.Tag('DehydrateTasks')<
     DehydrateTasks,
     {
-        readonly dehydrate: () => Effect.Effect<
-            Record<string, any>,
-            never,
-            never
-        >
+        readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>
     }
 >() {}
 
-export const DehydrateTasksLive = Layer.effect(
+export const live_dehydrate_tasks = Layer.effect(
     DehydrateTasks,
     Effect.gen(function* () {
         return {
             dehydrate: () =>
                 Effect.gen(function* () {
-                    const context = tasksStore.get().context.list
-                    return yield* arrayToObject(context)
+                    const context = store_tasks.get().context.list
+                    return yield* array_to_object(context)
                 }),
         }
     })

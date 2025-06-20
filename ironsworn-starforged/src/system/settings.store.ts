@@ -19,7 +19,7 @@ export type Settings = {
     darkMode: DarkMode
 }
 
-export const settingsStore = createStore({
+export const store_settings = createStore({
     context: {
         mode: 'mode-select',
         darkMode: 'unset',
@@ -42,21 +42,17 @@ export const settingsStore = createStore({
 export class DehydrateSettings extends Context.Tag('DehydrateSettings')<
     DehydrateSettings,
     {
-        readonly dehydrate: () => Effect.Effect<
-            Record<string, any>,
-            never,
-            never
-        >
+        readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>
     }
 >() {}
 
-export const DehydrateSettingsLive = Layer.effect(
+export const live_dehydrate_settings = Layer.effect(
     DehydrateSettings,
     Effect.gen(function* () {
         return {
             dehydrate: () =>
                 Effect.gen(function* () {
-                    const context = settingsStore.get().context
+                    const context = store_settings.get().context
                     return yield* Effect.succeed({
                         mode: context.mode,
                         darkMode: context.darkMode,

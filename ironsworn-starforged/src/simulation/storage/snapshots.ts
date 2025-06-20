@@ -1,6 +1,6 @@
-import { Effect } from 'effect'
 import { drizzle } from 'drizzle-orm/libsql'
-import { runTable, rollInputsTable, storesTable } from './schema'
+import { Effect } from 'effect'
+import { table_roll_inputs, table_run, table_stores } from './schema'
 
 export const db = drizzle({
     connection: {
@@ -8,18 +8,18 @@ export const db = drizzle({
     },
 })
 
-export const saveSnapshot = (table: string, options: any) =>
+export const save_snapshot = (table: string, options: any) =>
     Effect.promise(async () => {
         if (table === 'run') {
-            await db.insert(runTable).values(options)
+            await db.insert(table_run).values(options)
         }
 
         if (table === 'rollInputs') {
-            await db.insert(rollInputsTable).values(options)
+            await db.insert(table_roll_inputs).values(options)
         }
 
         if (table === 'stores') {
-            await db.insert(storesTable).values({
+            await db.insert(table_stores).values({
                 run_id: options.run_id,
                 momentum: options.momentum,
                 stats: JSON.stringify(options.stats),

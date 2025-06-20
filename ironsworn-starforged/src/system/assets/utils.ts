@@ -15,18 +15,14 @@ const getAssetById = (assets: IAsset[], id: string) => {
     const asset: IAsset | undefined = assets.find(x => x.$id === id)
 
     if (!asset) {
-        return Effect.fail(
-            new AssetError({ message: `Asset not found for ${id}` })
-        )
+        return Effect.fail(new AssetError({ message: `Asset not found for ${id}` }))
     }
 
     return Effect.succeed(asset)
 }
 
 export const getAssetType = (assetTypeName: AssetCategory) => {
-    const selectedAssetType = starforged['Asset Types'].find(
-        x => x.Name === assetTypeName
-    )
+    const selectedAssetType = starforged['Asset Types'].find(x => x.Name === assetTypeName)
     if (!selectedAssetType) {
         return Effect.fail(
             new AssetError({
@@ -38,10 +34,8 @@ export const getAssetType = (assetTypeName: AssetCategory) => {
     return Effect.succeed(selectedAssetType)
 }
 
-export const getAssetAbilities = (id: string, category: AssetCategory) => {
-    const selectedCategory = starforged['Asset Types'].find(
-        x => x.Name === category
-    )
+export const get_asset_abilities = (id: string, category: AssetCategory) => {
+    const selectedCategory = starforged['Asset Types'].find(x => x.Name === category)
 
     if (!selectedCategory) {
         return Effect.fail(new AssetError({ message: 'No category found' }))
@@ -54,15 +48,13 @@ export const getAssetAbilities = (id: string, category: AssetCategory) => {
     }
 
     if (!selectedAsset.Abilities) {
-        return Effect.fail(
-            new AssetError({ message: 'No abilities found for Asset' })
-        )
+        return Effect.fail(new AssetError({ message: 'No abilities found for Asset' }))
     }
 
     return Effect.succeed(
         selectedAsset.Abilities.map(x => ({
             _id: createId(),
-            dataforgedId: x.$id,
+            dataforged_id: x.$id,
             enabled: x.Enabled,
         }))
     )
@@ -77,9 +69,7 @@ export const getAsset = (id: string, category: AssetCategory) =>
     )
 
 export const getAllAssetsForCategory = (category: AssetCategory) => {
-    const selectedCategory = starforged['Asset Types'].find(
-        x => x.Name === category
-    )
+    const selectedCategory = starforged['Asset Types'].find(x => x.Name === category)
 
     if (!selectedCategory) {
         return Effect.fail(

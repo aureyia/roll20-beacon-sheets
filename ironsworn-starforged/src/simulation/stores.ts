@@ -1,28 +1,26 @@
 import { Effect } from 'effect'
-import { impactsStore } from '@/system/impacts/store'
-import { tasksStore } from '@/system/tasks/store'
-import { assetsStore } from '@/system/assets/store'
-import { resources, stats, impacts, assets, tasks } from './fuzzers/stores'
-import { statsStore } from '@/system/stats.store'
-import { numberBetween } from './prng'
-import { momentumStore } from '@/system/momentum/store'
-import { saveSnapshot } from './storage/snapshots'
 import type { Intensity } from '@/simulation/types'
+import { store_assets } from '@/system/assets/store'
+import { store_impacts } from '@/system/impacts/store'
+import { store_momentum } from '@/system/momentum/store'
+import { store_stats } from '@/system/stats.store'
+import { store_tasks } from '@/system/tasks/store'
+import { assets, impacts, resources, stats, tasks } from './fuzzers/stores'
+import { number_between } from './prng'
+import { save_snapshot } from './storage/snapshots'
 
 export const setupStores = (seed: string, intensity: typeof Intensity) =>
     Effect.sync(() => {
         // Clear Stores
 
-        impactsStore.trigger.clear()
-        tasksStore.trigger.clear()
-        assetsStore.trigger.clear()
+        store_impacts.trigger.clear()
+        store_tasks.trigger.clear()
+        store_assets.trigger.clear()
 
         // Momentum
 
-        const selectedMomentum = Effect.runSync(
-            numberBetween(seed, 'momentum', -6, 10)
-        )
-        momentumStore.trigger.set({ value: selectedMomentum })
+        const selectedMomentum = Effect.runSync(number_between(seed, 'momentum', -6, 10))
+        store_momentum.trigger.set({ value: selectedMomentum })
 
         // Stats
 
@@ -37,7 +35,7 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
 
         for (const entry of selectedStats) {
             // @ts-ignore
-            statsStore.trigger.set(entry)
+            store_stats.trigger.set(entry)
         }
 
         // Resources
@@ -53,18 +51,12 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
 
         for (const entry of selectedResources) {
             // @ts-ignore
-            statsStore.trigger.set(entry)
+            store_stats.trigger.set(entry)
         }
 
         // Impacts
 
-        const impactList = [
-            'misfortunes',
-            'lastingEffects',
-            'burdens',
-            'currentVehicle',
-            'other',
-        ]
+        const impactList = ['misfortunes', 'lasting_effects', 'burdens', 'current_vehicle', 'other']
 
         const selectedImpacts = impactList.map(category => {
             return {
@@ -76,23 +68,23 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
 
         for (const entry of selectedImpacts) {
             // @ts-ignore
-            impactsStore.trigger.set(entry)
+            store_impacts.trigger.set(entry)
         }
 
         // Assets
 
         const selectedAssets = assets(seed, intensity)
         // @ts-ignore
-        assetsStore.trigger.set({ label: 'list', value: selectedAssets })
+        store_assets.trigger.set({ label: 'list', value: selectedAssets })
 
         // Tasks
 
         const selectedTasks = tasks(seed, intensity)
         // @ts-ignore
-        tasksStore.trigger.set({ label: 'list', value: selectedTasks })
+        store_tasks.trigger.set({ label: 'list', value: selectedTasks })
 
         Effect.runPromise(
-            saveSnapshot('stores', {
+            save_snapshot('stores', {
                 run_id: seed,
                 momentum: selectedMomentum,
                 stats: selectedStats,

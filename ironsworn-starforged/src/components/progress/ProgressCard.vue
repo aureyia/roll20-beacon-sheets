@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import ProgressTrack from '@/components/progress/ProgressTrack.vue'
 import Input from '@/components/ui/input/Input.vue'
 import DifficultyList from '@/components/progress/DifficultyList.vue'
-import { tasksStore } from '@/system/tasks/store'
+import { store_tasks } from '@/system/tasks/store'
 
-const taskStore = tasksStore.get().context.list
+const taskStore = store_tasks.get().context.list
 
 const props = defineProps({
     removeMode: Boolean,

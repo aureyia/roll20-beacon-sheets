@@ -9,11 +9,9 @@ class ArrayTransformError extends Data.TaggedError('ArrayTransformError')<{
 export class ArrayTransform extends Context.Tag('ArrayTransform')<
     ArrayTransform,
     {
-        readonly arrayToObject: (
+        readonly array_to_object: (
             array: []
-        ) => // biome-ignore lint: Intentional any
-            | Effect.Effect<Record<string, any>>
-            | Effect.Effect<never, ArrayTransformError>
+        ) => Effect.Effect<Record<string, any>> | Effect.Effect<never, ArrayTransformError> // biome-ignore lint: Intentional any
     }
 >() {}
 
@@ -21,13 +19,12 @@ export const ArrayTransformLive = Layer.effect(
     ArrayTransform,
     Effect.gen(function* () {
         return {
-            arrayToObject: array => {
+            array_to_object: array => {
                 if (!Array.isArray(array)) {
                     return Effect.fail(
                         new ArrayTransformError({
                             cause: array,
-                            message:
-                                'Tried to objectify an array, but not every item had ids',
+                            message: 'Tried to objectify an array, but not every item had ids',
                         })
                     )
                 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { impactsStore, type ImpactsGrouped } from '@/system/impacts/store'
+import { store_impacts, type ImpactsGrouped } from '@/system/impacts/store'
 import {
     DialogTrigger,
     Dialog,
@@ -11,9 +11,9 @@ import {
 import { Button } from '../ui/button'
 import type { AnyImpact } from '@/system/impacts/types'
 
-const impacts = impactsStore
+const impacts = store_impacts
 const getImpactsByCategory = (category: keyof ImpactsGrouped) =>
-    impactsStore.get().context[category]
+    store_impacts.get().context[category]
 
 defineProps({
     label: {

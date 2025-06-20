@@ -1,5 +1,5 @@
 // @ts-nocheck
 
-export { default as compactStatRollTemplate } from './compact/stat-roll.hbs?raw'
-export { default as statRollTemplate } from './full-size/stat-roll.hbs?raw'
-export { default as taskRollTemplate } from './full-size/task-roll.hbs?raw'
+export { default as compact_stat_roll_template } from './compact/stat_roll.hbs?raw'
+export { default as stat_roll_template } from './full_size/stat_roll.hbs?raw'
+export { default as task_roll_template } from './full_size/task_roll.hbs?raw'

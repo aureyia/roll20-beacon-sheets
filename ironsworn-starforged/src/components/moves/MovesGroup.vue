@@ -14,7 +14,7 @@ defineProps({
     },
 })
 
-const { updateActiveMove }: any = inject('move')
+const { update_active_move }: any = inject('move')
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const { updateActiveMove }: any = inject('move')
       <div class="h7 my-1 flex items-center">
         <div class="button-container mr-1 h-7 w-7 items-center leading-3">
           <Button
-            @click="updateActiveMove(move.$id)"
+            @click="update_active_move(move.$id)"
             :data-qa="move.$id"
             class="border-primary bg-muted text-primary hover:bg-muted-accent h-7 w-7 content-center p-0 leading-3 font-bold"
           >

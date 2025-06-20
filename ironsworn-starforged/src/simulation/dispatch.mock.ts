@@ -1,10 +1,10 @@
 import type { Dispatch } from '@roll20-official/beacon-sdk'
-import { rollResults as rollResultsLow } from './fuzzers/roll-results/roll-results-low'
-import { rollResults as rollResultsMedium } from './fuzzers/roll-results/roll-results-medium'
-import { rollResults as rollResultsHigh } from './fuzzers/roll-results/roll-results-high'
 import { createAtom } from '@xstate/store'
-import { seed } from './generate-rolls'
-import { intensity, postRef } from '@/main'
+import { postRef, ref_intensity } from '@/main'
+import { rollResults as rollResultsHigh } from './fuzzers/roll_results/roll-results-high'
+import { rollResults as rollResultsLow } from './fuzzers/roll_results/roll-results-low'
+import { rollResults as rollResultsMedium } from './fuzzers/roll_results/roll-results-medium'
+import { seed } from './generate_rolls'
 
 const character = createAtom({
     id: '-ORfR02B4KDjtJ6bwU_p',
@@ -35,9 +35,9 @@ const character = createAtom({
         },
         impacts: {
             misfortunes: {},
-            lastingEffects: {},
+            lasting_effects: {},
             burdens: {},
-            currentVehicle: {},
+            current_vehicle: {},
             other: {},
         },
         settings: {
@@ -60,11 +60,11 @@ const character = createAtom({
 })
 
 // biome-ignore lint: Intentional any
-export const simRelay = async (relayConfig: any) => {
-    relayConfig.handlers.onInit({ character: character.get(), settings: {} })
+export const relay_sim = async (config_relay: any) => {
+    config_relay.handlers.onInit({ character: character.get(), settings: {} })
     return {
         // biome-ignore lint: Intentional any
-        update: (...args: any[]) => console.log('devRelay update', args),
+        update: (...args: any[]) => console.log('relay_dev update', args),
         // biome-ignore lint: Intentional any
         updateCharacter: (...args: any[]) => {
             character.set(args[0].character)
@@ -80,11 +80,11 @@ export const simRelay = async (relayConfig: any) => {
         updateSharedSettings: async (update: any) => await {},
         // biome-ignore lint: Intentional any
         roll: async (roll: any) => {
-            if (intensity.value === 'high') {
+            if (ref_intensity.value === 'high') {
                 return await rollResultsHigh(seed.get())
             }
 
-            if (intensity.value === 'medium') {
+            if (ref_intensity.value === 'medium') {
                 return await rollResultsMedium(seed.get())
             }
 

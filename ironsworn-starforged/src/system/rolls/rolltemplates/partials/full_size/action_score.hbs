@@ -1,0 +1,13 @@
+<div class="action-score">
+    {{#if action_score.die_negated}}
+        <div class="action-score__row">
+            <div class="action-score__warning">Action Die Negated</div>
+        </div>
+    {{/if}}
+    <div class="action-score__row">
+        <div class="action-score__col-1 action-score__title">Action Score</div>
+        <div class="action-score__col-2">
+            <div class="action-score__image">{{> action_score_bg action_score=action_score.score}}</div>
+        </div>
+    </div>
+</div>

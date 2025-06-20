@@ -1,17 +1,13 @@
 import type { InitArgs } from '@roll20-official/beacon-sdk'
-import { beaconPulse, initValues } from '@/external/sync'
+import { beaconPulse, sheet_init_values } from '@/external/sync'
 
 // onInit is called when the Relay is first loaded.
 // It is used to set up the initial values of the sheet.
-export const onInit = ({
-    character,
-    settings,
-    compendiumDropData,
-}: InitArgs) => {
-    initValues.id = character.id
-    initValues.character = character
-    initValues.settings = settings
-    initValues.compendiumDrop = compendiumDropData ? compendiumDropData : null
+export const onInit = ({ character, settings, compendiumDropData }: InitArgs) => {
+    sheet_init_values.id = character.id
+    sheet_init_values.character = character
+    sheet_init_values.settings = settings
+    sheet_init_values.compendiumDrop = compendiumDropData ? compendiumDropData : null
     console.log('onInit -> Starforged Sheet Relay')
 }
 

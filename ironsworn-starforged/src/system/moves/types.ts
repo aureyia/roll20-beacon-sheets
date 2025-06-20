@@ -1,4 +1,4 @@
-export const MeterAlias = {
+export const METER_ALIAS = {
     CompanionHealth: 'Companion Health',
     VehicleIntegrity: 'Vehicle Integrity',
     CommandVehicleIntegrity: 'Command Vehicle Integrity',
@@ -6,14 +6,14 @@ export const MeterAlias = {
     IncidentalVehicleIntegrity: 'Incidental Vehicle Integrity',
 } as const
 
-export const MeterType = {
+export const METER_TYPE = {
     Health: 'Health',
     Spirit: 'Spirit',
     Supply: 'Supply',
     Momentum: 'Momentum',
 } as const
 
-export const ProgressTypeStarforged = {
+export const PROGRESS_TYPE = {
     Combat: 'Combat',
     Vow: 'Vow',
     Expedition: 'Expedition',
@@ -24,7 +24,7 @@ export const ProgressTypeStarforged = {
     Discoveries: 'Discoveries Legacy',
 } as const
 
-export const Stat = {
+export const STATS = {
     Edge: 'edge',
     Heart: 'heart',
     Iron: 'iron',

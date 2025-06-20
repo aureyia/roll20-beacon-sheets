@@ -4,10 +4,10 @@ import LabelledInput from '@/components/inputs/LabelledInput.vue'
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue'
 import LabelledNumberField from '@/components/inputs/LabelledNumberField.vue'
 import { ImpactCategory } from '@/components/impacts'
-import { statsStore, STATS, type Stats } from '@/system/stats.store'
-import { characterStore } from '@/system/character.store'
-import { metaStore } from '@/external/store'
-import { resourcesStore } from '@/system/resources.store'
+import { store_stats, STATS, type Stats } from '@/system/stats.store'
+import { store_character } from '@/system/character.store'
+import { store_meta } from '@/external/store'
+import { store_resources } from '@/system/resources.store'
 import { Toggle } from '@/components/ui/toggle/index'
 import { ref } from 'vue'
 import { IMPACTS } from '@/system/impacts/types'
@@ -15,10 +15,10 @@ import { IMPACTS } from '@/system/impacts/types'
 import { ImpactDialog } from '@/components/impacts'
 
 const stores = {
-    meta: metaStore,
-    character: characterStore,
-    resources: resourcesStore,
-    stats: statsStore,
+    meta: store_meta,
+    character: store_character,
+    resources: store_resources,
+    stats: store_stats,
 }
 
 const toggleStatsEdit = ref(false)
@@ -29,15 +29,15 @@ const name = ref(stores.meta.get().context.name)
 const stats = ref(stores.stats.get().context)
 const resources = ref(stores.resources.get().context)
 
-characterStore.subscribe(snapshot => {
+store_character.subscribe(snapshot => {
     character.value = snapshot.context
 })
 
-resourcesStore.subscribe(snapshot => {
+store_resources.subscribe(snapshot => {
     resources.value = snapshot.context
 })
 
-statsStore.subscribe(snapshot => {
+store_stats.subscribe(snapshot => {
     stats.value = snapshot.context
 })
 

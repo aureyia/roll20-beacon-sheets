@@ -7,15 +7,27 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!src/vendor/**/*", "!src/components/ui/**/*"]
+    "includes": [
+      "**",
+      "!src/vendor/**/*",
+      "!src/components/ui/**/*",
+      "!**/*.vue",
+      "!**/*.d.ts"
+    ]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 4,
-    "lineWidth": 80
+    "lineWidth": 100
   },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -28,8 +40,14 @@
           "level": "error",
           "fix": "safe",
           "options": {
-            "attributes": ["className"],
-            "functions": ["cn", "clsx", "twMerge"]
+            "attributes": [
+              "className"
+            ],
+            "functions": [
+              "cn",
+              "clsx",
+              "twMerge"
+            ]
           }
         }
       },

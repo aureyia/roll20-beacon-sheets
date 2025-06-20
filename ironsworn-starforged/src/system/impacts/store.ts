@@ -10,7 +10,7 @@ import type {
     Other,
 } from '@/system/impacts/types'
 import { assert } from '@/utility/assert'
-import { arrayToObject, objectToArray } from '@/utility/objectify'
+import { array_to_object, object_to_array } from '@/utility/objectify'
 
 export type AddImpact = {
     name: AnyImpact['name']
@@ -20,26 +20,20 @@ export type AddImpact = {
 
 export type ImpactsGrouped = {
     misfortunes: Misfortune[]
-    lastingEffects: LastingEffect[]
+    lasting_effects: LastingEffect[]
     burdens: Burden[]
-    currentVehicle: CurrentVehicle[]
+    current_vehicle: CurrentVehicle[]
     other: Other[]
 }
 
 const isValidCategory = (category: string) => {
-    return [
-        'misfortunes',
-        'lastingEffects',
-        'burdens',
-        'currentVehicle',
-        'other',
-    ].includes(category)
+    return ['misfortunes', 'lasting_effects', 'burdens', 'current_vehicle', 'other'].includes(
+        category
+    )
 }
 
 const filterOutImpact = (context: ImpactsGrouped, event: AnyImpact) =>
-    context[event.category].filter(
-        (entry: AnyImpact) => entry.name !== event.name
-    )
+    context[event.category].filter((entry: AnyImpact) => entry.name !== event.name)
 
 function assertAddImpact(data: AddImpact) {
     assert(!!data.category)
@@ -57,21 +51,21 @@ export type HydrateEvent = {
     // biome-ignore lint: Intentional any
     misfortunes: Record<string, any>
     // biome-ignore lint: Intentional any
-    lastingEffects: Record<string, any>
+    lasting_effects: Record<string, any>
     // biome-ignore lint: Intentional any
     burdens: Record<string, any>
     // biome-ignore lint: Intentional any
-    currentVehicle: Record<string, any>
+    current_vehicle: Record<string, any>
     // biome-ignore lint: Intentional any
     other: Record<string, any>
 }
 
-export const impactsStore = createStore({
+export const store_impacts = createStore({
     context: {
         misfortunes: [] as Misfortune[],
-        lastingEffects: [] as LastingEffect[],
+        lasting_effects: [] as LastingEffect[],
         burdens: [] as Burden[],
-        currentVehicle: [] as CurrentVehicle[],
+        current_vehicle: [] as CurrentVehicle[],
         other: [] as Other[],
     },
     emits: {
@@ -80,18 +74,13 @@ export const impactsStore = createStore({
     on: {
         hydrate: (context, event: HydrateEvent) => {
             context.misfortunes =
-                Effect.runSync(objectToArray(event.misfortunes)) ??
-                context.misfortunes
-            context.lastingEffects =
-                Effect.runSync(objectToArray(event.lastingEffects)) ??
-                context.lastingEffects
-            context.burdens =
-                Effect.runSync(objectToArray(event.burdens)) ?? context.burdens
-            context.currentVehicle =
-                Effect.runSync(objectToArray(event.currentVehicle)) ??
-                context.currentVehicle
-            context.other =
-                Effect.runSync(objectToArray(event.other)) ?? context.other
+                Effect.runSync(object_to_array(event.misfortunes)) ?? context.misfortunes
+            context.lasting_effects =
+                Effect.runSync(object_to_array(event.lasting_effects)) ?? context.lasting_effects
+            context.burdens = Effect.runSync(object_to_array(event.burdens)) ?? context.burdens
+            context.current_vehicle =
+                Effect.runSync(object_to_array(event.current_vehicle)) ?? context.current_vehicle
+            context.other = Effect.runSync(object_to_array(event.other)) ?? context.other
         },
         add: (context, event: AddImpact, enqueue) => {
             console.log('event', event)
@@ -111,11 +100,7 @@ export const impactsStore = createStore({
             filterOutImpact(context, event)
             enqueue.emit.updated()
         },
-        set: (
-            context: ImpactsGrouped,
-            event: SetEvent<ImpactsGrouped>,
-            enqueue
-        ) => {
+        set: (context: ImpactsGrouped, event: SetEvent<ImpactsGrouped>, enqueue) => {
             switch (event.label) {
                 case 'misfortunes':
                     context.misfortunes = event.value
@@ -123,11 +108,11 @@ export const impactsStore = createStore({
                 case 'burdens':
                     context.burdens = event.value
                     break
-                case 'currentVehicle':
-                    context.currentVehicle = event.value
+                case 'current_vehicle':
+                    context.current_vehicle = event.value
                     break
-                case 'lastingEffects':
-                    context.lastingEffects = event.value
+                case 'lasting_effects':
+                    context.lasting_effects = event.value
                     break
                 case 'other':
                     context.other = event.value
@@ -139,9 +124,9 @@ export const impactsStore = createStore({
         },
         clear: context => {
             context.misfortunes = []
-            context.lastingEffects = []
+            context.lasting_effects = []
             context.burdens = []
-            context.currentVehicle = []
+            context.current_vehicle = []
             context.other = []
         },
     },
@@ -159,23 +144,19 @@ export class DehydrateImpacts extends Context.Tag('DehydrateImpacts')<
     }
 >() {}
 
-export const DehydrateImpactsLive = Layer.effect(
+export const live_dehydrate_impacts = Layer.effect(
     DehydrateImpacts,
     Effect.gen(function* () {
         return {
             dehydrate: () =>
                 Effect.gen(function* () {
-                    const context = impactsStore.get().context
+                    const context = store_impacts.get().context
                     return {
-                        misfortunes: yield* arrayToObject(context.misfortunes),
-                        lastingEffects: yield* arrayToObject(
-                            context.lastingEffects
-                        ),
-                        burdens: yield* arrayToObject(context.burdens),
-                        currentVehicle: yield* arrayToObject(
-                            context.currentVehicle
-                        ),
-                        other: yield* arrayToObject(context.other),
+                        misfortunes: yield* array_to_object(context.misfortunes),
+                        lasting_effects: yield* array_to_object(context.lasting_effects),
+                        burdens: yield* array_to_object(context.burdens),
+                        current_vehicle: yield* array_to_object(context.current_vehicle),
+                        other: yield* array_to_object(context.other),
                     }
                 }),
         }

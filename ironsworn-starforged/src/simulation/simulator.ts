@@ -1,18 +1,18 @@
 import { Effect, Stream } from 'effect'
+import type { App } from 'vue'
 import {
-    onInit,
     onChange,
+    onDragOver,
+    onInit,
     onSettingsChange,
     onSharedSettingsChange,
     onTranslationsRequest,
-    onDragOver,
 } from '@/external/relay-handlers'
-import type { App } from 'vue'
-import { dispatchRef } from '@/external/vue.relay'
-import { simRelay } from './dispatch.mock'
-import { rollSteam } from './generate-rolls'
+import { ref_dispatch } from '@/external/vue.relay'
+import { relay_sim } from './dispatch.mock'
+import { rollSteam } from './generate_rolls'
 
-export const relayConfig = {
+export const config_relay = {
     handlers: {
         onInit,
         onChange,
@@ -23,26 +23,26 @@ export const relayConfig = {
     },
 }
 
-export const simRelayPlugin = () =>
+export const plugin_relay_sim = () =>
     Effect.gen(function* () {
-        const dispatch = yield* Effect.promise(() => simRelay(relayConfig))
+        const dispatch = yield* Effect.promise(() => relay_sim(config_relay))
 
-        dispatchRef.value = dispatch
+        ref_dispatch.value = dispatch
 
-        const sheetRelay = {
+        const relay_sheet = {
             install(app: App) {
                 app.provide('dispatch', dispatch)
             },
         }
 
         return {
-            sheetRelay,
+            relay_sheet,
             dispatch,
         }
     })
 
-export const simRunner = (speed: number) =>
+export const simRunner = (speed_ms: number) =>
     Effect.gen(function* () {
         yield* Effect.sleep('1 seconds')
-        yield* Stream.runDrain(rollSteam(speed))
+        yield* Stream.runDrain(rollSteam(speed_ms))
     })

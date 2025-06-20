@@ -1,5 +1,3 @@
-export const momentumMax = (numberOfImpacts: number) =>
-    numberOfImpacts > 10 ? 0 : 10 - numberOfImpacts
+export const momentum_max = (impacts: number) => (impacts > 10 ? 0 : 10 - impacts)
 
-export const momentumReset = (numberOfImpacts: number) =>
-    numberOfImpacts === 1 ? 1 : numberOfImpacts >= 2 ? 0 : 2
+export const momentum_reset = (impacts: number) => (impacts === 1 ? 1 : impacts >= 2 ? 0 : 2)

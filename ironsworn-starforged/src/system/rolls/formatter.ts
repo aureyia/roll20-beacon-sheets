@@ -27,9 +27,7 @@ export class InvalidDispatch extends Data.TaggedError('InvalidDispatch')<{
 export class RollFormatter extends Context.Tag('RollFormatter')<
     RollFormatter,
     {
-        readonly toDispatch: (
-            dice: Die[]
-        ) => Effect.Effect<FormattedRoll['rolls'], InvalidDie>
+        readonly toDispatch: (dice: Die[]) => Effect.Effect<FormattedRoll['rolls'], InvalidDie>
         readonly fromDispatch: (
             output: any,
             formattedDice: FormattedRoll['rolls'],
@@ -51,9 +49,7 @@ export const RollFormatterLive = Layer.effect(
                     const { sides } = dice[index]
 
                     if (sides === undefined) {
-                        return yield* Effect.fail(
-                            new InvalidDie({ message: 'Die has no sides' })
-                        )
+                        return yield* Effect.fail(new InvalidDie({ message: 'Die has no sides' }))
                     }
 
                     const formattedDice = {
@@ -78,26 +74,21 @@ export const RollFormatterLive = Layer.effect(
 
                     for (const key of diceKeys) {
                         // @ts-ignore
-                        const sides = Number(
-                            formattedDice[key].replace('1d', '')
-                        )
+                        const sides = Number(formattedDice[key].replace('1d', ''))
                         if (
                             output.results[key].results.result < 1 ||
                             output.results[key].results.result > sides
                         )
                             return yield* Effect.fail(
                                 new InvalidDie({
-                                    message:
-                                        'Die result is outside the valid range',
+                                    message: 'Die result is outside the valid range',
                                 })
                             )
                     }
 
-                    const dieValues = Object.keys(output.results).map(
-                        (key: any) => {
-                            return output.results[key].results.result
-                        }
-                    )
+                    const dieValues = Object.keys(output.results).map((key: any) => {
+                        return output.results[key].results.result
+                    })
 
                     if (dieValues.some((value: number) => value < 1)) {
                         return yield* Effect.fail(
@@ -111,8 +102,7 @@ export const RollFormatterLive = Layer.effect(
                     return dice.map((die, index) => ({
                         sides: die.sides,
                         label: die.label,
-                        value: output.results[formatDieKey(index)].results
-                            .result,
+                        value: output.results[formatDieKey(index)].results.result,
                     }))
                 }),
         }

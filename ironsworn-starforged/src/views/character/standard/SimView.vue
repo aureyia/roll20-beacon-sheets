@@ -1,31 +1,29 @@
 <script setup lang="ts">
-import { postRef } from '@/main'
-import { metaStore } from '@/external/store'
-import { characterStore } from '@/system/character.store'
-import { resourcesStore } from '@/system/resources.store'
-import { impactsStore } from '@/system/impacts/store'
-import { momentumStore } from '@/system/momentum/store'
-import { assetsStore } from '@/system/assets/store'
-import { statsStore } from '@/system/stats.store'
-import { tasksStore } from '@/system/tasks/store'
-import { settingsStore } from '@/system/settings.store'
 import Card from '@/components/ui/card/Card.vue'
-import { rollSpeed } from '@/main'
-import { intensity } from '@/main'
-import { replaySeed, seed } from '@/simulation/generate-rolls'
+import { store_meta } from '@/external/store'
+import { intensity, postRef, rollSpeed } from '@/main'
+import { replaySeed, seed } from '@/simulation/generate_rolls'
+import { store_assets } from '@/system/assets/store'
+import { store_character } from '@/system/character.store'
+import { store_impacts } from '@/system/impacts/store'
+import { store_momentum } from '@/system/momentum/store'
+import { store_resources } from '@/system/resources.store'
+import { store_settings } from '@/system/settings.store'
+import { store_stats } from '@/system/stats.store'
+import { store_tasks } from '@/system/tasks/store'
 
 import { cn } from '@/utility'
 
 const stores = {
-    character: characterStore,
-    resources: resourcesStore,
-    stats: statsStore,
-    impacts: impactsStore,
-    assets: assetsStore,
-    tasks: tasksStore,
-    settings: settingsStore,
-    momentum: momentumStore,
-    meta: metaStore,
+    character: store_character,
+    resources: store_resources,
+    stats: store_stats,
+    impacts: store_impacts,
+    assets: store_assets,
+    tasks: store_tasks,
+    settings: store_settings,
+    momentum: store_momentum,
+    meta: store_meta,
 }
 </script>
 
@@ -138,7 +136,7 @@ const stores = {
                 class="bg-muted-secondary w-full rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Lasting Effects</strong>
-                <p>{{ store.getSnapshot().context.lastingEffects.length }}</p>
+                <p>{{ store.getSnapshot().context.lasting_effects.length }}</p>
               </div>
               <div
                 class="bg-muted-secondary w-[46%] rounded p-2 text-center drop-shadow-xs"
@@ -150,7 +148,7 @@ const stores = {
                 class="bg-muted-secondary w-[46%] rounded p-2 text-center drop-shadow-xs"
               >
                 <strong>Vehicle</strong>
-                <p>{{ store.getSnapshot().context.currentVehicle.length }}</p>
+                <p>{{ store.getSnapshot().context.current_vehicle.length }}</p>
               </div>
               <div
                 class="bg-muted-secondary w-full rounded p-2 text-center drop-shadow-xs"

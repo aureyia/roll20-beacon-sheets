@@ -1,8 +1,8 @@
-import { Effect, Context, Layer, Data, Schema, Predicate, Either } from 'effect'
-import { dispatchRef } from '@/external/vue.relay'
-import { DispatchResultsSchema, type DispatchResults } from './dispatch.schema'
-import { assert } from '@/utility/assert'
+import { Context, Data, Effect, Either, Layer, Predicate, Schema } from 'effect'
 import type { ParseError } from 'effect/ParseResult'
+import { ref_dispatch } from '@/external/vue.relay'
+import { assert } from '@/utility/assert'
+import { type DispatchResults, DispatchResultsSchema } from './dispatch.schema'
 
 type AvailableDice = '1d6' | '1d10' | '1d100'
 export type DispatchResultsOutput = { results: DispatchResults }
@@ -39,7 +39,7 @@ export const DispatchLive = Layer.effect(
 
                     const dispatchResult = yield* Effect.tryPromise({
                         try: () =>
-                            dispatchRef.value.roll({
+                            ref_dispatch.value.roll({
                                 rolls: dice,
                             }),
                         catch: e =>
@@ -50,9 +50,7 @@ export const DispatchLive = Layer.effect(
                     })
 
                     const { rawResults, ...results } =
-                        yield* Schema.decodeUnknown(DispatchResultsSchema)(
-                            dispatchResult
-                        )
+                        yield* Schema.decodeUnknown(DispatchResultsSchema)(dispatchResult)
 
                     if (Predicate.isUndefined(results.results['dice-0'])) {
                         return yield* new DispatchError({

@@ -1,0 +1,14 @@
+{{!-- TODO: Support momentum burning --}}
+{{#> wrapper type="stat"}}
+  {{#> compact_header_character_roll name_character=name_character title=title}}
+  {{/ compact_header_character_roll}}
+
+  <div class="compact-stat__body">
+    {{> compact_action_score action_die_negated=dice.action_die.negated score=score}}
+    {{> compact_challenge_dice challenge_die_1=dice.challenge_die_1 challenge_die_2=dice.challenge_die_2}}
+  </div>
+  {{> compact_momentum_burned momentum_burned=momentum_burned}}
+  <div class="compact-stat__footer">
+    {{> compact_roll_outcome outcome=outcome}}
+  </div>
+{{/ wrapper }}

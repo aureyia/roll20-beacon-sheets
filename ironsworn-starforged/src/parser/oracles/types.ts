@@ -17,34 +17,32 @@ const renderExample = [
         oracles: [
             {
                 id: 'oracle-id',
-                rows: [
-                    { id: 'result-id', min: 1, max: 2 }
-                ]
-            }
-        ]
-    }
+                rows: [{ id: 'result-id', min: 1, max: 2 }],
+            },
+        ],
+    },
 ]
 
-// i18n ids: 
+// i18n ids:
 // "oracle--{category}--{name}": "Oracle Name"
 // "oracle--{category}--{name}--description": ""
 // "oracle--{category}--{name}--{min}-to-{max}: "Result Text"
 
 const oracles = {
-    "character-creation": {
-        "background-assets": {
-            "1-to-5": {
+    'character-creation': {
+        'background-assets': {
+            '1-to-5': {
                 min: 1,
                 max: 5,
                 actions: {},
             },
-            "6-to-10": {
+            '6-to-10': {
                 min: 6,
                 max: 10,
                 actions: {},
-            }
-        }
-    }
+            },
+        },
+    },
 }
 
 type OracleRanges = {
@@ -54,13 +52,13 @@ type OracleRanges = {
 }
 
 const ranges = {
-    "background-assets": {
+    'background-assets': {
         1: 'background-assets--1-to-5',
         2: 'background-assets--1-to-5',
         3: 'background-assets--1-to-5',
         4: 'background-assets--1-to-5',
         5: 'background-assets--1-to-5',
-    }
+    },
 }
 
 // Flat Map for rendering

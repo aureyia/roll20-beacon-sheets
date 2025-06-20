@@ -7,7 +7,7 @@ export class Oracles extends Context.Tag('Oracles')<
     {
         readonly parse: (oracles: IOracle[]) => Effect.Effect<Oracle[]>
     }
->() { }
+>() {}
 
 export const OraclesLive = Layer.effect(
     Oracles,
@@ -15,7 +15,6 @@ export const OraclesLive = Layer.effect(
         return {
             parse: oracles =>
                 Effect.gen(function* () {
-
                     return yield* Effect.succeed(oracles)
                 }),
         }

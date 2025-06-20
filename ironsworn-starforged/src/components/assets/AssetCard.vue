@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { CardFooter, Card, CardHeader, CardContent } from '../ui/card'
-import { Checkbox } from '../ui/checkbox'
 import { marked } from 'marked'
+import { store_assets } from '@/system/assets/store'
+import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
+import { Checkbox } from '../ui/checkbox'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
-import { assetsStore } from '@/system/assets/store'
-import type { Ability } from '@/system/assets/types'
 
 defineProps({
     dataforgedAsset: {
@@ -14,10 +13,10 @@ defineProps({
 })
 
 const abilities = defineModel('abilities', { required: true })
-const storedAsset = defineModel('storedAsset', { required: true })
+const asset_stored = defineModel('asset_stored', { required: true })
 
-const updateAbility = (event: any) => {
-    assetsStore.trigger.updateAbility(event)
+const ability_update = (event: any) => {
+    store_assets.trigger.ability_update(event)
 }
 </script>
 
@@ -41,9 +40,9 @@ const updateAbility = (event: any) => {
             v-model="abilities[index].enabled"
             @update:model-value="
               (event) =>
-                updateAbility({
-                  assetId: storedAsset._id,
-                  abilityId: abilities[index]._id,
+                ability_update({
+                  assetId: asset_stored._id,
+                  id_ability: abilities[index]._id,
                   value: event,
                 })
             "
@@ -56,10 +55,10 @@ const updateAbility = (event: any) => {
         </div>
       </div>
     </CardContent>
-    <CardFooter v-if="storedAsset.meter">
+    <CardFooter v-if="asset_stored.meter">
       <ToggleGroup>
         <ToggleGroupItem
-          v-for="value in Array.from(storedAsset.meter)"
+          v-for="value in Array.from(asset_stored.meter)"
           :value="value.toString()"
           >{{ value }}</ToggleGroupItem
         >

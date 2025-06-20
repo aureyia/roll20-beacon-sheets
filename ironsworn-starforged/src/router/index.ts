@@ -2,39 +2,32 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ModeSelectView from '@/views/_common/ModeSelectView.vue'
 
 import {
-    MainView as CharacterStandardMainView,
     AssetsView as CharacterStandardAssetsView,
     ConnectionsView as CharacterStandardConnectionsView,
     LegaciesView as CharacterStandardLegaciesView,
+    MainView as CharacterStandardMainView,
+    MovesDetailView as CharacterStandardMovesDetailView,
+    MovesOverView as CharacterStandardMovesOverView,
     MovesView as CharacterStandardMovesView,
     ProgressView as CharacterStandardProgressView,
+    SimView as CharacterStandardSimView,
     SummaryView as CharacterStandardSummaryView,
     VowsView as CharacterStandardVowsView,
-    MovesOverView as CharacterStandardMovesOverView,
-    MovesDetailView as CharacterStandardMovesDetailView,
-    SimView as CharacterStandardSimView,
 } from '@/views/character/standard'
-
+import { MainView as GuideMainView, OraclesView as GuideOraclesView } from '@/views/guide'
+import { MainView as LocationsMainView } from '@/views/locations'
+import { MainView as OraclesMainView } from '@/views/oracles'
+import { MainView as SharedMainView, MainView as ShipMainView } from '@/views/ship'
 import {
-    MainView as CharacterEdgeMainView,
     AssetsView as CharacterEdgeAssetsView,
     ConnectionsView as CharacterEdgeConnectionsView,
     LegaciesView as CharacterEdgeLegaciesView,
+    MainView as CharacterEdgeMainView,
     MovesView as CharacterEdgeMovesView,
     ProgressView as CharacterEdgeProgressView,
     SummaryView as CharacterEdgeSummaryView,
     VowsView as CharacterEdgeVowsView,
 } from '../views/character/edge'
-
-import {
-    MainView as GuideMainView,
-    OraclesView as GuideOraclesView,
-} from '@/views/guide'
-
-import { MainView as LocationsMainView } from '@/views/locations'
-import { MainView as OraclesMainView } from '@/views/oracles'
-import { MainView as SharedMainView } from '@/views/ship'
-import { MainView as ShipMainView } from '@/views/ship'
 
 const characterStandardViews: any = {
     summary: CharacterStandardSummaryView,

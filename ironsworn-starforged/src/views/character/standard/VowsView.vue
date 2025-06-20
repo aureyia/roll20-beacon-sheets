@@ -2,13 +2,13 @@
 import { ProgressCard } from '@/components/progress'
 import { ProgressDialog } from '@/components/progress'
 import { Toggle } from '@/components/ui/toggle'
-import { tasksStore } from '@/system/tasks/store'
+import { store_tasks } from '@/system/tasks/store'
 import { ref, provide } from 'vue'
 
-const tasks = ref(tasksStore.get().context.list)
+const tasks = ref(store_tasks.get().context.list)
 const removeMode = ref(false)
 
-tasksStore.subscribe(snapshot => {
+store_tasks.subscribe(snapshot => {
     tasks.value = snapshot.context.list
 })
 

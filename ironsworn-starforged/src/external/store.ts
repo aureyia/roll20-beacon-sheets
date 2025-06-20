@@ -29,7 +29,7 @@ export type Permissions = {
     isGM: boolean
 }
 
-export const metaStore = createStore({
+export const store_meta = createStore({
     context: {
         id: '',
         name: '',
@@ -48,7 +48,6 @@ export const metaStore = createStore({
     },
     on: {
         hydrate: (context, event: MetaHydration) => {
-            console.log(event)
             context.id = event.id ?? context.id
             context.name = event.name ?? context.name
             context.avatar = event.avatar ?? context.avatar
@@ -56,11 +55,11 @@ export const metaStore = createStore({
             context.gmNotes = event.gmNotes ?? context.gmNotes
             context.token = event.token ?? context.token
         },
-        setPermissions: (context, event: Permissions) => {
+        set_permissions: (context, event: Permissions) => {
             context.permissions.isGM = event.isGM
             context.permissions.isOwner = event.isOwner
         },
-        setCampaignId: (context, event: { id: number | undefined }) => {
+        set_campaign_id: (context, event: { id: number | undefined }) => {
             context.campaignId = event.id
         },
         set: (context, event: MetaSetEvent, enqueue) => {
@@ -75,7 +74,7 @@ export const metaStore = createStore({
 })
 
 export const dehydrate = (): MetaHydration => {
-    const context = metaStore.get().context
+    const context = store_meta.get().context
     return {
         id: context.id,
         name: context.name,
@@ -93,13 +92,13 @@ export class DehydrateMeta extends Context.Tag('DehydrateMeta')<
     }
 >() {}
 
-export const DehydrateMetaLive = Layer.effect(
+export const live_dehydrate_meta = Layer.effect(
     DehydrateMeta,
     Effect.gen(function* () {
         return {
             dehydrate: () =>
                 Effect.gen(function* () {
-                    const context = metaStore.get().context
+                    const context = store_meta.get().context
                     return yield* Effect.succeed({
                         id: context.id,
                         name: context.name,

@@ -1,32 +1,32 @@
-import { integer, text, sqliteTable } from 'drizzle-orm/sqlite-core'
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
-export const runTable = sqliteTable('runs', {
+export const table_run = sqliteTable('runs', {
     id: text('seed').primaryKey(),
     intensity: text('intensity').notNull(),
     status: text('status').notNull(),
 })
 
-export type InsertRun = typeof runTable.$inferInsert
-export type SelectRun = typeof runTable.$inferSelect
+export type InsertRun = typeof table_run.$inferInsert
+export type SelectRun = typeof table_run.$inferSelect
 
-export const rollInputsTable = sqliteTable('rollInputs', {
+export const table_roll_inputs = sqliteTable('rollInputs', {
     id: integer('id').primaryKey(),
     run_id: text('run_id')
         .notNull()
-        .references(() => runTable.id),
+        .references(() => table_run.id),
     modifier: integer('modifier').notNull(),
     momentum: integer('momentum').notNull(),
     move_name: text('move_name').notNull(),
 })
 
-export type InsertRollInputs = typeof rollInputsTable.$inferInsert
-export type SelectRollInputs = typeof rollInputsTable.$inferSelect
+export type InsertRollInputs = typeof table_roll_inputs.$inferInsert
+export type SelectRollInputs = typeof table_roll_inputs.$inferSelect
 
-export const storesTable = sqliteTable('stores', {
+export const table_stores = sqliteTable('stores', {
     id: integer('id').primaryKey(),
     run_id: text('run_id')
         .notNull()
-        .references(() => runTable.id),
+        .references(() => table_run.id),
     momentum: integer('momentum').notNull(),
     stats: text('stats').notNull(),
     resources: text('resources').notNull(),
@@ -35,5 +35,5 @@ export const storesTable = sqliteTable('stores', {
     assets: text('assets').notNull(),
 })
 
-export type InsertStores = typeof storesTable.$inferInsert
-export type SelectStores = typeof storesTable.$inferSelect
+export type InsertStores = typeof table_stores.$inferInsert
+export type SelectStores = typeof table_stores.$inferSelect

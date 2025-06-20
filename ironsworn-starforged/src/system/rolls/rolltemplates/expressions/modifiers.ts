@@ -1,3 +1,2 @@
-export function modifiers(style: string, modifiers: string[]): string {
-    return modifiers.map(modifier => `${style}--${modifier}`).join(' ')
-}
+export default (style: string, modifiers: string[]): string =>
+    modifiers.map(modifier => `${style}--${modifier}`).join(' ')

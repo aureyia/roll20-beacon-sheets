@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { impactsStore } from '@/system/impacts/store'
-import { momentumMax, momentumReset } from '@/system/momentum/utils'
 import { computed, ref } from 'vue'
 import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue'
-import { momentumStore } from '@/system/momentum/store'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { store_impacts } from '@/system/impacts/store'
+import { store_momentum } from '@/system/momentum/store'
+import { momentum_max, momentum_reset } from '@/system/momentum/utils'
 
-const impacts = impactsStore.get()
-const momentum = momentumStore.get().context.momentum
-const momentumRef = ref(momentum)
+const impacts = store_impacts.get()
+const momentum = store_momentum.get().context.momentum
+const ref_momentum = ref(momentum)
 
-const impactsList = [
+const list_impacts = [
     ...impacts.context.misfortunes,
-    ...impacts.context.lastingEffects,
+    ...impacts.context.lasting_effects,
     ...impacts.context.burdens,
-    ...impacts.context.currentVehicle,
+    ...impacts.context.current_vehicle,
     ...impacts.context.other,
 ]
 
-const numberOfImpacts = computed(() => impactsList.length)
+const number_of_impacts = computed(() => list_impacts.length)
 
-const burnMomentum = (resetValue: number) => {
-    momentumStore.trigger.set({ value: resetValue })
+const momentum_burn = (reset: number) => {
+    store_momentum.trigger.set({ value: reset })
 }
 
-momentumStore.subscribe(snapshot => {
-    momentumRef.value = snapshot.context.momentum
+store_momentum.subscribe(snapshot => {
+    ref_momentum.value = snapshot.context.momentum
 })
 
 defineProps({
-    edgeMode: Boolean,
+    mode_edge: Boolean,
     default: () => false,
 })
 </script>
@@ -41,7 +41,7 @@ defineProps({
     <DarkModeSwitch />
     <div
       class="button-container ml-4 flex basis-1/4 justify-start"
-      v-if="edgeMode"
+      v-if="mode_edge"
     >
       <Button class="w-20 p-2 drop-shadow-sm">Progress</Button>
     </div>
@@ -49,34 +49,34 @@ defineProps({
       <ToggleGroup
         type="single"
         class="mr-2"
-        :modelValue="momentumRef.toString()"
+        :modelValue="ref_momentum.toString()"
         @update:modelValue="
-          momentumStore.trigger.set({ value: parseInt($event.toString()) })
+          store_momentum.trigger.set({ value: Number($event.toString()) })
         "
       >
         <ToggleGroupItem
           v-for="option in Array.from(
-            { length: momentumMax(numberOfImpacts) + 7 },
+            { length: momentum_max(number_of_impacts) + 7 },
             (_, i) => i - 6,
           )"
           :key="option"
           :value="option.toString()"
           class="text-foreground hover:bg-muted-accent data-[state=on]:bg-muted-accent data-[state=off]:text-foreground data-[state=on]:text-foreground"
           :class="{
-            'momentum-reset': option === momentumReset(numberOfImpacts),
+            'momentum-reset': option === momentum_reset(number_of_impacts),
           }"
           >{{ option }}</ToggleGroupItem
         >
       </ToggleGroup>
       <Button
         class="border-primary bg-muted text-primary hover:bg-muted-accent h-8 w-24 border-2 font-bold"
-        @click="burnMomentum(momentumReset(numberOfImpacts))"
+        @click="momentum_burn(momentum_reset(number_of_impacts))"
         >Burn</Button
       >
     </div>
     <div
       class="button-container mr-4 flex basis-1/4 justify-end"
-      v-if="edgeMode"
+      v-if="mode_edge"
     >
       <Button class="w-20 p-2 drop-shadow-sm">Chronicle</Button>
     </div>

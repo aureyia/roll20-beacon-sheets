@@ -1,0 +1,13 @@
+{{#> wrapper type="task" key_values=key_values }}
+  {{#> header_character_roll name_character=name_character title=title}}
+  {{/ header_character_roll}}
+
+  <div class="stat__body">
+    <div>Progress:</div><div>{{progress}}</div>
+    {{> challenge_dice dice=dice}}
+  </div>
+
+  <div class="stat__footer">
+    {{> roll_outcome outcome=(calculate_outcome progress dice) score=progress}}
+  </div>
+{{/ wrapper }}

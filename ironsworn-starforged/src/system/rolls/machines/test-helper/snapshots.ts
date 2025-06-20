@@ -1,56 +1,56 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import { diff } from 'json-diff'
 
-const outputFile = path.resolve(__dirname, 'expected-outcomes.json')
-const testFile = path.resolve(__dirname, 'temp/test-outcomes.json')
-const diffFile = path.resolve(__dirname, 'temp/diff.json')
+const output_file = path.resolve(__dirname, 'outcomes_expected.json')
+const test_file = path.resolve(__dirname, 'temp/test_outcomes.json')
+const diff_file = path.resolve(__dirname, 'temp/diff.json')
 
-export const loadOutcomes = () => {
-    if (!fs.existsSync(outputFile)) {
+export const outcomes_load = () => {
+    if (!fs.existsSync(output_file)) {
         return {}
     }
-    return JSON.parse(fs.readFileSync(outputFile))
+    return JSON.parse(fs.readFileSync(output_file))
 }
 
-export const loadTestOutcomes = () => {
-    if (!fs.existsSync(testFile)) {
+export const test_outcomes_load = () => {
+    if (!fs.existsSync(test_file)) {
         return {}
     }
-    return JSON.parse(fs.readFileSync(testFile))
+    return JSON.parse(fs.readFileSync(test_file))
 }
 
-export const saveOutcomes = (outcomes: any) => {
-    fs.writeFileSync(outputFile, JSON.stringify(outcomes))
+export const outcomes_save = (outcomes: any) => {
+    fs.writeFileSync(output_file, JSON.stringify(outcomes))
 }
 
-export const saveTestOutcomes = (outcomes: any) => {
-    fs.writeFileSync(testFile, JSON.stringify(outcomes))
+export const test_outcomes_save = (outcomes: any) => {
+    fs.writeFileSync(test_file, JSON.stringify(outcomes))
 }
 
-export const saveDiff = (results: any) => {
-    fs.writeFileSync(diffFile, JSON.stringify(results))
+export const diff_save = (results: any) => {
+    fs.writeFileSync(diff_file, JSON.stringify(results))
 }
 
-export const getOutcomeKey = ({
-    challengeDie1,
-    challengeDie2,
+export const get_outcome_key = ({
+    challenge_die_1,
+    challenge_die_2,
     momentum,
-    actionScore,
+    action_score,
     burn,
 }) => {
-    return `${challengeDie1}-${challengeDie2}-${momentum}-${actionScore}-${burn}`
+    return `${challenge_die_1}-${challenge_die_2}-${momentum}-${action_score}-${burn}`
 }
 
 export const compare = () => {
-    const expectedOutcomes = loadOutcomes()
-    const testOutomes = loadTestOutcomes()
+    const outcomes_expected = outcomes_load()
+    const outomes_test = test_outcomes_load()
 
-    const results = diff(expectedOutcomes, testOutomes)
+    const results = diff(outcomes_expected, outomes_test)
 
     if (results === undefined) {
         return 'No differences found.'
     }
-    saveDiff(results)
+    diff_save(results)
     return 'Differences found!'
 }

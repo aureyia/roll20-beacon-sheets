@@ -28,7 +28,7 @@ const assertStoreValues = (values: Stats) => {
     assert(typeof values.wits === 'number')
 }
 
-export const statsStore = createStore({
+export const store_stats = createStore({
     context: {
         edge: 0,
         heart: 0,
@@ -57,21 +57,17 @@ export const statsStore = createStore({
 export class DehydrateStats extends Context.Tag('DehydrateStats')<
     DehydrateStats,
     {
-        readonly dehydrate: () => Effect.Effect<
-            Record<string, any>,
-            never,
-            never
-        >
+        readonly dehydrate: () => Effect.Effect<Record<string, any>, never, never>
     }
 >() {}
 
-export const DehydrateStatsLive = Layer.effect(
+export const live_dehydrate_stats = Layer.effect(
     DehydrateStats,
     Effect.gen(function* () {
         return {
             dehydrate: () =>
                 Effect.gen(function* () {
-                    const context = statsStore.get().context
+                    const context = store_stats.get().context
                     return yield* Effect.succeed({
                         edge: context.edge,
                         heart: context.heart,

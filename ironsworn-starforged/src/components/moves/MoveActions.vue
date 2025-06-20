@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { Effect, Layer } from 'effect'
+import { inject, ref } from 'vue'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import {
     NumberField,
     NumberFieldContent,
@@ -6,20 +10,15 @@ import {
     NumberFieldIncrement,
     NumberFieldInput,
 } from '@/components/ui/number-field'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
-import type { IMoveTriggerOptionAction } from '@/vendor/dataforged'
-import { inject, ref } from 'vue'
-import { Effect, Layer } from 'effect'
-import { momentumStore } from '@/system/momentum/store'
-import { statsStore } from '@/system/stats.store'
-import { roll as actionRoll } from '@/system/rolls/handlers/action-roll'
-import { roll as progressRoll } from '@/system/rolls/handlers/progress-roll'
-import { roll as oracleRoll } from '@/system/rolls/handlers/oracle-roll'
-import { RollFormatterLive } from '@/system/rolls/formatter'
+import { store_momentum } from '@/system/momentum/store'
+import { ActionScoreLive } from '@/system/rolls/action_score'
 import { DispatchLive } from '@/system/rolls/dispatch'
-import { ActionRollLive } from '@/system/rolls/handlers/action-roll'
-import { ActionScoreLive } from '@/system/rolls/action-score'
+import { RollFormatterLive } from '@/system/rolls/formatter'
+import { ActionRollLive, roll as actionRoll } from '@/system/rolls/handlers/action_roll'
+import { roll as oracleRoll } from '@/system/rolls/handlers/oracle_roll'
+import { roll as progressRoll } from '@/system/rolls/handlers/progress_roll'
+import { store_stats } from '@/system/stats.store'
+import type { IMoveTriggerOptionAction } from '@/vendor/dataforged'
 
 const props = defineProps({
     move: {
@@ -32,7 +31,7 @@ const { moveMode, actor } = inject('roll')
 const { selectedOption } = inject('move')
 const modifier = ref<number>(0)
 
-const burnMomentum = (choice: boolean) => {
+const momentum_burn = (choice: boolean) => {
     actor.send({
         type: 'burnChoice',
         value: choice,
@@ -46,8 +45,8 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
         return
     }
 
-    const momentum = momentumStore.get().context.momentum
-    const stats = statsStore.get().context
+    const momentum = store_momentum.get().context.momentum
+    const stats = store_stats.get().context
     const formattedModifier = Number(modifier.value)
     // TODO: Update this to use the parsed version
     // const baseBonus = stats[selectedOption.value.Using[0].toLowerCase()]
@@ -79,8 +78,8 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
       class="flex items-end justify-between"
       v-if="moveMode === 'momentumBurn'"
     >
-      <Button variant="default" @click="burnMomentum(true)">Yes</Button>
-      <Button variant="destructive" @click="burnMomentum(false)">No</Button>
+      <Button variant="default" @click="momentum_burn(true)">Yes</Button>
+      <Button variant="destructive" @click="momentum_burn(false)">No</Button>
     </div>
     <div class="flex items-end justify-between" d v-else>
       <NumberField

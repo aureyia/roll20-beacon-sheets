@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { settingsStore } from '@/system/settings.store'
+import { store_settings } from '@/system/settings.store'
 
 const modeList = [
     'character-standard',
