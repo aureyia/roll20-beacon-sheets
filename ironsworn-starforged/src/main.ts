@@ -18,7 +18,7 @@ import './sheet/scss/index.scss'
 
 import { runner } from './simulation/runner'
 import { plugin_relay_sim } from './simulation/simulator'
-import { Intensity } from './simulation/types'
+import { INTENSITY } from './simulation/types'
 
 // @ts-ignore
 const env = import.meta.env.MODE || ''
@@ -26,7 +26,7 @@ const env = import.meta.env.MODE || ''
 const is_dev_environment = ['development', 'test'].includes(env)
 export const is_sim_environment = env === 'simulation'
 export const roll_speed_ms = ref([2000])
-export const ref_intensity = ref(Intensity.Low) as VueRef<ObjectValues<typeof Intensity>>
+export const ref_intensity = ref(INTENSITY.Low) as VueRef<ObjectValues<typeof INTENSITY>>
 export const postRef = ref()
 
 const main = Effect.promise(async () => {

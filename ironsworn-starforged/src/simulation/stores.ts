@@ -9,7 +9,7 @@ import { assets, impacts, resources, stats, tasks } from './fuzzers/stores'
 import { number_between } from './prng'
 import { save_snapshot } from './storage/snapshots'
 
-export const setupStores = (seed: string, intensity: typeof Intensity) =>
+export const setup_stores = (seed: string, intensity: Intensity) =>
     Effect.sync(() => {
         // Clear Stores
 
@@ -19,13 +19,13 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
 
         // Momentum
 
-        const selectedMomentum = Effect.runSync(number_between(seed, 'momentum', -6, 10))
-        store_momentum.trigger.set({ value: selectedMomentum })
+        const selected_momentum = Effect.runSync(number_between(seed, 'momentum', -6, 10))
+        store_momentum.trigger.set({ value: selected_momentum })
 
         // Stats
 
-        const statList = ['edge', 'heart', 'iron', 'shadow', 'wits']
-        const selectedStats = statList.map(stat => {
+        const stat_list = ['edge', 'heart', 'iron', 'shadow', 'wits']
+        const stats_selected = stat_list.map(stat => {
             return {
                 label: stat,
                 // @ts-ignore
@@ -33,15 +33,15 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
             }
         })
 
-        for (const entry of selectedStats) {
+        for (const entry of stats_selected) {
             // @ts-ignore
             store_stats.trigger.set(entry)
         }
 
         // Resources
 
-        const resourceList = ['health', 'spirit', 'supply', 'xp']
-        const selectedResources = resourceList.map(resource => {
+        const resource_list = ['health', 'spirit', 'supply', 'xp']
+        const resource_selected = resource_list.map(resource => {
             return {
                 label: resource,
                 // @ts-ignore
@@ -49,16 +49,15 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
             }
         })
 
-        for (const entry of selectedResources) {
+        for (const entry of resource_selected) {
             // @ts-ignore
             store_stats.trigger.set(entry)
         }
 
         // Impacts
 
-        const impactList = ['misfortunes', 'lasting_effects', 'burdens', 'current_vehicle', 'other']
-
-        const selectedImpacts = impactList.map(category => {
+        const impact_list = ['misfortunes', 'lasting_effects', 'burdens', 'current_vehicle', 'other']
+        const impact_selected = impact_list.map(category => {
             return {
                 label: category,
                 // @ts-ignore
@@ -66,32 +65,32 @@ export const setupStores = (seed: string, intensity: typeof Intensity) =>
             }
         })
 
-        for (const entry of selectedImpacts) {
+        for (const entry of impact_selected) {
             // @ts-ignore
             store_impacts.trigger.set(entry)
         }
 
         // Assets
 
-        const selectedAssets = assets(seed, intensity)
+        const assets_selected = assets(seed, intensity)
         // @ts-ignore
-        store_assets.trigger.set({ label: 'list', value: selectedAssets })
+        store_assets.trigger.set({ label: 'list', value: assets_selected })
 
         // Tasks
 
-        const selectedTasks = tasks(seed, intensity)
+        const tasks_selected = tasks(seed, intensity)
         // @ts-ignore
-        store_tasks.trigger.set({ label: 'list', value: selectedTasks })
+        store_tasks.trigger.set({ label: 'list', value: tasks_selected })
 
         Effect.runPromise(
             save_snapshot('stores', {
                 run_id: seed,
-                momentum: selectedMomentum,
-                stats: selectedStats,
-                resources: selectedResources,
-                impacts: selectedImpacts,
-                tasks: selectedTasks,
-                assets: selectedAssets,
+                momentum: selected_momentum,
+                stats: stats_selected,
+                resources: resource_selected,
+                impacts: impact_selected,
+                tasks: tasks_selected,
+                assets: assets_selected,
             })
         )
     })

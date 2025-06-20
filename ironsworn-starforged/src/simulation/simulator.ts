@@ -10,7 +10,7 @@ import {
 } from '@/external/relay-handlers'
 import { ref_dispatch } from '@/external/vue.relay'
 import { relay_sim } from './dispatch.mock'
-import { rollSteam } from './generate_rolls'
+import { roll_stream } from './generate_rolls'
 
 export const config_relay = {
     handlers: {
@@ -41,8 +41,8 @@ export const plugin_relay_sim = () =>
         }
     })
 
-export const simRunner = (speed_ms: number) =>
+export const runner_simulation = (speed_ms: number) =>
     Effect.gen(function* () {
         yield* Effect.sleep('1 seconds')
-        yield* Stream.runDrain(rollSteam(speed_ms))
+        yield* Stream.runDrain(roll_stream(speed_ms))
     })

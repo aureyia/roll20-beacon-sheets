@@ -14,7 +14,7 @@ import { roll as progressRoll } from '@/system/rolls/handlers/progress_roll'
 import { machine } from '@/system/rolls/machines/calculate_outcome'
 import { number_between } from './prng'
 import { save_snapshot } from './storage/snapshots'
-import { setupStores } from './stores'
+import { setup_stores } from './stores'
 
 const MainLive = ActionRollLive.pipe(
     Layer.provide(RollFormatterLive),
@@ -53,7 +53,7 @@ export const createSeed = () => (replaySeed.value !== '' ? replaySeed.value : cr
 
 const modifier = () => Effect.runSync(number_between(seed.get(), 'modifier', 0, 4))
 
-export const rollSteam = (speed_ms: number) => {
+export const roll_stream = (speed_ms: number) => {
     const streamInit = Schedule.spaced(`${speed_ms} millis`)
     return Stream.fromSchedule(streamInit).pipe(
         Stream.tap(() =>
@@ -69,7 +69,7 @@ export const rollSteam = (speed_ms: number) => {
                 status: 'TBD',
             })
         ),
-        Stream.tap(() => setupStores(seed.get(), ref_intensity.value)),
+        Stream.tap(() => setup_stores(seed.get(), ref_intensity.value)),
         Stream.tap(() =>
             save_snapshot('rollInputs', {
                 run_id: seed.get(),

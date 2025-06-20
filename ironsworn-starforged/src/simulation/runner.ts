@@ -1,8 +1,8 @@
 import { Effect, Fiber, Queue, Ref, Stream, SubscriptionRef } from 'effect'
 import { type Ref as VueRef, watch } from 'vue'
-import { simRunner } from './simulator'
+import { runner_simulation } from './simulator'
 
-export const runner = (rollSpeed: VueRef) =>
+export const runner = (roll_speed: VueRef) =>
     Effect.gen(function* () {
         const queue = yield* Queue.bounded<number>(20)
         const fiber_ref = yield* SubscriptionRef.make<Fiber.RuntimeFiber<
@@ -12,32 +12,32 @@ export const runner = (rollSpeed: VueRef) =>
             any
         > | null>(null)
 
-        const startFiber = (speed_ms: number) => Effect.fork(simRunner(speed_ms))
+        const start_fiber = (speed_ms: number) => Effect.fork(runner_simulation(speed_ms))
 
-        const initial_fiber = yield* startFiber(rollSpeed.value[0])
-        yield* Ref.set(fiber_ref, initial_fiber)
+        const fiber_initial = yield* start_fiber(roll_speed.value[0])
+        yield* Ref.set(fiber_ref, fiber_initial)
 
-        watch(rollSpeed, speed_ms => {
+        watch(roll_speed, speed_ms => {
             Effect.runPromise(Queue.offer(queue, speed_ms[0]))
         })
 
         const stream = Stream.fromQueue(queue).pipe(Stream.debounce('3000 millis'))
 
-        yield* Stream.runForEach(stream, speed =>
+        yield* Stream.runForEach(stream, speed_ms =>
             Effect.gen(function* () {
-                const currentFiber = yield* Ref.get(fiber_ref)
-                if (currentFiber) {
-                    yield* Fiber.interrupt(currentFiber)
+                const fiber_current = yield* Ref.get(fiber_ref)
+                if (fiber_current) {    
+                    yield* Fiber.interrupt(fiber_current)
                 }
 
-                const newFiber = yield* startFiber(speed)
-                yield* Ref.set(fiber_ref, newFiber)
+                const fiber_new = yield* start_fiber(speed_ms)
+                yield* Ref.set(fiber_ref, fiber_new)
             })
         )
 
-        const finalFiber = yield* Ref.get(fiber_ref)
+        const fiber_final = yield* Ref.get(fiber_ref)
 
-        if (finalFiber) {
-            yield* finalFiber
+        if (fiber_final) {
+            yield* fiber_final
         }
     })

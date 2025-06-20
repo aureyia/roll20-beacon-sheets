@@ -1,9 +1,9 @@
+import type { INTENSITY } from '@/simulation/types'
+import {} from './high'
 import {} from './low'
 import {} from './medium'
-import {} from './high'
-import type { Intensity } from '@/simulation/types'
 
-export const resources = (seed: string, intensity: Intensity) => {
+export const resources = (seed: string, intensity: INTENSITY) => {
     if (intensity === 'high') {
         return high(seed)
     }
