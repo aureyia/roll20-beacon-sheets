@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { ref } from 'vue'
-import { store_tasks } from '@/system/tasks/store'
-import { DIFFICULTIES } from '@/system/tasks/types'
+import { store_tasks } from '@/system/tasks_store'
+import { DIFFICULTIES } from '@/system/tasks_types'
 
 defineProps({ id: String })
 defineModel('selectedDifficulty', { type: String })

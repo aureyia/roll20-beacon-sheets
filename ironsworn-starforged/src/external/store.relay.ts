@@ -1,13 +1,13 @@
 import { Console, Duration, Effect, Queue, Stream } from 'effect'
 import { sync } from '@/external/sync'
-import { store_assets } from '@/system/assets/store'
+import { store_assets } from '@/system/assets_store'
 import { store_character } from '@/system/character.store'
-import { store_impacts } from '@/system/impacts/store'
-import { store_momentum } from '@/system/momentum/store'
+import { store_impacts } from '@/system/impacts_store'
+import { store_momentum } from '@/system/momentum_store'
 import { store_resources } from '@/system/resources.store'
 import { store_settings } from '@/system/settings.store'
 import { store_stats } from '@/system/stats.store'
-import { store_tasks } from '@/system/tasks/store'
+import { store_tasks } from '@/system/tasks_store'
 import { store_meta } from './store'
 
 export const relay_store = Effect.gen(function* () {

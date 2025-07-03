@@ -8,7 +8,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { ref, watch } from 'vue'
-import { store_tasks } from '@/system/tasks/store'
+import { store_tasks } from '@/system/tasks_store'
 
 const INPUTS = ['0', '1', '2', '3', '4'] as const
 const props = defineProps({ id: String, ticks: String })

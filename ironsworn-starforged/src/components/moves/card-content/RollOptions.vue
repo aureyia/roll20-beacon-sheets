@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { RadioGroup } from '@/components/ui/radio-group'
-import { get_move_data } from '@/system/moves/utils'
+import { get_move_data } from '@/system/moves_utils'
 
 const { active_move, selectedOption }: any = inject('move')
 const moveData = computed(() => Effect.runSync(get_move_data(active_move.value)))

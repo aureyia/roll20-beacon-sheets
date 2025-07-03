@@ -1,14 +1,14 @@
 import { Context, Effect, Layer } from 'effect'
 
 import { store_meta as meta } from '@/external/store'
-import { store_assets as assets } from '@/system/assets/store'
+import { store_assets as assets } from '@/system/assets_store'
 import { store_character as character } from '@/system/character.store'
-import { store_impacts as impacts } from '@/system/impacts/store'
-import { store_momentum as momentum } from '@/system/momentum/store'
+import { store_impacts as impacts } from '@/system/impacts_store'
+import { store_momentum as momentum } from '@/system/momentum_store'
 import { store_resources as resources } from '@/system/resources.store'
 import { store_settings as settings } from '@/system/settings.store'
 import { store_stats as stats } from '@/system/stats.store'
-import { store_tasks as tasks } from '@/system/tasks/store'
+import { store_tasks as tasks } from '@/system/tasks_store'
 
 export class Hydration extends Context.Tag('Dehydration')<
     Hydration,

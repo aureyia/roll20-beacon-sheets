@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ProgressBox } from '@/components/progress'
-import { progressTicksToFill } from '@/system/tasks/progress_ticks_to_fill'
-import { type Task, store_tasks } from '@/system/tasks/store'
+import { ProgressBox } from '@/components/progress/progress_components'
+import { progressTicksToFill } from '@/system/tasks_utils'
+import { type Task, store_tasks } from '@/system/tasks_store'
 
 const BOXES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 const taskStore = store_tasks.get().context.list

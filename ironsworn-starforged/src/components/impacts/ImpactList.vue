@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { store_impacts, type ImpactsGrouped } from '@/system/impacts/store'
+import { store_impacts, type ImpactsGrouped } from '@/system/impacts_store'
 import {
     DialogTrigger,
     Dialog,
@@ -9,7 +9,7 @@ import {
     DialogClose,
 } from '../ui/dialog'
 import { Button } from '../ui/button'
-import type { AnyImpact } from '@/system/impacts/types'
+import type { AnyImpact } from '@/system/impacts_types'
 
 const impacts = store_impacts
 const getImpactsByCategory = (category: keyof ImpactsGrouped) =>

@@ -32,8 +32,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'vee-validate'
-import { store_tasks, type TaskCategory } from '@/system/tasks/store'
-import { DIFFICULTIES } from '@/system/tasks/types'
+import { store_tasks, type TaskCategory } from '@/system/tasks_store'
+import { DIFFICULTIES } from '@/system/tasks_types'
 import { inject, watch } from 'vue'
 
 const categories: TaskCategory[] =

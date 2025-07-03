@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { marked } from 'marked'
-import { store_assets } from '@/system/assets/store'
+import { store_assets } from '@/system/assets_store'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
 import { Checkbox } from '../ui/checkbox'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'

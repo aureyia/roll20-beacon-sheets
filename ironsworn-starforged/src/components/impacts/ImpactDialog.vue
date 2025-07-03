@@ -33,8 +33,8 @@ import {
     Dialog,
     DialogFooter,
 } from '@/components/ui/dialog'
-import { IMPACTS, type AnyImpact } from '@/system/impacts/types'
-import { store_impacts, type AddImpact } from '@/system/impacts/store'
+import { IMPACTS, type AnyImpact } from '@/system/impacts_types'
+import { store_impacts, type AddImpact } from '@/system/impacts_store'
 
 const fullImpactList = {
     ...IMPACTS,

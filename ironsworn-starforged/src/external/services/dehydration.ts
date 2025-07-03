@@ -1,14 +1,14 @@
 import type { Character } from '@roll20-official/beacon-sdk'
 import { Context, Effect, Layer } from 'effect'
 import { DehydrateMeta } from '@/external/store'
-import { DehydrateAssets } from '@/system/assets/store'
+import { DehydrateAssets } from '@/system/assets_store'
 import { DehydrateCharacter } from '@/system/character.store'
-import { DehydrateImpacts } from '@/system/impacts/store'
-import { DehydrateMomentum } from '@/system/momentum/store'
+import { DehydrateImpacts } from '@/system/impacts_store'
+import { DehydrateMomentum } from '@/system/momentum_store'
 import { DehydrateResources } from '@/system/resources.store'
 import { DehydrateSettings } from '@/system/settings.store'
 import { DehydrateStats } from '@/system/stats.store'
-import { DehydrateTasks } from '@/system/tasks/store'
+import { DehydrateTasks } from '@/system/tasks_store'
 
 type DehydratedCharacter = {
     character: Character

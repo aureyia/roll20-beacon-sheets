@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { store_assets } from '@/system/assets/store'
+import { store_assets } from '@/system/assets_store'
 import { Card, CardContent, CardTitle } from '../ui/card'
 import { Toggle } from '../ui/toggle'
 

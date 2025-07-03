@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Effect } from 'effect'
 import { computed, inject } from 'vue'
-import { MomentumBurn, MoveActions, MoveCopy, MoveRollOptions } from '@/components/moves'
-import { get_move_data } from '@/system/moves/utils'
+import { MomentumBurn, MoveActions, MoveCopy, MoveRollOptions } from '@/components/moves/moves_components'
+import { get_move_data } from '@/system/moves_utils'
 import { Card, CardFooter, CardHeader } from '../ui/card'
 
 const { active_move }: any = inject('move')

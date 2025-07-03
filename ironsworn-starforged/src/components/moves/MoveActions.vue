@@ -10,13 +10,13 @@ import {
     NumberFieldIncrement,
     NumberFieldInput,
 } from '@/components/ui/number-field'
-import { store_momentum } from '@/system/momentum/store'
+import { store_momentum } from '@/system/momentum_store'
 import { ActionScoreLive } from '@/system/rolls/action_score'
 import { DispatchLive } from '@/system/rolls/dispatch'
 import { RollFormatterLive } from '@/system/rolls/formatter'
-import { ActionRollLive, roll as actionRoll } from '@/system/rolls/handlers/action_roll'
-import { roll as oracleRoll } from '@/system/rolls/handlers/oracle_roll'
-import { roll as progressRoll } from '@/system/rolls/handlers/progress_roll'
+import { ActionRollLive, roll as actionRoll } from '@/system/rolls/handler_action_roll'
+import { roll as oracleRoll } from '@/system/rolls/handler_oracle_roll'
+import { roll as progressRoll } from '@/system/rolls/handler_progress_roll'
 import { store_stats } from '@/system/stats.store'
 import type { IMoveTriggerOptionAction } from '@/vendor/dataforged'
 

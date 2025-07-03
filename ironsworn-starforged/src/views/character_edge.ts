@@ -1,0 +1,8 @@
+export { default as EdgeAssetsView } from './character/EdgeAssetsView.vue'
+export { default as EdgeConnectionsView } from './character/EdgeConnectionsView.vue'
+export { default as EdgeLegaciesView } from './character/EdgeLegaciesView.vue'
+export { default as EdgeMainView } from './character/EdgeMainView.vue'
+export { default as EdgeMovesView } from './character/EdgeMovesView.vue'
+export { default as EdgeProgressView } from './character/EdgeProgressView.vue'
+export { default as EdgeSummaryView } from './character/EdgeSummaryView.vue'
+export { default as EdgeVowsView } from './character/EdgeVowsView.vue'

@@ -6,7 +6,7 @@ import {
     type Task,
     TaskCategory,
     TaskStatus,
-} from '@/system/tasks/types'
+} from '@/system/tasks_types'
 import { number_between } from '../../prng'
 
 export const stats = (seed: string) => ({

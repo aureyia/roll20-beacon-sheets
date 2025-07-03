@@ -2,9 +2,9 @@
 import { computed, ref } from 'vue'
 import DarkModeSwitch from '@/components/switches/DarkModeSwitch.vue'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { store_impacts } from '@/system/impacts/store'
-import { store_momentum } from '@/system/momentum/store'
-import { momentum_max, momentum_reset } from '@/system/momentum/utils'
+import { store_impacts } from '@/system/impacts_store'
+import { store_momentum } from '@/system/momentum_store'
+import { momentum_max, momentum_reset } from '@/system/momentum_utils'
 
 const impacts = store_impacts.get()
 const momentum = store_momentum.get().context.momentum

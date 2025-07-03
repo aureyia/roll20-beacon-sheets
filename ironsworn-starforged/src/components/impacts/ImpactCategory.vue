@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ImpactList } from '@/components/impacts'
+import { ImpactList } from '@/components/impacts/impacts_components'
 
 defineProps({
     label: {
