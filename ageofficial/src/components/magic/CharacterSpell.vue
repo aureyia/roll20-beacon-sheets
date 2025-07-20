@@ -4,7 +4,7 @@
             <div class="label" data-testid="test-spell-header" style="flex:1;">{{ spell.name }}<br />({{ spell.requirements }})</div>     
         </div>
         <div>
-            <img v-if="spell.arcanaType" :src="'/src/assets/arcana/' + spell.arcanaType.toLowerCase() + '.png'" class="age-arcana-logo" v-tippy="{ content: '<span>'+spell.arcanaType+' '+ magicLabel+'</span>'}" />
+            <img v-if="spell.arcanaType && settings.gameSystem !== 'blue rose'" :src="'/src/assets/arcana/' + spell.arcanaType.toLowerCase() + '.png'" class="age-arcana-logo" v-tippy="{ content: '<span>'+spell.arcanaType+' '+ magicLabel+'</span>'}" />
         </div>   
         <!-- <div class="age-cost-tn-number" v-tippy="{ content: 'Magic Point Cost'}">
             <span>{{ spell.mpCost }}</span>
@@ -18,7 +18,7 @@
                 data-bs-target="#spellDetailsModal" 
                 data-bs-dismiss="showModal = false" 
                 data-bs-backdrop="static" 
-                v-tippy="{ content: 'Cast '+magicLabel+' (' + spell.mpCost + ''+magicPoints+')' }"
+                v-tippy="{ content: settings.gameSystem === 'blue rose' ? 'Cast '+magicLabel : 'Cast '+magicLabel+' (' + spell.mpCost + ''+magicPoints+')' }"
                 @click="handlePrint"
                 :disabled="(char.magic < spell.mpCost)"
                 :class="{ 'spell-btn-disabled':(char.magic < spell.mpCost)}">
@@ -85,6 +85,14 @@
       </template>
     </SpellModal>
   </Teleport>
+  <Teleport to="body">
+    <SpellFamiliarityModal :show="showFamiliarityModal" @close="showFamiliarityModal = false;" :spell="spell"
+      :index="index" :magicLabel="magicLabel" @delete="handleDelete()">
+      <template #header>
+        <h3 class="age-spell-details-header">Familiarity</h3>
+      </template>
+    </SpellFamiliarityModal>
+  </Teleport>
 </template>
 
 <script setup>
@@ -96,11 +104,15 @@ import { useBioStore } from '@/sheet/stores/bio/bioStore';
 import { useCharacterStore } from '@/sheet/stores/character/characterStore';
 import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import { useAbilityFocusesStore } from '@/sheet/stores/abilityScores/abilityFocusStore';
+import SpellFamiliarityModal from './SpellFamiliarityModal.vue';
+import { useItemStore } from '@/sheet/stores/character/characterQualitiesStore';
 
 const bio = useBioStore();
 const char = useCharacterStore();
 const settings = useSettingsStore();
-const showModal = ref(false)
+const qualitiesStore = useItemStore();
+const showModal = ref(false);
+const showFamiliarityModal = ref(false);
 const open = ref(false)
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
@@ -115,6 +127,16 @@ const expanded = ref(false);
 
 const magicLabel = ref('Arcana');
 const magicPoints = ref('MP');
+
+const familiarity = ref(0);
+const familiarityOptions = ref([
+  { value: 0, label: 'Present' },
+  { value: 2, label: 'Very Familiar' },
+  { value: 4, label: 'Familiar' },
+  { value: 6, label: 'Somewhat Familiar' },
+  { value: 8, label: 'Casually Familiar' },
+  { value: 10, label: 'Slightly Familiar' }
+]);
 switch(settings.gameSystem){
   case 'mage':
     magicLabel.value = 'Power';
@@ -138,15 +160,35 @@ const setAttackRoll = () => {
     toAttackRoll = useAbilityScoreStore().abilityScores[props.spell.ability].base;
   }
 }
-setAttackRoll()
+setAttackRoll();
 
+function focusBonus(){
+  const focusArray = qualitiesStore.items.filter(item => item.type === 'Ability Focus');
+  const obj = focusArray.find(obj => {
+    return (obj.name.toLowerCase() === props.spell.arcanaType.toLowerCase());
+  });
+  if (!obj) {
+    return 0; // Return 0 if no matching focus is found
+  }
+  if (obj.doubleFocus) {
+      return 4; // Return 4 if doubleFocus is true
+    } else if (obj.focus) {
+      return 2; // Return 2 if only focus is true
+    } else {
+      return 0;
+    }
+}
 const handleDelete = () => {
   const spellStore = useSpellStore();
   spellStore.removeSpell(props.spell._id);
 };
 const handlePrint = () => {
   const spellStore = useSpellStore();
-  spellStore.printSpell(props.spell._id,toAttackRoll);
+  if(settings.gameSystem === 'blue rose'){
+    showFamiliarityModal.value = true;
+  } else {
+    spellStore.printSpell(props.spell._id,parseInt(toAttackRoll) + focusBonus());
+  }
 };
 const handleDamagePrint = () => {
   const spellStore = useSpellStore();

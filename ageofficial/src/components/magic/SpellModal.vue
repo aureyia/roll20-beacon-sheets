@@ -60,11 +60,16 @@
                   <div class="mb-3 col">
                           <span class="age-input-label" id="basic-addon1">Target Number</span>
                           <input type="number" class="form-control" placeholder="0" aria-label="Target Number" v-model="spell.targetNumber"  aria-describedby="basic-addon1">
-                      </div>
-                  <div class="mb-3 col">
+                  </div>
+                  <div class="mb-3 col" v-if="settings.gameSystem !== 'blue rose'">
                           <span class="age-input-label" id="basic-addon1">MP Cost</span>
                           <input type="number" class="form-control" placeholder="0" aria-label="Magic Point Cost" v-model="spell.mpCost"  aria-describedby="basic-addon1">
-                      </div>
+                  </div>
+                  <div class="mb-3 col" v-if="settings.gameSystem === 'blue rose'">
+                      <span class="age-input-label" id="basic-addon1">Fatigue</span>
+                      <input type="text" class="form-control" aria-label="Fatigue" :id="`damage-${spell._id}`"
+                      v-model="spell.damageMiss"  aria-describedby="basic-addon1">
+                  </div>
             </div>
             <div class="row">
               
@@ -78,18 +83,93 @@
                           <select
                           class="age-atk-select form-select"
                               data-testid="test-spell-weaponType-input"
-                              :id="`weaponType-${spell._id}`"
                               v-model="spell.castingTime"
                           >
                               <option value="Minor">Minor Action</option>
                               <option value="Major">Major Action</option>
                           </select>
                   </div>
-                  <div class="mb-3 col">
+                  <div class="mb-3 col" v-if="settings.gameSystem !== 'blue rose'">
                       <span class="age-input-label" id="basic-addon1">Test</span>
                       <input type="text" class="form-control" placeholder="ex. Strength(Might)" aria-label="Spell Test" v-model="spell.spellTest"  aria-describedby="basic-addon1">
                   </div>
-                      
+                  <div class="mb-3 col" v-if="settings.gameSystem === 'blue rose'">
+                      <span class="age-input-label" id="basic-addon1">Test</span>
+                      <select
+                        class="age-atk-select form-select"
+                          data-testid="test-spell-weaponType-input"
+                          v-model="spell.ability"
+                          @change="onAbilityChange()">
+                        <option v-for="abl in abilities" :key="abl" :value="abl">{{ abl }}</option>
+                      </select>
+                      </div>
+                  <div class="mb-3 col align-content-end" v-if="settings.gameSystem === 'blue rose'">
+                      <span class="age-input-label" id="basic-addon1"></span>
+                        <select class="age-atk-select form-select"
+                                data-testid="test-spell-weaponType-input"
+                                v-model="spell.abilityFocus">
+                          <option v-for="mt in magicTypes" :key="mt" :value="mt">{{ mt }}</option>
+
+                          <!-- <option v-for="foci in filteredFocuses[spell.ability]" :key="foci" :value="foci">{{ foci }}</option> -->
+                          <!-- <option value="custom">Custom</option> -->
+                        </select>
+                      </div>
+                      <!-- <select class="age-atk-select form-select" name="Spell Test" id="spellTest">
+                        <optgroup v-for="(options, group) in bluerose"
+                                  :key="group"
+                                  :label="group">
+                          <option v-for="option in options"
+                                  :key="option"
+                                  :value="option">
+                            {{ option }}
+                          </option>
+                        </optgroup>
+                      </select>
+                      <div class="custom-select-wrapper" style="position: relative;"> -->
+    <!-- Overlayed display when selected -->
+
+                      <!-- <div
+                         class="age-atk-select form-select" 
+                        v-if="selected"
+                        style="position: absolute; top: 2px; left: 1px; width:99%; border:transparent; padding: 4px; pointer-events: none; background: white;z-index: 2;"
+                      >
+                         {{ selected }}
+                      </div> -->
+                        <!-- Actual select dropdown -->
+                        <!-- <select class="age-atk-select form-select" v-model="selected" style="position: relative; background: transparent;"
+                        @change="setBRSpellTest(selected)">
+                          <option disabled value="">Select an option</option>
+                          <optgroup
+                            v-for="(options, group) in bluerose"
+                            :key="group"
+                            :label="group"
+                          >
+                            <option
+                              v-for="option in options"
+                              :key="option"
+                              :value="`${group} (${option})`"
+                            >
+                            {{ option }}
+                            </option>
+                          </optgroup>
+                        </select> -->
+                      <!-- </div> -->
+                      <!-- <select class="age-atk-select form-select" name="Spell Test" id="spellTest">
+                        <optgroup v-for="(options, group) in bluerose"
+                                  :key="group"
+                                  :label="group">
+                          <option v-for="option in options"
+                                  :key="option"
+                                  :value="option">
+                            {{ option }}
+                          </option>
+                        </optgroup>
+                      </select> -->
+                  <!-- </div> -->
+                  <div class="mb-3 col" v-if="settings.gameSystem === 'blue rose'">
+                      <span class="age-input-label" id="basic-addon1">Resistance</span>
+                      <input type="text" class="form-control" placeholder="ex. Willpower(Self-Discipline)" aria-label="Spell Resistance" v-model="spell.spellTest"  aria-describedby="basic-addon1">
+                  </div>
                   <div class="mb-3 col"  v-if="spell.weaponType === 'ranged' || spell.weaponType === 'melee'">
                       <span class="age-input-label" id="basic-addon1">Weapon Group</span>
                           <select
@@ -113,21 +193,16 @@
                               <option value="staves">Staves</option>
                           </select>
                   </div>
-                  <div class="mb-3 col">
+                  <div class="mb-3 col" v-if="spell.spellType === 'Attack'">
                       <span class="age-input-label" id="basic-addon1">Damage (Success)</span>
                       <input type="text" class="form-control" placeholder="ex. 1d6" aria-label="Damage (Success)" :id="`damage-${spell._id}`"
                       v-model="spell.damageHit"  aria-describedby="basic-addon1">
                   </div>
-                  <div class="mb-3 col">
+                  <div class="mb-3 col" v-if="spell.spellType === 'Attack'">
                       <span class="age-input-label" id="basic-addon1">Damage (Failure)</span>
                       <input type="text" class="form-control" placeholder="ex. 1d6" aria-label="Damage (Failure)" :id="`damage-${spell._id}`"
                       v-model="spell.damageMiss"  aria-describedby="basic-addon1">
-                  </div>
-                  <div class="mb-3 col" v-if="settings.gameSystem === 'blue rose'">
-                      <span class="age-input-label" id="basic-addon1">Fatigue</span>
-                      <input type="text" class="form-control" aria-label="Fatigue" :id="`damage-${spell._id}`"
-                      v-model="spell.damageMiss"  aria-describedby="basic-addon1">
-                  </div>
+                  </div>                  
                   <div v-if="spell.weaponType === 'ranged'">
                       <div class="mb-3 col">
                           <span class="age-input-label" id="basic-addon1">Short Range</span>
@@ -220,8 +295,9 @@
 <script setup>
 import { useSpellStore } from '@/sheet/stores/magic/magicStore';
 import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
-import { fageArcana, magePowers } from './magicTypes';
-import { ref } from 'vue';
+import { brArcana, fageArcana, magePowers } from './magicTypes';
+import { computed, ref } from 'vue';
+import { bluerose, cthulhu, fage1e, fage2e, mage } from '../modifiers/focuses';
 
 const props = defineProps({
   show: Boolean,
@@ -234,16 +310,43 @@ const settings = useSettingsStore();
 const magicTypes = ref();
 switch(settings.gameSystem){
   case 'fage2e':
-  case 'blue rose':
     magicTypes.value = fageArcana;
   break;
   case 'mage':
     magicTypes.value = magePowers;
+  break;
+  case 'blue rose':
+    magicTypes.value = brArcana
+  break;
 }
-
+const selected = ref(props.spell.ability ? `${props.spell.ability} (${props.spell.abilityFocus})` : '');
+const abilityFocuses = ref(bluerose)
 const spellStore = useSpellStore();
+const abilities = ['Accuracy', 'Communication','Constitution','Dexterity','Fighting','Intelligence','Perception','Strength','Willpower'];
+const filteredFocuses = ref(fage2e)
+const arcanaFocuses = ref([]);
+switch(useSettingsStore().gameSystem){
+  case 'fage2e':
+    filteredFocuses.value = fage2e;
+    arcanaFocuses.value = fageArcana;
+  break;
+  case 'mage':
+    filteredFocuses.value = mage;
+    arcanaFocuses.value = magePowers;
+
+  break;
+  case 'fage1e':
+    filteredFocuses.value = fage1e;
+  break;
+  case 'blue rose':
+    filteredFocuses.value = bluerose;
+    arcanaFocuses.value = brArcana;
+  break;
+  case 'cthulhu':
+    filteredFocuses.value = cthulhu;
+  break;
+}
 const setArcanaAbility = () => {
-  // debugger
   switch(props.spell.arcanaType){
     // WILLPOWER For Psychic
     case('Apportation'):
@@ -271,6 +374,16 @@ const setArcanaAbility = () => {
     break;
   }
 }
+const setBRSpellTest = (selectedOption) => {
+  const [group, option] = selected.value.split('(')
+  props.spell.ability = group.trim();
+  props.spell.abilityFocus = option.slice(0, -1);
+}
+const selectedOptionDisplay = computed(() => {
+  if (!selected.value) return ''
+  const [group, option] = selected.value.split('|')
+  return `${group} (${option})`
+})
 </script>
 <style>
 

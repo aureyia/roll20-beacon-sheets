@@ -9,7 +9,7 @@
 
             <div class="modal-body">
               <div v-if="mode === 'create' && !feature.type" style="display: grid;grid-template-columns: repeat(2,1fr);grid-gap: 5px;">
-                <button v-for="qty in qualityOptions" :key="qty" class="age-quality-select-btn" @click="feature.type = qty">
+                <button v-for="qty in qualityOptions" :key="qty" class="age-quality-select-btn" @click="feature.type = qty;if(qty === 'Favored Stunt') feature.spCost = 1">
                   <div class="age-quality-section age-quality-class-icon" v-if="qty === 'Class'"></div>
                   <div class="age-quality-section age-quality-ancestry-icon" v-if="qty === 'Ancestry'"></div>
                   <div class="age-quality-section age-quality-focus-icon" v-if="qty === 'Ability Focus'"></div>
@@ -31,23 +31,54 @@
                       data-testid="test-spell-weaponType-input"
                       :id="`weaponType-${feature._id}`"
                       v-model="feature.ability"
-                  >
+                      @change="onAbilityChange()">
                     <option v-for="abl in abilities" :key="abl" :value="abl">{{ abl }}</option>
                   </select>
                 </div>
                 <div class="mb-3 col">
+                <span class="age-input-label" id="basic-addon1">Focus Name</span>
+                <div class="custom-select-wrapper" style="position: relative;">
+                  <!-- Overlayed display for selected value -->
+                  <div
+                    class="age-atk-select form-select"
+                    v-if="selected"
+                    style="position: absolute; top: 1px; left: 1px; width:99%; border:transparent; padding: 4px; pointer-events: none; background: white; z-index: 2;height: 92%;text-transform: capitalize;">
+                    {{ selected }}
+                  </div>
+                  <!-- Native select dropdown -->
+                  <select                    
+                    class="age-atk-select form-select"                    
+                    v-model="selected"
+                    style="position: relative; background: transparent;"
+                    @change="setFocus(selected)">
+                      <option disabled value="">Select an option</option>
+                      <!-- Arcana group first -->
+                      <optgroup label="Arcana" v-if="feature.ability === 'Intelligence'">
+                        <option
+                          v-for="option in arcanaFocuses"
+                          :key="`Arcana-${option}`"
+                          :value="`Arcana (${option})`">
+                          {{ option }}
+                        </option>
+                      </optgroup>
+                      <option v-for="foci in filteredFocuses[feature.ability]" :key="foci" :value="foci">{{ foci }}</option>
+                      <option value="custom">Custom</option>
+                  </select>
+            </div>
+    </div>
+                <!-- <div class="mb-3 col">
                   <span class="age-input-label" id="basic-addon1">Focus Name</span>
                   <select class="age-atk-select form-select"
                           data-testid="test-spell-weaponType-input"
                           :id="`weaponType-${feature._id}`"
                           v-model="feature.name">
                     <option v-for="foci in filteredFocuses[feature.ability]" :key="foci" :value="foci">{{ foci }}</option>
-                    <option value="custom">Custom</option>
+                    <option value="Custom">Custom</option>
                   </select>
-                </div>
+                </div> -->
                 <div class="mb-3 col" v-if="feature.name === 'custom'">
                   <span class="age-input-label" id="basic-addon1">Custom Name</span>
-                  <input type="text" v-model="feature.customName" />
+                  <input class="form-control" type="text" v-model="feature.customName" />
                 </div>
                 <div class="age-focus-container">
                   <div class=" input-group">
@@ -124,7 +155,7 @@
                 </div>
                 <div class="mb-3 col-2">
                   <span class="age-input-label" id="basic-addon1" v-if="feature.type === 'Favored Stunt'">SP Cost</span>
-                  <input type="number" class="form-control" placeholder="1" aria-label="Stunt Point Cost" v-model="feature.spCost"  aria-describedby="basic-addon1">
+                  <input type="number" class="form-control" placeholder="1" aria-label="Stunt Point Cost" v-model="feature.spCost"  aria-describedby="basic-addon1" min="1">
                 </div>
               </div>
               <div class="row" style="margin:0" v-if="feature.type === 'Ancestry' || feature.type === 'Class'">
@@ -279,7 +310,6 @@
                 </div>
               </div>
             </div>
-
         <div class="modal-footer-actions" v-if="mode === 'create'">
           <slot name="footer">
                 <div >
@@ -288,10 +318,6 @@
                 @click="useItemStore().addItem(feature);$emit('close')"
               >Create</button>      
                 </div>
-            
-             
-            
-            
           </slot>
         </div>
         <div class="modal-footer-actions"  v-else>
@@ -326,6 +352,7 @@ import { bluerose, cthulhu, fage1e, fage2e, mage } from '../modifiers/focuses';
 import CustomAttackModView from '../modifiers/CustomAttackModView.vue';
 import {useModifiersStore} from '@/sheet/stores/modifiers/modifiersStore'
 import BaseModView from '@/components/modifiers/BaseModView.vue';
+import { brArcana, fageArcana, magePowers } from '../magic/magicTypes';
 // const qualityOptions = ['Ability Focus', 'Ancestry', 'Class', 'Favored Stunt', 'Specialization', 'Talent' ];
 const props = defineProps({
   show: Boolean,
@@ -335,7 +362,8 @@ const props = defineProps({
 });
 const char = useCharacterStore();
 const mods = useModifiersStore();
-const abilities = ['Accuracy', 'Communication','Constitution','Dexterity','Fighting','Intelligence','Perception','Strength','Willpower']
+const abilities = ['Accuracy', 'Communication','Constitution','Dexterity','Fighting','Intelligence','Perception','Strength','Willpower'];
+
 // const filteredFocuses = ref({
 //   Accuracy: ['Arcane Blast', 'Black Powder', 'Bows', 'Brawling', 'Dueling', 'Grenades', 'Light Blades', 'Slings', 'Staves'],
 //   Communication: ['Animal Handling', 'Bargaining', 'Deception','Disguise', 'Etiquette', 'Gambling', 'Investigation', 'Leadership','Performing', 'Persuasion', 'Seduction'],
@@ -348,24 +376,40 @@ const abilities = ['Accuracy', 'Communication','Constitution','Dexterity','Fight
 //   Willpower: ['Courage', 'Faith', 'Morale', 'Self-Discipline']
 // })
 const filteredFocuses = ref(fage2e)
-
+const arcanaFocuses = ref([]);
 switch(useSettingsStore().gameSystem){
   case 'fage2e':
     filteredFocuses.value = fage2e;
+    arcanaFocuses.value = fageArcana;
   break;
   case 'mage':
     filteredFocuses.value = mage;
+    arcanaFocuses.value = magePowers;
+
   break;
   case 'fage1e':
     filteredFocuses.value = fage1e;
   break;
-  case 'bluerose':
+  case 'blue rose':
     filteredFocuses.value = bluerose;
+    arcanaFocuses.value = brArcana;
   break;
   case 'cthulhu':
     filteredFocuses.value = cthulhu;
   break;
 }
+const setFocus = (selectedOption) => {
+  const [group, option] = selected.value.split('(');
+  console.log('setFocus', selected.value, group, option);
+  if(option){
+    props.feature.name = option.slice(0, -1).trim(); 
+  } else {
+    props.feature.name = group === 'custom' ? 'custom' : group;
+  }
+}
+const selected = ref(arcanaFocuses.value.includes(props.feature.name) ? `Arcana (${props.feature.name})` : props.feature.name || '');
+// const selected = ref(arcanaFocuses.value.includes(props.feature.name) ? setFocus('Arcana',props.feature.name) : props.feature.name || '');
+
 const modOptions = ref(['Ability Reroll', 'Armor Penalty', 'Armor Rating', 'Custom Attack', 'Damage', 'Defense', 
 // 'Health Points', 'Magic Points',
  'Speed', 'Spell', 
@@ -438,6 +482,11 @@ const removeModifier = (index) => {
     props.feature.modifiers?.splice(index, 1)
   }
 }
+const onAbilityChange = () => {
+  selected.value = null;
+}
+
+
 </script>
 <style>
 .modal-mask {
