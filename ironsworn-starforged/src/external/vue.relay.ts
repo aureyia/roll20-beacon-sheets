@@ -10,7 +10,7 @@ import {
     onTranslationsRequest,
 } from '@/external/relay_handlers'
 
-export const ref_dispatch = shallowRef()
+export const dispatch_ref = shallowRef()
 export const config_relay = {
     handlers: {
         onInit,
@@ -43,8 +43,7 @@ export const plugin_sheet_relay = (mode: boolean) =>
             return initRelay(config_relay)
         })
 
-        ref_dispatch.value = dispatch
-        console.log('ref_dispatch.value', ref_dispatch.value)
+        dispatch_ref.value = dispatch
 
         const relay_sheet = {
             install(app: App) {

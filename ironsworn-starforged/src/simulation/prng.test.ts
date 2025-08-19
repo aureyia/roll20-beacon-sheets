@@ -1,5 +1,5 @@
 import { Effect } from 'effect'
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import { live_prng, PRNG } from './prng'
 
 describe('PRNG', () => {

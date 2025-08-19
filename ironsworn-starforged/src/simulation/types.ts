@@ -4,4 +4,4 @@ export const INTENSITY = {
     Low: 'low',
 } as const
 
-export type Intensity = typeof INTENSITY[keyof typeof INTENSITY]
+export type Intensity = (typeof INTENSITY)[keyof typeof INTENSITY]

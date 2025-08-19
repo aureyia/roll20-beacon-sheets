@@ -81,8 +81,8 @@ export type RollStat = {
     type: 'stat' | 'stat_compact' | 'move' | 'move_compact'
     parameters: CommonParameters & {
         dice: {
-            challenge_die1: number
-            challenge_die2: number
+            challenge_die_1: number
+            challenge_die_2: number
             action_die: {
                 value: number
                 negated: boolean

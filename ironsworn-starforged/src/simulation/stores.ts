@@ -56,7 +56,13 @@ export const setup_stores = (seed: string, intensity: Intensity) =>
 
         // Impacts
 
-        const impact_list = ['misfortunes', 'lasting_effects', 'burdens', 'current_vehicle', 'other']
+        const impact_list = [
+            'misfortunes',
+            'lasting_effects',
+            'burdens',
+            'current_vehicle',
+            'other',
+        ]
         const impact_selected = impact_list.map(category => {
             return {
                 label: category,

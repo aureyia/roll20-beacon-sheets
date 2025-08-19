@@ -14,7 +14,7 @@ export const DispatchResultsSchema = Schema.Struct({
     results: Schema.Record({
         key: DieKey.pipe(Schema.minLength(1)),
         value: Schema.Struct({
-            rollName: DieKey,
+            roll_name: DieKey,
             expression: DieExpression,
             results: Schema.Struct({
                 result: Schema.Number,

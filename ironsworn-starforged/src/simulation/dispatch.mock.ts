@@ -1,6 +1,6 @@
 import type { Dispatch } from '@roll20-official/beacon-sdk'
 import { createAtom } from '@xstate/store'
-import { postRef, ref_intensity } from '@/main'
+import { intensity_ref, post_ref } from '@/main'
 import { rollResults as rollResultsHigh } from './fuzzers/roll_results/roll-results-high'
 import { rollResults as rollResultsLow } from './fuzzers/roll_results/roll-results-low'
 import { rollResults as rollResultsMedium } from './fuzzers/roll_results/roll-results-medium'
@@ -80,18 +80,18 @@ export const relay_sim = async (config_relay: any) => {
         updateSharedSettings: async (update: any) => await {},
         // biome-ignore lint: Intentional any
         roll: async (roll: any) => {
-            if (ref_intensity.value === 'high') {
+            if (intensity_ref.value === 'high') {
                 return await rollResultsHigh(seed.get())
             }
 
-            if (ref_intensity.value === 'medium') {
+            if (intensity_ref.value === 'medium') {
                 return await rollResultsMedium(seed.get())
             }
 
             return await rollResultsLow(seed.get())
         },
         // biome-ignore lint: TODO: Ignoring for now
-        post: async (args: any) => (postRef.value = args),
+        post: async (args: any) => (post_ref.value = args),
         // biome-ignore lint: Intentional any
     } as any as Dispatch
 }

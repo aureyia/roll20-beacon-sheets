@@ -1,9 +1,9 @@
-import { Effect, Context, Layer, Data, Schema } from 'effect'
+import { Context, Data, Effect, Layer, Schema } from 'effect'
+import type { Die, RolledDie } from '@/system/rolls/dice'
 import type { DiceComponent } from '@/system/rolls/rolltemplates/rolltemplates'
-import type { RolledDie, Die } from '@/system/rolls/dice'
 import { assert } from '@/utility/assert'
-import type { DieKey } from './dispatch.schema'
 import type { DispatchResultsOutput } from './dispatch'
+import type { DieKey } from './dispatch.schema'
 
 type AvailableDice = '1d6' | '1d10' | '1d100'
 type FormattedRoll = {
@@ -36,7 +36,7 @@ export class RollFormatter extends Context.Tag('RollFormatter')<
     }
 >() {}
 
-export const RollFormatterLive = Layer.effect(
+export const roll_formatter_live = Layer.effect(
     RollFormatter,
     Effect.gen(function* () {
         return {

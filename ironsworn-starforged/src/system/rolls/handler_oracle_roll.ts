@@ -4,10 +4,10 @@ import {
     type InvalidDie,
     type InvalidDispatch,
     RollFormatter,
-    RollFormatterLive,
+    roll_formatter_live,
 } from '@/system/rolls/formatter'
-import { type DieNotFound, getDieByLabel } from '@/system/rolls/get_die_by_label'
-import { type DispatchError, DispatchLive } from './dispatch'
+import { type DieNotFound, get_die_by_label } from '@/system/rolls/get_die_by_label'
+import { type DispatchError, dispatch_live } from './dispatch'
 
 type OracleRollResult = { oracleDie: { roll: number } }
 
@@ -21,7 +21,7 @@ class OracleRoll extends Context.Tag('OracleRoll')<
     }
 >() {}
 
-const OracleRollLive = Layer.effect(
+const oracle_roll_handler_live = Layer.effect(
     OracleRoll,
     Effect.gen(function* () {
         const formatter = yield* RollFormatter
@@ -29,8 +29,8 @@ const OracleRollLive = Layer.effect(
         return {
             roll: () =>
                 Effect.gen(function* () {
-                    const rolledDice = yield* formatter.roll(oracleDie)
-                    const die = yield* getDieByLabel(rolledDice, 'Oracle Die')
+                    const dice_rolled = yield* formatter.roll(oracleDie)
+                    const die = yield* get_die_by_label(dice_rolled, 'Oracle Die')
 
                     return {
                         oracleDie: {
@@ -42,11 +42,11 @@ const OracleRollLive = Layer.effect(
     })
 )
 
-const FormatAndRoll = RollFormatterLive.pipe(Layer.provide(DispatchLive))
-const MainLive = OracleRollLive.pipe(Layer.provide(FormatAndRoll))
+const FormatAndRoll = roll_formatter_live.pipe(Layer.provide(dispatch_live))
+const main_live = oracle_roll_handler_live.pipe(Layer.provide(FormatAndRoll))
 
 export const roll = () =>
     Effect.provide(
         Effect.flatMap(OracleRoll, handler => handler.roll()),
-        MainLive
+        main_live
     )

@@ -3,36 +3,34 @@ import { createAtom } from '@xstate/store'
 import { Effect, Layer, Schedule, Stream } from 'effect'
 import { ref } from 'vue'
 import { createActor } from 'xstate'
-import { ref_intensity } from '@/main'
-import { momentumStore } from '@/system/momentum_store'
-import { ActionScoreLive } from '@/system/rolls/action_score'
-import { DispatchLive } from '@/system/rolls/dispatch'
-import { RollFormatterLive } from '@/system/rolls/formatter'
-import { ActionRollLive, roll as actionRoll } from '@/system/rolls/handler_action_roll'
-import { roll as oracleRoll } from '@/system/rolls/handler_oracle_roll'
-import { roll as progressRoll } from '@/system/rolls/handler_progress_roll'
+import { intensity_ref } from '@/main'
+import { store_momentum } from '@/system/momentum_store'
+import { action_score_live } from '@/system/rolls/action_score'
+import { dispatch_live } from '@/system/rolls/dispatch'
+import { roll_formatter_live } from '@/system/rolls/formatter'
+import { action_roll_handler_live, roll as roll_action } from '@/system/rolls/handler_action_roll'
 import { machine } from '@/system/rolls/state_machine_calculate_outcome'
 import { number_between } from './prng'
 import { save_snapshot } from './storage/snapshots'
 import { setup_stores } from './stores'
 
-const MainLive = ActionRollLive.pipe(
-    Layer.provide(RollFormatterLive),
-    Layer.provide(DispatchLive),
-    Layer.provide(ActionScoreLive)
+const main_live = action_roll_handler_live.pipe(
+    Layer.provide(roll_formatter_live),
+    Layer.provide(dispatch_live),
+    Layer.provide(action_score_live)
 )
 
 const actor = createActor(machine)
 
 actor.subscribe(snapshot => {
     const matched =
-        // @ts-ignore
+        // @ts-expect-error - Due to x-state types
         snapshot.matches('Eligible for Opportunity') ||
-        // @ts-ignore
+        // @ts-expect-error - Due to x-state types
         snapshot.matches('Hitting: Eligible for Strong Hit') ||
-        // @ts-ignore
+        // @ts-expect-error - Due to x-state types
         snapshot.matches('Missing: Eligible for Strong Hit') ||
-        // @ts-ignore
+        // @ts-expect-error - Due to x-state types
         snapshot.matches('Eligible for Weak Hit')
 
     if (matched) {
@@ -46,42 +44,45 @@ actor.subscribe(snapshot => {
 
 actor.start()
 
-const moveData = { Name: 'Simulation Rolls' }
+const move_data = { Name: 'Simulation Rolls' }
 export const seed = createAtom('')
-export const replaySeed = ref('')
-export const createSeed = () => (replaySeed.value !== '' ? replaySeed.value : createId())
+export const seed_replay = ref('')
+export const create_seed = () => (seed_replay.value !== '' ? seed_replay.value : createId())
 
 const modifier = () => Effect.runSync(number_between(seed.get(), 'modifier', 0, 4))
 
-export const roll_stream = (speed_ms: number) => {
-    const streamInit = Schedule.spaced(`${speed_ms} millis`)
-    return Stream.fromSchedule(streamInit).pipe(
+export const start_roll_stream = (speed_ms: number) => {
+    const roll_stream_init = Schedule.spaced(`${speed_ms} millis`)
+    return Stream.fromSchedule(roll_stream_init).pipe(
         Stream.tap(() =>
             Effect.sync(() => {
-                seed.set(createSeed())
+                seed.set(create_seed())
                 console.log('seed', seed.get())
             })
         ),
         Stream.tap(() =>
             save_snapshot('run', {
                 id: seed.get(),
-                intensity: ref_intensity.value,
+                intensity: intensity_ref.value,
                 status: 'TBD',
             })
         ),
-        Stream.tap(() => setup_stores(seed.get(), ref_intensity.value)),
+        Stream.tap(() => setup_stores(seed.get(), intensity_ref.value)),
         Stream.tap(() =>
             save_snapshot('rollInputs', {
                 run_id: seed.get(),
                 modifier: modifier(),
-                momentum: momentumStore.get().context.momentum,
-                move_name: moveData.Name,
+                momentum: store_momentum.get().context.momentum,
+                move_name: move_data.Name,
             })
         ),
-        Stream.runForEach(n =>
-            actionRoll(actor, modifier(), momentumStore.get().context.momentum, moveData.Name).pipe(
-                Effect.provide(MainLive)
-            )
+        Stream.runForEach(() =>
+            roll_action(
+                actor,
+                modifier(),
+                store_momentum.get().context.momentum,
+                move_data.Name
+            ).pipe(Effect.provide(main_live))
         )
     )
 }

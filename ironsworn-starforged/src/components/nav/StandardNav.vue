@@ -5,7 +5,7 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
 } from '@/components/ui/navigation-menu'
-import { isSimEnvironment } from '@/main'
+import { sim_environment_enabled } from '@/main'
 
 const baseList = {
     legacies: '/legacies',
@@ -22,7 +22,7 @@ const simList = {
     simulation: '/simulation',
 }
 
-const navList = isSimEnvironment ? simList : baseList
+const navList = sim_environment_enabled ? simList : baseList
 </script>
 
 <template>

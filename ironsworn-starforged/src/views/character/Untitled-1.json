@@ -1,0 +1,250 @@
+{
+  "id": "9999010",
+  "version": 1,
+  "createdAt": "2025-08-11T18:28:43.515Z",
+  "rules": [
+    {
+      "indicator": "info",
+      "summary": "LG-01",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='4').answer.valueCoding.where(code='C'))",
+      "suggestions": [
+        "LG-01"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-02",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='3').answer.valueCoding.where(code!='D')))",
+      "suggestions": [
+        "LG-02"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-02",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='3').answer.valueCoding.where(code!='D')) and exists(QuestionnaireResponse.item.where(linkId='4').answer.valueCoding.where(code='C')))",
+      "suggestions": [
+        "LG-02"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-03",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code!='A')) and exists(QuestionnaireResponse.item.where(linkId='3').answer.valueCoding.where(code='D')) and exists(QuestionnaireResponse.item.where(linkId='4').answer.valueCoding.where(code='C')))",
+      "suggestions": [
+        "LG-03"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-04",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A' or code='B')) and exists(QuestionnaireResponse.item.where(linkId='3').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='4').answer.valueCoding.where(code!='C')) and exists(QuestionnaireResponse.item.where(linkId='5').answer.valueCoding.where(code!='C' and code!='D')) and exists(QuestionnaireResponse.item.where(linkId='6-2').answer.valueCoding.where(code='B' or code='D')))",
+      "suggestions": [
+        "LG-04"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-05",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A' or code='B')) and exists(QuestionnaireResponse.item.where(linkId='3').answer.valueCoding.where(code!='A')) and exists(QuestionnaireResponse.item.where(linkId='4').answer.valueCoding.where(code!='C')) and exists(QuestionnaireResponse.item.where(linkId='5').answer.valueCoding.where(code!='C' and code!='D')) and exists(QuestionnaireResponse.item.where(linkId='6-2').answer.valueCoding.where(code='B' or code='D')))",
+      "suggestions": [
+        "LG-05"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-06",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A' or code='B')) and exists(QuestionnaireResponse.item.where(linkId='4').answer.valueCoding.where(code!='C')) and exists(QuestionnaireResponse.item.where(linkId='5').answer.valueCoding.where(code='C' or code='D'))and exists(QuestionnaireResponse.item.where(linkId='6-2').answer.valueCoding.where(code!='C')))",
+      "suggestions": [
+        "LG-06"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-07",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A' or code='B')) and exists(QuestionnaireResponse.item.where(linkId='4').answer.valueCoding.where(code!='C')) and exists(QuestionnaireResponse.item.where(linkId='5').answer.valueCoding.where(code!='C' and code!='D')) and exists(QuestionnaireResponse.item.where(linkId='6-2').answer.valueCoding.where(code='C')))",
+      "suggestions": [
+        "LG-07"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-08",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-08"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-09",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-09"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-10",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-10"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-11",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-11"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-12",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-12"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-13",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-13"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-14",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-14"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-15",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-15"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-16",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-16"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-17",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-17"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-18",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-18"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-19",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-19"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-20",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-20"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-21",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-21"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-22",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-22"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-23",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-23"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-24",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-24"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-25",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-25"
+      ],
+      "_display": []
+    },
+    {
+      "indicator": "info",
+      "summary": "LG-26",
+      "body": "(exists(QuestionnaireResponse.item.where(linkId='2').answer.valueCoding.where(code='A')) and exists(QuestionnaireResponse.item.where(linkId='2000').answer.valueCoding.where(code='2'))",
+      "suggestions": [
+        "LG-26"
+      ],
+      "_display": []
+    }
+  ]
+}

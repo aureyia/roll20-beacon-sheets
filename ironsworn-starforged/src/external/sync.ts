@@ -53,7 +53,7 @@ const live_dehydration_services = Layer.mergeAll(
     live_dehydrate_tasks
 )
 
-const MainLive = live_dehydration.pipe(Layer.provide(live_dehydration_services))
+const main_live = live_dehydration.pipe(Layer.provide(live_dehydration_services))
 
 // biome-ignore lint: Intentional any
 const update = (dispatch: Dispatch, data: any) =>
@@ -64,7 +64,7 @@ const update = (dispatch: Dispatch, data: any) =>
         character.character.attributes.updateId = createId()
 
         dispatch.updateCharacter(character as UpdateArgs)
-    }).pipe(Effect.provide(MainLive))
+    }).pipe(Effect.provide(main_live))
 
 export type SyncActor = ActorRefFrom<typeof machine>
 export const machine = setup({

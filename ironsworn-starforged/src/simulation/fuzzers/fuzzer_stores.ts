@@ -1,72 +1,72 @@
 import type { Intensity } from '@/simulation/types'
 import {
-    assets as assetsHigh,
-    impacts as impactsHigh,
-    resources as resourcesHigh,
-    stats as statsHigh,
-    tasks as tasksHigh,
-} from './stores/stores-high'
+    assets as assets_high,
+    impacts as impacts_high,
+    resources as resources_high,
+    stats as stats_high,
+    tasks as tasks_high,
+} from './stores/stores_high'
 import {
-    assets as assetsLow,
-    impacts as impactsLow,
-    resources as resourcesLow,
-    stats as statsLow,
-    tasks as tasksLow,
-} from './stores/stores-low'
+    assets as assets_low,
+    impacts as impacts_low,
+    resources as resources_low,
+    stats as stats_low,
+    tasks as tasks_low,
+} from './stores/stores_low'
 import {
-    assets as assetsMedium,
-    impacts as impactsMedium,
-    resources as resourcesMedium,
-    stats as statsMedium,
-    tasks as tasksMedium,
-} from './stores/stores-medium'
+    assets as assets_medium,
+    impacts as impacts_medium,
+    resources as resources_medium,
+    stats as stats_medium,
+    tasks as tasks_medium,
+} from './stores/stores_medium'
 
 export const resources = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
-        return resourcesHigh(seed)
+        return resources_high(seed)
     }
     if (intensity === 'medium') {
-        return resourcesMedium(seed)
+        return resources_medium(seed)
     }
-    return resourcesLow(seed)
+    return resources_low(seed)
 }
 
 export const stats = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
-        return statsHigh(seed)
+        return stats_high(seed)
     }
     if (intensity === 'medium') {
-        return statsMedium(seed)
+        return stats_medium(seed)
     }
-    return statsLow(seed)
+    return stats_low(seed)
 }
 
 export const impacts = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
-        return impactsHigh(seed)
+        return impacts_high(seed)
     }
     if (intensity === 'medium') {
-        return impactsMedium(seed)
+        return impacts_medium(seed)
     }
-    return impactsLow(seed)
+    return impacts_low(seed)
 }
 
 export const tasks = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
-        return tasksHigh(seed)
+        return tasks_high(seed)
     }
     if (intensity === 'medium') {
-        return tasksMedium(seed)
+        return tasks_medium(seed)
     }
-    return tasksLow(seed)
+    return tasks_low(seed)
 }
 
 export const assets = (seed: string, intensity: Intensity) => {
     if (intensity === 'high') {
-        return assetsHigh(seed)
+        return assets_high(seed)
     }
     if (intensity === 'medium') {
-        return assetsMedium(seed)
+        return assets_medium(seed)
     }
-    return assetsLow(seed)
+    return assets_low(seed)
 }

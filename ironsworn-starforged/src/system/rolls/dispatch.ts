@@ -1,4 +1,4 @@
-import { Context, Data, Effect, Either, Layer, Predicate, Schema } from 'effect'
+import { Context, Data, Effect, Layer, Predicate, Schema } from 'effect'
 import type { ParseError } from 'effect/ParseResult'
 import { ref_dispatch } from '@/external/vue.relay'
 import { assert } from '@/utility/assert'
@@ -29,7 +29,7 @@ export class Dispatch extends Context.Tag('Dispatch')<
     }
 >() {}
 
-export const DispatchLive = Layer.effect(
+export const dispatch_live = Layer.effect(
     Dispatch,
     Effect.gen(function* () {
         return {

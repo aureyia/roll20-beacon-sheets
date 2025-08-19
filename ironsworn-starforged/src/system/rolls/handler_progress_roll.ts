@@ -1,8 +1,8 @@
 import { Context, Effect, Layer } from 'effect'
 import { challengeDice } from '@/system/rolls/dice'
-import { Dispatch, DispatchLive } from '@/system/rolls/dispatch'
-import { RollFormatter, RollFormatterLive } from '@/system/rolls/formatter'
-import { getDieByLabel } from '@/system/rolls/get_die_by_label'
+import { Dispatch, dispatch_live } from '@/system/rolls/dispatch'
+import { roll_formatter, roll_formatter_live } from '@/system/rolls/formatter'
+import { get_die_by_label } from '@/system/rolls/get_die_by_label'
 
 type ProgressRollResult = {
     outcome: string
@@ -24,18 +24,18 @@ class ProgressRollHandler extends Context.Tag('ProgressRollHandler')<
     }
 >() {}
 
-const ProgressRollHandlerLive = Layer.effect(
+const progress_roll_handler_live = Layer.effect(
     ProgressRollHandler,
     Effect.gen(function* () {
-        const formatter = yield* RollFormatter
+        const formatter = yield* roll_formatter
         // const rollOutcome = yield* RollOutcome;
 
         return {
             roll: (progress: number) =>
                 Effect.gen(function* () {
                     const rolledDice = yield* formatter.roll(challengeDice)
-                    const challengeDie1 = yield* getDieByLabel(rolledDice, 'Challenge Die: 1')
-                    const challengeDie2 = yield* getDieByLabel(rolledDice, 'Challenge Die: 2')
+                    const challengeDie1 = yield* get_die_by_label(rolledDice, 'Challenge Die: 1')
+                    const challengeDie2 = yield* get_die_by_label(rolledDice, 'Challenge Die: 2')
 
                     const outcome = yield* rollOutcome.calculate(
                         progress,
@@ -46,11 +46,11 @@ const ProgressRollHandlerLive = Layer.effect(
                     return {
                         outcome: outcome.outcome,
                         progress: progress,
-                        challengeDie1: {
+                        challenge_die_1: {
                             roll: outcome.challengeDie1.value,
                             exceeded: outcome.challengeDie1.exceeded,
                         },
-                        challengeDie2: {
+                        challenge_die_2: {
                             roll: outcome.challengeDie2.value,
                             exceeded: outcome.challengeDie2.exceeded,
                         },
@@ -60,13 +60,13 @@ const ProgressRollHandlerLive = Layer.effect(
     })
 )
 
-const MainLive = ProgressRollHandlerLive.pipe(
-    Layer.provide(RollFormatterLive),
-    Layer.provide(DispatchLive)
+const main_live = progress_roll_handler_live.pipe(
+    Layer.provide(roll_formatter_live),
+    Layer.provide(dispatch_live)
 )
 
 export const roll = (score: number) =>
     Effect.provide(
         Effect.flatMap(ProgressRollHandler, handler => handler.roll(score)),
-        MainLive
+        main_live
     )

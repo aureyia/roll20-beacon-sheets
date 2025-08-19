@@ -3,11 +3,11 @@ import { describe, expect, test, vi } from 'vitest'
 import { createActor } from 'xstate'
 import { roll as actionRoll } from '@/system/rolls/handler_action_roll'
 import * as exports from '@/utility/roll_send_to_chat'
-import { ActionScoreLive } from './action_score'
+import { action_score_live } from './action_score'
 import type { DispatchResultsOutput } from './dispatch'
 import { Dispatch } from './dispatch'
-import { RollFormatterLive } from './formatter'
-import { ActionRollLive } from './handler_action_roll'
+import { roll_formatter_live } from './formatter'
+import { action_roll_handler_live } from './handler_action_roll'
 import { machine } from './state_machine_calculate_outcome'
 
 const rollResults = {}
@@ -16,9 +16,9 @@ const DispatchTest = Layer.succeed(Dispatch, {
     roll: _dice => Effect.succeed(rollResults as DispatchResultsOutput),
 })
 
-const MainTest = ActionRollLive.pipe(
-    Layer.provide(ActionScoreLive),
-    Layer.provide(RollFormatterLive),
+const MainTest = action_roll_handler_live.pipe(
+    Layer.provide(action_score_live),
+    Layer.provide(roll_formatter_live),
     Layer.provide(DispatchTest)
 )
 

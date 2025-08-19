@@ -20,7 +20,7 @@ const fuzzList = [
 ]
 
 const singleRoll = (seed: string) => ({
-    rollName: 'dice-0',
+    roll_name: 'dice-0',
     expression: '1d6',
     results: {
         result: fuzzList[Effect.runSync(number_between(seed, 'dice-0', 0, 13))],
@@ -75,7 +75,7 @@ export const rollResults = (seed: string) => ({
                 resultType: 'sum',
                 total: 5,
             },
-            rollName: 'dice-0',
+            roll_name: 'dice-0',
             expression: '1d6',
         },
         {
@@ -102,7 +102,7 @@ export const rollResults = (seed: string) => ({
                 resultType: 'sum',
                 total: 9,
             },
-            rollName: 'dice-1',
+            roll_name: 'dice-1',
             expression: '1d10',
         },
         {
@@ -129,7 +129,7 @@ export const rollResults = (seed: string) => ({
                 resultType: 'sum',
                 total: 10,
             },
-            rollName: 'dice-2',
+            roll_name: 'dice-2',
             expression: '1d10',
         },
     ],

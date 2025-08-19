@@ -1,8 +1,8 @@
-import { Effect, Data } from 'effect'
+import { Data, Effect } from 'effect'
 import type {
-    RolledDie,
-    RolledChallengeDie,
     RolledActionDie,
+    RolledChallengeDie,
+    RolledDie,
     RolledOracleDie,
 } from '@/system/rolls/dice'
 
@@ -17,7 +17,7 @@ export class DieNotFound extends Data.TaggedError('DieNotFound')<{
     message: string
 }> {}
 
-export function getDieByLabel<L extends keyof DieLabelMap>(
+export function get_die_by_label<L extends keyof DieLabelMap>(
     dice: RolledDie[],
     label: L
 ): Effect.Effect<DieLabelMap[L], DieNotFound> {

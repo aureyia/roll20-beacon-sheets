@@ -11,10 +11,10 @@ import {
     NumberFieldInput,
 } from '@/components/ui/number-field'
 import { store_momentum } from '@/system/momentum_store'
-import { ActionScoreLive } from '@/system/rolls/action_score'
-import { DispatchLive } from '@/system/rolls/dispatch'
-import { RollFormatterLive } from '@/system/rolls/formatter'
-import { ActionRollLive, roll as actionRoll } from '@/system/rolls/handler_action_roll'
+import { action_score_live } from '@/system/rolls/action_score'
+import { dispatch_live } from '@/system/rolls/dispatch'
+import { roll_formatter_live } from '@/system/rolls/formatter'
+import { action_roll_handler_live, roll as actionRoll } from '@/system/rolls/handler_action_roll'
 import { roll as oracleRoll } from '@/system/rolls/handler_oracle_roll'
 import { roll as progressRoll } from '@/system/rolls/handler_progress_roll'
 import { store_stats } from '@/system/stats.store'
@@ -52,10 +52,10 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
     // const baseBonus = stats[selectedOption.value.Using[0].toLowerCase()]
     const baseBonus = 2
 
-    const MainLive = ActionRollLive.pipe(
-        Layer.provide(RollFormatterLive),
-        Layer.provide(ActionScoreLive),
-        Layer.provide(DispatchLive)
+    const main_live = action_roll_handler_live.pipe(
+        Layer.provide(roll_formatter_live),
+        Layer.provide(action_score_live),
+        Layer.provide(dispatch_live)
     )
 
     await Effect.runPromise(
@@ -64,7 +64,7 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
             formattedModifier + baseBonus,
             momentum,
             props.move.Name
-        ).pipe(Effect.provide(MainLive))
+        ).pipe(Effect.provide(main_live))
     )
 
     selectedOption.value = ''

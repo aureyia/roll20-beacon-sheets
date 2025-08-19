@@ -83,9 +83,9 @@ export const machine = setup({
             assert(params.outcome !== null)
             Effect.runPromise(
                 roll_send_to_chat(context.character.id, {
-                    type: 'move-compact',
+                    type: 'move_compact',
                     parameters: {
-                        characterName: context.character.name,
+                        character_name: context.character.name,
                         title: `Rolling ${context.name}`,
                         dice: {
                             challenge_die_1: context.challenge_die_1,

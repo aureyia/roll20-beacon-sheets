@@ -4,7 +4,7 @@ export const rollResults = {
     messageId: '56d2712f-4f76-4f3e-b1b1-31545e770808',
     results: {
         'dice-0': {
-            rollName: 'dice-0',
+            roll_name: 'dice-0',
             expression: '1d6',
             results: {
                 result: 5,
@@ -20,7 +20,7 @@ export const rollResults = {
             },
         },
         'dice-1': {
-            rollName: 'dice-1',
+            roll_name: 'dice-1',
             expression: '1d10',
             results: {
                 result: 9,
@@ -36,7 +36,7 @@ export const rollResults = {
             },
         },
         'dice-2': {
-            rollName: 'dice-2',
+            roll_name: 'dice-2',
             expression: '1d10',
             results: {
                 result: 10,
@@ -77,7 +77,7 @@ export const rollResults = {
                 resultType: 'sum',
                 total: 5,
             },
-            rollName: 'dice-0',
+            roll_name: 'dice-0',
             expression: '1d6',
         },
         {
@@ -104,7 +104,7 @@ export const rollResults = {
                 resultType: 'sum',
                 total: 9,
             },
-            rollName: 'dice-1',
+            roll_name: 'dice-1',
             expression: '1d10',
         },
         {
@@ -131,7 +131,7 @@ export const rollResults = {
                 resultType: 'sum',
                 total: 10,
             },
-            rollName: 'dice-2',
+            roll_name: 'dice-2',
             expression: '1d10',
         },
     ],

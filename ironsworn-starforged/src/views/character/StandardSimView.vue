@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Card from '@/components/ui/card/Card.vue'
 import { store_meta } from '@/external/store'
-import { intensity, postRef, rollSpeed } from '@/main'
+import { ref_intensity, post_ref, roll_speed_ms } from '@/main'
 import { replaySeed, seed } from '@/simulation/generate_rolls'
 import { store_assets } from '@/system/assets_store'
 import { store_character } from '@/system/character.store'
@@ -34,7 +34,7 @@ const stores = {
       <h2 class="mt-2 text-xl">Current Seed</h2>
       <div>{{ seed.get() }}</div>
       <h2 class="my-2 text-xl">Roll Display</h2>
-      <div v-if="postRef" v-html="postRef.content" />
+      <div v-if="post_ref" v-html="post_ref.content" />
     </div>
     <div class="w-[830px]">
       <h2 class="text-xl">Stores</h2>
@@ -258,21 +258,21 @@ const stores = {
         <div class="mt-4">
           <h3>Roll Delay</h3>
           <Slider
-            v-model="rollSpeed"
+            v-model="roll_speed_ms"
             :min="50"
             :max="5000"
             :step="50"
             :class="cn('w-3/5', $attrs.class ?? '')"
             class="mt-2 mb-2"
           />
-          <span class="text-sm">{{ rollSpeed[0] }} milliseconds</span>
+          <span class="text-sm">{{ roll_speed_ms[0] }} milliseconds</span>
         </div>
         <div class="mt-4">
           <h3>Volatility</h3>
           <ToggleGroup
             type="single"
             class="w-full justify-between"
-            v-model="intensity"
+            v-model="ref_intensity"
           >
             <ToggleGroupItem
               value="low"
