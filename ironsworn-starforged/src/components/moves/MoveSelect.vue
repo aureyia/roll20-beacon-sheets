@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue'
-import { starforged } from '@/vendor/dataforged'
+import { starforged } from '@/system/dataforged'
 import { Effect } from 'effect'
 import { get_all_moves_in_category } from '@/system/moves_utils'
 

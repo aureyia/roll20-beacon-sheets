@@ -5,7 +5,8 @@ import AssetAddDialog from '@/components/assets/AssetAddDialog.vue'
 import AssetCard from '@/components/assets/AssetCard.vue'
 import { store_assets } from '@/system/assets_store'
 // @ts-ignore
-import { type IAsset, starforged } from '@/vendor/dataforged'
+import type { IAsset } from '@/system/dataforged/types'
+import { starforged } from '@/system/dataforged'
 
 const storeAssetList = () => store_assets.get().context.list
 const removeMode = ref(false)

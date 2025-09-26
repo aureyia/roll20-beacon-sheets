@@ -4,7 +4,7 @@ import { sheet_init_values } from '@/external/sync'
 import { ActionScore, type ActionScoreError } from '@/system/rolls/action_score'
 import { actionDice } from '@/system/rolls/dice'
 import { Dispatch, type DispatchError } from '@/system/rolls/dispatch'
-import { type InvalidDie, type InvalidDispatch, roll_formatter } from '@/system/rolls/formatter'
+import { type InvalidDie, type InvalidDispatch, RollFormatter } from '@/system/rolls/formatter'
 import { type DieNotFound, get_die_by_label } from '@/system/rolls/get_die_by_label'
 import type { OutcomeActor } from '@/system/rolls/state_machine_calculate_outcome'
 import { assert } from '@/utility/assert'
@@ -32,7 +32,7 @@ export class ActionRoll extends Context.Tag('ActionRoll')<
 export const action_roll_handler_live = Layer.effect(
     ActionRoll,
     Effect.gen(function* () {
-        const formatter = yield* roll_formatter
+        const formatter = yield* RollFormatter
         const dispatch = yield* Dispatch
         const action_score = yield* ActionScore
 

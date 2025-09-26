@@ -18,7 +18,7 @@ import { action_roll_handler_live, roll as actionRoll } from '@/system/rolls/han
 import { roll as oracleRoll } from '@/system/rolls/handler_oracle_roll'
 import { roll as progressRoll } from '@/system/rolls/handler_progress_roll'
 import { store_stats } from '@/system/stats.store'
-import type { IMoveTriggerOptionAction } from '@/vendor/dataforged'
+import type { IMoveTriggerOptionAction } from '@/system/dataforged/types'
 
 const props = defineProps({
     move: {

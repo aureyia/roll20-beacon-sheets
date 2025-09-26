@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { starforged } from '@/vendor/dataforged'
+import { starforged } from '@/system/dataforged'
 // import { ItemSearch } from '@/components/search';
 import { MovesGroup } from '@/components/moves/moves_components'
 import LabelledSwitch from '@/components/switches/LabelledSwitch.vue'

@@ -1,11 +1,10 @@
 import { fileURLToPath, URL } from 'node:url';
-
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-
-import svgLoader from 'vite-svg-loader';
 import tailwindcss from '@tailwindcss/vite';
+import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
+import { defineConfig } from 'vite';
+import { analyzer } from 'vite-bundle-analyzer'
+import svgLoader from 'vite-svg-loader';
 
 export default defineConfig(({ mode }) => ({
   plugins: [
@@ -15,6 +14,7 @@ export default defineConfig(({ mode }) => ({
       dts: true,
     }),
     tailwindcss(),
+    analyzer(),
   ],
   base:
     mode === 'production'

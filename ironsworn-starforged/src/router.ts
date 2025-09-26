@@ -10,11 +10,11 @@ import {
     StandardMovesOverView,
     StandardMovesView,
     StandardProgressView,
-    StandardSimView,
     StandardSummaryView,
     StandardVowsView,
 } from '@/views/character_standard'
 import { SharedMainView } from '@/views/shared'
+// import { sim_environment_enabled } from './main'
 import {
     EdgeAssetsView,
     EdgeConnectionsView,
@@ -38,7 +38,6 @@ const characterStandardViews: any = {
     moves: StandardMovesView,
     progress: StandardProgressView,
     vows: StandardVowsView,
-    simulation: StandardSimView,
 }
 
 const characterEdgeViews: any = {
@@ -59,7 +58,6 @@ const characterViewList = [
     'progress',
     'summary',
     'vows',
-    'simulation',
 ]
 
 const characterStandardRoutes = () =>

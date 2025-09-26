@@ -1,6 +1,6 @@
 import type { Dispatch, PostArgs } from '@roll20-official/beacon-sdk'
 import { Effect } from 'effect'
-import { ref_dispatch } from '@/external/vue.relay'
+import { dispatch_ref } from '@/external/vue.relay'
 import { DispatchError } from '@/system/rolls/dispatch'
 import {
     type AnyRollTemplate,
@@ -9,7 +9,7 @@ import {
 
 export default (id: PostArgs['characterId'], params: AnyRollTemplate, options = {}) =>
     Effect.gen(function* () {
-        const dispatch = ref_dispatch.value as Dispatch
+        const dispatch = dispatch_ref.value as Dispatch
         const roll_template = roll_template_create(params)
 
         if (id === undefined) {

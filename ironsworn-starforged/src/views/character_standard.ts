@@ -6,6 +6,5 @@ export { default as StandardMovesDetailView } from './character/StandardMovesDet
 export { default as StandardMovesOverView } from './character/StandardMovesOverView.vue'
 export { default as StandardMovesView } from './character/StandardMovesView.vue'
 export { default as StandardProgressView } from './character/StandardProgressView.vue'
-export { default as StandardSimView } from './character/StandardSimView.vue'
 export { default as StandardSummaryView } from './character/StandardSummaryView.vue'
 export { default as StandardVowsView } from './character/StandardVowsView.vue'

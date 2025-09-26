@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Card from '@/components/ui/card/Card.vue'
 import { store_meta } from '@/external/store'
-import { ref_intensity, post_ref, roll_speed_ms } from '@/main'
-import { replaySeed, seed } from '@/simulation/generate_rolls'
+import { intensity_ref, post_ref, roll_speed_ms } from '@/main'
+import { seed_replay, seed } from '@/simulation/generate_rolls'
 import { store_assets } from '@/system/assets_store'
 import { store_character } from '@/system/character.store'
 import { store_impacts } from '@/system/impacts_store'
@@ -249,10 +249,10 @@ const stores = {
           <div class="mt-1 flex">
             <Input
               class="bg-muted mr-2"
-              v-model="replaySeed"
+              v-model="seed_replay"
               placeholder="Seed"
             />
-            <Button @click="replaySeed = ''">Clear</Button>
+            <Button @click="seed_replay = ''">Clear</Button>
           </div>
         </div>
         <div class="mt-4">
@@ -272,7 +272,7 @@ const stores = {
           <ToggleGroup
             type="single"
             class="w-full justify-between"
-            v-model="ref_intensity"
+            v-model="intensity_ref"
           >
             <ToggleGroupItem
               value="low"

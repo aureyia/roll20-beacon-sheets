@@ -17,8 +17,9 @@ import router from './router'
 import './sheet/css/index.css'
 import './sheet/scss/index.scss'
 
-import { start_simulator } from './simulation/runner'
-import { plugin_relay_sim } from './simulation/simulator'
+import type { Dispatch } from '@roll20-official/beacon-sdk'
+// import { start_simulator } from './simulation/runner'
+// import { plugin_relay_sim } from './simulation/simulator'
 import { INTENSITY } from './simulation/types'
 
 // @ts-ignore
@@ -34,21 +35,45 @@ const main = Effect.promise(async () => {
     const i18n = createI18n({})
     const app = createApp(App)
 
-    const { relay_sheet, dispatch } = await Effect.runPromise(
-        sim_environment_enabled ? plugin_relay_sim() : plugin_sheet_relay(dev_environment_enabled)
-    )
+    // biome-ignore lint: Intentional any
+    let relay_live: any
+    let dispatch_live: Dispatch
 
-    const sync = plugin_sync(dispatch)
+    if (sim_environment_enabled) {
+        const { plugin_relay_sim } = await import('./simulation/simulator')
+        const { relay_sheet, dispatch } = await Effect.runPromise(plugin_relay_sim())
+
+        relay_live = relay_sheet
+        dispatch_live = dispatch
+    } else {
+        const { relay_sheet, dispatch } = await Effect.runPromise(
+            plugin_sheet_relay(dev_environment_enabled)
+        )
+
+        relay_live = relay_sheet
+        dispatch_live = dispatch
+    }
+
+    const sync = plugin_sync(dispatch_live)
 
     app.use(router)
     app.use(i18n)
     app.use(sync)
-    app.use(relay_sheet)
+    app.use(relay_live)
 
     Effect.runPromise(relay_store)
 
     if (sim_environment_enabled) {
+        const { start_simulator } = await import('./simulation/runner')
         Effect.runPromise(start_simulator(roll_speed_ms))
+
+        const { StandardSimView } = await import('@/views/simulation/character')
+        router.addRoute('character-standard', {
+            path: '/simulation',
+            name: 'characterStandardSimulation',
+            component: StandardSimView,
+            alias: '/character-simulation',
+        })
     }
 
     app.mount('#app')

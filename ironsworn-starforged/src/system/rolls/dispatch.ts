@@ -1,6 +1,6 @@
 import { Context, Data, Effect, Layer, Predicate, Schema } from 'effect'
 import type { ParseError } from 'effect/ParseResult'
-import { ref_dispatch } from '@/external/vue.relay'
+import { dispatch_ref } from '@/external/vue.relay'
 import { assert } from '@/utility/assert'
 import { type DispatchResults, DispatchResultsSchema } from './dispatch.schema'
 
@@ -39,7 +39,7 @@ export const dispatch_live = Layer.effect(
 
                     const dispatchResult = yield* Effect.tryPromise({
                         try: () =>
-                            ref_dispatch.value.roll({
+                            dispatch_ref.value.roll({
                                 rolls: dice,
                             }),
                         catch: e =>

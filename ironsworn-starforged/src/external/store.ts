@@ -1,7 +1,10 @@
-import type { Token } from '@roll20-official/beacon-sdk'
 import { createStore } from '@xstate/store'
-import { Context, Effect, Layer } from 'effect'
+import * as Context from "effect/Context"
+import * as Effect from "effect/Effect"
+import * as Layer from "effect/Layer"
 import { assert } from '@/utility/assert'
+
+type Token = import('@roll20-official/beacon-sdk').Token
 
 /**
  * Every Character, regardless of sheet, has these meta fields

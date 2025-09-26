@@ -1,7 +1,7 @@
 import { Context, Effect, Layer } from 'effect'
 import { challengeDice } from '@/system/rolls/dice'
 import { Dispatch, dispatch_live } from '@/system/rolls/dispatch'
-import { roll_formatter, roll_formatter_live } from '@/system/rolls/formatter'
+import { RollFormatter, roll_formatter_live } from '@/system/rolls/formatter'
 import { get_die_by_label } from '@/system/rolls/get_die_by_label'
 
 type ProgressRollResult = {
@@ -27,7 +27,7 @@ class ProgressRollHandler extends Context.Tag('ProgressRollHandler')<
 const progress_roll_handler_live = Layer.effect(
     ProgressRollHandler,
     Effect.gen(function* () {
-        const formatter = yield* roll_formatter
+        const formatter = yield* RollFormatter
         // const rollOutcome = yield* RollOutcome;
 
         return {
