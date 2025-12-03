@@ -49,7 +49,7 @@ export const dispatch_live = Layer.effect(
                             }),
                     })
 
-                    const { rawResults, ...results } =
+                    const { ...results } =
                         yield* Schema.decodeUnknown(DispatchResultsSchema)(dispatchResult)
 
                     if (Predicate.isUndefined(results.results['dice-0'])) {
