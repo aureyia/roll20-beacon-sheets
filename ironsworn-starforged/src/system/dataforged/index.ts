@@ -1,6 +1,2 @@
-import * as SF from './dataforged.json' with { type: 'json' }
-
-// import {} from './types'
-
-const starforged = SF
+import starforged from './dataforged.json' with { type: 'json' }
 export { starforged }

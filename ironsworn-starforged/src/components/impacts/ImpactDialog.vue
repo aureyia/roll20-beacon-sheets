@@ -1,18 +1,18 @@
 <script setup lang="ts">
+
 import { ref } from 'vue'
-import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import {
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-    Form,
-} from '@/components/ui/form'
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 import {
     Select,
     SelectContent,
@@ -23,44 +23,34 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { Input } from '@/components/ui/input'
-import {
-    DialogClose,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-    Dialog,
-    DialogFooter,
-} from '@/components/ui/dialog'
-import { IMPACTS, type AnyImpact } from '@/system/impacts_types'
 import { store_impacts, type AddImpact } from '@/system/impacts_store'
+import { IMPACTS, type AnyImpact } from '@/system/impacts_types'
 
 const fullImpactList = {
     ...IMPACTS,
     other: '',
 }
 
-const formSchema = toTypedSchema(
-    z.object({
-        name: z.string().min(2).max(50),
-        category: z.string().min(1).max(50),
-        description: z.string().optional(),
-    })
-)
+// const formSchema = toTypedSchema(
+//     z.object({
+//         name: z.string().min(2).max(50),
+//         category: z.string().min(1).max(50),
+//         description: z.string().optional(),
+//     })
+// )
 
-const form = useForm({
-    validationSchema: formSchema,
-})
+// const form = useForm({
+//     validationSchema: formSchema,
+// })
 
-const onSubmit = form.handleSubmit(values => {
-    store_impacts.trigger.add({ ...values } as AddImpact)
-})
+// const onSubmit = form.handleSubmit(values => {
+//     store_impacts.trigger.add({ ...values } as AddImpact)
+// })
 </script>
 
 <template>
   <div class="impact-dialog">
-    <Dialog>
+    <!-- <Dialog>
       <DialogTrigger as-child>
         <Button class="w-20">Add</Button>
       </DialogTrigger>
@@ -142,6 +132,6 @@ const onSubmit = form.handleSubmit(values => {
           </DialogFooter>
         </form>
       </DialogContent>
-    </Dialog>
+    </Dialog> -->
   </div>
 </template>

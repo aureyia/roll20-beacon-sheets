@@ -5,10 +5,6 @@ import type { Ability, Asset, AssetCategory } from '@/system/assets_types'
 import { AssetError, get_asset_abilities } from '@/system/assets_utils'
 import { array_to_object, object_to_array } from '@/utility/objectify'
 
-export type AssetsHydrate = {
-    assets: Asset[]
-}
-
 export type AssetStore = {
     list: Asset[]
 }
@@ -28,13 +24,13 @@ export type AssetSubmission = {
 
 const abilities_format = (
     formatter: typeof object_to_array | typeof array_to_object,
-    assets: AssetsHydrate | any
+    assets: Asset[]
 ) => {
     if (!assets) {
         return Effect.fail(new AssetError({ message: 'No assets were provided' }))
     }
 
-    const assets_mapped = assets.map((asset: any) => {
+    const assets_mapped = assets.map((asset) => {
         const abilities = Effect.runSync(formatter(asset.abilities))
         return {
             ...asset,
@@ -61,13 +57,13 @@ export const store_assets = createStore({
         },
         add: (context: AssetStore, event: AssetSubmission, enqueue) => {
             console.log(context, event)
-            const abilities: Ability[] = Effect.runSync(
-                get_asset_abilities(event.id_dataforged, event.category)
+            const abilities = Effect.runSync(
+                get_asset_abilities(event.dataforged_id, event.category)
             )
 
             context.list.push({
                 _id: createId(),
-                dataforged_id: event.id_dataforged,
+                dataforged_id: event.dataforged_id,
                 name: event.name,
                 category: event.category,
                 abilities,

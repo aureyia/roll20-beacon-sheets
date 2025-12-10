@@ -59,12 +59,9 @@ const startMoveRoll = async (options: IMoveTriggerOptionAction[]) => {
     )
 
     await Effect.runPromise(
-        actionRoll(
-            actor,
-            formattedModifier + baseBonus,
-            momentum,
-            props.move.Name
-        ).pipe(Effect.provide(main_live))
+        actionRoll(actor, formattedModifier + baseBonus, momentum, props.move.Name).pipe(
+            Effect.provide(main_live)
+        )
     )
 
     selectedOption.value = ''

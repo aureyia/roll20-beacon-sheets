@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { Effect } from 'effect'
 import { inject, computed, ref } from 'vue'
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { get_move_data } from '@/system/moves_utils'

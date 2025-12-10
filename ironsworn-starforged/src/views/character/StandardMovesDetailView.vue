@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, onUnmounted, provide, ref } from 'vue'
 import { createActor } from 'xstate'
-import {
-    MoveActiveCard,
-    MoveAssetControl,
-    MoveSelect,
-} from '@/components/moves/moves_components'
+import { MoveActiveCard, MoveAssetControl, MoveSelect } from '@/components/moves/moves_components'
 import { machine } from '@/system/rolls/state_machine_calculate_outcome'
 
 const { active_move }: any = inject('move')
