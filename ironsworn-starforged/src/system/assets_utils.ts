@@ -8,11 +8,7 @@ export class AssetError extends Data.TaggedError('AssetError')<{
     message?: string
 }> {}
 
-const getAssets = (assetType: IAssetType) => {
-    return assetType.Assets
-}
-
-const getAssetById = (assets: IAsset[], id: string) => {
+const get_asset_by_id = (assets: IAsset[], id: string) => {
     const asset: IAsset | undefined = assets.find(x => x.$id === id)
 
     if (!asset) {
@@ -22,17 +18,18 @@ const getAssetById = (assets: IAsset[], id: string) => {
     return Effect.succeed(asset)
 }
 
-export const getAssetType = (assetTypeName: AssetCategory) => {
-    const selectedAssetType = starforged['Asset Types'].find(x => x.Name === assetTypeName)
-    if (!selectedAssetType) {
+export const get_asset_category = (category: AssetCategory) => {
+    const selected_asset_category = starforged['Asset Types'].find(x => x.Name === category)
+
+    if (!selected_asset_category) {
         return Effect.fail(
             new AssetError({
-                message: `No assets found for category: ${assetTypeName}`,
+                message: `No assets found for category: ${category}`,
             })
         )
     }
 
-    return Effect.succeed(selectedAssetType)
+    return Effect.succeed(selected_asset_category)
 }
 
 export const get_asset_abilities = (id: string, category: AssetCategory) => {
@@ -61,18 +58,18 @@ export const get_asset_abilities = (id: string, category: AssetCategory) => {
     )
 }
 
-export const getAsset = (id: string, category: AssetCategory) =>
+export const get_asset = (id: string, category: AssetCategory) =>
     pipe(
         category,
-        getAssetType,
-        Effect.map(getAssets),
-        Effect.andThen(x => getAssetById(x, id))
+        get_asset_category,
+        Effect.map((assetType: IAssetType) => assetType.Assets),
+        Effect.andThen(x => get_asset_by_id(x, id))
     )
 
-export const getAllAssetsForCategory = (category: AssetCategory) => {
-    const selectedCategory = starforged['Asset Types'].find(x => x.Name === category)
+export const get_all_assets_for_category = (category: AssetCategory) => {
+    const category_selected = starforged['Asset Types'].find(x => x.Name === category)
 
-    if (!selectedCategory) {
+    if (!category_selected) {
         return Effect.fail(
             new AssetError({
                 message: `No assets found for category: ${category}`,
@@ -80,5 +77,5 @@ export const getAllAssetsForCategory = (category: AssetCategory) => {
         )
     }
 
-    return Effect.succeed(selectedCategory.Assets)
+    return Effect.succeed(category_selected.Assets)
 }
