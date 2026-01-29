@@ -1,7 +1,12 @@
 import { Schema } from 'effect'
-import { Aliases, Description, DisplayWithTitle, Source } from './generic'
-import { AlterMomentum, AlterMove, AlterProperties, Move } from './moves'
+import { aliases, description, display_title, source } from './generic'
+import { alter_momentum, move, move_alter } from './moves'
 import { PlayerConditionMeter, Stat } from './stats'
+
+export const asset_id = Schema.String.pipe(
+    //TODO: Verify this regex
+    Schema.pattern(/^Starforged\/Assets\/[A-z_-]+\/[A-z_-]+$/),
+);
 
 export const TypeId = Schema.String
 const InputType = Schema.Enums({
@@ -101,63 +106,123 @@ const Attachment = Schema.Struct({
     Max: Schema.NullOr(Schema.Number),
 })
 
-const Ability = Schema.Struct({
-    $id: Schema.String,
-    Name: Schema.optional(Schema.String),
-    Moves: Schema.optional(Move),
-    Inputs: Schema.optional(Schema.Array(Schema.Union(InputNumber, InputClock, InputText))),
-    'Alter Moves': Schema.optional(AlterMove),
-    'Alter Properties': Schema.optional(AlterProperties),
-    'Alter Momentum': Schema.optional(AlterMomentum),
-    Enabled: Schema.Boolean,
-})
-
-const MeterCondition = Schema.Enums({
+const CONDITIONS = {
     Battered: 'Battered',
     Cursed: 'Cursed',
     OutOfAction: 'Out of Action',
     Wrecked: 'Wrecked',
-} as const)
+} as const
 
-const MeterAlias = Schema.Enums({
+const condition = Schema.Enums(CONDITIONS)
+
+const ALIASES = {
     CompanionHealth: 'Companion Health',
     VehicleIntegrity: 'Vehicle Integrity',
     CommandVehicleIntegrity: 'Command Vehicle Integrity',
     SupportVehicleIntegrity: 'Support Vehicle Integrity',
     IncidentalVehicleIntegrity: 'Incidental Vehicle Integrity',
-} as const)
+} as const
 
-const ConditionMeter = Schema.Struct({
+const alias = Schema.Enums(ALIASES)
+
+const meter_condition = Schema.Struct({
     $id: Schema.String,
     Min: Schema.Literal(0),
-    Conditions: Schema.Array(MeterCondition),
-    Aliases: Schema.optional(Schema.Array(MeterAlias)),
+    Conditions: Schema.Array(condition),
+    Aliases: Schema.optional(Schema.Array(alias)),
 })
 
-export const AssetSchema = Schema.Struct({
-    $id: Schema.String,
-    Name: Schema.String,
-    Display: DisplayWithTitle,
+// Assets Fields
+
+const asset_fields_optional = {
     States: Schema.optional(States),
-    'Asset Type': TypeId,
-    Usage,
     Attachements: Schema.optional(Attachment),
     Inputs: Schema.optional(Schema.Union(InputText, InputSelect)),
     Requirement: Schema.optional(Schema.String),
-    Abilities: Schema.Tuple(Ability, Ability, Ability),
-    'Condition Meter': Schema.optional(ConditionMeter),
+    'Condition Meter': Schema.optional(meter_condition),
     Tags: Schema.optional(Schema.Array(Schema.String)),
+}
+
+const asset_fields = {
+    ...asset_fields_optional,
+    $id: Schema.String,
+    Name: Schema.String,
+    Display: display_title,
+    'Asset Type': TypeId,
+    Usage,
+}
+
+export interface Asset extends Schema.Struct.Type<typeof asset_fields> {
+    readonly Abilities: readonly [Ability, Ability, Ability]
+}
+
+export const asset = Schema.Struct({
+    ...asset_fields,
+    Abilities: Schema.Tuple(
+        Schema.suspend((): Schema.Schema<Ability> => ability),
+        Schema.suspend((): Schema.Schema<Ability> => ability),
+        Schema.suspend((): Schema.Schema<Ability> => ability)
+    ),
 })
 
-export const AssetType = Schema.extend(
+export interface AssetAlter extends Schema.Struct.Type<typeof asset_alter_fields> {
+    readonly Abilities?: readonly [Ability, Ability, Ability] | undefined
+}
+
+const asset_alter_fields = {
+    ...asset_fields_optional,
+    $id: Schema.optional(Schema.String),
+    Name: Schema.optional(Schema.String),
+    Display: Schema.optional(display_title),
+    'Asset Type': Schema.optional(TypeId),
+    Usage: Schema.optional(Usage),
+}
+
+const asset_alter = Schema.partial(
+    Schema.Struct({
+        ...asset_alter_fields,
+        Abilities: Schema.Tuple(
+            Schema.suspend((): Schema.Schema<Ability> => ability),
+            Schema.suspend((): Schema.Schema<Ability> => ability),
+            Schema.suspend((): Schema.Schema<Ability> => ability)
+        ),
+    })
+)
+
+// Abilities
+
+const ability_fields = {
+    $id: Schema.String,
+    Name: Schema.optional(Schema.String),
+    Moves: Schema.optional(move),
+    Inputs: Schema.optional(Schema.Array(Schema.Union(InputNumber, InputClock, InputText))),
+    'Alter Moves': Schema.optional(move_alter),
+    'Alter Momentum': Schema.optional(alter_momentum),
+    Enabled: Schema.Boolean,
+}
+
+export interface Ability extends Schema.Struct.Type<typeof ability_fields> {
+    readonly 'Alter Properties'?: AssetAlter | undefined
+}
+
+const ability = Schema.Struct({
+    ...ability_fields,
+    'Alter Properties': Schema.optional(
+        Schema.suspend((): Schema.Schema<AssetAlter> => asset_alter)
+    ),
+})
+
+// Asset Categories
+
+export const asset_category = Schema.extend(
     Schema.Struct({
         $id: TypeId,
-        Source,
-        Description: Description,
-        Assets: Schema.Array(AssetSchema),
+        Source: source,
+        Description: description,
+        Assets: Schema.Array(asset),
         Name: Schema.String,
-        Display: DisplayWithTitle,
-        Usage,
+        Display: display_title,
+        Usage: Usage,
     }),
-    Schema.partial(Aliases)
+    Schema.partial(aliases)
 )

@@ -1,6 +1,12 @@
 import { Schema } from 'effect'
 import { TypeId } from './assets'
-import { DisplayWithTitle } from './generic'
+import { display_title } from './generic'
+import { oracle_id } from './oracles'
+
+export const move_id = Schema.String.pipe(
+    // TODO: Verify this regex
+    Schema.pattern(/^Starforged\/Moves\/[A-z_-]+$/),
+);
 
 const MOVE_OUTCOMES = {
     Miss: 0,
@@ -9,7 +15,8 @@ const MOVE_OUTCOMES = {
 } as const
 
 const move_outcome = Schema.Enums(MOVE_OUTCOMES)
-const move_category_id = Schema.String.pipe(Schema.pattern(/^Starforged\/Moves\/[A-z_-]+$/))
+
+// TODO: Finish move trigger
 const move_trigger = Schema.Struct({})
 
 const move_outcome_info_fields = {
@@ -70,14 +77,14 @@ const move_alter_fields = {
     Outcomes: Schema.optional(move_alter_outcomes),
 }
 
-export interface IMoveAlter extends Schema.Struct.Type<typeof move_alter_fields> {
-    readonly Alters?: IMoveAlter['$id'] | undefined
+export interface MoveAlter extends Schema.Struct.Type<typeof move_alter_fields> {
+    readonly Alters?: MoveAlter['$id'] | undefined
 }
 
-const move_alter = Schema.Struct({
+export const move_alter = Schema.Struct({
     ...move_alter_fields,
     Alters: Schema.optional(
-        Schema.suspend((): Schema.Schema<IMoveAlter['$id']> => move_alter.fields.$id)
+        Schema.suspend((): Schema.Schema<MoveAlter['$id']> => move_alter.fields.$id)
     ),
 })
 
@@ -96,12 +103,12 @@ const move_fields = {
     ),
     Name: Schema.String,
     Asset: Schema.optional(TypeId),
-    Category: move_category_id,
+    Category: Schema.suspend((): Schema.Schema<MoveCategory['$id']> => move_category.fields.$id),
     'Progress Move': Schema.optional(Schema.Boolean),
     Trigger: move_trigger,
-    Oracles: Schema.optional(Schema.Array(OracleId)),
+    Oracles: Schema.optional(Schema.Array(oracle_id)),
     Outcomes: Schema.optional(outcomes),
-    Display: DisplayWithTitle,
+    Display: display_title,
 }
 
 export interface Move extends Schema.Struct.Type<typeof move_fields> {
@@ -114,3 +121,19 @@ export const move = Schema.Struct({
         Schema.suspend((): Schema.Schema<Move['$id']> => move.fields.$id)
     ),
 })
+
+export interface MoveCategory {
+    readonly $id: string
+    readonly Name: string
+    readonly Moves: Move['$id'][]
+    readonly Display: typeof display_title
+}
+
+export const move_category = Schema.Struct({
+    $id: Schema.String.pipe(Schema.pattern(/^Starforged\/Moves\/[A-z_-]+$/)),
+    Name: Schema.String,
+    Moves: Schema.Array(move.fields.$id),
+    Display: display_title,
+})
+
+
