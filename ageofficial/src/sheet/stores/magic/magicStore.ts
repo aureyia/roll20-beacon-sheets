@@ -9,6 +9,7 @@ import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import { useMetaStore } from '@/sheet/stores/meta/metaStore';
 import { useAbilityScoreStore } from '../abilityScores/abilityScoresStore';
 import { useCharacterStore } from '../character/characterStore';
+import { powerFatiguePenalty } from '@/utility/arcanaPower';
 
 // See "inventoryStore.ts" for an explanation of how to use list/repeating sections
 interface Spell {
@@ -75,6 +76,7 @@ export const useSpellStore = defineStore('spells', () => {
   };
 
   const printSpell = async (_id: string, bonus?:number, familiarity:number = 0) => {
+    const settings = useSettingsStore();
     const spell = spells.value.find((item) => item._id === _id);
     if (!spell) return;
     const modifier = ref(0);
@@ -89,6 +91,9 @@ export const useSpellStore = defineStore('spells', () => {
         { label: 'Aim', value: useSettingsStore().aimValue  }
       )  
     }
+    if( powerFatiguePenalty.value > 0 && settings.userPowerFatigue){
+      components.push({ label: 'Power Fatigue', value: powerFatiguePenalty.value * -1 });
+    }
     // if (familiarity) {
     //   components.push(
     //     { label: 'Familiarity', value: familiarity },
@@ -97,7 +102,6 @@ export const useSpellStore = defineStore('spells', () => {
     // components.push(      
     //   { label: 'Modifier', value: modifier.value },
     // );
-    const settings = useSettingsStore();
     if (settings.gameSystem !== 'blue rose') {
       spendMP(spell.mpCost);
     }
@@ -109,7 +113,6 @@ export const useSpellStore = defineStore('spells', () => {
       title: spell.name,
       subtitle: spell.spellType,
       characterName: useMetaStore().name,
-      allowHeroDie: false,
       textContent: spellTest,
       targetNumber:spell.targetNumber + familiarity,
       components
@@ -140,11 +143,18 @@ export const useSpellStore = defineStore('spells', () => {
     await rollToChat({
       characterName: useMetaStore().name,
       title: spell.name,
-      allowHeroDie: false,
       rollType:'spellDamage',
       components
     });
   }
+  const printSpellDetails = async (spell: any, arcanaLabel: string) => {
+      await sendToChat({
+        title: spell.name,
+        subtitle: spell.arcanaType,
+        traits: [ arcanaLabel + ' Type: ' + spell.arcanaType],
+        description: spell.description,
+      });
+    }
   const setCurrentSpell = (_id: string) => {
     const spell = spells.value.find((item) => item._id === _id);
     if (!spell) return;
@@ -183,6 +193,7 @@ export const useSpellStore = defineStore('spells', () => {
     removeSpell,
     printSpell,
     printSpellDamage,
+    printSpellDetails,
     setCurrentSpell,
 
     dehydrate,

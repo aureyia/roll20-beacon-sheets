@@ -28,7 +28,8 @@ import rollStunt from './partials/rollStunt.hbs?raw';
 import rollResults from './partials/rollResults.hbs?raw';
 // @ts-ignore
 import spellTN from './partials/spellTN.hbs?raw';
-
+// @ts-ignore
+import pfTest from './partials/pfTest.hbs?raw';
 // @ts-ignore
 import stuntDie from './partials/stuntDie.hbs?raw';
 
@@ -57,6 +58,7 @@ handlebars.registerPartial('rollStunt', rollStunt);
 handlebars.registerPartial('stuntDie', stuntDie);
 handlebars.registerPartial('rollResults', rollResults);
 handlebars.registerPartial('spellTN', spellTN);
+handlebars.registerPartial('pfTest', pfTest);
 
 // Helper functions for math/transformations
 handlebars.registerHelper('sumComponents', sumComponents);
@@ -83,6 +85,7 @@ const rollTemplates = {
 // This corresponds to the data returned by Beacon when you ask it to roll dice for you.
 // You may want to re-use this to simplify crafting your own templates.
 export type DiceComponent = {
+  trained?: boolean;
   /** The number of sides the die has */
   sides?: number;
   /** The number of dice with the amount of sides */
@@ -110,6 +113,7 @@ type CommonParameters = {
   rollType?:string;
   description?:string;
   targetNumber?:number;
+  hideSuccessText?: boolean;
 };
 
 export type SendToChatTemplate = {
@@ -123,9 +127,7 @@ export type RollToChatTemplate = {
     components: DiceComponent[];
     multiplier?: number;
     resultType?: 'crit-success' | 'crit-fail';
-    allowHeroDie?: boolean;
     type?:string;
-    // secondaryComponents?: DiceComponent[];
   };
 };
 

@@ -20,8 +20,8 @@
                 data-bs-backdrop="static" 
                 v-tippy="{ content: settings.gameSystem === 'blue rose' ? 'Cast '+magicLabel : 'Cast '+magicLabel+' (' + spell.mpCost + ''+magicPoints+')' }"
                 @click="handlePrint"
-                :disabled="(char.magic < spell.mpCost)"
-                :class="{ 'spell-btn-disabled':(char.magic < spell.mpCost)}">
+                :disabled="(settings.userPowerFatigue ? false : char.magic < spell.mpCost)"
+                :class="{ 'spell-btn-disabled':(settings.userPowerFatigue ? false : char.magic < spell.mpCost)}">
             <div class="age-spell-cast"></div>
         </button>
         <div>
@@ -40,7 +40,7 @@
         </button>
         </div>
         
-        <button type="button" class="config-btn age-icon-btn" @click="handlePrint" v-tippy="{ content: 'Share '+magicLabel+' in chat'}">
+        <button type="button" class="config-btn age-icon-btn" @click="handleSpellDetails" v-tippy="{ content: 'Share '+magicLabel+' in chat'}">
           <font-awesome-icon :icon="['fa', 'comment']" />
         </button> 
         <button type="button" class="config-btn age-icon-btn" @click="showModal = true" v-tippy="{ content: 'Edit '+magicLabel}">
@@ -87,7 +87,7 @@
   </Teleport>
   <Teleport to="body">
     <SpellFamiliarityModal :show="showFamiliarityModal" @close="showFamiliarityModal = false;" :spell="spell"
-      :index="index" :magicLabel="magicLabel" @delete="handleDelete()">
+      :index="index" :magicLabel="magicLabel" :magicPoints="magicPoints" @delete="handleDelete()">
       <template #header>
         <h3 class="age-spell-details-header">Familiarity</h3>
       </template>
@@ -140,7 +140,11 @@ const familiarityOptions = ref([
 switch(settings.gameSystem){
   case 'mage':
     magicLabel.value = 'Power';
-    magicPoints.value = 'PP';
+    if(settings.userPowerFatigue){
+      magicPoints.value = ' Power Cost';
+    } else {
+      magicPoints.value = 'PP';
+    }
   break;
   default:
     magicLabel.value = 'Arcana';
@@ -193,6 +197,11 @@ const handlePrint = () => {
 const handleDamagePrint = () => {
   const spellStore = useSpellStore();
   spellStore.printSpellDamage(props.spell);
+};
+
+const handleSpellDetails = () => {
+  const spellStore = useSpellStore();
+  spellStore.printSpellDetails(props.spell, magicLabel.value);
 };
 const selectedAttack = () => {
   const spellStore = useSpellStore();

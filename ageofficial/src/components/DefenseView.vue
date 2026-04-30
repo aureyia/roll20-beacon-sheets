@@ -21,18 +21,16 @@
           <div class="age-container-heading">
             Defense
           </div>
-            <!-- <span class="age-num-value">{{ 10 + Number(ability.DexterityBase) + (guard ? guardValue : 0) + (inventory.equippedShield?.defenseMod ? inventory.equippedShield?.defenseMod : 0) + Number(defenseMods) }} -->
-              <span class="age-num-value">{{ 10 + Number(ability.DexterityBase) + ((guard || guardOption === 'always') ? guardValue : 0) + Number(defenseMods) }}
-            </span>
+            <span class="age-num-value">{{ defense }}</span>
             <!-- Additional corner elements -->
             <div class="age-container-content-corner-top-right"></div>
             <div class="age-container-content-corner-bottom-left"></div>
         </div>  
-        <div class="age-container-content" v-if="settings.gameSystem === 'mage'">      
+        <div class="age-container-content" v-if="settings.gameSystem === 'mage' || settings.gameSystem === 'expanse'">      
           <div class="age-container-heading">
             Toughness
           </div>
-            <span class="age-num-value">{{ ability.ConstitutionBase >= 0 ? ability.ConstitutionBase : 0 }}</span>
+            <span class="age-num-value">{{ toughnessMod }}</span>
             <!-- Additional corner elements -->
             <div class="age-container-content-corner-top-right"></div>
             <div class="age-container-content-corner-bottom-left"></div>
@@ -52,9 +50,9 @@
             Armor Rating | Penalty
           </div>
             <div style="display: flex;">
-              <span class="age-num-value">{{ armorRatingSet !== null && armorRatingSet !== undefined ? armorRatingSet : armorRatingMod}}</span>
+              <span class="age-num-value">{{ armorRatingSet !== null && armorRatingSet !== 0 ? armorRatingSet : armorRatingMod}}</span>
               <span style="font-size: 20px;">|</span>
-              <span class="age-num-value">{{ armorPenaltySet !== null && armorPenaltySet !== undefined ? armorPenaltySet : armorPenaltyMod}}</span>
+              <span class="age-num-value">{{ armorPenaltySet !== null && armorPenaltySet !== 0 ? armorPenaltySet : armorPenaltyMod}}</span>
             </div>
             
             <!-- Additional corner elements -->
@@ -84,14 +82,14 @@
 import { useCharacterStore } from '@/sheet/stores/character/characterStore';
 import { useAbilityScoreStore } from '@/sheet/stores/abilityScores/abilityScoresStore';
 import { useInventoryStore } from '@/sheet/stores/inventory/inventoryStore';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useConditionsStore } from '@/sheet/stores/conditions/conditionsStore';
 import { objectToArray } from '@/utility/objectify';
 import { useBioStore } from '@/sheet/stores/bio/bioStore';
 import { useItemStore } from '@/sheet/stores/character/characterQualitiesStore';
 import { useSettingsStore } from '@/sheet/stores/settings/settingsStore';
 import { armorRatingMod, armorRatingSet } from '@/sheet/stores/modifiersCheck/armorRating';
-import { defenseMod } from '@/sheet/stores/modifiersCheck/defense';
+import { defenseMod, toughnessMod } from '@/sheet/stores/modifiersCheck/defense';
 import { speedMod } from '@/sheet/stores/modifiersCheck/speed';
 import SidebarSection from '@/components/SidebarSection.vue';
 import { actionsList, defenseList } from '@/system/actions';
@@ -114,6 +112,8 @@ const settings = useSettingsStore();
 const armorRating = armorRatingMod;
 const defenseMods = defenseMod;
 const speedMods = speedMod
+char.gameModeBonus();
+
 const defenseModifiers = computed(() => {
   const conditions = useConditionsStore().conditions;
   let values = []
@@ -223,5 +223,8 @@ const filteredSections = computed(() => {
     }
     return false;
   });
+});
+const defense = computed(() => {
+  return 10 + Number(ability.DexterityBase) + ((props.guard || props.guardOption === 'always') ? props.guardValue : 0) + Number(defenseMods.value) + char.defenseLevelMod;
 });
 </script>
